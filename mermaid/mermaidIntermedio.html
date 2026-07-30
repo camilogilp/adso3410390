@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo 2: Intermedio - Mermaid.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #fdfdfd; color: #333; }
+        .card { background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); border-top: 4px solid #d69e2e; }
+        .context-box { background: #fefcbf; border-left: 4px solid #d69e2e; padding: 12px 15px; margin-bottom: 20px; border-radius: 0 4px 4px 0; font-size: 0.95rem; }
+        pre.code { background: #272822; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        .diagram-container { display: flex; justify-content: center; margin-top: 20px; border: 1px dashed #cbd5e0; padding: 15px; border-radius: 6px; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Ejemplo 2: Nivel Intermedio (Arquitectura y Subgráficos)</h2>
+        
+        <!-- CONTEXTO DEL EJERCICIO -->
+        <div class="context-box">
+            <strong>Contexto Backend:</strong> En una arquitectura de microservicios moderna, las aplicaciones se dividen por responsabilidades en capas físicas o lógicas. Este diagrama modela un sistema distribuido donde un API Gateway centraliza el tráfico entrante y lo distribuye hacia servicios especializados (Autenticación, Usuarios), los cuales se conectan a bases de datos y caches independientes (PostgreSQL, Redis).
+        </div>
+
+        <h3>Código con comentarios paso a paso:</h3>
+        <pre class="code"><code>&lt;pre class="mermaid"&gt;
+graph TB
+    %% PASO 1: Creación de subgráficos para segmentar capas de infraestructura
+    subgraph Capa de Entrada
+        Client[Cliente Web / Móvil] --> Gateway[API Gateway / Load Balancer]
+    end
+
+    subgraph Capa de Lógica Backend
+        Gateway --> AuthSrv[Servicio de Autenticación]
+        Gateway --> UserSrv[Servicio de Usuarios]
+    end
+
+    subgraph Capa de Persistencia
+        AuthSrv --> Redis[(Redis Cache)]
+        UserSrv --> Postgres[(PostgreSQL DB)]
+    end
+
+    %% PASO 2: Inyección de estilos de color personalizados para nodos clave
+    style Gateway fill:#f9f,stroke:#333,stroke-width:2px
+    style Postgres fill:#bbf,stroke:#333,stroke-width:1px
+&lt;/pre&gt;</code></pre>
+
+        <h3>Renderizado Visual:</h3>
+        <div class="diagram-container">
+            <pre class="mermaid">
+                graph TB
+                    subgraph Capa de Entrada
+                        Client[Cliente Web / Móvil] --> Gateway[API Gateway / Load Balancer]
+                    end
+
+                    subgraph Capa de Lógica Backend
+                        Gateway --> AuthSrv[Servicio de Autenticación]
+                        Gateway --> UserSrv[Servicio de Usuarios]
+                    end
+
+                    subgraph Capa de Persistencia
+                        AuthSrv --> Redis[(Redis Cache)]
+                        UserSrv --> Postgres[(PostgreSQL DB)]
+                    end
+
+                    style Gateway fill:#f9f,stroke:#333,stroke-width:2px
+                    style Postgres fill:#bbf,stroke:#333,stroke-width:1px
+            </pre>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</body>
+</html>

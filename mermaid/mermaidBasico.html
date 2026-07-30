@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo 1: Básico - Mermaid.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #fdfdfd; color: #333; }
+        .card { background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); border-top: 4px solid #3182ce; }
+        .context-box { background: #ebf8ff; border-left: 4px solid #3182ce; padding: 12px 15px; margin-bottom: 20px; border-radius: 0 4px 4px 0; font-size: 0.95rem; }
+        pre.code { background: #272822; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        .diagram-container { display: flex; justify-content: center; margin-top: 20px; border: 1px dashed #cbd5e0; padding: 15px; border-radius: 6px; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Ejemplo 1: Nivel Básico (Flujo Lineal de Autenticación)</h2>
+        
+        <!-- CONTEXTO DEL EJERCICIO -->
+        <div class="context-box">
+            <strong>Contexto Backend:</strong> Este flujo representa la validación inicial de seguridad que ocurre en cualquier API REST cuando un cliente intenta acceder a un recurso protegido utilizando un token JWT o de sesión. El backend actúa como un nodo decisor (rombo) que evalúa la integridad del token: si es correcto permite el acceso, de lo contrario rechaza la petición con un código HTTP 401.
+        </div>
+
+        <h3>Código con comentarios paso a paso:</h3>
+        <pre class="code"><code>&lt;!-- 
+  PASO 1: Contenedor HTML con la clase 'mermaid' 
+  El motor de Mermaid detecta automáticamente este bloque al cargar.
+--&gt;
+&lt;pre class="mermaid"&gt;
+graph TD
+    %% PASO 2: Definición de nodos y texto descriptivo
+    A[Cliente: Envía Credenciales] --> B{Backend: Valida Token}
+    
+    %% PASO 3: Generación de ramificaciones condicionales
+    B -- Token Válido --> C[Acceso Concedido]
+    B -- Token Inválido --> D[Error 401 Unauthorized]
+&lt;/pre&gt;</code></pre>
+
+        <h3>Renderizado Visual:</h3>
+        <div class="diagram-container">
+            <pre class="mermaid">
+                graph TD
+                    A[Cliente: Envía Credenciales] --> B{Backend: Valida Token}
+                    B -- Token Válido --> C[Acceso Concedido]
+                    B -- Token Inválido --> D[Error 401 Unauthorized]
+            </pre>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</body>
+</html>
