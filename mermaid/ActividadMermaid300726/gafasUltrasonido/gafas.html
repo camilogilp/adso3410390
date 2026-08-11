@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESPECIFICACIÓN DE REQUISITOS - SAVUC</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #f4f6f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            background: white;
+            padding: 40px 50px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.12);
+        }
+        h1 { text-align: center; font-size: 28px; color: #1a3c6e; border-bottom: 3px solid #1a3c6e; padding-bottom: 15px; margin-bottom: 30px; }
+        h2 { font-size: 22px; color: #1a3c6e; margin-top: 40px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; }
+        h3 { font-size: 18px; color: #2c5282; margin-top: 30px; margin-bottom: 15px; }
+        h4 { font-size: 16px; color: #1a3c6e; margin-top: 25px; margin-bottom: 10px; }
+        .category { background: #eef3f9; padding: 12px 20px; border-radius: 6px; margin: 30px 0 15px 0; border-left: 5px solid #2c5282; }
+        .category h3 { margin: 0; color: #1a3c6e; font-size: 18px; }
+        .qa-item { margin: 16px 0; padding: 14px 20px; background: #fafbfc; border-radius: 6px; border-left: 4px solid #4a90d9; }
+        .qa-item .question { font-weight: bold; color: #1a3c6e; font-size: 15px; }
+        .qa-item .answer { margin-top: 6px; color: #333; padding-left: 10px; font-size: 14.5px; }
+        .qa-item .answer strong { color: #2c5282; }
+        .qa-number { font-weight: bold; color: #4a90d9; margin-right: 5px; }
+        hr { border: none; border-top: 2px solid #e0e0e0; margin: 30px 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 15px 0; }
+        th, td { border: 1px solid #7f7f7f; padding: 8px 12px; text-align: left; vertical-align: middle; }
+        th { background-color: #b1b1b1; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        .footer { text-align: center; margin-top: 40px; font-size: 12px; color: #888; border-top: 1px solid #ddd; padding-top: 20px; }
+        .center { text-align: center; }
+        .red { color: #c0392b; }
+        .bold { font-weight: bold; }
+        .mt-60 { margin-top: 60px; }
+        .mt-6rem { margin-top: 6rem; }
+
+        .prio-alta { background-color: #e74c3c; color: white; padding: 2px 8px; border-radius: 4px; font-weight: bold; display: inline-block; font-size: 12px; }
+        .prio-media { background-color: #f1c40f; color: #000000; padding: 2px 8px; border-radius: 4px; font-weight: bold; display: inline-block; font-size: 12px; }
+        .prio-baja { background-color: #2ecc71; color: white; padding: 2px 8px; border-radius: 4px; font-weight: bold; display: inline-block; font-size: 12px; }
+
+        .gantt-wrapper {
+            height: 550px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            position: relative;
+        }
+        .gantt-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        .gantt-table th, .gantt-table td {
+            border: 1px solid #7f7f7f;
+            padding: 4px 2px;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+        .gantt-table thead th {
+            position: sticky;
+            top: 0;
+            background-color: #b1b1b1;
+            z-index: 20;
+        }
+        .gantt-table .month-row th {
+            background-color: #2c3e50;
+            color: white;
+            font-weight: bold;
+        }
+        .gantt-table .week-row th {
+            background-color: #ecf0f1;
+            font-weight: normal;
+            color: #333;
+        }
+        .gantt-table thead tr:first-child th { top: 0; }
+        .gantt-table thead tr:last-child th { top: 28px; }
+
+        .gantt-cell {
+            display: inline-block;
+            width: 100%;
+            height: 24px;
+            border-radius: 3px;
+            line-height: 24px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s, opacity 0.2s;
+        }
+        .gantt-cell.completed {
+            background-color: #27ae60 !important;
+            color: white;
+        }
+        .gantt-cell.completed::after { content: "✓"; font-weight: bold; }
+        .gantt-cell:not(.completed) { opacity: 0.75; }
+        .gantt-cell:not(.completed):hover { opacity: 1; box-shadow: 0 0 5px rgba(0,0,0,0.3); }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            justify-content: center;
+        }
+        .progress-bar {
+            width: 60px;
+            height: 12px;
+            background-color: #ecf0f1;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #2ecc71;
+            border-radius: 6px;
+            transition: width 0.3s;
+            width: 0%;
+        }
+        .progress-text {
+            font-size: 11px;
+            font-weight: bold;
+            min-width: 32px;
+            text-align: right;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            .qa-item { padding: 12px 15px; }
+            table { font-size: 12px; }
+            th, td { padding: 5px 8px; }
+            .progress-bar { width: 40px; }
+            .gantt-wrapper { height: 400px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ==================== PORTADA ==================== -->
+    <div class="mt-60"></div>
+    <p class="center bold" style="font-size:20px;">ESPECIFICACIÓN DE REQUISITOS DE SOFTWARE</p>
+    
+   
+    <div class="mt-60"></div>
+    <p class="center bold">FICHA 3410390</p>
+    <div class="mt-60"></div>
+    <p class="center bold">EQUIPO DE DESARROLLO SAVUC</p>
+    <div class="mt-60"></div>
+    
+    <div class="mt-60"></div>
+    <p class="center bold">SERVICIO NACIONAL DE APRENDIZAJE (SENA)</p>
+    <div class="mt-60"></div>
+    <p class="center bold">CENTRO DE PROCESOS INDUSTRIALES Y CONSTRUCCION</p>
+    <div class="mt-60"></div>
+    <p class="center bold">TECNOLOGIA EN ANALISIS Y DESARROLLO DE SOFTWARE</p>
+    <div class="mt-60"></div>
+    <p class="center bold">ETAPA DE ELICITACION DE REQUISITOS</p>
+    <div class="mt-60"></div>
+    <p class="center bold">20 DE JUNIO 2026</p>
+    <div class="mt-6rem"></div>
+    <hr>
+
+    <!-- ==================== FICHA DEL DOCUMENTO ==================== -->
+    <h5 style="font-size:16px; color:#1a3c6e;">FICHA DEL DOCUMENTO</h5>
+    <table>
+        <thead><tr style="background-color:#b1b1b1;"><th style="width:33.33%;">FECHA</th><th style="width:33.33%;">REVISIÓN(ES)</th><th style="width:33.33%;">AUTOR(ES)</th></tr></thead>
+        <tbody><tr><td>20/06/2026</td><td>V1.0</td><td>Equipo SAVUC</td></tr><tr><td></td><td></td><td></td></tr></tbody>
+    </table>
+
+    <h5 style="font-size:16px; color:#1a3c6e;">DOCUMENTO VALIDADO POR LAS PARTES EN FECHA:</h5>
+    <table>
+        <thead><tr style="background-color:#feffff;"><th style="width:50%; font-weight:bold;">POR CLIENTE</th><th style="width:50%; font-weight:bold;">DESARROLLADOR</th></tr></thead>
+        <tbody><tr><td>FECHA: _________________</td><td>FECHA: _________________</td></tr><tr><td>NOMBRE DEL ENCARGADO: _________________</td><td>NOMBRE DEL ENCARGADO: _________________</td></tr></tbody>
+    </table>
+    <hr>
+
+    <!-- ==================== CONTENIDO ==================== -->
+    <h5 style="font-size:16px; color:#1a3c6e;">CONTENIDO</h5>
+    <ol>
+        <li>INTRODUCCION
+            <ol>
+                <li>OBJETIVO GENERAL</li>
+                <li>OBJETIVOS ESPECIFICOS</li>
+                <li>PROPOSITO</li>
+                <li>ALCANCE</li>
+                <li>PERSONAL INVOLUCRADO</li>
+                <li>DEFINICIONES, ACRONIMOS Y ABREVIATURAS</li>
+                <li>REFERENCIAS</li>
+                <li>RESUMEN</li>
+            </ol>
+        </li>
+        <li>DESCRIPCION GENERAL
+            <ol>
+                <li>PERSPECTIVA DEL PRODUCTO</li>
+                <li>FUNCIONALIDADES DEL PRODUCTO</li>
+                <li>CARACTERISTICAS DE LOS USUARIOS</li>
+                <li>RESTRICCIONES</li>
+            </ol>
+        </li>
+        <li>REQUISITOS ESPECIFICOS
+            <ol>
+                <li>REQUISITOS DEL SISTEMA</li>
+                <li>REQUISITOS FUNCIONALES</li>
+                <li>REQUISITOS NO FUNCIONALES</li>
+            </ol>
+        </li>
+        <li>VALIDACIÓN DE REQUISITOS
+            <ol>
+                <li>CONSTRUCCIÓN DE PROTOTIPOS</li>
+                <li>FORMATO DE CASO DE PRUEBA</li>
+            </ol>
+        </li>
+        <li>CRONOGRAMA DE ACTIVIDADES DEL PROYECTO
+            <ol>
+                <li>DIAGRAMA DE GANTT INTERACTIVO</li>
+                <li>DESCRIPCIÓN DE ACTIVIDADES</li>
+            </ol>
+        </li>
+    </ol>
+    <hr>
+
+    <!-- ==================== 1. INTRODUCCION ==================== -->
+    <h2>1. INTRODUCCION</h2>
+    <p><span class="red">(Contexto del proyecto y necesidad de asistencia visual)</span></p>
+    <p>El SAVUC es un dispositivo wearable (gafas inteligentes) diseñado para mejorar la movilidad y autonomía de personas con discapacidad visual, incluyendo ceguera total y baja visión severa. El sistema utiliza dos sensores de ultrasonido laterales y una cámara en el puente nasal para detectar obstáculos y reconocer objetos, proporcionando retroalimentación auditiva y háptica al usuario. Este proyecto surge de la necesidad de ofrecer una solución accesible, eficaz y de bajo costo para la población con discapacidad visual en Colombia, en línea con las políticas de inclusión del Ministerio de Salud.</p>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">1.1. OBJETIVO GENERAL</h5>
+    <p>Desarrollar un sistema de asistencia visual portátil basado en sensores de ultrasonido y cámara que permita a las personas con discapacidad visual detectar obstáculos y reconocer objetos en tiempo real, mejorando su seguridad y autonomía en entornos interiores y exteriores, y que pueda ser producido a gran escala para su distribución a través de EPS y hospitales.</p>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">1.2. OBJETIVOS ESPECIFICOS</h5>
+    <ul>
+        <li>Diseñar un par de gafas con dos sensores de ultrasonido (laterales) y una cámara (puente nasal) de bajo consumo y peso ligero (&lt; 80 g).</li>
+        <li>Desarrollar un software embebido que procese las señales de los sensores y la cámara con una latencia menor a 100 ms para la detección de obstáculos.</li>
+        <li>Implementar algoritmos de fusión de datos que combinen la información de distancia (ultrasonido) con el reconocimiento de objetos (visión por computador).</li>
+        <li>Proporcionar retroalimentación al usuario mediante tonos auditivos, vibraciones y mensajes de voz (text-to-speech) para indicar la dirección y distancia de obstáculos.</li>
+        <li>Desarrollar una aplicación móvil complementaria para la configuración, calibración y monitoreo del dispositivo.</li>
+        <li>Obtener las certificaciones necesarias (INVIMA, FDA Clase II) para su comercialización como dispositivo médico de asistencia.</li>
+    </ul>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">1.3. PROPOSITO</h5>
+    <p><span class="red">(Finalidad del software y hardware en la mejora de la calidad de vida)</span></p>
+    <p>El propósito del SAVUC es proporcionar a las personas con discapacidad visual una herramienta que les permita desplazarse con mayor seguridad y confianza, reduciendo el riesgo de colisiones y caídas. El sistema busca complementar el uso del bastón blanco o perro guía, ofreciendo información detallada sobre el entorno (distancias, tipo de objetos, textos) que no es posible obtener con otros métodos. Además, el dispositivo pretende ser asequible (costo &lt; USD 150) para facilitar su adopción masiva en el sistema de salud.</p>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">1.4. ALCANCE</h5>
+    <p><span class="red">(Áreas y funcionalidades que cubre el sistema)</span></p>
+    <p>El SAVUC abarca los siguientes componentes y funcionalidades:</p>
+    <ul>
+        <li><strong>Hardware:</strong> Gafas con sensores de ultrasonido (HC-SR04 o similar), cámara (OV2640), microcontrolador (ESP32-S3), batería recargable, auricular de conducción ósea y botones físicos.</li>
+        <li><strong>Firmware:</strong> Adquisición y procesamiento de datos de sensores, fusión de datos, generación de alertas, control de energía y comunicación Bluetooth/Wi-Fi.</li>
+        <li><strong>Software embebido:</strong> Algoritmos de detección de obstáculos, reconocimiento de objetos (personas, vehículos, escaleras), OCR (reconocimiento de texto) y generación de voz.</li>
+        <li><strong>Aplicación móvil:</strong> Configuración de parámetros (sensibilidad, volumen), actualización de firmware OTA, visualización de estadísticas y alertas de emergencia.</li>
+        <li><strong>Integración:</strong> Conexión con smartphone para funciones avanzadas (GPS, envío de alertas) y actualizaciones.</li>
+    </ul>
+    <p><strong>Quedan fuera del alcance en esta fase:</strong></p>
+    <ul>
+        <li>Reconocimiento de rostros o identificación de personas.</li>
+        <li>Navegación por GPS autónoma (depende del smartphone).</li>
+        <li>Integración con servicios de salud electrónica (historias clínicas).</li>
+        <li>Producción a gran escala (se realizará una prueba piloto con 100 unidades).</li>
+    </ul>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">1.5. PERSONAL Involucrado <span class="red">(Stakeholders clave)</span></h5>
+    <table><tr><th style="width:40%;">NOMBRE</th><td>Dra. Laura Martínez</td></tr><tr><th>ROL</th><td>Coordinadora de Innovación - Ministerio de Salud</td></tr><tr><th>PROFESION</th><td>Médica Oftalmóloga</td></tr><tr><th>RESPONSABILIDADES</th><td>Aprobación de requerimientos clínicos, validación con pacientes, gestión de recursos</td></tr><tr><th>INFORMACION DE CONTACTO</th><td>Celular: 3001234567 - Correo: lmartinez@minsalud.gov.co</td></tr><tr><th>APRUEBA</th><td><span class="red">SI</span></td></tr></table>
+    <br>
+    <table><tr><th style="width:40%;">NOMBRE</th><td>Ing. Carlos Ríos</td></tr><tr><th>ROL</th><td>Gerente de Proyecto - Hospital San José</td></tr><tr><th>PROFESION</th><td>Ingeniero Biomédico</td></tr><tr><th>RESPONSABILIDADES</th><td>Supervisión de pruebas clínicas, logística de distribución</td></tr><tr><th>INFORMACION DE CONTACTO</th><td>Celular: 3007654321 - Correo: carios@hospitalsanjose.com</td></tr><tr><th>APRUEBA</th><td><span class="red">SI</span></td></tr></table>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">1.6. DEFINICIONES, ACRONIMOS Y ABREVIATURAS</h5>
+    <table>
+        <tr><th style="width:30%;">TÉRMINO</th><th>DEFINICIÓN / SIGNIFICADO</th></tr>
+        <tr><td>SAVUC</td><td>Sistema de Asistencia Visual por Ultrasonido y Cámara</td></tr>
+        <tr><td>TOF</td><td>Time of Flight (Tiempo de Vuelo) - técnica de medición de distancia</td></tr>
+        <tr><td>FOV</td><td>Field of View (Campo de Visión) de la cámara</td></tr>
+        <tr><td>RTOS</td><td>Real-Time Operating System (Sistema Operativo en Tiempo Real)</td></tr>
+        <tr><td>BLE</td><td>Bluetooth Low Energy (Bluetooth de Baja Energía)</td></tr>
+        <tr><td>OCR</td><td>Optical Character Recognition (Reconocimiento Óptico de Caracteres)</td></tr>
+        <tr><td>IA/ML</td><td>Inteligencia Artificial / Machine Learning</td></tr>
+        <tr><td>EPS</td><td>Entidad Promotora de Salud (Colombia)</td></tr>
+        <tr><td>INVIMA</td><td>Instituto Nacional de Vigilancia de Medicamentos y Alimentos</td></tr>
+        <tr><td>FDA</td><td>Food and Drug Administration (EE. UU.)</td></tr>
+        <tr><td>OTA</td><td>Over-The-Air (actualización inalámbrica de firmware)</td></tr>
+        <tr><td>FMEA</td><td>Failure Mode and Effects Analysis (Análisis de Modos de Falla y Efectos)</td></tr>
+    </table>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">1.7. REFERENCIAS</h5>
+    <p><span class="red">(Productos similares y estándares aplicados)</span></p>
+    <ul>
+        <li><strong>OrCam MyEye:</strong> Dispositivo de asistencia visual que utiliza cámara y reconocimiento de texto, pero su costo es elevado (&gt; USD 3.000).</li>
+        <li><strong>Envision Glasses:</strong> Gafas inteligentes con cámara y reconocimiento de objetos, pero no incluyen ultrasonido para detección de obstáculos cercanos.</li>
+        <li><strong>WeWALK Smart Cane:</strong> Bastón inteligente con ultrasonido, pero no integra cámara ni reconocimiento de objetos.</li>
+        <li><strong>Estándares:</strong> IEC 60601-1 (seguridad eléctrica), IEC 62304 (software médico), ISO 14971 (gestión de riesgos).</li>
+    </ul>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">1.8. RESUMEN</h5>
+    <p><span class="red">(Descripción sintética del sistema y su uso)</span></p>
+    <p>El SAVUC es un sistema integral de asistencia visual que combina sensores de ultrasonido y cámara en unas gafas ligeras. El software embebido procesa en tiempo real la información del entorno y genera alertas auditivas y hápticas para guiar al usuario. Complementado con una aplicación móvil, permite la configuración personalizada y el monitoreo de la salud del dispositivo. Está destinado a personas con discapacidad visual, y su desarrollo se rige por estrictas normas de calidad y seguridad para su uso como dispositivo médico.</p>
+    <hr>
+
+    <!-- ==================== 2. DESCRIPCION GENERAL ==================== -->
+    <h2>2. DESCRIPCION GENERAL</h2>
+    <p><span class="red">(Visión general del funcionamiento del sistema SAVUC)</span></p>
+    <p>El SAVUC es un sistema embebido que opera de forma autónoma tras el encendido. Los sensores de ultrasonido emiten pulsos y miden el tiempo de vuelo para calcular distancias a objetos; la cámara captura imágenes que son procesadas mediante algoritmos de visión por computador (detección de objetos, OCR). Los datos de ambos sensores se fusionan en un mapa de obstáculos que se utiliza para activar alertas sonoras (tonos, voz) y vibraciones, indicando al usuario la ubicación y proximidad de peligros. El usuario puede interactuar mediante botones físicos para ajustar volumen, activar modo de emergencia o pausar el sistema. La aplicación móvil permite configurar parámetros, recibir notificaciones y actualizar el firmware.</p>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">2.1. PERSPECTIVA DEL PRODUCTO</h5>
+    <p><span class="red">(Interfaz, usuarios y roles)</span></p>
+    <p>El producto se compone de dos partes interconectadas:</p>
+    <ul>
+        <li><strong>Dispositivo físico (gafas):</strong> Integra los sensores, la unidad de procesamiento, la batería y el sistema de retroalimentación. Es portable, resistente y ergonómico.</li>
+        <li><strong>Aplicación móvil (Android/iOS):</strong> Actúa como consola de configuración, visualización de estadísticas y canal de comunicación para emergencias.</li>
+    </ul>
+    <p><strong>Usuarios y roles:</strong></p>
+    <table>
+        <tr><th>ROL</th><th>DESCRIPCIÓN</th><th>NIVEL DE ACCESO</th></tr>
+        <tr><td><strong>Usuario final (persona con discapacidad visual)</strong></td><td>Utiliza el dispositivo diariamente para su movilidad</td><td>Interacción solo mediante botones físicos y retroalimentación auditiva/háptica</td></tr>
+        <tr><td><strong>Profesional de la salud (oftalmólogo, terapeuta)</strong></td><td>Prescribe y ajusta el dispositivo según las necesidades del paciente</td><td>Acceso a la aplicación móvil para configuración avanzada y calibración</td></tr>
+        <tr><td><strong>Técnico de soporte</strong></td><td>Realiza mantenimiento, diagnósticos y actualizaciones</td><td>Acceso al modo de servicio y logs del sistema</td></tr>
+        <tr><td><strong>Administrador (EPS/hospital)</strong></td><td>Gestiona inventario, asignaciones y reportes de uso</td><td>Panel web para administración de dispositivos y usuarios</td></tr>
+    </table>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">2.2. FUNCIONALIDADES DEL PRODUCTO <span class="red">(Elicitación)</span></h5>
+    <p><span class="red">(Enumeración de funciones solicitadas por los stakeholders)</span></p>
+    <p><strong>PREGUNTAS PARA EL PROCESO DE ELICITACIÓN DE REQUISITOS</strong></p>
+
+    <!-- CATEGORÍA 1 -->
+    <div class="category"><h3>CATEGORÍA 1: CONTEXTO GENERAL DEL PROYECTO (Preguntas #1 - #6)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#1.</span> ¿Cuál es la principal necesidad que el SAVUC debe resolver?</div><div class="answer">La principal necesidad es mejorar la autonomía y seguridad en la movilidad diaria de personas con ceguera o baja visión severa, reduciendo el riesgo de colisiones y caídas mediante la detección temprana de obstáculos.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#2.</span> ¿Qué espera lograr la implementación de este sistema en comparación con las soluciones existentes?</div><div class="answer">Se espera lograr un dispositivo de bajo costo (menos de USD 150) que combine ultrasonido y cámara, ofreciendo una detección más completa que los bastones inteligentes y con un precio accesible frente a las gafas comerciales (OrCam, Envision).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#3.</span> ¿Cómo impactará este sistema en la calidad de vida de los usuarios?</div><div class="answer">Impactará permitiendo una mayor independencia, reduciendo la ansiedad al desplazarse, y facilitando la identificación de objetos y textos en el entorno, lo que favorece la inclusión social y laboral.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#4.</span> ¿Quién será el usuario final principal y cuáles son sus características?</div><div class="answer">El usuario final principal son personas con discapacidad visual (ceguera total o baja visión), de edades entre 18 y 80 años, con diversos niveles de educación y experiencia tecnológica. Debe ser usable sin entrenamiento complejo.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#5.</span> ¿Cuáles son los entornos de uso típicos?</div><div class="answer">Entornos interiores (hogar, oficinas, centros comerciales) y exteriores (calles, parques, transporte público), con condiciones de iluminación variables y posibles ruidos ambientales.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#6.</span> ¿Qué condiciones ambientales debe soportar el dispositivo?</div><div class="answer">Debe soportar temperaturas de 0 a 40°C, humedad relativa de 10 a 90% sin condensación, y ser resistente a salpicaduras (grado IP54).</div></div>
+
+    <!-- CATEGORÍA 2 -->
+    <div class="category"><h3>CATEGORÍA 2: ALCANCE Y PROCESOS (Preguntas #7 - #12)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#7.</span> ¿Qué procesos específicos debe cubrir el software del dispositivo?</div><div class="answer">El software debe cubrir la adquisición de datos de sensores, procesamiento de señales, fusión de datos, generación de alertas, gestión de energía, comunicación inalámbrica y actualización de firmware.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#8.</span> ¿Qué funcionalidades no serán cubiertas en la primera versión?</div><div class="answer">No se cubrirá el reconocimiento facial, la navegación GPS autónoma (dependerá del smartphone), ni la integración con sistemas de historias clínicas.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#9.</span> ¿El sistema interactuará con otros dispositivos o plataformas?</div><div class="answer">Sí, se conectará vía Bluetooth con un smartphone para la aplicación móvil y opcionalmente con servicios en la nube para actualizaciones y análisis de datos anonimizados.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#10.</span> ¿Se requiere soporte para múltiples idiomas?</div><div class="answer">Inicialmente solo español, pero se dejará preparada la arquitectura para agregar inglés en futuras versiones.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#11.</span> ¿Qué tipo de retroalimentación se considera más efectiva para los usuarios?</div><div class="answer">Una combinación de tonos auditivos (frecuencia variable según distancia), vibraciones (intensidad creciente) y mensajes de voz (text-to-speech) para indicar dirección y tipo de objeto.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#12.</span> ¿El dispositivo debe ser autónomo o depender del smartphone?</div><div class="answer">Debe ser autónomo para las funciones básicas (detección de obstáculos), pero puede usar el smartphone para funciones avanzadas (reconocimiento de objetos mediante IA en la nube, GPS).</div></div>
+
+    <!-- CATEGORÍA 3 -->
+    <div class="category"><h3>CATEGORÍA 3: DEFINICIONES, ACRÓNIMOS Y REFERENCIAS (Preguntas 13 - 18)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">13.</span> ¿Qué términos técnicos específicos del sector se deben manejar?</div><div class="answer">Términos como "ultrasonido", "tiempo de vuelo", "fusión de sensores", "conducción ósea", "retroalimentación háptica", "reconocimiento de objetos" y "OCR".</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">14.</span> ¿Qué acrónimos son de uso común (ej. TOF, FOV, BLE)?</div><div class="answer">TOF (Time of Flight), FOV (Field of View), BLE (Bluetooth Low Energy), RTOS (Real-Time Operating System), OTA (Over-The-Air).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">15.</span> ¿Existe un glosario interno de términos que debamos usar como referencia?</div><div class="answer">No existe uno formal; se construirá durante el proyecto con la participación de los ingenieros y médicos.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">16.</span> ¿Cómo se refieren internamente a los diferentes modos de alerta?</div><div class="answer">Actualmente se usa "alerta de proximidad" para ultrasonido, "alerta de objeto" para cámara, y "alerta mixta" cuando ambos coinciden.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">17.</span> ¿Qué dispositivos similares han sido evaluados y por qué no son adecuados?</div><div class="answer">Se evaluaron OrCam MyEye (costoso, sin ultrasonido), Envision Glasses (costoso, sin ultrasonido), y bastones inteligentes (no ofrecen reconocimiento de objetos). Ninguno combina ambas tecnologías a bajo costo.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">18.</span> ¿Existen documentos o manuales que describan el flujo de uso del dispositivo?</div><div class="answer">Se cuenta con guías de usuario de dispositivos similares y manuales de instrucciones de bastones electrónicos, que servirán de referencia para el diseño de la interacción.</div></div>
+
+    <!-- CATEGORÍA 4 -->
+    <div class="category"><h3>CATEGORÍA 4: VISIÓN GENERAL Y CRONOGRAMA (Preguntas 19 - 23)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">19.</span> Si tuviera que describir el SAVUC en una frase, ¿cuál sería?</div><div class="answer">"Un par de gafas inteligentes que mediante ultrasonido y cámara guían a las personas con discapacidad visual para moverse con seguridad."</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">20.</span> ¿Cuál es el "corazón" del sistema?</div><div class="answer">El módulo de fusión de datos que combina la información de los sensores y la cámara para generar alertas precisas en tiempo real.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">21.</span> ¿Qué funcionalidad es crítica y debe funcionar perfectamente desde el primer día?</div><div class="answer">La detección de obstáculos mediante ultrasonido con latencia inferior a 100 ms y la generación de la alerta correspondiente.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">22.</span> ¿Cuál es el cronograma esperado para la implementación?</div><div class="answer">Se estima un prototipo funcional en 6 meses, pruebas clínicas en 3 meses adicionales, y certificación y producción en 3 meses más, total 12 meses.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">23.</span> ¿Cuál es el presupuesto estimado?</div><div class="answer">Se estima un presupuesto de $200.000 USD para el desarrollo y pruebas iniciales, con un costo unitario de producción inferior a $150 USD.</div></div>
+
+    <!-- CATEGORÍA 5 -->
+    <div class="category"><h3>CATEGORÍA 5: USUARIOS, ROLES E INTERFAZ (Preguntas 24 - 28)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">24.</span> Describa un día típico de un usuario usando el SAVUC.</div><div class="answer">El usuario se coloca las gafas al salir de casa, camina por la calle recibiendo alertas sonoras que indican obstáculos y direcciones, usa los botones para ajustar el volumen, y al llegar a su destino las guarda.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">25.</span> ¿Qué roles de usuario existirán y qué nivel de acceso debe tener cada uno?</div><div class="answer">Roles: Usuario final (interacción limitada a botones y voz), Profesional de salud (acceso a configuración vía app), Técnico (modo de diagnóstico), Administrador (gestión de dispositivos).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">26.</span> ¿Cómo debería ser la interfaz de usuario: simple o con muchas opciones?</div><div class="answer">Para el usuario final, debe ser extremadamente simple (solo botones y retroalimentación). Para el profesional, la app debe ofrecer opciones avanzadas pero con una curva de aprendizaje suave.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">27.</span> ¿El sistema debe tener una pantalla?</div><div class="answer">No, para no incrementar el costo y el peso. Toda la interacción es auditiva y háptica.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">28.</span> ¿Debe ser compatible con gafas graduadas?</div><div class="answer">Sí, el diseño debe permitir adaptarse a diferentes marcos, incluso con graduación.</div></div>
+
+    <!-- CATEGORÍA 6 -->
+    <div class="category"><h3>CATEGORÍA 6: FUNCIONALIDADES PRINCIPALES DEL SOFTWARE (Preguntas 29 - 35)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">29.</span> Enumere las 5 funcionalidades más importantes del SAVUC.</div><div class="answer">(1) Detección de obstáculos por ultrasonido. (2) Reconocimiento de objetos por cámara. (3) Fusión de datos para alertas mixtas. (4) Retroalimentación auditiva y háptica. (5) Configuración y actualización vía app.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">30.</span> ¿Cómo se manejará el ciclo de vida de una detección: desde la captura hasta la alerta?</div><div class="answer">Captura de datos -&gt; Procesamiento (filtrado, cálculo de distancia) -&gt; Fusión con datos de cámara -&gt; Decisión de alerta -&gt; Generación de tono/voz/vibración.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">31.</span> ¿Se requiere un módulo de reconocimiento de texto (OCR)?</div><div class="answer">Sí, para leer letreros, documentos, menús, y convertirlos a voz.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">32.</span> ¿El sistema debe llevar un registro de eventos (logs)?</div><div class="answer">Sí, para análisis de incidentes y mejora continua, se almacenarán localmente los últimos 100 eventos (detecciones, errores, caídas).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">33.</span> ¿Se necesita un botón de pánico?</div><div class="answer">Sí, un botón físico que, al ser presionado, envía una alerta a un contacto de emergencia a través del smartphone.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">34.</span> ¿Qué tipo de reportes se generarán?</div><div class="answer">Reportes de uso (horas de uso, número de alertas), y reportes de incidentes (caídas, obstáculos no detectados) para el personal médico.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">35.</span> ¿El sistema debe actualizar su firmware de forma remota?</div><div class="answer">Sí, mediante OTA (Over-The-Air) a través de la app móvil.</div></div>
+
+    <!-- CATEGORÍA 7 -->
+    <div class="category"><h3>CATEGORÍA 7: CARACTERÍSTICAS DE LOS USUARIOS Y SOPORTE (Preguntas 36 - 40)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">36.</span> ¿Qué nivel de conocimiento tecnológico tienen los usuarios finales?</div><div class="answer">Muy variado, desde usuarios sin experiencia en tecnología hasta aquellos familiarizados con smartphones. Se debe priorizar la simplicidad.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">37.</span> ¿Qué tipo de capacitación se necesita?</div><div class="answer">Capacitación práctica de 1 a 2 horas con un terapeuta ocupacional, y tutoriales de audio integrados en la app.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">38.</span> ¿Con qué frecuencia se usa el dispositivo?</div><div class="answer">Se espera un uso diario, durante varias horas, especialmente en desplazamientos.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">39.</span> ¿Existe un equipo de soporte técnico para atender incidencias?</div><div class="answer">Sí, un equipo de soporte de las EPS o del fabricante, con atención telefónica y remota.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">40.</span> ¿Cómo se manejarán las devoluciones o garantías?</div><div class="answer">A través de los puntos de distribución (hospitales, EPS) con un proceso de reemplazo o reparación en un plazo máximo de 5 días hábiles.</div></div>
+
+    <!-- CATEGORÍA 8 -->
+    <div class="category"><h3>CATEGORÍA 8: RESTRICCIONES TÉCNICAS, LEGALES Y PRESUPUESTARIAS (Preguntas 41 - 46)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">41.</span> ¿Qué restricciones técnicas existen?</div><div class="answer">Uso de microcontrolador de bajo consumo (ESP32), memoria RAM limitada (&lt; 512 KB), almacenamiento flash (&lt; 16 MB), y batería con autonomía mínima de 8 horas.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">42.</span> ¿Qué restricciones legales o normativas debe cumplir?</div><div class="answer">Debe cumplir con las regulaciones de dispositivos médicos de la FDA (Clase II), INVIMA (Colombia), y la normativa de protección de datos (Ley 1581).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">43.</span> ¿Qué restricciones presupuestarias o de plazo son innegociables?</div><div class="answer">El costo unitario no debe superar los $150 USD, y el plazo para el prototipo funcional es de 6 meses.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">44.</span> ¿Se debe cumplir con alguna política de seguridad de la información?</div><div class="answer">Sí, se deben cifrar los datos personales y los logs de uso, y mantener registros de acceso por 5 años.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">45.</span> ¿Qué peso máximo se permite para el dispositivo?</div><div class="answer">El conjunto completo (gafas + electrónica) no debe exceder los 80 gramos.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">46.</span> ¿El sistema debe ser resistente al agua?</div><div class="answer">Sí, debe tener grado de protección IP54 (salpicaduras).</div></div>
+
+    <!-- CATEGORÍA 9 -->
+    <div class="category"><h3>CATEGORÍA 9: REQUISITOS DEL SISTEMA (INFRAESTRUCTURA Y ARQUITECTURA) (Preguntas 47 - 52)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">47.</span> ¿Cuál es la plataforma objetivo para el software embebido?</div><div class="answer">Microcontrolador ESP32-S3 con FreeRTOS como sistema operativo en tiempo real.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">48.</span> ¿Con qué sistemas externos debe integrarse?</div><div class="answer">Debe integrarse con la app móvil (vía BLE), y opcionalmente con servicios en la nube para actualizaciones y análisis.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">49.</span> ¿La integración con la nube será para almacenamiento de datos o solo para actualizaciones?</div><div class="answer">Principalmente para actualizaciones OTA y envío de datos anonimizados de uso (con consentimiento).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">50.</span> ¿Qué volumen de datos se espera procesar diariamente?</div><div class="answer">Se espera procesar aproximadamente 10.000 mediciones de ultrasonido y 500 fotogramas por hora de uso.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">51.</span> ¿Se requiere una arquitectura que permita escalar a futuras versiones?</div><div class="answer">Sí, el software debe ser modular para permitir la adición de nuevos sensores o algoritmos sin reescribir todo el núcleo.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">52.</span> ¿Qué protocolos de comunicación se utilizarán?</div><div class="answer">BLE para la app, Wi-Fi para actualizaciones OTA, y UART/SPI para la comunicación interna con sensores.</div></div>
+
+    <!-- CATEGORÍA 10 -->
+    <div class="category"><h3>CATEGORÍA 10: MÓDULO DE DETECCIÓN Y ULTRASONIDO (Preguntas 53 - 58)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">53.</span> ¿Qué rango de distancias debe cubrir el ultrasonido?</div><div class="answer">Desde 0.2 m hasta 4 m, con una precisión de ± 2 cm.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">54.</span> ¿Con qué frecuencia se debe muestrear el ultrasonido?</div><div class="answer">Al menos 10 veces por segundo (10 Hz) para detectar obstáculos en movimiento.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">55.</span> ¿Cómo se manejarán las interferencias entre los dos sensores (izquierdo y derecho)?</div><div class="answer">Se implementará un esquema de multiplexación en el tiempo para evitar que los pulsos se solapen.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">56.</span> ¿Qué nivel de precisión se requiere en la medición de distancia?</div><div class="answer">Precisión de ± 2 cm, con una tasa de falsos positivos menor al 5%.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">57.</span> ¿Cómo se calibrarán los sensores?</div><div class="answer">Se realizará una calibración de fábrica y se podrá ajustar mediante la app móvil (compensación de temperatura y humedad).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">58.</span> ¿Qué sucede si un sensor falla?</div><div class="answer">El sistema debe detectar el fallo, alertar al usuario (tono de error) y continuar operando con el otro sensor y la cámara en modo degradado.</div></div>
+
+    <!-- CATEGORÍA 11 -->
+    <div class="category"><h3>CATEGORÍA 11: MÓDULO DE CÁMARA Y VISIÓN POR COMPUTADOR (Preguntas 59 - 64)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">59.</span> ¿Qué resolución mínima debe tener la cámara?</div><div class="answer">Mínimo VGA (640x480 píxeles) para un reconocimiento básico de objetos.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">60.</span> ¿Qué objetos debe reconocer el sistema?</div><div class="answer">Personas, vehículos, paredes, puertas, escaleras, y señales de tránsito (opcional).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">61.</span> ¿Debe reconocer texto (OCR)?</div><div class="answer">Sí, para leer letreros, documentos, menús, etc.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">62.</span> ¿Qué tasa de fotogramas se requiere para el procesamiento de imágenes?</div><div class="answer">Al menos 5 fotogramas por segundo (fps) para detección de objetos en movimiento.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">63.</span> ¿Cómo se manejará la iluminación variable?</div><div class="answer">Se utilizarán algoritmos de ecualización de histograma y ajuste automático de exposición para mantener la calidad de imagen.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">64.</span> ¿Qué sucede si la cámara falla?</div><div class="answer">El sistema debe pasar a un modo solo ultrasonido, alertando al usuario y registrando el error.</div></div>
+
+    <!-- CATEGORÍA 12 -->
+    <div class="category"><h3>CATEGORÍA 12: FUSIÓN DE DATOS Y ALERTAS (Preguntas 65 - 70)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">65.</span> ¿Cómo se fusionan los datos de ultrasonido y cámara?</div><div class="answer">Se utiliza un algoritmo de fusión sensorial que pondera la información de distancia (ultrasonido) con la identificación de objetos (cámara) para generar un mapa de obstáculos.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">66.</span> ¿Qué tipos de alertas se generan?</div><div class="answer">Tonos (frecuencia variable según distancia), vibración (intensidad variable) y mensajes de voz (ej. "Obstáculo a 1 metro a la derecha").</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">67.</span> ¿Cómo se indica la dirección del obstáculo?</div><div class="answer">Con tonos diferenciados (tono agudo para derecha, grave para izquierda) y mensajes de voz.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">68.</span> ¿La vibración se utiliza para obstáculos muy cercanos?</div><div class="answer">Sí, la vibración continua se activa si el obstáculo está a menos de 0.5 m.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">69.</span> ¿El usuario puede ajustar la sensibilidad de las alertas?</div><div class="answer">Sí, a través de la app móvil o mediante botones físicos (volumen y distancia umbral).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">70.</span> ¿Cómo se manejan las falsas alarmas?</div><div class="answer">Se implementará un filtro temporal y de consistencia para reducir falsos positivos, y el usuario podrá reportarlas para mejorar el algoritmo.</div></div>
+
+    <!-- CATEGORÍA 13 -->
+    <div class="category"><h3>CATEGORÍA 13: GESTIÓN DE ENERGÍA Y BATERÍA (Preguntas 71 - 75)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">71.</span> ¿Cuánto debe durar la batería?</div><div class="answer">Mínimo 8 horas de uso continuo.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">72.</span> ¿Cómo se carga la batería?</div><div class="answer">Mediante un puerto USB-C, con carga completa en menos de 2 horas.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">73.</span> ¿El sistema debe indicar el nivel de batería?</div><div class="answer">Sí, mediante un tono o mensaje de voz al encender y cuando esté baja (menos del 20%).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">74.</span> ¿Se requiere un modo de bajo consumo?</div><div class="answer">Sí, debe pasar a modo sleep después de 5 minutos de inactividad (sin movimiento).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">75.</span> ¿Qué consumo de corriente se espera en modo activo?</div><div class="answer">Menos de 200 mA a 3.7 V.</div></div>
+
+    <!-- CATEGORÍA 14 -->
+    <div class="category"><h3>CATEGORÍA 14: REQUISITOS NO FUNCIONALES - RENDIMIENTO Y DISPONIBILIDAD (Preguntas 76 - 80)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">76.</span> ¿Cuál es la latencia máxima permitida para la detección de obstáculos?</div><div class="answer">100 ms desde la lectura del sensor hasta la alerta.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">77.</span> ¿Qué tasa de falsos positivos y negativos es aceptable?</div><div class="answer">Falsos positivos < 5%, falsos negativos < 2%.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">78.</span> ¿Cuánto tiempo debe tardar en encenderse el sistema?</div><div class="answer">Menos de 10 segundos.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">79.</span> ¿Cuál es la disponibilidad esperada del sistema?</div><div class="answer">99.9% en condiciones normales de uso (MTBF > 5000 horas).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">80.</span> ¿Cómo se garantiza la fiabilidad?</div><div class="answer">Mediante análisis FMEA, pruebas de estrés y redundancia en los sensores.</div></div>
+
+    <!-- CATEGORÍA 15 -->
+    <div class="category"><h3>CATEGORÍA 15: REQUISITOS NO FUNCIONALES - SEGURIDAD Y PRIVACIDAD (Preguntas 81 - 85)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">81.</span> ¿Qué nivel de cifrado se requiere para los datos?</div><div class="answer">Cifrado AES-256 para datos en reposo y TLS 1.3 para transmisión.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">82.</span> ¿Cómo se protege el sistema contra accesos no autorizados?</div><div class="answer">Autenticación en la app, y en el dispositivo, solo se permite emparejamiento con dispositivos autorizados.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">83.</span> ¿Se debe cumplir con la normativa de protección de datos?</div><div class="answer">Sí, Ley 1581 de Habeas Data en Colombia, garantizando el consentimiento y la anonimización.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">84.</span> ¿Los datos de imagen se almacenan?</div><div class="answer">No, se procesan en tiempo real y se descartan; solo se almacenan metadatos (eventos).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">85.</span> ¿Cómo se maneja la privacidad del usuario?</div><div class="answer">Solicitando consentimiento explícito para cualquier transmisión de datos, y ofreciendo la opción de desactivar la cámara si lo desea.</div></div>
+
+    <!-- CATEGORÍA 16 -->
+    <div class="category"><h3>CATEGORÍA 16: REQUISITOS NO FUNCIONALES - USABILIDAD Y MANTENIBILIDAD (Preguntas 86 - 91)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">86.</span> ¿El sistema debe ser fácil de usar para personas sin experiencia tecnológica?</div><div class="answer">Sí, debe ser intuitivo; los botones deben tener formas y texturas diferenciadas, y la retroalimentación debe ser clara.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">87.</span> ¿Se requiere un diseño ergonómico?</div><div class="answer">Sí, las gafas deben ser cómodas para uso prolongado y ajustables a diferentes tamaños de cabeza.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">88.</span> ¿El sistema debe proporcionar ayuda en línea?</div><div class="answer">Sí, mediante tutoriales de voz y una sección de ayuda en la app móvil.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">89.</span> ¿Cómo se manejan los fallos inesperados?</div><div class="answer">Con mensajes de error audibles claros (ej. "Error en sensor izquierdo, usando solo cámara").</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">90.</span> ¿El sistema debe ser fácilmente actualizable?</div><div class="answer">Sí, mediante OTA, y el código debe ser modular para facilitar el mantenimiento.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">91.</span> ¿Qué soporte se ofrece después del despliegue?</div><div class="answer">Soporte de 12 meses incluido, con respuesta en menos de 4 horas para incidentes críticos.</div></div>
+
+    <!-- CATEGORÍA 17 -->
+    <div class="category"><h3>CATEGORÍA 17: INTERFACES EXTERNAS (Preguntas 92 - 96)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">92.</span> ¿Qué interfaces de usuario (pantallas) se consideran críticas?</div><div class="answer">La app móvil (configuración, estadísticas) y la interfaz auditiva del dispositivo (tonos, voz).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">93.</span> ¿Qué interfaces de comunicación con otros sistemas son necesarias?</div><div class="answer">Bluetooth para app, Wi-Fi para OTA, y posiblemente API REST para la nube.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">94.</span> ¿Qué hardware externo se requiere (impresoras, etc.)?</div><div class="answer">No se requiere hardware adicional; solo el smartphone para la app.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">95.</span> ¿Se necesita un puerto de diagnóstico?</div><div class="answer">Sí, un puerto USB-C que también permite depuración.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">96.</span> ¿El sistema debe ser compatible con audífonos estándar?</div><div class="answer">Sí, debe tener salida de audio de 3.5 mm o Bluetooth para audífonos.</div></div>
+
+    <!-- CATEGORÍA 18 -->
+    <div class="category"><h3>CATEGORÍA 18: PROTOTIPADO Y VALIDACIÓN (Preguntas 97 - 101)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">97.</span> ¿Qué flujos son prioritarios para prototipar?</div><div class="answer">El flujo de detección de obstáculos (ultrasonido + alerta) y la interfaz de configuración de la app.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">98.</span> ¿Quién debe participar en la validación de prototipos?</div><div class="answer">Usuarios finales (personas con discapacidad visual), oftalmólogos y terapeutas ocupacionales.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">99.</span> ¿Con qué frecuencia se deben presentar los prototipos?</div><div class="answer">Cada 2-3 semanas, para iterar rápidamente.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">100.</span> ¿Qué herramientas se prefieren para prototipar?</div><div class="answer">Para hardware, impresión 3D y placas de desarrollo; para software, maquetas interactivas en Figma.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">101.</span> ¿Qué nivel de detalle debe tener el prototipo?</div><div class="answer">Baja fidelidad inicial para flujos, y alta fidelidad (con componentes reales) en etapas avanzadas.</div></div>
+
+    <!-- CATEGORÍA 19 -->
+    <div class="category"><h3>CATEGORÍA 19: ESTRATEGIA DE PRUEBAS (Preguntas 102 - 110)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">102.</span> ¿Qué casos de uso son prioritarios para pruebas?</div><div class="answer">Detección de obstáculos a diferentes distancias, reconocimiento de objetos en condiciones de luz variable, y respuesta a botones.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">103.</span> ¿Cómo se definirán los criterios de aceptación?</div><div class="answer">Serán medibles (ej. "El sistema detecta un objeto a 1 m con una precisión de ± 2 cm en el 95% de los casos").</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">104.</span> ¿Quién ejecutará las pruebas?</div><div class="answer">El equipo de desarrollo, con la supervisión de ingenieros biomédicos y pruebas de usuarios reales.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">105.</span> ¿Se requieren pruebas en entornos reales?</div><div class="answer">Sí, pruebas de campo en calles, parques, y centros comerciales.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">106.</span> ¿Qué tipo de pruebas de seguridad se realizarán?</div><div class="answer">Pruebas de penetración en la app y análisis de vulnerabilidades del firmware.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">107.</span> ¿Cómo se gestionarán los defectos?</div><div class="answer">Mediante un sistema de tickets (Jira), con priorización según severidad.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">108.</span> ¿Se necesita un entorno de pruebas separado?</div><div class="answer">Sí, un entorno de pruebas con dispositivos de desarrollo y simulación de condiciones.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">109.</span> ¿Qué datos de prueba se necesitan?</div><div class="answer">Grabaciones de ultrasonido y vídeos de escenarios reales para simular el entorno.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">110.</span> ¿Cuál es el proceso de validación final (UAT)?</div><div class="answer">Un grupo de 10 usuarios finales probará el dispositivo durante una semana y completará un cuestionario de satisfacción.</div></div>
+
+    <!-- CATEGORÍA 20 -->
+    <div class="category"><h3>CATEGORÍA 20: PRIORIZACIÓN, TRAZABILIDAD Y GESTIÓN DE CAMBIOS (Preguntas 111 - 115)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">111.</span> ¿Cómo se priorizarán los requisitos?</div><div class="answer">Usando la escala MoSCoW: Must have (detección de obstáculos), Should have (reconocimiento de objetos), Could have (OCR), Won't have (reconocimiento facial).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">112.</span> ¿Quién tiene la autoridad final para priorizar?</div><div class="answer">El comité directivo del proyecto, con representantes del Ministerio de Salud y los hospitales.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">113.</span> ¿Cómo se gestionarán los cambios en los requisitos?</div><div class="answer">A través de un comité de control de cambios, con evaluación de impacto en costo y plazo.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">114.</span> ¿Se requiere una matriz de trazabilidad?</div><div class="answer">Sí, para vincular cada requisito con su diseño, implementación y pruebas.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">115.</span> ¿Cómo se comunicarán los cambios?</div><div class="answer">Mediante actas de reunión y correos electrónicos, con un resumen semanal.</div></div>
+
+    <!-- CATEGORÍA 21 -->
+    <div class="category"><h3>CATEGORÍA 21: CRITERIOS DE ACEPTACIÓN Y CIERRE DEL PROYECTO (Preguntas 116 - 120)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">116.</span> ¿Cuáles son los criterios para considerar el software "terminado"?</div><div class="answer">Cuando el dispositivo supere todas las pruebas de laboratorio y campo, obtenga la certificación INVIMA, y haya sido probado con éxito por 10 usuarios durante 1 mes.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">117.</span> ¿Qué entregables se esperan?</div><div class="answer">Código fuente, planos del hardware, manuales de usuario y técnico, informes de pruebas, y certificados de conformidad.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">118.</span> ¿Cómo se realizará la transferencia de conocimiento?</div><div class="answer">Mediante talleres prácticos con el personal de las EPS y hospitales, y documentación detallada.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">119.</span> ¿Cuál es el proceso de firma de conformidad?</div><div class="answer">Después de un período de operación piloto de 30 días sin incidentes críticos, se firma un acta de conformidad.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">120.</span> ¿Qué sucede después del lanzamiento?</div><div class="answer">Se brindará soporte técnico y se recogerán sugerencias para mejoras en futuras versiones.</div></div>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">2.3. CARACTERISTICAS DE LOS USUARIOS <span class="red">(Funciones de la persona en el proceso)</span></h5>
+    <p><span class="red">(Descripción de cada rol dentro del sistema SAVUC)</span></p>
+    <table>
+        <tr><th>ROL</th><th>DESCRIPCIÓN</th><th>CONOCIMIENTO TÉCNICO</th><th>CONOCIMIENTO DE LA DISCAPACIDAD</th></tr>
+        <tr><td><strong>Usuario final</strong></td><td>Persona con discapacidad visual que utiliza el dispositivo</td><td>Bajo</td><td>Alto (vivencia propia)</td></tr>
+        <tr><td><strong>Profesional de salud</strong></td><td>Oftalmólogo o terapeuta ocupacional que prescribe y ajusta el dispositivo</td><td>Medio</td><td>Alto</td></tr>
+        <tr><td><strong>Técnico de soporte</strong></td><td>Ingeniero o técnico encargado del mantenimiento y reparación</td><td>Alto</td><td>Medio</td></tr>
+        <tr><td><strong>Administrador EPS/Hospital</strong></td><td>Gestiona el inventario, asignaciones y reportes</td><td>Medio</td><td>Bajo</td></tr>
+    </table>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">2.4. RESTRICCIONES</h5>
+    <p><span class="red">(Limitaciones técnicas, legales, presupuestarias, de plazo y seguridad)</span></p>
+    <table>
+        <tr><th style="width:25%;">RESTRICCIÓN</th><th>DETALLE</th></tr>
+        <tr><td><strong>Técnicas</strong></td><td>- Microcontrolador ESP32-S3, memoria RAM ≤ 512 KB, flash ≤ 16 MB.<br>- Batería con autonomía ≥ 8 horas.<br>- Peso total ≤ 80 g.<br>- Sensores de ultrasonido con rango 0.2 - 4 m, precisión ± 2 cm.<br>- Cámara VGA (640x480) con FOV ≥ 60°.<br>- Conectividad BLE 5.0 y Wi-Fi.</td></tr>
+        <tr><td><strong>Legales / Normativas</strong></td><td>- Certificación INVIMA (Colombia) como dispositivo médico Clase IIa.<br>- Cumplimiento IEC 60601-1 (seguridad eléctrica), IEC 62304 (software médico), ISO 14971 (gestión de riesgos).<br>- Cumplimiento de Ley 1581 de Protección de Datos.</td></tr>
+        <tr><td><strong>Presupuestarias</strong></td><td>- Presupuesto de desarrollo: $200.000 USD.<br>- Costo unitario en producción: < $150 USD.</td></tr>
+        <tr><td><strong>De plazos</strong></td><td>- Prototipo funcional: 6 meses.<br>- Pruebas clínicas: 3 meses.<br>- Certificación y producción piloto: 3 meses.<br>- Lanzamiento: 12 meses.</td></tr>
+        <tr><td><strong>De seguridad</strong></td><td>- Cifrado AES-256 para datos en reposo, TLS 1.3 para transmisión.<br>- Autenticación en la app y emparejamiento seguro.<br>- Registro de logs inmutable para auditoría.</td></tr>
+        <tr><td><strong>De idioma</strong></td><td>- Sistema en español (interfaz de voz y textos).<br>- Preparado para inglés en futuras versiones.</td></tr>
+        <tr><td><strong>De interoperabilidad</strong></td><td>- Integración con app móvil (Android/iOS) vía BLE.<br>- Actualizaciones OTA vía Wi-Fi.<br>- Opcional: conexión a servicios en la nube.</td></tr>
+    </table>
+    <hr>
+
+    <!-- ==================== 3. REQUISITOS ESPECIFICOS ==================== -->
+    <h2>3. REQUISITOS ESPECIFICOS</h2>
+    <p><span class="red">(Requisitos funcionales y no funcionales del SAVUC)</span></p>
+    <h5 style="font-size:15px; color:#1a3c6e;">3.1. REQUISITOS DEL SISTEMA</h5>
+    <table>
+        <tr><th style="width:10%;">ID</th><th style="width:25%;">REQUISITO</th><th style="width:65%;">DESCRIPCIÓN</th></tr>
+        <tr><td>RS-01</td><td>Plataforma embebida</td><td>El software debe ejecutarse en un microcontrolador ESP32-S3 con FreeRTOS.</td></tr>
+        <tr><td>RS-02</td><td>Adquisición de sensores</td><td>El sistema debe leer los sensores de ultrasonido (izquierdo y derecho) y la cámara de forma simultánea.</td></tr>
+        <tr><td>RS-03</td><td>Procesamiento en tiempo real</td><td>El sistema debe procesar los datos con una latencia total < 100 ms.</td></tr>
+        <tr><td>RS-04</td><td>Almacenamiento local</td><td>El sistema debe contar con al menos 16 MB de flash para firmware y logs.</td></tr>
+        <tr><td>RS-05</td><td>Comunicación Bluetooth</td><td>El sistema debe soportar BLE 5.0 para comunicación con la app móvil.</td></tr>
+        <tr><td>RS-06</td><td>Actualización OTA</td><td>El sistema debe permitir la actualización del firmware vía Wi-Fi.</td></tr>
+        <tr><td>RS-07</td><td>Gestión de energía</td><td>El sistema debe tener modos de funcionamiento (activo, sleep, apagado) y monitoreo de batería.</td></tr>
+        <tr><td>RS-08</td><td>Auditoría de eventos</td><td>El sistema debe registrar logs de eventos (detecciones, errores, caídas) en memoria no volátil.</td></tr>
+        <tr><td>RS-09</td><td>Seguridad</td><td>El sistema debe implementar cifrado AES-256 para datos almacenados y TLS para comunicaciones.</td></tr>
+        <tr><td>RS-10</td><td>Escalabilidad</td><td>El software debe ser modular para permitir la adición de nuevos sensores o algoritmos.</td></tr>
+    </table>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">3.2. REQUISITOS FUNCIONALES</h5>
+    <p>Priorización: <strong>ALTA</strong> (indispensable), <strong>MEDIA</strong> (deseable), <strong>BAJA</strong> (futura).</p>
+    <h4 style="font-size:15px; color:#1a3c6e;">3.2.1. MÓDULO DE DETECCIÓN Y ULTRASONIDO</h4>
+    <table>
+        <tr><th style="width:8%;">ID</th><th style="width:30%;">REQUISITO</th><th style="width:47%;">DESCRIPCIÓN</th><th style="width:15%;">PRIORIDAD</th></tr>
+        <tr><td>RF-001</td><td>Medición de distancia</td><td>El sistema debe medir la distancia a obstáculos en el rango 0.2-4 m con precisión ± 2 cm.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-002</td><td>Frecuencia de muestreo</td><td>El sistema debe muestrear los sensores de ultrasonido a 10 Hz como mínimo.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-003</td><td>Detección de obstáculos en movimiento</td><td>El sistema debe detectar obstáculos en movimiento (personas, vehículos) con actualización continua.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-004</td><td>Indicación de dirección</td><td>El sistema debe indicar si el obstáculo está a la izquierda, derecha o centro mediante tonos o voz.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-005</td><td>Alerta de proximidad</td><td>El sistema debe generar una alerta cuando un obstáculo esté a menos de 1.5 m (distancia configurable).</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-006</td><td>Modo de contingencia por fallo</td><td>Si un sensor falla, el sistema debe operar con el otro sensor y alertar al usuario.</td><td><strong>ALTA</strong></td></tr>
+    </table>
+
+    <h4 style="font-size:15px; color:#1a3c6e;">3.2.2. MÓDULO DE CÁMARA Y VISIÓN</h4>
+    <table>
+        <tr><th style="width:8%;">ID</th><th style="width:30%;">REQUISITO</th><th style="width:47%;">DESCRIPCIÓN</th><th style="width:15%;">PRIORIDAD</th></tr>
+        <tr><td>RF-007</td><td>Captura de imágenes</td><td>El sistema debe capturar imágenes a una resolución mínima de VGA (640x480) a 5 fps.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-008</td><td>Reconocimiento de objetos</td><td>El sistema debe reconocer objetos comunes (personas, vehículos, paredes, escaleras) mediante IA embebida.</td><td><strong>MEDIA</strong></td></tr>
+        <tr><td>RF-009</td><td>Reconocimiento de texto (OCR)</td><td>El sistema debe leer texto en imágenes y convertirlo a voz (español).</td><td><strong>MEDIA</strong></td></tr>
+        <tr><td>RF-010</td><td>Adaptación a iluminación</td><td>El sistema debe ajustar automáticamente la exposición de la cámara para condiciones de luz variable.</td><td><strong>ALTA</strong></td></tr>
+    </table>
+
+    <h4 style="font-size:15px; color:#1a3c6e;">3.2.3. MÓDULO DE FUSIÓN Y ALERTAS</h4>
+    <table>
+        <tr><th style="width:8%;">ID</th><th style="width:30%;">REQUISITO</th><th style="width:47%;">DESCRIPCIÓN</th><th style="width:15%;">PRIORIDAD</th></tr>
+        <tr><td>RF-011</td><td>Fusión de datos</td><td>El sistema debe combinar la información de ultrasonido y cámara para generar un mapa de obstáculos.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-012</td><td>Generación de alertas auditivas</td><td>El sistema debe generar tonos de frecuencia variable según la distancia y dirección del obstáculo.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-013</td><td>Vibración háptica</td><td>El sistema debe activar una vibración de intensidad creciente cuando el obstáculo esté a menos de 0.5 m.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-014</td><td>Mensajes de voz</td><td>El sistema debe emitir mensajes de voz (text-to-speech) para indicar tipo de objeto y distancia.</td><td><strong>MEDIA</strong></td></tr>
+        <tr><td>RF-015</td><td>Configuración de umbrales</td><td>El usuario debe poder ajustar la distancia de alerta y el volumen mediante la app móvil.</td><td><strong>ALTA</strong></td></tr>
+    </table>
+
+    <h4 style="font-size:15px; color:#1a3c6e;">3.2.4. MÓDULO DE COMUNICACIÓN Y APP</h4>
+    <table>
+        <tr><th style="width:8%;">ID</th><th style="width:30%;">REQUISITO</th><th style="width:47%;">DESCRIPCIÓN</th><th style="width:15%;">PRIORIDAD</th></tr>
+        <tr><td>RF-016</td><td>Emparejamiento BLE</td><td>El sistema debe emparejarse con la app móvil mediante BLE de forma segura.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-017</td><td>Envío de eventos</td><td>El sistema debe transmitir eventos (detecciones, errores) a la app para su visualización.</td><td><strong>MEDIA</strong></td></tr>
+        <tr><td>RF-018</td><td>Actualización OTA</td><td>El sistema debe recibir y aplicar actualizaciones de firmware vía Wi-Fi.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-019</td><td>Botón de pánico</td><td>El sistema debe incluir un botón que, al presionarlo, envíe una alerta a contacto de emergencia vía app.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-020</td><td>Reporte de uso</td><td>La app debe mostrar estadísticas de uso (horas, alertas, batería) al usuario y al profesional.</td><td><strong>MEDIA</strong></td></tr>
+    </table>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">3.3. REQUISITOS NO FUNCIONALES</h5>
+    <table>
+        <tr><th style="width:8%;">ID</th><th style="width:18%;">CATEGORÍA</th><th style="width:44%;">DESCRIPCIÓN</th><th style="width:15%;">PRIORIDAD</th><th style="width:15%;">MÉTODO DE VERIFICACIÓN</th></tr>
+        <tr><td>RNF-001</td><td>Rendimiento</td><td>Latencia de detección < 100 ms.</td><td><strong>ALTA</strong></td><td>Medición con osciloscopio</td></tr>
+        <tr><td>RNF-002</td><td>Rendimiento</td><td>Falsos positivos < 5%, falsos negativos < 2%.</td><td><strong>ALTA</strong></td><td>Pruebas en entornos controlados</td></tr>
+        <tr><td>RNF-003</td><td>Rendimiento</td><td>Tiempo de arranque < 10 s.</td><td><strong>ALTA</strong></td><td>Cronometraje</td></tr>
+        <tr><td>RNF-004</td><td>Consumo</td><td>Corriente en activo < 200 mA (3.7 V), en sleep < 10 mA.</td><td><strong>ALTA</strong></td><td>Medición con multímetro</td></tr>
+        <tr><td>RNF-005</td><td>Fiabilidad</td><td>MTBF > 5000 horas.</td><td><strong>ALTA</strong></td><td>Pruebas de envejecimiento</td></tr>
+        <tr><td>RNF-006</td><td>Seguridad</td><td>Cumplimiento IEC 60601-1 (seguridad eléctrica).</td><td><strong>ALTA</strong></td><td>Certificación por laboratorio</td></tr>
+        <tr><td>RNF-007</td><td>Seguridad</td><td>Cifrado AES-256 para datos, TLS 1.3 para comunicaciones.</td><td><strong>ALTA</strong></td><td>Auditoría de seguridad</td></tr>
+        <tr><td>RNF-008</td><td>Usabilidad</td><td>Un usuario nuevo debe poder usar el dispositivo después de 1 hora de entrenamiento.</td><td><strong>ALTA</strong></td><td>Pruebas de usabilidad</td></tr>
+        <tr><td>RNF-009</td><td>Usabilidad</td><td>Botones físicos deben ser fácilmente identificables al tacto.</td><td><strong>ALTA</strong></td><td>Evaluación ergonómica</td></tr>
+        <tr><td>RNF-010</td><td>Mantenibilidad</td><td>Código modular y documentado (estándar MISRA C).</td><td><strong>MEDIA</strong></td><td>Revisión de código</td></tr>
+        <tr><td>RNF-011</td><td>Portabilidad</td><td>El software debe ser portable a otros microcontroladores con cambios mínimos.</td><td><strong>BAJA</strong></td><td>Análisis de dependencias</td></tr>
+        <tr><td>RNF-012</td><td>Privacidad</td><td>Los datos de imagen no se almacenan ni transmiten sin consentimiento explícito.</td><td><strong>ALTA</strong></td><td>Auditoría de privacidad</td></tr>
+        <tr><td>RNF-013</td><td>Resistencia ambiental</td><td>Grado IP54 (salpicaduras), temperatura 0-40°C, humedad 10-90%.</td><td><strong>ALTA</strong></td><td>Pruebas ambientales</td></tr>
+        <tr><td>RNF-014</td><td>Peso</td><td>El dispositivo completo debe pesar menos de 80 g.</td><td><strong>ALTA</strong></td><td>Pesaje</td></tr>
+        <tr><td>RNF-015</td><td>Autonomía</td><td>Batería debe durar al menos 8 horas de uso continuo.</td><td><strong>ALTA</strong></td><td>Pruebas de descarga</td></tr>
+    </table>
+    <hr>
+
+    <!-- ==================== 4. VALIDACIÓN DE REQUISITOS ==================== -->
+    <h2>4. VALIDACIÓN DE REQUISITOS</h2>
+    <h5 style="font-size:15px; color:#1a3c6e;">4.1. CONSTRUCCIÓN DE PROTOTIPOS</h5>
+    <p><span class="red">(Prototipos prioritarios para validar con usuarios y profesionales)</span></p>
+    <p><strong>Prototipos sugeridos para validación inicial:</strong></p>
+    <ol>
+        <li><strong>Prototipo de detección de obstáculos:</strong> Simulación de las alertas sonoras y hápticas basadas en lecturas de ultrasonido, utilizando un microcontrolador y sensores básicos. Validar la precisión y tiempo de reacción.</li>
+        <li><strong>Prototipo de la aplicación móvil:</strong> Maqueta interactiva de la app (Figma) para configurar parámetros y visualizar estadísticas. Validar la usabilidad con profesionales de la salud.</li>
+        <li><strong>Prototipo de reconocimiento de objetos:</strong> Demostración de algoritmos de visión por computador en un ordenador (OpenCV) para mostrar la capacidad de detección de objetos y texto.</li>
+        <li><strong>Prototipo de integración:</strong> Integración de los módulos de ultrasonido, cámara y procesamiento en una placa de desarrollo (ESP32) para probar la fusión de datos en tiempo real.</li>
+    </ol>
+    <p><strong>Criterios de validación de prototipos:</strong></p>
+    <ul>
+        <li>Participación de usuarios finales (personas con discapacidad visual) y profesionales (oftalmólogos, terapeutas).</li>
+        <li>Frecuencia: presentación cada 3 semanas para iterar.</li>
+        <li>Herramientas: Para hardware, placas de desarrollo e impresión 3D; para software, Figma y simulaciones.</li>
+        <li>Nivel de detalle: Comenzar con prototipos funcionales básicos y aumentar la fidelidad en etapas avanzadas.</li>
+        <li>Aprobación formal por parte del comité del proyecto antes de pasar a producción.</li>
+    </ul>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">4.2. FORMATO DE CASO DE PRUEBA</h5>
+    <p><span class="red">(Ejemplos de casos de prueba para requisitos críticos)</span></p>
+    <p><strong>CASO DE PRUEBA CP-001</strong></p>
+    <table>
+        <tr><th style="width:25%;">OBJETIVO DEL CASO DE PRUEBA</th><td>Validar que el sistema detecta correctamente un obstáculo a 1 metro de distancia mediante ultrasonido y genera la alerta auditiva.</td></tr>
+        <tr><th>IDENTIFICADOR</th><td>CP-001</td></tr>
+        <tr><th>REQUISITO FUNCIONAL</th><td>RF-001, RF-005</td></tr>
+        <tr><th>PRECONDICIONES</th><td>Dispositivo encendido, sensores calibrados, batería > 50%. El obstáculo es una pared plana.</td></tr>
+        <tr><th>PASOS</th><td>1. Colocar el dispositivo a 1 metro de la pared.<br>2. Encender el sistema.<br>3. Esperar 2 segundos.<br>4. Registrar la alerta sonora emitida.</td></tr>
+        <tr><th>RESULTADOS ESPERADOS</th><td>1. El sistema emite un tono continuo (frecuencia media) indicando obstáculo a 1 m.<br>2. El sistema muestra la distancia en el log (si se monitorea).<br>3. La alerta se mantiene mientras el obstáculo esté presente.</td></tr>
+    </table>
+
+    <p><strong>CASO DE PRUEBA CP-002</strong></p>
+    <table>
+        <tr><th style="width:25%;">OBJETIVO DEL CASO DE PRUEBA</th><td>Validar que el sistema reconoce un objeto (persona) mediante la cámara y genera un mensaje de voz.</td></tr>
+        <tr><th>IDENTIFICADOR</th><td>CP-002</td></tr>
+        <tr><th>REQUISITO FUNCIONAL</th><td>RF-008, RF-014</td></tr>
+        <tr><th>PRECONDICIONES</th><td>Dispositivo encendido, cámara operativa, modelo de IA cargado. Una persona se encuentra a 2 metros frente al dispositivo.</td></tr>
+        <tr><th>PASOS</th><td>1. Apuntar la cámara hacia la persona.<br>2. Activar el modo de reconocimiento.<br>3. Esperar 5 segundos.<br>4. Escuchar el mensaje de voz.</td></tr>
+        <tr><th>RESULTADOS ESPERADOS</th><td>1. El sistema emite el mensaje "Persona detectada a 2 metros".<br>2. El mensaje se repite si la persona se mueve dentro del campo de visión.</td></tr>
+    </table>
+
+    <p><strong>CASO DE PRUEBA CP-003</strong></p>
+    <table>
+        <tr><th style="width:25%;">OBJETIVO DEL CASO DE PRUEBA</th><td>Validar la respuesta del sistema ante un fallo del sensor de ultrasonido izquierdo.</td></tr>
+        <tr><th>IDENTIFICADOR</th><td>CP-003</td></tr>
+        <tr><th>REQUISITO FUNCIONAL</th><td>RF-006</td></tr>
+        <tr><th>PRECONDICIONES</th><td>Dispositivo encendido, sensor izquierdo desconectado deliberadamente.</td></tr>
+        <tr><th>PASOS</th><td>1. Encender el sistema con el sensor izquierdo desconectado.<br>2. Esperar a que el sistema se inicialice.<br>3. Observar la alerta y el comportamiento.</td></tr>
+        <tr><th>RESULTADOS ESPERADOS</th><td>1. El sistema emite un tono de error (tres pitidos cortos).<br>2. El sistema opera solo con el sensor derecho y la cámara.<br>3. En la app se registra el error.</td></tr>
+    </table>
+    <hr>
+
+    <!-- ==================== 5. CRONOGRAMA DE ACTIVIDADES ==================== -->
+    <h2>5. CRONOGRAMA DE ACTIVIDADES DEL PROYECTO</h2>
+    <p><span class="red">(Planificación temporal del desarrollo del SAVUC)</span></p>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">5.1. DIAGRAMA DE GANTT INTERACTIVO</h5>
+    <p><strong>Instrucciones:</strong> Haz clic en cada celda de color para marcarla como completada (✓). El progreso se actualizará automáticamente. Los hitos (★) muestran el progreso de su fase.</p>
+    <p><strong>Leyenda de colores:</strong>
+        <span style="background-color:#2c5282; color:white; padding:2px 6px; border-radius:3px;">Inicio</span>
+        <span style="background-color:#e67e22; color:white; padding:2px 6px; border-radius:3px;">Análisis</span>
+        <span style="background-color:#2980b9; color:white; padding:2px 6px; border-radius:3px;">Diseño</span>
+        <span style="background-color:#8e44ad; color:white; padding:2px 6px; border-radius:3px;">Desarrollo</span>
+        <span style="background-color:#27ae60; color:white; padding:2px 6px; border-radius:3px;">Pruebas</span>
+        <span style="background-color:#c0392b; color:white; padding:2px 6px; border-radius:3px;">Cierre</span>
+        <span style="background-color:#f1c40f; padding:2px 6px; border-radius:3px;">★ Hito</span>
+    </p>
+    <p><strong>Prioridades:</strong>
+        <span class="prio-alta">Alta</span> ·
+        <span class="prio-media">Media</span> ·
+        <span class="prio-baja">Baja</span>
+    </p>
+
+    <div class="gantt-wrapper">
+        <table class="gantt-table" id="ganttTable">
+            <thead>
+                <tr class="month-row">
+                    <th rowspan="2" style="min-width:180px; background-color:#2c3e50; color:white;">ACTIVIDAD</th>
+                    <th rowspan="2" style="min-width:100px; background-color:#2c3e50; color:white;">PROGRESO</th>
+                    <th colspan="4" style="background-color:#2c3e50; color:white;">JUL</th>
+                    <th colspan="4" style="background-color:#2c3e50; color:white;">AGO</th>
+                    <th colspan="4" style="background-color:#2c3e50; color:white;">SEP</th>
+                    <th colspan="4" style="background-color:#2c3e50; color:white;">OCT</th>
+                    <th colspan="4" style="background-color:#2c3e50; color:white;">NOV</th>
+                    <th colspan="4" style="background-color:#2c3e50; color:white;">DIC</th>
+                    <th rowspan="2" style="min-width:70px; background-color:#2c3e50; color:white;">PRIORIDAD</th>
+                </tr>
+                <tr class="week-row">
+                    <th>1</th><th>2</th><th>3</th><th>4</th>
+                    <th>5</th><th>6</th><th>7</th><th>8</th>
+                    <th>9</th><th>10</th><th>11</th><th>12</th>
+                    <th>13</th><th>14</th><th>15</th><th>16</th>
+                    <th>17</th><th>18</th><th>19</th><th>20</th>
+                    <th>21</th><th>22</th><th>23</th><th>24</th>
+                </tr>
+            </thead>
+            <tbody id="gantt-body"></tbody>
+        </table>
+    </div>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">5.2. DESCRIPCIÓN DE ACTIVIDADES</h5>
+    <p>A continuación se detalla cada una de las actividades del cronograma:</p>
+    <table style="font-size:13px;">
+        <tr><th style="width:8%;">ID</th><th style="width:22%;">ACTIVIDAD</th><th style="width:38%;">DESCRIPCIÓN</th><th style="width:20%;">RESPONSABLE</th><th style="width:12%;">PRIORIDAD</th></tr>
+        <tr><td>1.1</td><td>Kickoff y definición de alcance</td><td>Reunión inicial con stakeholders para establecer objetivos, alcance y cronograma.</td><td>PM / Cliente</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>1.2</td><td>Estudio de viabilidad técnica</td><td>Evaluación de componentes (sensores, cámara, microcontrolador) y costos.</td><td>Ing. Hardware</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>1.3</td><td>Planificación detallada</td><td>Elaboración del plan de proyecto con hitos y recursos.</td><td>PM</td><td><span class="prio-media">Media</span></td></tr>
+        <tr><td>2.1</td><td>Diseño mecánico y ergonómico</td><td>Diseño de las gafas en CAD, considerando peso y ajuste.</td><td>Diseñador Industrial</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>2.2</td><td>Selección de componentes electrónicos</td><td>Selección de sensores, cámara, batería, y microcontrolador.</td><td>Ing. Hardware</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>2.3</td><td>Diseño de PCB</td><td>Diseño del circuito impreso para la integración de todos los componentes.</td><td>Ing. Hardware</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>3.1</td><td>Desarrollo de firmware base</td><td>Implementación del sistema operativo RTOS y controladores para sensores y cámara.</td><td>Desarrollador Embebido</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>3.2</td><td>Algoritmos de ultrasonido</td><td>Implementación de la medición de distancia y filtrado de señales.</td><td>Desarrollador Embebido</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>3.3</td><td>Algoritmos de visión por computador</td><td>Implementación de detección de objetos y OCR utilizando TensorFlow Lite.</td><td>Desarrollador IA</td><td><span class="prio-media">Media</span></td></tr>
+        <tr><td>3.4</td><td>Fusión de datos y lógica de alertas</td><td>Integración de datos de ultrasonido y cámara para generar alertas.</td><td>Desarrollador Embebido</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>3.5</td><td>Desarrollo de la app móvil (Android/iOS)</td><td>Desarrollo de la aplicación para configuración, monitoreo y actualizaciones.</td><td>Desarrollador Móvil</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>3.6</td><td>Integración BLE y OTA</td><td>Implementación de la comunicación Bluetooth y actualización de firmware.</td><td>Desarrollador Embebido</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>4.1</td><td>Pruebas de laboratorio</td><td>Pruebas de precisión, latencia, consumo y ambientales en laboratorio.</td><td>QA / Ing. Biomédico</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>4.2</td><td>Pruebas de usabilidad con usuarios</td><td>Pruebas con personas con discapacidad visual para evaluar la experiencia.</td><td>Terapeuta Ocupacional</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>4.3</td><td>Pruebas de campo</td><td>Pruebas en entornos reales (calles, centros comerciales) con usuarios voluntarios.</td><td>QA / Usuarios</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>4.4</td><td>Pruebas de seguridad y certificación</td><td>Pruebas de cumplimiento normativo (IEC 60601, etc.) y preparación para certificación.</td><td>Ing. Biomédico</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>5.1</td><td>Certificación INVIMA y FDA</td><td>Gestión de la documentación y pruebas ante los entes reguladores.</td><td>Regulatory Affairs</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>5.2</td><td>Producción piloto (100 unidades)</td><td>Fabricación de las primeras 100 unidades para distribución piloto.</td><td>Producción</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>5.3</td><td>Despliegue y capacitación</td><td>Distribución a EPS y hospitales, y capacitación del personal.</td><td>PM / Capacitador</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>5.4</td><td>Monitoreo y soporte post-lanzamiento</td><td>Recolección de datos de uso y soporte a usuarios durante 3 meses.</td><td>Soporte</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>H1</td><td>★ Hito 1: Proyecto aprobado</td><td>Acta de inicio firmada y recursos asignados.</td><td>Comité</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>H2</td><td>★ Hito 2: Diseño completado</td><td>Planos y PCB listos para fabricación.</td><td>Ing. Hardware</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>H3</td><td>★ Hito 3: Prototipo funcional</td><td>Primer prototipo integrado funcionando con todas las funcionalidades básicas.</td><td>Equipo de desarrollo</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>H4</td><td>★ Hito 4: Pruebas de campo exitosas</td><td>Validación con usuarios finales con resultados positivos.</td><td>QA / Usuarios</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>H5</td><td>★ Hito 5: Certificación obtenida</td><td>Dispositivo certificado por INVIMA y FDA.</td><td>Regulatory Affairs</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>H6</td><td>★ Hito 6: Lanzamiento oficial</td><td>Producción piloto distribuida y en uso.</td><td>PM</td><td><span class="prio-alta">Alta</span></td></tr>
+    </table>
+    <hr>
+
+    <!-- ==================== CIERRE ==================== -->
+    <h5 style="font-size:16px; color:#1a3c6e;">DOCUMENTO VALIDADO POR LAS PARTES EN FECHA:</h5>
+    <table>
+        <thead><tr style="background-color:#feffff;"><th style="width:50%; font-weight:bold;">POR CLIENTE</th><th style="width:50%; font-weight:bold;">DESARROLLADOR</th></tr></thead>
+        <tbody><tr><td>FECHA: _________________</td><td>FECHA: _________________</td></tr><tr><td>NOMBRE DEL ENCARGADO: _________________</td><td>NOMBRE DEL ENCARGADO: _________________</td></tr></tbody>
+    </table>
+
+    <div class="footer">
+        <p><b>ESPECIFICACIÓN DE REQUISITOS DE SOFTWARE</b></p>
+        <p>Proyecto: Sistema de Asistencia Visual por Ultrasonido y Cámara (SAVUC)</p>
+        <p>Total de preguntas: 120 | Documento generado en formato IEEE 830</p>
+    </div>
+
+</div>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+    (function() {
+        const phaseActivities = {
+            'H1': ['1.1','1.2','1.3'],
+            'H2': ['2.1','2.2','2.3'],
+            'H3': ['3.1','3.2','3.3','3.4','3.5','3.6'],
+            'H4': ['4.1','4.2','4.3','4.4'],
+            'H5': ['5.1','5.2','5.3','5.4'],
+            'H6': ['5.5','5.6','5.7','5.8']
+        };
+
+        const activities = [
+            { id: '1.1', name: '1.1 Kickoff y definición de alcance', weeks: [0,1], color: '#2c5282', priority: 'Alta' },
+            { id: '1.2', name: '1.2 Estudio de viabilidad técnica', weeks: [1,2], color: '#2c5282', priority: 'Alta' },
+            { id: '1.3', name: '1.3 Planificación detallada', weeks: [2], color: '#2c5282', priority: 'Media' },
+            { id: 'H1', name: '★ Hito 1: Proyecto aprobado', weeks: [], color: '#f1c40f', priority: 'Alta', isHito: true },
+            { id: '2.1', name: '2.1 Diseño mecánico y ergonómico', weeks: [3,4], color: '#e67e22', priority: 'Alta' },
+            { id: '2.2', name: '2.2 Selección de componentes electrónicos', weeks: [4,5], color: '#e67e22', priority: 'Alta' },
+            { id: '2.3', name: '2.3 Diseño de PCB', weeks: [5,6], color: '#e67e22', priority: 'Alta' },
+            { id: 'H2', name: '★ Hito 2: Diseño completado', weeks: [], color: '#f1c40f', priority: 'Alta', isHito: true },
+            { id: '3.1', name: '3.1 Desarrollo de firmware base', weeks: [7,8,9], color: '#2980b9', priority: 'Alta' },
+            { id: '3.2', name: '3.2 Algoritmos de ultrasonido', weeks: [8,9], color: '#2980b9', priority: 'Alta' },
+            { id: '3.3', name: '3.3 Algoritmos de visión por computador', weeks: [9,10,11], color: '#2980b9', priority: 'Media' },
+            { id: '3.4', name: '3.4 Fusión de datos y lógica de alertas', weeks: [10,11,12], color: '#2980b9', priority: 'Alta' },
+            { id: '3.5', name: '3.5 Desarrollo de la app móvil', weeks: [11,12,13], color: '#2980b9', priority: 'Alta' },
+            { id: '3.6', name: '3.6 Integración BLE y OTA', weeks: [12,13,14], color: '#2980b9', priority: 'Alta' },
+            { id: 'H3', name: '★ Hito 3: Prototipo funcional', weeks: [], color: '#f1c40f', priority: 'Alta', isHito: true },
+            { id: '4.1', name: '4.1 Pruebas de laboratorio', weeks: [14,15], color: '#8e44ad', priority: 'Alta' },
+            { id: '4.2', name: '4.2 Pruebas de usabilidad con usuarios', weeks: [15,16], color: '#8e44ad', priority: 'Alta' },
+            { id: '4.3', name: '4.3 Pruebas de campo', weeks: [16,17], color: '#8e44ad', priority: 'Alta' },
+            { id: '4.4', name: '4.4 Pruebas de seguridad y certificación', weeks: [17,18], color: '#8e44ad', priority: 'Alta' },
+            { id: 'H4', name: '★ Hito 4: Pruebas de campo exitosas', weeks: [], color: '#f1c40f', priority: 'Alta', isHito: true },
+            { id: '5.1', name: '5.1 Certificación INVIMA y FDA', weeks: [18,19,20], color: '#27ae60', priority: 'Alta' },
+            { id: '5.2', name: '5.2 Producción piloto (100 unidades)', weeks: [19,20,21], color: '#27ae60', priority: 'Alta' },
+            { id: '5.3', name: '5.3 Despliegue y capacitación', weeks: [21,22], color: '#27ae60', priority: 'Alta' },
+            { id: '5.4', name: '5.4 Monitoreo y soporte post-lanzamiento', weeks: [22,23], color: '#27ae60', priority: 'Alta' },
+            { id: 'H5', name: '★ Hito 5: Certificación obtenida', weeks: [], color: '#f1c40f', priority: 'Alta', isHito: true },
+            { id: 'H6', name: '★ Hito 6: Lanzamiento oficial', weeks: [], color: '#f1c40f', priority: 'Alta', isHito: true }
+        ];
+
+        const totalWeeks = 24;
+
+        function getHitoProgress(hitoId) {
+            const actIds = phaseActivities[hitoId] || [];
+            if (actIds.length === 0) return 0;
+            let completed = 0;
+            actIds.forEach(id => {
+                const key = 'gantt_' + id;
+                const saved = localStorage.getItem(key);
+                if (saved) {
+                    const state = JSON.parse(saved);
+                    if (Array.isArray(state) && state.length > 0) {
+                        const completadas = state.filter(v => v === true).length;
+                        if (completadas === state.length) completed++;
+                    }
+                }
+            });
+            return Math.round((completed / actIds.length) * 100);
+        }
+
+        function renderGantt() {
+            const tbody = document.getElementById('gantt-body');
+            tbody.innerHTML = '';
+            activities.forEach((act) => {
+                const tr = document.createElement('tr');
+                const tdName = document.createElement('td');
+                tdName.textContent = act.name;
+                tdName.style.textAlign = 'left';
+                tdName.style.padding = '4px 8px';
+                tdName.style.whiteSpace = 'nowrap';
+                if (act.isHito) { tdName.style.fontWeight = 'bold'; tdName.style.backgroundColor = '#fef9e7'; }
+                tr.appendChild(tdName);
+
+                const tdProgress = document.createElement('td');
+                tdProgress.style.textAlign = 'center';
+                tdProgress.style.padding = '4px 8px';
+                let pct = 0;
+                if (act.isHito) { pct = getHitoProgress(act.id); } else {
+                    const totalCells = act.weeks.length;
+                    let completed = 0;
+                    if (totalCells > 0) {
+                        const key = 'gantt_' + act.id;
+                        const saved = localStorage.getItem(key);
+                        if (saved) { const state = JSON.parse(saved); completed = state.filter(v => v === true).length; }
+                    }
+                    pct = totalCells > 0 ? Math.round((completed / totalCells) * 100) : 0;
+                }
+                const progressDiv = document.createElement('div');
+                progressDiv.className = 'progress-container';
+                const barDiv = document.createElement('div');
+                barDiv.className = 'progress-bar';
+                const fillDiv = document.createElement('div');
+                fillDiv.className = 'progress-fill';
+                fillDiv.style.width = pct + '%';
+                barDiv.appendChild(fillDiv);
+                progressDiv.appendChild(barDiv);
+                const textSpan = document.createElement('span');
+                textSpan.className = 'progress-text';
+                textSpan.textContent = pct + '%';
+                progressDiv.appendChild(textSpan);
+                tdProgress.appendChild(progressDiv);
+                tr.appendChild(tdProgress);
+
+                for (let w = 0; w < totalWeeks; w++) {
+                    const td = document.createElement('td');
+                    td.style.padding = '2px';
+                    td.style.textAlign = 'center';
+                    td.style.verticalAlign = 'middle';
+                    const isActive = act.weeks.includes(w);
+                    if (isActive && !act.isHito) {
+                        const cellDiv = document.createElement('div');
+                        cellDiv.className = 'gantt-cell';
+                        cellDiv.style.backgroundColor = act.color;
+                        cellDiv.style.width = '100%';
+                        cellDiv.style.height = '24px';
+                        cellDiv.style.borderRadius = '3px';
+                        cellDiv.style.cursor = 'pointer';
+                        cellDiv.style.lineHeight = '24px';
+                        cellDiv.style.fontSize = '12px';
+                        const key = 'gantt_' + act.id;
+                        let state = [];
+                        const saved = localStorage.getItem(key);
+                        if (saved) { state = JSON.parse(saved); } else { state = new Array(act.weeks.length).fill(false); localStorage.setItem(key, JSON.stringify(state)); }
+                        const weekIndex = act.weeks.indexOf(w);
+                        if (weekIndex !== -1 && state[weekIndex] === true) { cellDiv.classList.add('completed'); cellDiv.textContent = '✓'; }
+                        cellDiv.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            const key = 'gantt_' + act.id;
+                            let state = JSON.parse(localStorage.getItem(key) || '[]');
+                            if (state.length === 0) state = new Array(act.weeks.length).fill(false);
+                            const idx = act.weeks.indexOf(w);
+                            if (idx !== -1) { state[idx] = !state[idx]; localStorage.setItem(key, JSON.stringify(state)); renderGantt(); }
+                        });
+                        td.appendChild(cellDiv);
+                    }
+                    tr.appendChild(td);
+                }
+
+                const tdPrio = document.createElement('td');
+                tdPrio.style.textAlign = 'center';
+                tdPrio.style.verticalAlign = 'middle';
+                if (act.isHito) { tdPrio.textContent = '★'; tdPrio.style.fontSize = '18px'; tdPrio.style.color = '#f1c40f'; } else {
+                    const span = document.createElement('span');
+                    if (act.priority === 'Alta') { span.className = 'prio-alta'; span.textContent = 'Alta'; }
+                    else if (act.priority === 'Media') { span.className = 'prio-media'; span.textContent = 'Media'; }
+                    else { span.className = 'prio-baja'; span.textContent = 'Baja'; }
+                    tdPrio.appendChild(span);
+                }
+                tr.appendChild(tdPrio);
+                tbody.appendChild(tr);
+            });
+        }
+        renderGantt();
+    })();
+</script>
+
+</body>
+</html>

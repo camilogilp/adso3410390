@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESPECIFICACIÓN DE REQUISITOS - VISIÓN CLARA S.A.S.</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #f4f6f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            background: white;
+            padding: 40px 50px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.12);
+        }
+        h1 { text-align: center; font-size: 28px; color: #1a3c6e; border-bottom: 3px solid #1a3c6e; padding-bottom: 15px; margin-bottom: 30px; }
+        h2 { font-size: 22px; color: #1a3c6e; margin-top: 40px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; }
+        h3 { font-size: 18px; color: #2c5282; margin-top: 30px; margin-bottom: 15px; }
+        h4 { font-size: 16px; color: #1a3c6e; margin-top: 25px; margin-bottom: 10px; }
+        .category { background: #eef3f9; padding: 12px 20px; border-radius: 6px; margin: 30px 0 15px 0; border-left: 5px solid #2c5282; }
+        .category h3 { margin: 0; color: #1a3c6e; font-size: 18px; }
+        .qa-item { margin: 16px 0; padding: 14px 20px; background: #fafbfc; border-radius: 6px; border-left: 4px solid #4a90d9; }
+        .qa-item .question { font-weight: bold; color: #1a3c6e; font-size: 15px; }
+        .qa-item .answer { margin-top: 6px; color: #333; padding-left: 10px; font-size: 14.5px; }
+        .qa-item .answer strong { color: #2c5282; }
+        .qa-number { font-weight: bold; color: #4a90d9; margin-right: 5px; }
+        hr { border: none; border-top: 2px solid #e0e0e0; margin: 30px 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 15px 0; }
+        th, td { border: 1px solid #7f7f7f; padding: 8px 12px; text-align: left; vertical-align: middle; }
+        th { background-color: #b1b1b1; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        .footer { text-align: center; margin-top: 40px; font-size: 12px; color: #888; border-top: 1px solid #ddd; padding-top: 20px; }
+        .center { text-align: center; }
+        .red { color: #c0392b; }
+        .bold { font-weight: bold; }
+        .mt-60 { margin-top: 60px; }
+        .mt-6rem { margin-top: 6rem; }
+
+        .prio-alta { background-color: #e74c3c; color: white; padding: 2px 8px; border-radius: 4px; font-weight: bold; display: inline-block; font-size: 12px; }
+        .prio-media { background-color: #f1c40f; color: #000000; padding: 2px 8px; border-radius: 4px; font-weight: bold; display: inline-block; font-size: 12px; }
+        .prio-baja { background-color: #2ecc71; color: white; padding: 2px 8px; border-radius: 4px; font-weight: bold; display: inline-block; font-size: 12px; }
+
+        .gantt-wrapper {
+            height: 550px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            position: relative;
+        }
+        .gantt-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        .gantt-table th, .gantt-table td {
+            border: 1px solid #7f7f7f;
+            padding: 4px 2px;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+        .gantt-table thead th {
+            position: sticky;
+            top: 0;
+            background-color: #b1b1b1;
+            z-index: 20;
+        }
+        .gantt-table .month-row th {
+            background-color: #2c3e50;
+            color: white;
+            font-weight: bold;
+        }
+        .gantt-table .week-row th {
+            background-color: #ecf0f1;
+            font-weight: normal;
+            color: #333;
+        }
+        .gantt-table thead tr:first-child th { top: 0; }
+        .gantt-table thead tr:last-child th { top: 28px; }
+
+        .gantt-cell {
+            display: inline-block;
+            width: 100%;
+            height: 24px;
+            border-radius: 3px;
+            line-height: 24px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s, opacity 0.2s;
+        }
+        .gantt-cell.completed {
+            background-color: #27ae60 !important;
+            color: white;
+        }
+        .gantt-cell.completed::after { content: "✓"; font-weight: bold; }
+        .gantt-cell:not(.completed) { opacity: 0.75; }
+        .gantt-cell:not(.completed):hover { opacity: 1; box-shadow: 0 0 5px rgba(0,0,0,0.3); }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            justify-content: center;
+        }
+        .progress-bar {
+            width: 60px;
+            height: 12px;
+            background-color: #ecf0f1;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #2ecc71;
+            border-radius: 6px;
+            transition: width 0.3s;
+            width: 0%;
+        }
+        .progress-text {
+            font-size: 11px;
+            font-weight: bold;
+            min-width: 32px;
+            text-align: right;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px; }
+            .qa-item { padding: 12px 15px; }
+            table { font-size: 12px; }
+            th, td { padding: 5px 8px; }
+            .progress-bar { width: 40px; }
+            .gantt-wrapper { height: 400px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ==================== PORTADA ==================== -->
+    <div class="mt-60"></div>
+    <p class="center bold" style="font-size:20px;">ESPECIFICACIÓN DE REQUISITOS DE SOFTWARE</p>
+    <div class="mt-60"></div>
+    <p class="center bold" style="font-size:18px;">PROYECTO: SISTEMA CONTABLE Y DE FACTURACIÓN ELECTRÓNICA</p>
+    <div class="mt-60"></div>
+    <p class="center bold" style="font-size:17px;">VISIÓN CLARA S.A.S.</p>
+    <div class="mt-60"></div>
+    <p class="center bold">FICHA 3410390</p>
+    <div class="mt-60"></div>
+    <p class="center bold">JUAN CAMILO GIL PEREZ</p>
+    <div class="mt-60"></div>
+    <p class="center bold">JOSE GERMAN ESTRADA</p>
+    <div class="mt-60"></div>
+    <p class="center bold">SERVICIO NACIONAL DE APRENDIZAJE (SENA)</p>
+    <div class="mt-60"></div>
+    <p class="center bold">CENTRO DE PROCESOS INDUSTRIALES Y CONSTRUCCION</p>
+    <div class="mt-60"></div>
+    <p class="center bold">TECNOLOGIA EN ANALISIS Y DESARROLLO DE SOFTWARE</p>
+    <div class="mt-60"></div>
+    <p class="center bold">ETAPA DE ELICITACION DE REQUISITOS</p>
+    <div class="mt-60"></div>
+    <p class="center bold">FORMACION PRESENCIAL JORNADA DE LA MAÑANA</p>
+    <div class="mt-60"></div>
+    <p class="center bold">20 DE JUNIO 2026</p>
+    <div class="mt-6rem"></div>
+    <hr>
+
+    <!-- ==================== FICHA DEL DOCUMENTO ==================== -->
+    <h5 style="font-size:16px; color:#1a3c6e;">FICHA DEL DOCUMENTO</h5>
+    <table>
+        <thead><tr style="background-color:#b1b1b1;"><th style="width:33.33%;">FECHA</th><th style="width:33.33%;">REVISIÓN(ES)</th><th style="width:33.33%;">AUTOR(ES)</th></tr></thead>
+        <tbody><tr><td>20/06/2026</td><td>V1.0</td><td>Juan Camilo Gil Perez</td></tr><tr><td></td><td></td><td></td></tr></tbody>
+    </table>
+
+    <h5 style="font-size:16px; color:#1a3c6e;">DOCUMENTO VALIDADO POR LAS PARTES EN FECHA:</h5>
+    <table>
+        <thead><tr style="background-color:#feffff;"><th style="width:50%; font-weight:bold;">POR CLIENTE</th><th style="width:50%; font-weight:bold;">DESARROLLADOR</th></tr></thead>
+        <tbody><tr><td>FECHA: _________________</td><td>FECHA: _________________</td></tr><tr><td>NOMBRE DEL ENCARGADO: _________________</td><td>NOMBRE DEL ENCARGADO: _________________</td></tr></tbody>
+    </table>
+    <hr>
+
+    <!-- ==================== CONTENIDO ==================== -->
+    <h5 style="font-size:16px; color:#1a3c6e;">CONTENIDO</h5>
+    <ol>
+        <li>INTRODUCCION
+            <ol>
+                <li>OBJETIVO GENERAL</li>
+                <li>OBJETIVOS ESPECIFICOS</li>
+                <li>PROPOSITO</li>
+                <li>ALCANCE</li>
+                <li>PERSONAL INVOLUCRADO</li>
+                <li>DEFINICIONES, ACRONIMOS Y ABREVIATURAS</li>
+                <li>REFERENCIAS</li>
+                <li>RESUMEN</li>
+            </ol>
+        </li>
+        <li>DESCRIPCION GENERAL
+            <ol>
+                <li>PERSPECTIVA DEL PRODUCTO</li>
+                <li>FUNCIONALIDADES DEL PRODUCTO</li>
+                <li>CARACTERISTICAS DE LOS USUARIOS</li>
+                <li>RESTRICCIONES</li>
+            </ol>
+        </li>
+        <li>REQUISITOS ESPECIFICOS
+            <ol>
+                <li>REQUISITOS DEL SISTEMA</li>
+                <li>REQUISITOS FUNCIONALES</li>
+                <li>REQUISITOS NO FUNCIONALES</li>
+            </ol>
+        </li>
+        <li>VALIDACIÓN DE REQUISITOS
+            <ol>
+                <li>CONSTRUCCIÓN DE PROTOTIPOS</li>
+                <li>FORMATO DE CASO DE PRUEBA</li>
+            </ol>
+        </li>
+        <li>CRONOGRAMA DE ACTIVIDADES DEL PROYECTO
+            <ol>
+                <li>DIAGRAMA DE GANTT INTERACTIVO</li>
+                <li>DESCRIPCIÓN DE ACTIVIDADES</li>
+            </ol>
+        </li>
+    </ol>
+    <hr>
+
+    <!-- ==================== 1. INTRODUCCION ==================== -->
+    <h2>1. INTRODUCCION</h2>
+    <p><span class="red">(Contexto del negocio y necesidad de digitalización contable)</span></p>
+    <p>Visión Clara S.A.S. es una empresa especializada en la comercialización y adaptación de gafas y dispositivos de asistencia visual para personas con discapacidad visual (baja visión y ceguera). La empresa opera con 3 sedes físicas (Centro, Norte, Occidente) y una tienda virtual, atendiendo tanto a EPS y hospitales (B2B) como a clientes finales.</p>
+    <p>Actualmente, la empresa enfrenta desafíos significativos en su gestión contable y financiera: el proceso de contabilización manual toma 3 días completos a la semana, el cierre mensual se extiende hasta 15 días, y la facturación electrónica presenta devoluciones de la DIAN que afectan el flujo de caja. Se requiere un sistema que automatice estos procesos y proporcione visibilidad en tiempo real de la rentabilidad por producto y por sede.</p>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">1.1. OBJETIVO GENERAL</h5>
+    <p>Desarrollar e implementar un sistema contable y de facturación electrónica integral que permita a Visión Clara S.A.S. automatizar sus procesos financieros, cumplir con los requisitos de la DIAN, y proporcionar información en tiempo real para la toma de decisiones estratégicas, mejorando la eficiencia operativa y la rentabilidad del negocio.</p>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">1.2. OBJETIVOS ESPECIFICOS</h5>
+    <ul>
+        <li>Automatizar el proceso de facturación electrónica con envío en tiempo real a la DIAN y obtención del CUFE.</li>
+        <li>Centralizar la gestión contable incluyendo cuentas por cobrar, cuentas por pagar, inventarios, nómina y activos fijos.</li>
+        <li>Implementar un sistema de inventarios con costeo promedio ponderado y control de costos por producto/lote.</li>
+        <li>Generar reportes financieros estándar (Balance, P&G, Flujo de Caja) y personalizables por sede y línea de producto.</li>
+        <li>Reducir el tiempo de cierre contable mensual de 15 días a 3 días.</li>
+        <li>Garantizar el cumplimiento de las obligaciones tributarias (IVA, Renta, Retención, Exógena) mediante generación automática de archivos planos.</li>
+    </ul>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">1.3. PROPOSITO</h5>
+    <p><span class="red">(Que finalidad tiene el software frente a la necesidad de automatización contable y cumplimiento DIAN)</span></p>
+    <p>El software tiene como propósito principal ser la herramienta de gestión financiera diaria de Visión Clara S.A.S., permitiendo al equipo contable pasar de una contabilidad "reactiva" a una "predictiva" en tiempo real. La finalidad es eliminar el tipeo manual de asientos, reducir errores en la liquidación de retenciones e IVA, y proporcionar dashboards actualizados que permitan tomar decisiones informadas sobre compras de inventario y gestión de cartera.</p>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">1.4. ALCANCE</h5>
+    <p><span class="red">(Que tan lejos va a abarcar el software en las funciones de la empresa)</span></p>
+    <p>El sistema abarcará las siguientes áreas de la empresa:</p>
+    <ul>
+        <li><strong>Facturación Electrónica:</strong> Generación de Factura Electrónica de Venta, Nota Débito, Nota Crédito y Documento Soporte, con envío en tiempo real a la DIAN.</li>
+        <li><strong>Gestión Contable:</strong> Plan de cuentas (PUC) personalizable, asientos contables automáticos y manuales, cierre mensual y anual.</li>
+        <li><strong>Cuentas por Cobrar y Pagar:</strong> Gestión de cartera con antigüedad de saldos, gestión de proveedores con retenciones y fechas de pago.</li>
+        <li><strong>Inventarios:</strong> Control de inventarios con costeo promedio ponderado, ajustes por mermas y toma física.</li>
+        <li><strong>Activos Fijos:</strong> Gestión de equipos de diagnóstico visual (lentómetros, autorrefractores) con depreciación por línea recta.</li>
+        <li><strong>Nómina:</strong> Registro de nómina integrada con seguridad social.</li>
+        <li><strong>Reportes y Analytics:</strong> Dashboard con KPIs en tiempo real, reportes financieros estándar y personalizables, exportación a Excel, PDF y CSV.</li>
+        <li><strong>Declaraciones Tributarias:</strong> Generación de archivos planos para IVA (formato 300), Renta, Retención (formato 350) y Exógena.</li>
+    </ul>
+    <p><strong>Quedan fuera del alcance en esta primera fase:</strong></p>
+    <ul>
+        <li>Gestión de citas médicas e historial clínico (permanece en CRM/Salesforce).</li>
+        <li>Gestión de bodegas logísticas avanzadas (solo costo y saldo).</li>
+        <li>Facturación de nómina electrónica (se evalúa para fase 2).</li>
+        <li>Módulo de RRHH completo.</li>
+    </ul>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">1.5. PERSONAL Involucrado <span class="red">(Puede ser 1 persona o varias)</span></h5>
+    <table><tr><th style="width:40%;">NOMBRE</th><td>Carlos Mendoza</td></tr><tr><th>ROL</th><td>Gerente General / Propietario</td></tr><tr><th>PROFESION</th><td>Administrador de Empresas</td></tr><tr><th>RESPONSABILIDADES</th><td>Aprobación de presupuestos, decisiones estratégicas, validación del sistema</td></tr><tr><th>INFORMACION DE CONTACTO</th><td>Celular: [Número] - Correo: [Correo]</td></tr><tr><th>APRUEBA</th><td><span class="red">(Aprueba entrevista y seguimiento) SI/NO</span></td></tr></table>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">1.6. DEFINICIONES, ACRONIMOS Y ABREVIATURAS</h5>
+    <table>
+        <tr><th style="width:30%;">TÉRMINO</th><th>DEFINICIÓN / SIGNIFICADO</th></tr>
+        <tr><td>CUFE</td><td>Código Único de Factura Electrónica - Identificador de la DIAN</td></tr>
+        <tr><td>CUDE</td><td>Código Único de Documento Electrónico - Identificador de notas y otros documentos</td></tr>
+        <tr><td>PUC</td><td>Plan Único de Cuentas - Estándar contable colombiano</td></tr>
+        <tr><td>RUT</td><td>Registro Único Tributario - Identificación fiscal en Colombia</td></tr>
+        <tr><td>EPS</td><td>Entidad Promotora de Salud - Clientes institucionales</td></tr>
+        <tr><td>B2B</td><td>Business to Business - Ventas a empresas</td></tr>
+        <tr><td>KPI</td><td>Indicador Clave de Rendimiento - Métrica para evaluar el éxito</td></tr>
+        <tr><td>MUISCA</td><td>Portal de la DIAN para declaraciones tributarias</td></tr>
+        <tr><td>FOSYGA</td><td>Fondo de Solidaridad y Garantía - Entidad estatal de salud</td></tr>
+        <tr><td>WAF</td><td>Web Application Firewall - Firewall a nivel de aplicación</td></tr>
+        <tr><td>RTO</td><td>Recovery Time Objective - Tiempo objetivo de recuperación</td></tr>
+        <tr><td>RPO</td><td>Recovery Point Objective - Punto objetivo de recuperación</td></tr>
+    </table>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">1.7. REFERENCIAS</h5>
+    <p><span class="red">(Ejemplos de software que resuelven necesidades similares)</span></p>
+    <ul>
+        <li><strong>SIIGO Nube:</strong> Software contable actualmente utilizado, se desea reemplazar por su rigidez y lentitud en integración DIAN.</li>
+        <li><strong>Odoo:</strong> Evaluado por su flexibilidad técnica, pero rechazado por requerir demasiados módulos externos para el tratamiento fiscal colombiano.</li>
+        <li><strong>Nómina Software:</strong> Evaluado pero considerado muy básico para el control de inventarios de alto valor.</li>
+    </ul>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">1.8. RESUMEN</h5>
+    <p><span class="red">(Breve resumen del uso del software, para que se usa)</span></p>
+    <p>El sistema contable y de facturación electrónica es una herramienta integral diseñada para automatizar la gestión financiera de Visión Clara S.A.S. El software permite generar y enviar facturas electrónicas a la DIAN, gestionar inventarios de productos de alto valor, administrar cartera y proveedores, y generar reportes financieros en tiempo real. Su uso diario está previsto para el equipo contable, el gerente general y personal administrativo, facilitando el cumplimiento tributario y la toma de decisiones estratégicas basadas en datos.</p>
+    <hr>
+
+    <!-- ==================== 2. DESCRIPCION GENERAL ==================== -->
+    <h2>2. DESCRIPCION GENERAL</h2>
+    <p><span class="red">(A groso modo la descripción del software en funcionamiento, como se usa o funciona)</span></p>
+    <p>El software contable y de facturación electrónica es una aplicación web (SaaS) alojada en la nube (AWS o Azure), accesible desde navegador y con versión móvil (PWA) para aprobaciones rápidas. La plataforma está diseñada con una interfaz simple y rápida para el día a día, con la capacidad de desplegar opciones avanzadas para la contabilidad.</p>
+    <p>El sistema se organiza en módulos interconectados: Facturación Electrónica, Contabilidad, Cartera, Proveedores, Inventarios, Activos Fijos, Nómina, Reportes y Declaraciones Tributarias. Cada módulo permite el registro, consulta, edición y generación de reportes con trazabilidad completa de todas las acciones realizadas.</p>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">2.1. PERSPECTIVA DEL PRODUCTO</h5>
+    <p><span class="red">(Como se describe la interfaz del sistema, con las que él usuario interactúa con el sistema y cuales usuarios lo usarán y bajo que roles)</span></p>
+    <p>El sistema se presenta como una aplicación web (responsive) con las siguientes características de interfaz:</p>
+    <ul>
+        <li><strong>Dashboard ejecutivo:</strong> Resumen con KPIs en tiempo real: Ventas del día, Cartera vencida &gt; 60 días, Margen bruto del mes, Efectivo disponible, Facturas pendientes por enviar a DIAN.</li>
+        <li><strong>Menú de navegación:</strong> Acceso rápido a todos los módulos (Facturación, Contabilidad, Cartera, Proveedores, Inventarios, Activos Fijos, Reportes, Declaraciones).</li>
+        <li><strong>Buscador inteligente:</strong> Búsqueda rápida por cliente, factura, producto o asiento contable.</li>
+        <li><strong>Formularios optimizados:</strong> Registro de facturas con validación de reglas (precios, IVA) y envío en tiempo real a la DIAN.</li>
+        <li><strong>Reportes y gráficos:</strong> Visualización de datos en tablas, gráficos de barras, líneas y dashboards interactivos.</li>
+        <li><strong>Alertas y notificaciones:</strong> Sistema de alarmas automáticas para facturas rechazadas, vencimiento de certificado digital, inventario bajo, etc.</li>
+    </ul>
+    <p><strong>Usuarios y roles:</strong></p>
+    <table>
+        <tr><th>ROL</th><th>DESCRIPCIÓN</th><th>NIVEL DE ACCESO</th></tr>
+        <tr><td><strong>Administrador</strong></td><td>Gerente General y Gerente Financiero</td><td>Acceso total a todos los módulos y configuraciones</td></tr>
+        <tr><td><strong>Contador Jefe</strong></td><td>Profesional contable con alto conocimiento</td><td>Todo contable y reportes, parametrización de impuestos</td></tr>
+        <tr><td><strong>Auxiliar Contable</strong></td><td>Personal de facturación, cartera y proveedores</td><td>Solo facturación, cartera y proveedores, sin modificar parametrizaciones</td></tr>
+        <tr><td><strong>Auditor Externo</strong></td><td>Contador externo para revisiones</td><td>Solo lectura de todos los módulos</td></tr>
+    </table>
+
+    <!-- ==================== 2.2. FUNCIONALIDADES DEL PRODUCTO (ELICITACIÓN) ==================== -->
+    <h5 style="font-size:15px; color:#1a3c6e;">2.2. FUNCIONALIDADES DEL PRODUCTO <span class="red">(Elicitación)</span></h5>
+    <p><span class="red">(Enumerar todas y cada una de las funciones que pide el cliente para su proyecto de automatización)</span></p>
+    <p><strong>PREGUNTAS PARA EL PROCESO DE ELICITACIÓN DE REQUISITOS</strong></p>
+
+    <!-- CATEGORÍA 1 -->
+    <div class="category"><h3>CATEGORÍA 1: CONTEXTO GENERAL DEL PROYECTO (Preguntas #1 - #4)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#1.</span> ¿Cuál es la principal necesidad o problema que este software contable debe resolver para la organización?</div><div class="answer">La principal necesidad es controlar el costo de ventas y la rentabilidad por producto/lote (los lentes y dispositivos electrónicos de asistencia son costosos) y automatizar la facturación electrónica para evitar devoluciones de la DIAN que nos frenen el flujo de caja con las EPS.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#2.</span> ¿Qué espera lograr la empresa con la implementación de este nuevo sistema contable?</div><div class="answer">Esperamos pasar de una contabilidad "reactiva" (donde nos damos cuenta de pérdidas al mes siguiente) a una contabilidad "predictiva" en tiempo real, que nos permita saber al instante el margen de cada orden de venta y el estado de cobranza a las clínicas.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#3.</span> ¿Cómo impactará este software en los procesos contables y financieros actuales?</div><div class="answer">Impactará eliminando por completo el tipeo manual de asientos contables (que actualmente nos toma 3 días completos a la semana) y reduciendo los errores humanos en la liquidación de retenciones e IVA, agilizando el cierre mensual de 15 días a solo 3 días.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#4.</span> ¿Quién será el usuario final principal del sistema y qué beneficio directo obtendrá?</div><div class="answer">El usuario final principal será mi Contador Líder (Jefe de Finanzas). Su beneficio directo será dejar de ser un "digitador" para convertirse en un analista de datos, teniendo dashboards actualizados para tomar decisiones de compra de inventario.</div></div>
+
+    <!-- CATEGORÍA 2 -->
+    <div class="category"><h3>CATEGORÍA 2: ALCANCE Y PROCESOS CONTABLES (Preguntas #5 - #8)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#5.</span> ¿Qué procesos contables específicos (ej. cuentas por pagar, cobrar, inventarios, nómina) debe cubrir el software?</div><div class="answer">Debe cubrir: Cuentas por Pagar (a proveedores internacionales de lentes), Cuentas por Cobrar (especialmente cartera a EPS con +60 días), Inventarios (con costeo promedio ponderado), Nómina (integrada con seguridad social) y Activos Fijos (equipos de diagnóstico visual).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#6.</span> ¿Qué procesos contables actuales no serán cubiertos por el sistema en esta primera fase?</div><div class="answer">En esta primera fase, NO cubriremos la gestión de citas médicas ni el historial clínico de los pacientes (eso queda en nuestro CRM médico). Tampoco cubriremos la gestión de bodegas logísticas avanzadas (solo el costo y saldo).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#7.</span> ¿El software interactuará con otros sistemas existentes en la empresa (ej. ERP, CRM, sistemas de nómina)?</div><div class="answer">Sí, debe interactuar con nuestro CRM/Sistema de Ventas (actualmente Salesforce) para traer los datos del cliente (NIT, razón social) y con la plataforma de la DIAN (obligatorio). También debe exportar archivos planos para nuestra entidad bancaria (conciliación).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">#8.</span> ¿Se requiere que el software maneje múltiples empresas o sedes?</div><div class="answer">Sí. Debemos manejar 3 sedes (Centro, Norte, Occidente) y también manejar la opción de "empresa virtual" para la tienda e-commerce, pero el NIT es único. Necesito ver los resultados por sede (centro de costo).</div></div>
+
+    <!-- CATEGORÍA 3 -->
+    <div class="category"><h3>CATEGORÍA 3: DEFINICIONES, ACRÓNIMOS Y REFERENCIAS (Preguntas 9 - 15)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">9.</span> ¿Qué términos contables específicos de la empresa o del sector se deben considerar?</div><div class="answer">Términos clave: "Lente oftálmico terminado" (producto final), "Ayuda óptica" (no invasiva), "Facturación a EPS" (régimen especial de facturación), y "Devolución en garantía" (créditos por lentes defectuosos).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">10.</span> ¿Qué acrónimos de la DIAN (ej. CUFE, CUDE, XML, firma electrónica) son de uso común y deben ser manejados por el sistema?</div><div class="answer">Manejamos CUFE, CUDE, XML, ZIP, Firma Electrónica (Token), Resolución de Facturación y el RUT. Debemos gestionar las notas de crédito y débito electrónicas.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">11.</span> ¿Existe un glosario interno de términos que debamos usar como referencia?</div><div class="answer">No tenemos un glosario formal impreso; lo definiremos juntos durante el relevamiento para estandarizar el lenguaje entre el equipo de desarrollo y mi equipo contable.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">12.</span> ¿Cómo se refieren internamente a los diferentes tipos de documentos (factura, nota crédito, débito, etc.)?</div><div class="answer">Actualmente llamamos a las facturas B2B "Facturas EPS", a las de venta directa "Factura de mostrador", y a las notas crédito "NC - Devolución de paciente". Queremos mantener esta nomenclatura.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">13.</span> ¿Qué software contable se utiliza actualmente y qué aspectos del mismo se desean conservar o mejorar?</div><div class="answer">Usamos actualmente SIIGO Nube, pero es muy rígido para la parametrización de centros de costo y su integración con la DIAN es lenta; queremos mejorar la velocidad de envío y la capacidad de personalizar reportes de rentabilidad por tipo de gafa.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">14.</span> ¿Qué software de la competencia han evaluado y por qué no cumplen con sus expectativas?</div><div class="answer">Evaluamos Odoo (nos pareció excelente técnicamente, pero la implementación contable en Colombia con la DIAN requieren demasiados módulos externos y no nos daba confianza la estabilidad) y Nómina Software (muy básico para el control de inventarios de alto valor). No cumplieron porque ninguno ofrecía una solución integral "todo en uno" con el tratamiento fiscal colombiano nativo.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">15.</span> ¿Existen documentos, manuales o procedimientos internos que describan el flujo contable actual?</div><div class="answer">Sí, tenemos procedimientos internos en Excel donde describimos el "Flujo de la factura" y el "Cierre de caja diario". Se los entregaremos al equipo de desarrollo para que entiendan nuestros pasos actuales.</div></div>
+
+    <!-- CATEGORÍA 4 -->
+    <div class="category"><h3>CATEGORÍA 4: VISIÓN GENERAL Y CRONOGRAMA (Preguntas 16 - 20)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">16.</span> Si tuviera que describir el software en una sola frase, ¿cuál sería?</div><div class="answer">"El sistema financiero que nos da paz mental ante la DIAN y claridad absoluta de nuestra rentabilidad real por cada producto que vendemos."</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">17.</span> ¿Cuál es el "corazón" del negocio para este sistema?</div><div class="answer">El "corazón" del negocio para este sistema es el módulo de facturación electrónica y su contabilización automática, porque si la factura falla, no cobramos. En segundo lugar, el control de inventarios.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">18.</span> ¿Qué funcionalidad es crítica y debe funcionar perfectamente desde el primer día?</div><div class="answer">Funcionalidad crítica desde el día 1: La generación y envío de facturas electrónicas con su respectiva firma digital y obtención del CUFE. Si el software no factura, la empresa se detiene.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">19.</span> ¿Cuál es el cronograma esperado para la implementación y puesta en marcha del software?</div><div class="answer">Cronograma esperado: 4 a 5 meses para la versión funcional (con facturación e inventarios), y 1 mes adicional de pruebas paralelas (usando el sistema en paralelo con SIIGO). Puesta en marcha definitiva en 6 meses.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">20.</span> ¿Cuál es el presupuesto estimado para este proyecto?</div><div class="answer">Presupuesto estimado: $180.000.000 a $220.000.000 COP (incluyendo capacitaciones y el primer año de soporte y mantenimiento). No podemos exceder los $250M sin aprobación de la junta.</div></div>
+
+    <!-- CATEGORÍA 5 -->
+    <div class="category"><h3>CATEGORÍA 5: USUARIOS, ROLES E INTERFAZ (Preguntas 21 - 24)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">21.</span> Describa un día típico de trabajo para un contador usando este software. ¿Cuáles serían sus primeras acciones?</div><div class="answer">Un día típico: 8:00 a.m. revisar el dashboard de facturas rechazadas por la DIAN, validar las órdenes de venta pendientes de contabilizar, ejecutar el cierre de caja de las 3 sedes del día anterior, y a medio día revisar las cuentas por cobrar vencidas para llamar a las EPS.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">22.</span> ¿Qué roles de usuario existirán y qué nivel de acceso debe tener cada uno?</div><div class="answer">Roles: Administrador (yo y mi Gerente Financiero - acceso total), Contador Jefe (todo contable y reportes), Auxiliar Contable (solo facturación, cartera y proveedores, sin poder modificar parametrizaciones), Auditor Externo (solo lectura de todos los módulos).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">23.</span> ¿Cómo debería ser la interfaz de usuario: simple y rápida, o detallada y con muchas opciones?</div><div class="answer">Interfaz: Simple y rápida para el día a día (facturación y caja), pero con la posibilidad de desplegar opciones avanzadas para la contabilidad. Odio las interfaces recargadas; prefiero un diseño limpio tipo "command palette" o barra de búsqueda inteligente.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">24.</span> ¿El sistema debe estar disponible en dispositivos móviles o solo en computadores de escritorio?</div><div class="answer">Debe estar disponible principalmente en escritorio (web) para el contador, pero necesito una versión móvil (PWA o App) para que yo pueda aprobar órdenes de pago o revisar el saldo de caja desde cualquier lugar.</div></div>
+
+    <!-- CATEGORÍA 6 -->
+    <div class="category"><h3>CATEGORÍA 6: FUNCIONALIDADES PRINCIPALES DEL SOFTWARE (Preguntas 25 - 31)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">25.</span> Enumere las 5 funcionalidades más importantes que el software debe tener.</div><div class="answer">Top 5: (1) Facturación Electrónica DIAN (envío/aceptación), (2) Módulo de Inventarios con costo promedio y ajustes, (3) Cartera (Clientes) y Proveedores, (4) Generación de declaraciones (IVA, Renta, Retención), (5) Reportes financieros base (Balance, P&G).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">26.</span> ¿Cómo se manejará el ciclo de vida de una factura: desde su creación, envío a la DIAN, hasta su contabilización y pago?</div><div class="answer">Ciclo de vida de factura: Creación desde CRM/Manual -&gt; Validación de reglas (precios, IVA) -&gt; Firma y envío a DIAN en tiempo real -&gt; Recepción CUFE -&gt; Contabilización automática (asiento) -&gt; Estado "Por Cobrar" -&gt; Al recibir el pago, se aplica a la cartera.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">27.</span> ¿Se requiere un módulo de cartera (cuentas por cobrar) y otro de proveedores (cuentas por pagar)?</div><div class="answer">Sí, absolutamente obligatorios. El módulo de cartera debe tener gestión de cobranzas por antigüedad de saldos. El de proveedores debe gestionar las fechas de pago y las retenciones de ley.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">28.</span> ¿El sistema debe llevar un control de inventarios y su correspondiente costo?</div><div class="answer">Sí, es un requisito no negociable. Al ser gafas de alta tecnología (algunas superan los $2 millones), debo saber el costo unitario exacto al vender. Soporte para inventario físico (toma física) y ajustes por mermas.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">29.</span> ¿Se necesita un módulo para la gestión de activos fijos?</div><div class="answer">Sí, necesito un módulo sencillo para gestionar lentómetros, autorrefractores y computadores de diagnóstico (activos fijos), con depreciación por línea recta y su respectivo asiento mensual.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">30.</span> ¿Qué tipo de reportes financieros son indispensables (ej. Balance General, Estado de Resultados, Flujo de Caja)?</div><div class="answer">Indispensables: Balance General, Estado de Resultados (P&G), Flujo de Efectivo (método directo e indirecto), y un reporte de Rentabilidad por Sucursal.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">31.</span> ¿El software debe generar los archivos planos para las declaraciones tributarias (ej. IVA, Renta)?</div><div class="answer">Sí, absolutamente. El software debe generar los archivos planos de IVA (formato 300), Renta (personas jurídicas), Retención en la fuente (formato 350) y Exógena. No quiero hacerlos a mano en el MUISCA.</div></div>
+
+    <!-- CATEGORÍA 7 -->
+    <div class="category"><h3>CATEGORÍA 7: CARACTERÍSTICAS DE LOS USUARIOS Y SOPORTE (Preguntas 32 - 35)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">32.</span> ¿Qué nivel de conocimiento contable y tecnológico tienen los usuarios finales?</div><div class="answer">Mi equipo contable tiene alto conocimiento contable (son profesionales) pero nivel tecnológico intermedio; les cuesta adaptarse a cambios bruscos de interfaz, necesitan flujos de trabajo muy lógicos.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">33.</span> ¿Qué tipo de formación o capacitación necesitarán para usar el sistema eficazmente?</div><div class="answer">Necesitarán capacitación práctica (talleres hands-on) durante 2 semanas seguidas, simulando un mes de cierre completo. Prefiero videos tutoriales cortos (máx 5 min) integrados en el sistema para consultas rápidas.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">34.</span> ¿Con qué frecuencia y en qué horarios suelen trabajar los contadores en el sistema?</div><div class="answer">Trabajan en horario comercial (8 a.m. a 6 p.m.), pero durante los cierres mensuales (últimos 5 días del mes) pueden trabajar hasta las 9 p.m. El sistema debe permitir trabajo fuera de horario sin caídas.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">35.</span> ¿Existe un departamento de TI interno que pueda dar soporte de primer nivel?</div><div class="answer">Tenemos un equipo de TI interno de 3 personas, pero su enfoque es infraestructura y redes. Solo podrán dar soporte de primer nivel (reseteo de contraseñas, conectividad); el soporte técnico del software debe ser remoto por parte del desarrollador.</div></div>
+
+    <!-- CATEGORÍA 8 -->
+    <div class="category"><h3>CATEGORÍA 8: RESTRICCIONES TÉCNICAS, LEGALES Y PRESUPUESTARIAS (Preguntas 36 - 40)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">36.</span> ¿Qué restricciones técnicas existen?</div><div class="answer">Debe ser aplicación web (SaaS) alojada en la nube (AWS o Azure). No queremos servidores físicos. Debe funcionar en Chrome/Edge y ser responsive. La BD puede ser PostgreSQL o similar, pero no Oracle (demasiado costoso).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">37.</span> ¿Qué restricciones legales o normativas, además de las de la DIAN, debe cumplir el software?</div><div class="answer">Además de la DIAN, debe cumplir con la Ley de Protección de Datos (Habeas Data - Ley 1581) ya que manejamos datos de pacientes con condiciones de salud. También debe cumplir con la facturación electrónica de entidades estatales (si vendemos a FOSYGA).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">38.</span> ¿Qué restricciones presupuestarias o de plazo son innegociables?</div><div class="answer">Innegociable: Plazo máximo 6 meses para el GO LIVE. Presupuesto tope $250M. Si hay sobrecostos por cambios en la DIAN durante el desarrollo, se negociará como un ítem separado.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">39.</span> ¿Se debe cumplir con alguna política de seguridad de la información de la empresa?</div><div class="answer">Sí, debemos cumplir con la Política de Seguridad de la Información de la empresa, que exige cifrado de datos sensibles y registros de acceso (logs) por 5 años.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">40.</span> ¿El sistema debe ser multi-idioma o solo español?</div><div class="answer">Solo español para el sistema. La interfaz debe manejar los términos contables colombianos (ej. no "neto", sino "saldo").</div></div>
+
+    <!-- CATEGORÍA 9 -->
+    <div class="category"><h3>CATEGORÍA 9: REQUISITOS DEL SISTEMA (INFRAESTRUCTURA Y ARQUITECTURA) (Preguntas 41 - 45)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">41.</span> ¿Cuál es la plataforma objetivo para el sistema?</div><div class="answer">Plataforma web (cloud) con arquitectura moderna (microservicios o monolito modular bien estructurado).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">42.</span> ¿Con qué sistemas externos debe integrarse?</div><div class="answer">Integración con: DIAN (facturación y declaraciones), Bancos (descarga de extractos en formato estándar para conciliación), y Salesforce (vía API REST para traer clientes y pedidos).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">43.</span> ¿La integración con la DIAN será para facturación electrónica, declaraciones, o ambos?</div><div class="answer">La integración con DIAN será para Facturación Electrónica (envío de XML y recepción del CUFE) y para la generación de archivos de declaración tributaria. No necesitamos la facturación de nómina electrónica por ahora, pero sí debe estar preparado para el futuro.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">44.</span> ¿El sistema debe soportar un alto volumen de transacciones diarias? ¿Cuál es el volumen esperado?</div><div class="answer">Volumen esperado: 500 facturas/día en temporada baja, hasta 1.500 facturas/día en diciembre o campañas de salud visual. Debe responder bien con ese pico.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">45.</span> ¿Se requiere una arquitectura que permita escalar horizontalmente (añadir más servidores) en el futuro?</div><div class="answer">Sí, absolutamente. Si abrimos una cuarta sucursal o crece el e-commerce, debe poder escalar horizontalmente añadiendo más pods/servidores sin reescribir el núcleo.</div></div>
+
+    <!-- CATEGORÍA 10 -->
+    <div class="category"><h3>CATEGORÍA 10: MÓDULO DE FACTURACIÓN ELECTRÓNICA Y DIAN (Preguntas 46 - 58)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">46.</span> ¿El software debe generar facturas electrónicas de venta, notas débito, notas crédito y documentos soporte?</div><div class="answer">Sí. Debe generar Factura Electrónica de Venta, Nota Débito, Nota Crédito y Documento Soporte (para pagos a proveedores del exterior). Todos con sus respectivos CUDES.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">47.</span> ¿Cómo se manejará la numeración de facturas y demás documentos, cumpliendo con los requisitos de la DIAN?</div><div class="answer">La numeración debe ser autoincremental por resolución DIAN y el sistema debe permitir cargar las resoluciones de facturación (prefijo, rango numérico, vigencia). Debe controlar que no se salte ni repita números.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">48.</span> ¿Cómo será el flujo de validación y envío de un documento a la DIAN? ¿Se hará en tiempo real o por lotes?</div><div class="answer">Flujo: Validación previa en el sistema (reglas de negocio) -&gt; Firma con Token -&gt; Envío en tiempo real a DIAN (sincrónico). Solo en caso de contingencia, se enviará por lotes (asíncrono).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">49.</span> ¿Cómo se manejarán los errores en la validación de la DIAN (ej. rechazo de una factura por un campo incorrecto)?</div><div class="answer">Si la DIAN rechaza (ej. NIT inválido), el sistema debe bloquear la factura, mostrar claramente el error en la interfaz (en español claro) y permitir corregir el campo para reenviar, conservando el mismo número (si no ha sido contabilizado).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">50.</span> ¿El sistema debe permitir la anulación de una factura electrónica ya emitida? ¿Cuál es el proceso?</div><div class="answer">Sí. La anulación de una factura electrónica se hará mediante una Nota Crédito Electrónica, que deberá referenciar la factura original. El sistema debe generar el asiento contable de reversión automáticamente.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">51.</span> ¿Se debe gestionar el certificado de firma digital para la autenticación ante la DIAN?</div><div class="answer">Sí, el sistema debe gestionar el certificado de firma digital (.p12 o .pfx) configurando su fecha de expiración y alertando con 30 días de anticipación para renovarlo.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">52.</span> ¿Cómo se manejarán los diferentes tipos de identificación del cliente (NIT, cédula, etc.)?</div><div class="answer">Sí, debe soportar NIT, Cédula de Ciudadanía, Cédula de Extranjería, Pasaporte y NIT de empresas del exterior según la tabla de tipos de identificadores de la DIAN.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">53.</span> ¿El sistema debe soportar la facturación con diferentes monedas o solo en pesos colombianos?</div><div class="answer">Principalmente pesos colombianos (COP). No requerimos multi-moneda para la facturación, pero sí necesitamos registrar el valor en USD de las compras al exterior para la contabilidad de costos.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">54.</span> ¿Se requiere la generación de códigos CUFE y códigos QR en la representación gráfica de la factura?</div><div class="answer">Sí, es obligatorio. La representación gráfica (PDF) debe contener el Código QR que redirija a la consulta de la DIAN y el CUFE visible.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">55.</span> ¿Cómo se manejará la contingencia ante una caída del servicio de la DIAN?</div><div class="answer">El sistema debe tener un "modo contingencia" que permita habilitar la facturación sin conexión a la DIAN, guardando el XML en cola local, generando el número y el CUFE provisional, y cuando el servicio regrese, enviarlos automáticamente y solicitar el CUFE oficial. Debe reportar este estado.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">56.</span> ¿El sistema debe permitir la consulta del estado de un documento ante la DIAN?</div><div class="answer">Sí, el sistema debe consultar el estado del documento ante la DIAN (Aceptado, Rechazado, En Proceso) y actualizar el estado local mediante un botón o proceso programado.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">57.</span> ¿Se debe generar un reporte de los documentos enviados y su estado (aceptados, rechazados, en proceso)?</div><div class="answer">Sí, debe tener un reporte/dashboard de "Documentos Enviados" con filtros por fecha, estado y tipo de documento, y poder exportarlo a Excel para llevarlo a la DIAN si nos auditan.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">58.</span> ¿El sistema debe manejar los formatos de exógena (información de terceros) que solicita la DIAN?</div><div class="answer">Sí, necesario. Debe generar los archivos de Exógena (información de terceros - facturas y conceptos) en el formato que exige la DIAN anualmente (o mensual según el nuevo modelo).</div></div>
+
+    <!-- CATEGORÍA 11 -->
+    <div class="category"><h3>CATEGORÍA 11: MÓDULO CONTABLE Y PLAN DE CUENTAS (Preguntas 59 - 70)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">59.</span> ¿El sistema debe manejar un plan de cuentas estándar o se debe poder personalizar completamente?</div><div class="answer">Debe manejar un plan de cuentas (PUC) estándar colombiano base, pero debe ser completamente personalizable (crear, eliminar, modificar cuentas, siempre respetando la estructura jerárquica del PUC).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">60.</span> ¿Cómo se parametrizarán los impuestos (IVA, retenciones, ICA, etc.) en el sistema?</div><div class="answer">Parametrización de impuestos: Tabla maestra donde se defina el IVA (0%, 5%, 19%), Retención en la fuente (a título de renta, ICA, IVA) con sus bases y tarifas según el tipo de cliente/proveedor. Debe actualizarse fácilmente cuando la DIAN cambie tarifas.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">61.</span> ¿La contabilización de las facturas electrónicas será automática o requerirá una validación manual?</div><div class="answer">La contabilización debe ser automática basada en reglas predefinidas (ej. Factura de venta: Débito Clientes, Crédito Ingresos e IVA por pagar). Pero debe permitir la validación manual previa en un "buzón de contabilidad" para casos especiales (ventas a EPS con descuentos).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">62.</span> ¿Cómo se manejarán las retenciones en la fuente que se practican a proveedores y las que se reciben de clientes?</div><div class="answer">Las retenciones son críticas. El sistema debe calcular automáticamente la retención practicada a proveedores (según su régimen) y generar el asiento. Para las retenciones recibidas de clientes, debe permitir su registro y aplicación como abono a la cartera.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">63.</span> ¿El sistema debe permitir la creación de asientos contables manuales?</div><div class="answer">Sí, debe permitir la creación de asientos contables manuales (comprobantes de diario, ingreso y egreso) para ajustes de fin de mes, depreciaciones, provisiones, etc.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">64.</span> ¿Cómo se manejará el proceso de cierre contable mensual y anual?</div><div class="answer">El cierre mensual debe tener un asistente paso a paso que bloquee el período para evitar modificaciones, calcule las depreciaciones, las provisiones, valide la igualdad (debe-haber) y genere las declaraciones. El cierre anual debe permitir la distribución de utilidades.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">65.</span> ¿Se requiere un módulo de conciliación bancaria?</div><div class="answer">Sí, módulo de conciliación bancaria obligatorio. Debe permitir importar el extracto bancario, hacer match automático (por valor y referencia) con nuestros libros, y mostrar las diferencias (cheques girados no cobrados, etc.).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">66.</span> ¿Cómo se manejarán los diferentes tipos de comprobantes (ingreso, egreso, diario)?</div><div class="answer">Sí, tipos de comprobantes: Comprobante de Ingreso, Egreso y Diario, con numeración independiente y correlativa por tipo.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">67.</span> ¿El sistema debe permitir llevar la contabilidad por centros de costo o proyectos?</div><div class="answer">Sí, centros de costo por Sede (3 sedes) y por Línea de producto (Gafas, Lentes de contacto, Dispositivos electrónicos). Quiero ver el P&G por cada uno.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">68.</span> ¿Se requiere un módulo para la gestión de préstamos y sus intereses?</div><div class="answer">Sí, necesito módulo de préstamos (bancarios y socios) con cálculo de intereses (amortización francesa) y la generación automática del asiento de intereses causados.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">69.</span> ¿Cómo se manejarán las depreciaciones de activos fijos?</div><div class="answer">Depreciación de activos fijos: El sistema debe calcularla automáticamente por línea recta y generar el asiento mensual, actualizando el costo neto en libros.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">70.</span> ¿El sistema debe permitir la importación de datos contables desde archivos (ej. Excel) de otros sistemas?</div><div class="answer">Sí, debe permitir la importación de datos desde Excel/CSV para saldos iniciales, cuentas por cobrar/pagar iniciales, e inventario inicial al momento del arranque. No quiero tipear 2.000 referencias.</div></div>
+
+    <!-- CATEGORÍA 12 -->
+    <div class="category"><h3>CATEGORÍA 12: REPORTES E INTELIGENCIA DE NEGOCIOS (Preguntas 71 - 75)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">71.</span> ¿Qué reportes financieros estándar deben estar predefinidos?</div><div class="answer">Predefinidos: Balance de Comprobación, Balance General, Estado de Resultados, Flujo de Efectivo, y Antigüedad de Cartera.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">72.</span> ¿Se requieren reportes personalizables donde el usuario pueda seleccionar campos y filtros?</div><div class="answer">Sí, absolutamente. Necesito un "constructor de reportes" donde el usuario pueda arrastrar campos (ej. Cliente, Vendedor, Sucursal, Mes) y filtrar por rangos de fechas y montos.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">73.</span> ¿Los reportes se deben poder exportar a formatos como Excel, PDF o CSV?</div><div class="answer">Sí, todos los reportes deben exportarse a Excel (con fórmulas activas), PDF (para impresión) y CSV (para envío a entidades).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">74.</span> ¿Se necesita un cuadro de mando (dashboard) con indicadores clave de rendimiento (KPI)?</div><div class="answer">Sí, debe tener un Dashboard (cuadro de mando) con KPI en tiempo real: Ventas del día, Cartera vencida &gt; 60 días, Margen bruto del mes, Efectivo disponible, y facturas pendientes por enviar a DIAN.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">75.</span> ¿Los reportes deben poder ser enviados por correo electrónico de forma automática y programada?</div><div class="answer">Sí, debe permitir programar el envío automático por correo electrónico (ej. enviar el informe de caja diario al gerente a las 7:00 p.m. cada día).</div></div>
+
+    <!-- CATEGORÍA 13 -->
+    <div class="category"><h3>CATEGORÍA 13: GESTIÓN DE USUARIOS Y SEGURIDAD (Preguntas 76 - 80)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">76.</span> ¿Cómo se gestionará el acceso de los usuarios?</div><div class="answer">Gestión mediante usuario y contraseña con políticas de complejidad. No necesitamos integración con Active Directory por ahora, pero debe quedar abierta la puerta para SAML/OAuth en el futuro.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">77.</span> ¿Se requiere autenticación de dos factores (2FA)?</div><div class="answer">No inicialmente, pero para accesos remotos desde casa o el rol de Administrador, sí exigiré 2FA (Autenticación de dos factores) mediante código SMS o Google Authenticator.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">78.</span> ¿Qué niveles de permisos o roles se necesitan para controlar el acceso a las diferentes funciones?</div><div class="answer">Niveles de permisos granulares por módulo (Lectura, Creación, Edición, Eliminación). El Auxiliar no debe poder eliminar un asiento contable; el Contador no debe poder modificar la parametrización del IVA (solo el Admin).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">79.</span> ¿Se debe llevar un registro de auditoría (bitácora) de todas las acciones importantes realizadas en el sistema?</div><div class="answer">Sí, bitácora de auditoría obligatoria. Debe registrar quién, cuándo, desde qué IP y qué acción realizó (creación, modificación, eliminación, anulación, impresión) en todos los módulos críticos. Inmutable.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">80.</span> ¿Cómo se manejarán las copias de seguridad y la recuperación ante desastres?</div><div class="answer">Copias de seguridad diarias automáticas (almacenadas en zona geográfica diferente) con retención de 30 días. Debemos tener un plan de recuperación ante desastres (RTO &lt; 4 horas, RPO &lt; 1 hora) definido por el proveedor.</div></div>
+
+    <!-- CATEGORÍA 14 -->
+    <div class="category"><h3>CATEGORÍA 14: REQUISITOS NO FUNCIONALES - RENDIMIENTO Y DISPONIBILIDAD (Preguntas 81 - 83)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">81.</span> ¿Cuál es el tiempo de respuesta máximo aceptable para una consulta o transacción típica?</div><div class="answer">Tiempo de respuesta máximo: 2 segundos para consultas complejas (reportes) y menos de 1 segundo para transacciones (guardar factura). Si se demora más, el auxiliar se desespera.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">82.</span> ¿Cuántos usuarios concurrentes se espera que utilicen el sistema en el peor de los casos?</div><div class="answer">Usuarios concurrentes en el peor caso (cierre de mes): 15 usuarios (3 cajeros, 5 auxiliares, 3 contadores, 4 administradores).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">83.</span> ¿Cuál debe ser la disponibilidad del sistema (ej. 99.9% de tiempo activo)?</div><div class="answer">Disponibilidad del sistema: 99.7% (unas 22 horas de caída al año como máximo). Es aceptable, pero las caídas no deben ocurrir en hora pico (9 a.m. - 12 m.).</div></div>
+
+    <!-- CATEGORÍA 15 -->
+    <div class="category"><h3>CATEGORÍA 15: REQUISITOS NO FUNCIONALES - SEGURIDAD Y PRIVACIDAD (Preguntas 84 - 86)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">84.</span> ¿Qué nivel de cifrado se requiere para los datos sensibles?</div><div class="answer">Cifrado AES-256 para datos sensibles en reposo (base de datos) y TLS 1.3 para la transmisión. Especialmente los datos de pacientes (historia clínica financiera) y números de identificación.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">85.</span> ¿Cómo se protegerá el sistema contra accesos no autorizados?</div><div class="answer">Protección contra accesos no autorizados mediante firewall a nivel de aplicación (WAF), bloqueo de intentos de login fallidos (ej. 5 intentos bloquea IP por 15 min), y sesiones con tiempo de expiración (30 min de inactividad).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">86.</span> ¿Se debe cumplir con normativas específicas de protección de datos (ej. Habeas Data en Colombia)?</div><div class="answer">Sí. Cumplimiento estricto de la Ley 1581 de Habeas Data. El sistema debe permitir la baja de datos (derecho al olvido) si un paciente lo solicita y tener políticas de retención documental.</div></div>
+
+    <!-- CATEGORÍA 16 -->
+    <div class="category"><h3>CATEGORÍA 16: REQUISITOS NO FUNCIONALES - USABILIDAD Y MANTENIBILIDAD (Preguntas 87 - 92)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">87.</span> ¿El sistema debe ser intuitivo y fácil de usar para personas con conocimientos básicos de computación?</div><div class="answer">Sí, debe ser extremadamente intuitivo. Si un auxiliar nuevo puede facturar después de 1 hora de entrenamiento, el diseño es bueno. Nada de atajos crípticos.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">88.</span> ¿Se requiere un diseño de interfaz adaptable (responsive) para diferentes tamaños de pantalla?</div><div class="answer">Sí, el diseño debe ser responsive. El escritorio muestra todo, pero si se reduce la pantalla (tablet), los paneles deben reorganizarse sin romperse.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">89.</span> ¿El sistema debe proporcionar ayuda en línea o manuales de usuario integrados?</div><div class="answer">Sí, sistema de ayuda contextual (tooltips) y manuales de usuario en PDF/Word integrados en un menú de "Ayuda". Preferible videos incrustados de máximo 2 minutos.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">90.</span> ¿Cómo debe manejar el sistema los fallos inesperados (ej. caída de la red)?</div><div class="answer">Manejo de fallos: Mensajes de error amigables en español (ej. "No se pudo conectar con la DIAN, el documento se ha guardado en cola..."). Nunca mensajes de pila de código o "500 Internal Server Error" en pantalla.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">91.</span> ¿El sistema debe estar diseñado para ser fácilmente actualizable y mantenible?</div><div class="answer">Sí, arquitectura limpia y desacoplada. Las actualizaciones (cambios de tarifas DIAN) deben poder aplicarse sin tener que reescribir todo el sistema. Prefiero despliegues frecuentes (CI/CD).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">92.</span> ¿Qué nivel de soporte y mantenimiento se espera después de la implementación?</div><div class="answer">Espero un soporte de 12 meses incluido en el desarrollo, con respuesta en menos de 4 horas para incidentes críticos (no factura) y 24 horas para incidentes menores. Posteriormente, contrato anual de mantenimiento.</div></div>
+
+    <!-- CATEGORÍA 17 -->
+    <div class="category"><h3>CATEGORÍA 17: INTERFACES EXTERNAS (Preguntas 93 - 95)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">93.</span> ¿Qué interfaces de usuario (pantallas, formularios) se consideran críticas y deben ser diseñadas con especial cuidado?</div><div class="answer">Pantallas críticas: Formulario de facturación (cabecera + productos), el Dashboard de Gerente, y la vista de conciliación bancaria. Deben ser diseñadas con prioridad máxima.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">94.</span> ¿Qué interfaces de comunicación con otros sistemas son necesarias (APIs, web services)?</div><div class="answer">Interfaces de comunicación: API REST para conectar con Salesforce (pull de clientes y pedidos). Web Services SOAP o REST para la conexión con la DIAN (estándar de ellos).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">95.</span> ¿Qué interfaces de hardware (ej. impresoras, lectores de códigos de barras) deben ser soportadas?</div><div class="answer">Hardware: Impresoras térmicas de tickets (para la factura en papel simple) e impresoras A4 para el PDF legal. El sistema debe emitir comandos de impresión estándar. No necesitamos lectores de código de barras para el software contable (eso lo hace el CRM).</div></div>
+
+    <!-- CATEGORÍA 18 -->
+    <div class="category"><h3>CATEGORÍA 18: PROTOTIPADO Y VALIDACIÓN (Preguntas 96 - 100)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">96.</span> ¿Qué pantallas o flujos de trabajo son los más adecuados para prototipar primero?</div><div class="answer">Prototipar primero el flujo de creación de una factura de venta (rápido) y el flujo de recepción de pago/cartera. Es el día a día de mi equipo.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">97.</span> ¿Quién debe participar en la revisión y validación de los prototipos?</div><div class="answer">Debe participar mi Contador Jefe (María) y mi Gerente Administrativo (yo mismo en las revisiones clave). Ellos son los que validan que el flujo tenga sentido.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">98.</span> ¿Con qué frecuencia se deben presentar los prototipos para obtener retroalimentación?</div><div class="answer">Frecuencia: Cada 2 o 3 semanas. No quiero que pase un mes sin ver avances. Prefiero demos cortas pero constantes.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">99.</span> ¿Qué herramientas o métodos se prefieren para la construcción de prototipos?</div><div class="answer">Prefiero herramientas digitales como Figma o Balsamiq. El papel ya no funciona para un proyecto de esta envergadura, necesito ver la interactividad.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">100.</span> ¿Qué nivel de detalle debe tener el prototipo (baja fidelidad vs. alta fidelidad)?</div><div class="answer">Empezar con baja fidelidad (wireframes) para definir la estructura y flujo, y luego pasar a alta fidelidad (con colores, tipografía y datos reales) en las últimas 2 iteraciones antes de codificar la interfaz final.</div></div>
+
+    <!-- CATEGORÍA 19 -->
+    <div class="category"><h3>CATEGORÍA 19: ESTRATEGIA DE PRUEBAS (Preguntas 101 - 110)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">101.</span> ¿Qué casos de uso o historias de usuario son prioritarios para ser probados primero?</div><div class="answer">Prioridad 1: Caso de uso "Emisión y envío exitoso de factura". 2: "Aplicación de pago a cartera". 3: "Cierre mensual".</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">102.</span> ¿Cómo se definirán los criterios de aceptación para cada requisito funcional?</div><div class="answer">Los criterios de aceptación los definiremos en conjunto en las historias de usuario. Deben ser medibles (ej. "El sistema calcula la retención correctamente para 10 casos de prueba de proveedores" o "El Balance General cuadra a 0").</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">103.</span> ¿Quién será el responsable de diseñar y ejecutar las pruebas?</div><div class="answer">El responsable de diseñar las pruebas (funcionales) será el equipo de desarrollo con el apoyo de María (contadora). Yo mismo validaré las pruebas de aceptación finales (UAT).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">104.</span> ¿Se requieren pruebas de integración con la DIAN en un entorno de pruebas (sandbox)?</div><div class="answer">Sí, absolutamente obligatorio probar la integración con la DIAN en el entorno de Habilitación (Sandbox) antes de pasar a Producción. No quiero sorpresas.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">105.</span> ¿Cómo se probará la generación de reportes financieros para asegurar su exactitud?</div><div class="answer">La prueba de reportes financieros se hará comparando el resultado del nuevo sistema contra el resultado del sistema actual (SIIGO) para el mismo período histórico. La tolerancia es cero para diferencias.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">106.</span> ¿Qué tipo de pruebas de rendimiento y carga se deben realizar?</div><div class="answer">Pruebas de rendimiento con 1.500 facturas en 1 hora para simular el Black Friday. Pruebas de carga con 30 usuarios concurrentes (aunque solo tengamos 15, para dar margen).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">107.</span> ¿Cómo se gestionarán y darán seguimiento a los defectos encontrados durante las pruebas?</div><div class="answer">La gestión de defectos la haremos en Jira o Trello, donde el equipo de desarrollo asignará prioridades (Crítico, Alto, Medio, Bajo) y nosotros daremos seguimiento semanal.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">108.</span> ¿Se necesita un entorno de pruebas separado del entorno de producción?</div><div class="answer">Sí. Entorno de Desarrollo, entorno de Pruebas (Sandbox) y entorno de Producción. Ningún desarrollador toca Producción directamente.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">109.</span> ¿Qué datos de prueba serán necesarios y cómo se obtendrán de manera segura?</div><div class="answer">Necesitamos datos de prueba: Listado de NITs reales de nuestros clientes (ofuscados), un set de productos con costos, y movimientos de los últimos 3 meses. Los proporcionaremos en Excel anonimizados.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">110.</span> ¿Cuál es el proceso para que el cliente valide y apruebe los casos de prueba?</div><div class="answer">Proceso de validación UAT: El equipo de desarrollo entrega un entorno de pruebas con los casos ya pasados. María y yo ejecutamos un "script" de 20 casos de negocio reales. Si el 100% de los casos críticos pasan y el 95% de los secundarios, lo aprobamos.</div></div>
+
+    <!-- CATEGORÍA 20 -->
+    <div class="category"><h3>CATEGORÍA 20: PRIORIZACIÓN, TRAZABILIDAD Y GESTIÓN DE CAMBIOS (Preguntas 111 - 115)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">111.</span> ¿Cómo se priorizarán los requisitos si todos son importantes? ¿Se usará una escala (Alta, Media, Baja)?</div><div class="answer">Usaremos la escala MoSCoW: Must have (facturación, DIAN, contabilidad base), Should have (conciliación, módulo de préstamos), Could have (exportación avanzada de gráficos), Won't have (módulo de RRHH completo). Si todos son importantes, yo pongo el límite.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">112.</span> ¿Quién tiene la autoridad final para decidir la prioridad de un requisito?</div><div class="answer">La autoridad final para priorizar la tengo yo (Gerente General) asesorado por mi Contador Jefe. Si hay empate, decido yo basado en el retorno de inversión.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">113.</span> ¿Cómo se gestionarán los cambios en los requisitos a lo largo del proyecto?</div><div class="answer">La gestión de cambios se hará mediante un Comité de Control de Cambios (CCC) semanal. Si un cambio afecta el alcance o el presupuesto, se firma un anexo. Cambios menores (textos, colores) se aprueban por correo.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">114.</span> ¿Es necesario mantener una matriz de trazabilidad que vincule los requisitos con su diseño, implementación y pruebas?</div><div class="answer">Sí, necesito una matriz de trazabilidad (Requisito -&gt; Diseño -&gt; Codificación -&gt; Prueba). Quiero saber exactamente que lo que pedí en la semana 1 se probó en la semana 16.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">115.</span> ¿Cómo se comunicarán los cambios en la prioridad o el alcance a todo el equipo?</div><div class="answer">Los cambios de prioridad o alcance los comunicará el Project Manager en el correo semanal de estado y en una reunión corta de 15 minutos todos los viernes.</div></div>
+
+    <!-- CATEGORÍA 21 -->
+    <div class="category"><h3>CATEGORÍA 21: CRITERIOS DE ACEPTACIÓN Y CIERRE DEL PROYECTO (Preguntas 116 - 120)</h3></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">116.</span> ¿Cuáles son los criterios que el cliente utilizará para considerar que el software está "terminado" y es aceptable?</div><div class="answer">El software está "terminado" y aceptable cuando: (1) Se hayan emitido 100 facturas reales en el entorno de producción en paralelo con el sistema antiguo sin errores. (2) El balance de comprobación cuadre con el sistema antiguo. (3) La DIAN haya aceptado el 100% de esas pruebas. (4) Mi contador haya hecho un cierre mensual completo sin intervención del desarrollador.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">117.</span> ¿Qué documentos o entregables finales se esperan (ej. manuales de usuario, guías de instalación, código fuente)?</div><div class="answer">Entregables finales: Código fuente completo (depositado en un repositorio corporativo), Manual de Usuario (PDF), Manual Técnico (Arquitectura y despliegue), Scripts de Base de Datos, y Certificados de las pruebas de carga.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">118.</span> ¿Cómo se realizará la transferencia de conocimiento al equipo de la empresa?</div><div class="answer">La transferencia de conocimiento será una semana completa de entrenamiento práctico en las instalaciones de la empresa, donde el equipo de desarrollo acompaña a mi contador mientras hace el cierre del mes.</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">119.</span> ¿Cuál es el proceso para la firma de la conformidad y el cierre del proyecto?</div><div class="answer">La firma de conformidad se hará después de 30 días hábiles de operación en producción sin incidentes críticos. Se levanta un acta firmada por ambas partes liberando el pago final (20% restante).</div></div>
+    <div class="qa-item"><div class="question"><span class="qa-number">120.</span> ¿Qué sucede después del lanzamiento? ¿Cómo se manejarán las solicitudes de soporte y las futuras mejoras?</div><div class="answer">Después del lanzamiento, las solicitudes de soporte se manejarán a través de un ticket system (Zendesk o similar). Las futuras mejoras (fase 2) se recopilarán en un backlog; pero el soporte correctivo (bugs) tiene prioridad absoluta sobre las mejoras durante el primer año.</div></div>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">2.3. CARACTERISTICAS DE LOS USUARIOS <span class="red">(Funciones de la persona en el proceso)</span></h5>
+    <p><span class="red">(Descripción de cada rol dentro del software)</span></p>
+    <table>
+        <tr><th>ROL</th><th>DESCRIPCIÓN</th><th>CONOCIMIENTO CONTABLE</th><th>CONOCIMIENTO TECNOLÓGICO</th></tr>
+        <tr><td><strong>Administrador</strong></td><td>Gerente General y Gerente Financiero</td><td>Alto</td><td>Medio</td></tr>
+        <tr><td><strong>Contador Jefe</strong></td><td>Líder del equipo contable, responsable de cierres y reportes</td><td>Alto</td><td>Medio</td></tr>
+        <tr><td><strong>Auxiliar Contable</strong></td><td>Facturación, cartera, proveedores y caja</td><td>Medio</td><td>Bajo-Medio</td></tr>
+        <tr><td><strong>Auditor Externo</strong></td><td>Revisión y verificación contable</td><td>Alto</td><td>Medio</td></tr>
+    </table>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">2.4. RESTRICCIONES</h5>
+    <p><span class="red">(lo que no se quiere que se haga dentro del software, lo que cada rol tiene permitido y no permitido)</span></p>
+    <table>
+        <tr><th style="width:25%;">RESTRICCIÓN</th><th>DETALLE</th></tr>
+        <tr><td><strong>Técnicas</strong></td><td>- Debe ser aplicación web (SaaS) alojada en la nube (AWS o Azure).<br>- Debe funcionar en Chrome/Edge y ser responsive.<br>- BD puede ser PostgreSQL o similar, no Oracle.<br>- No se requiere servidores físicos.</td></tr>
+        <tr><td><strong>Legales / Normativas</strong></td><td>- Cumplimiento de Ley 1581 de Habeas Data (protección de datos de pacientes).<br>- Cumplimiento de facturación electrónica para entidades estatales (FOSYGA).<br>- Generación de declaraciones tributarias según normativa DIAN.</td></tr>
+        <tr><td><strong>Presupuestarias</strong></td><td>- Presupuesto estimado: $180M - $220M COP.<br>- Tope máximo: $250M sin aprobación de la junta.<br>- Sobrecostos por cambios DIAN se negocian como ítem separado.</td></tr>
+        <tr><td><strong>De plazos</strong></td><td>- Versión funcional (facturación e inventarios): 4-5 meses.<br>- Pruebas paralelas: 1 mes adicional.<br>- GO LIVE definitivo: 6 meses (innegociable).</td></tr>
+        <tr><td><strong>De seguridad</strong></td><td>- Cumplimiento de Política de Seguridad de la Información.<br>- Cifrado de datos sensibles.<br>- Registros de acceso (logs) por 5 años.<br>- Cifrado AES-256 para datos en reposo y TLS 1.3 para transmisión.<br>- WAF, bloqueo de intentos fallidos, sesiones con expiración (30 min).</td></tr>
+        <tr><td><strong>De idioma</strong></td><td>- Sistema 100% en español con términos contables colombianos.<br>- No se requiere multi-idioma.</td></tr>
+        <tr><td><strong>De interoperabilidad</strong></td><td>- Integración con DIAN (facturación y declaraciones).<br>- Integración con bancos (extractos).<br>- Integración con Salesforce (vía API REST).<br>- Exportación a Excel, PDF y CSV.</td></tr>
+    </table>
+    <hr>
+
+    <!-- ==================== 3. REQUISITOS ESPECIFICOS ==================== -->
+    <h2>3. REQUISITOS ESPECIFICOS</h2>
+    <p><span class="red">(Enumerar todas y cada una de las funciones que pide el cliente para su proyecto de automatización)</span></p>
+    <h5 style="font-size:15px; color:#1a3c6e;">3.1. REQUISITOS DEL SISTEMA</h5>
+    <table>
+        <tr><th style="width:10%;">ID</th><th style="width:25%;">REQUISITO</th><th style="width:65%;">DESCRIPCIÓN</th></tr>
+        <tr><td>RS-01</td><td>Plataforma Web y Móvil</td><td>El sistema debe ser accesible desde navegador web (escritorio) y tener versión móvil (PWA) para aprobaciones rápidas.</td></tr>
+        <tr><td>RS-02</td><td>Base de datos centralizada</td><td>Todos los datos contables deben almacenarse en una base de datos única en la nube, accesible desde cualquier dispositivo autorizado.</td></tr>
+        <tr><td>RS-03</td><td>Integración DIAN</td><td>El sistema debe integrarse con la DIAN para facturación electrónica (envío de XML, recepción CUFE) y generación de declaraciones tributarias.</td></tr>
+        <tr><td>RS-04</td><td>Integración Salesforce</td><td>El sistema debe integrarse con Salesforce vía API REST para traer clientes y pedidos.</td></tr>
+        <tr><td>RS-05</td><td>Integración Bancaria</td><td>El sistema debe permitir importar extractos bancarios para conciliación.</td></tr>
+        <tr><td>RS-06</td><td>Auditoría de cambios</td><td>El sistema debe registrar quién, cuándo, desde qué IP y qué acción realizó en cualquier registro del sistema.</td></tr>
+        <tr><td>RS-07</td><td>Roles y permisos</td><td>El sistema debe gestionar perfiles de usuario con permisos granulares por módulo (Lectura, Creación, Edición, Eliminación).</td></tr>
+        <tr><td>RS-08</td><td>Copia de seguridad automática</td><td>El sistema debe realizar copias de seguridad diarias automáticas con retención de 30 días y RTO &lt; 4 horas, RPO &lt; 1 hora.</td></tr>
+        <tr><td>RS-09</td><td>Exportación de datos</td><td>El sistema debe permitir exportar datos a Excel, PDF y CSV.</td></tr>
+        <tr><td>RS-10</td><td>Escalabilidad horizontal</td><td>El sistema debe permitir escalar horizontalmente añadiendo más servidores sin reescribir el núcleo.</td></tr>
+    </table>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">3.2. REQUISITOS FUNCIONALES</h5>
+    <p>A continuación se detallan los requisitos funcionales priorizados según las necesidades del cliente. La priorización se define como <strong>ALTA</strong> (indispensable para el lanzamiento), <strong>MEDIA</strong> (deseable para el lanzamiento, pero puede postergarse), <strong>BAJA</strong> (para futuras fases).</p>
+    <h4 style="font-size:15px; color:#1a3c6e;">3.2.1. MÓDULO DE FACTURACIÓN ELECTRÓNICA Y DIAN (Preguntas #46 - #58)</h4>
+    <table>
+        <tr><th style="width:8%;">ID</th><th style="width:30%;">REQUISITO</th><th style="width:47%;">DESCRIPCIÓN</th><th style="width:15%;">PRIORIDAD</th></tr>
+        <tr><td>RF-001</td><td>Generación de documentos electrónicos</td><td>El sistema debe generar Factura Electrónica de Venta, Nota Débito, Nota Crédito y Documento Soporte con sus respectivos CUDES.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-002</td><td>Numeración por resolución DIAN</td><td>El sistema debe manejar numeración autoincremental por resolución DIAN, cargando prefijo, rango numérico y vigencia.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-003</td><td>Envío en tiempo real a DIAN</td><td>El sistema debe validar, firmar con Token y enviar documentos a DIAN en tiempo real (sincrónico).</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-004</td><td>Gestión de errores DIAN</td><td>El sistema debe bloquear facturas rechazadas, mostrar error en español claro y permitir corrección y reenvío.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-005</td><td>Anulación con Nota Crédito</td><td>El sistema debe permitir anulación mediante Nota Crédito Electrónica con referencia a factura original y asiento de reversión.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-006</td><td>Certificado de firma digital</td><td>El sistema debe gestionar certificado de firma digital (.p12/.pfx) con alerta de expiración con 30 días de anticipación.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-007</td><td>Tipos de identificación</td><td>El sistema debe soportar NIT, Cédula de Ciudadanía, Cédula de Extranjería, Pasaporte y NIT de empresas del exterior.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-008</td><td>CUFE y código QR</td><td>El sistema debe generar código CUFE y código QR en la representación gráfica (PDF) de la factura.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-009</td><td>Modo contingencia</td><td>El sistema debe permitir facturación sin conexión a DIAN, guardando XML en cola local y enviando automáticamente cuando el servicio regrese.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-010</td><td>Consulta de estado</td><td>El sistema debe consultar el estado de documentos ante la DIAN (Aceptado, Rechazado, En Proceso) y actualizar estado local.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-011</td><td>Reporte de documentos enviados</td><td>El sistema debe tener un reporte/dashboard de "Documentos Enviados" con filtros por fecha, estado y tipo de documento, exportable a Excel.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-012</td><td>Generación de Exógena</td><td>El sistema debe generar archivos de Exógena en formato DIAN.</td><td><strong>ALTA</strong></td></tr>
+    </table>
+
+    <h4 style="font-size:15px; color:#1a3c6e;">3.2.2. MÓDULO CONTABLE Y PLAN DE CUENTAS (Preguntas #59 - #70)</h4>
+    <table>
+        <tr><th style="width:8%;">ID</th><th style="width:30%;">REQUISITO</th><th style="width:47%;">DESCRIPCIÓN</th><th style="width:15%;">PRIORIDAD</th></tr>
+        <tr><td>RF-013</td><td>Plan de cuentas personalizable</td><td>El sistema debe manejar un PUC estándar colombiano base, completamente personalizable.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-014</td><td>Parametrización de impuestos</td><td>El sistema debe permitir parametrizar IVA (0%, 5%, 19%), Retención en la fuente (renta, ICA, IVA) con bases y tarifas.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-015</td><td>Contabilización automática</td><td>El sistema debe contabilizar automáticamente facturas basado en reglas predefinidas, con validación manual previa en "buzón de contabilidad".</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-016</td><td>Cálculo de retenciones</td><td>El sistema debe calcular automáticamente retenciones practicadas a proveedores y retenciones recibidas de clientes.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-017</td><td>Asientos manuales</td><td>El sistema debe permitir creación de asientos contables manuales (comprobantes de diario, ingreso y egreso).</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-018</td><td>Asistente de cierre mensual</td><td>El sistema debe tener un asistente de cierre mensual paso a paso que bloquee el período, calcule depreciaciones y provisiones, valide debe-haber.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-019</td><td>Conciliación bancaria</td><td>El sistema debe tener módulo de conciliación bancaria con importación de extractos y match automático.</td><td><strong>MEDIA</strong></td></tr>
+        <tr><td>RF-020</td><td>Tipos de comprobantes</td><td>El sistema debe manejar Comprobante de Ingreso, Egreso y Diario con numeración independiente.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-021</td><td>Centros de costo</td><td>El sistema debe permitir contabilidad por centros de costo: Sede (3 sedes) y Línea de producto (Gafas, Lentes de contacto, Dispositivos).</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-022</td><td>Módulo de préstamos</td><td>El sistema debe tener módulo de préstamos con cálculo de intereses (amortización francesa) y generación automática de asientos.</td><td><strong>MEDIA</strong></td></tr>
+        <tr><td>RF-023</td><td>Depreciación de activos fijos</td><td>El sistema debe calcular depreciación por línea recta y generar asiento mensual actualizando costo neto en libros.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-024</td><td>Importación de datos</td><td>El sistema debe permitir importación de datos desde Excel/CSV para saldos iniciales, cuentas y inventario.</td><td><strong>ALTA</strong></td></tr>
+    </table>
+
+    <h4 style="font-size:15px; color:#1a3c6e;">3.2.3. MÓDULO DE INVENTARIOS Y ACTIVOS FIJOS (Preguntas #28 - #29)</h4>
+    <table>
+        <tr><th style="width:8%;">ID</th><th style="width:30%;">REQUISITO</th><th style="width:47%;">DESCRIPCIÓN</th><th style="width:15%;">PRIORIDAD</th></tr>
+        <tr><td>RF-025</td><td>Control de inventarios</td><td>El sistema debe controlar inventarios con costeo promedio ponderado, ajustes por mermas y toma física.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-026</td><td>Gestión de activos fijos</td><td>El sistema debe gestionar activos fijos (lentómetros, autorrefractores, computadores de diagnóstico) con depreciación por línea recta.</td><td><strong>ALTA</strong></td></tr>
+    </table>
+
+    <h4 style="font-size:15px; color:#1a3c6e;">3.2.4. MÓDULO DE CARTERA Y PROVEEDORES (Pregunta #27)</h4>
+    <table>
+        <tr><th style="width:8%;">ID</th><th style="width:30%;">REQUISITO</th><th style="width:47%;">DESCRIPCIÓN</th><th style="width:15%;">PRIORIDAD</th></tr>
+        <tr><td>RF-027</td><td>Gestión de cartera</td><td>El sistema debe gestionar cartera con antigüedad de saldos, gestión de cobranzas y aplicación de pagos.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-028</td><td>Gestión de proveedores</td><td>El sistema debe gestionar proveedores con fechas de pago y retenciones de ley.</td><td><strong>ALTA</strong></td></tr>
+    </table>
+
+    <h4 style="font-size:15px; color:#1a3c6e;">3.2.5. MÓDULO DE REPORTES Y DECLARACIONES (Preguntas #30 - #31, #71 - #75)</h4>
+    <table>
+        <tr><th style="width:8%;">ID</th><th style="width:30%;">REQUISITO</th><th style="width:47%;">DESCRIPCIÓN</th><th style="width:15%;">PRIORIDAD</th></tr>
+        <tr><td>RF-029</td><td>Reportes predefinidos</td><td>El sistema debe generar Balance de Comprobación, Balance General, Estado de Resultados, Flujo de Efectivo, Antigüedad de Cartera.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-030</td><td>Reportes personalizables</td><td>El sistema debe tener constructor de reportes con campos arrastrables y filtros por fechas y montos.</td><td><strong>MEDIA</strong></td></tr>
+        <tr><td>RF-031</td><td>Exportación de reportes</td><td>El sistema debe exportar reportes a Excel (con fórmulas), PDF y CSV.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-032</td><td>Dashboard con KPIs</td><td>El sistema debe tener dashboard con KPIs: Ventas del día, Cartera vencida &gt; 60 días, Margen bruto del mes, Efectivo disponible, Facturas pendientes por enviar a DIAN.</td><td><strong>ALTA</strong></td></tr>
+        <tr><td>RF-033</td><td>Envío programado de reportes</td><td>El sistema debe permitir envío automático programado de reportes por correo electrónico.</td><td><strong>MEDIA</strong></td></tr>
+        <tr><td>RF-034</td><td>Declaraciones tributarias</td><td>El sistema debe generar archivos planos para IVA (formato 300), Renta, Retención (formato 350) y Exógena.</td><td><strong>ALTA</strong></td></tr>
+    </table>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">3.3. REQUISITOS NO FUNCIONALES <span class="red">*(no tiene dependencias de otros requisitos)*</span></h5>
+    <table>
+        <tr><th style="width:8%;">ID</th><th style="width:18%;">CATEGORÍA</th><th style="width:44%;">DESCRIPCIÓN</th><th style="width:15%;">PRIORIDAD</th><th style="width:15%;">MÉTODO DE VERIFICACIÓN</th></tr>
+        <tr><td>RNF-001</td><td>Rendimiento</td><td>Tiempo de respuesta: &lt; 2 segundos para consultas complejas (reportes), &lt; 1 segundo para transacciones (guardar factura).</td><td><strong>ALTA</strong></td><td>Pruebas de carga</td></tr>
+        <tr><td>RNF-002</td><td>Rendimiento</td><td>Soporte para 1.500 facturas/día en pico (diciembre).</td><td><strong>ALTA</strong></td><td>Pruebas de rendimiento</td></tr>
+        <tr><td>RNF-003</td><td>Rendimiento</td><td>Soporte para 15 usuarios concurrentes en cierre de mes, hasta 30 para pruebas de carga.</td><td><strong>ALTA</strong></td><td>Pruebas de estrés</td></tr>
+        <tr><td>RNF-004</td><td>Disponibilidad</td><td>Disponibilidad del sistema: 99.7% (22 horas de caída/año máximo).</td><td><strong>ALTA</strong></td><td>Monitoreo de uptime</td></tr>
+        <tr><td>RNF-005</td><td>Usabilidad</td><td>Interfaz simple y rápida para el día a día, con opciones avanzadas desplegables.</td><td><strong>ALTA</strong></td><td>Pruebas de usuario</td></tr>
+        <tr><td>RNF-006</td><td>Usabilidad</td><td>Un auxiliar nuevo debe poder facturar después de 1 hora de entrenamiento.</td><td><strong>ALTA</strong></td><td>Pruebas de usabilidad</td></tr>
+        <tr><td>RNF-007</td><td>Usabilidad</td><td>Diseño responsive para escritorio y tablet.</td><td><strong>ALTA</strong></td><td>Pruebas de compatibilidad</td></tr>
+        <tr><td>RNF-008</td><td>Seguridad</td><td>Autenticación con usuario/contraseña con políticas de complejidad.</td><td><strong>ALTA</strong></td><td>Pruebas de autenticación</td></tr>
+        <tr><td>RNF-009</td><td>Seguridad</td><td>Autenticación de dos factores (2FA) para accesos remotos y rol de Administrador.</td><td><strong>MEDIA</strong></td><td>Pruebas de 2FA</td></tr>
+        <tr><td>RNF-010</td><td>Seguridad</td><td>Cifrado AES-256 para datos sensibles en reposo y TLS 1.3 para transmisión.</td><td><strong>ALTA</strong></td><td>Auditoría de seguridad</td></tr>
+        <tr><td>RNF-011</td><td>Seguridad</td><td>WAF, bloqueo de intentos fallidos (5 intentos bloquea IP 15 min), sesiones expiran a los 30 min.</td><td><strong>ALTA</strong></td><td>Pruebas de penetración</td></tr>
+        <tr><td>RNF-012</td><td>Seguridad</td><td>Bitácora de auditoría inmutable registrando quién, cuándo, IP y acción.</td><td><strong>ALTA</strong></td><td>Revisión de logs</td></tr>
+        <tr><td>RNF-013</td><td>Conectividad</td><td>Integración con DIAN vía SOAP/REST en tiempo real, con modo contingencia offline.</td><td><strong>ALTA</strong></td><td>Pruebas de integración</td></tr>
+        <tr><td>RNF-014</td><td>Legal</td><td>Cumplimiento de Ley 1581 de Habeas Data (protección de datos).</td><td><strong>ALTA</strong></td><td>Auditoría legal</td></tr>
+        <tr><td>RNF-015</td><td>Legal</td><td>Cumplimiento de facturación electrónica DIAN y entidades estatales.</td><td><strong>ALTA</strong></td><td>Auditoría legal</td></tr>
+        <tr><td>RNF-016</td><td>Idioma</td><td>Sistema 100% en español con términos contables colombianos.</td><td><strong>ALTA</strong></td><td>Revisión de contenido</td></tr>
+        <tr><td>RNF-017</td><td>Mantenibilidad</td><td>Arquitectura limpia y desacoplada para despliegues frecuentes (CI/CD).</td><td><strong>MEDIA</strong></td><td>Revisión de arquitectura</td></tr>
+        <tr><td>RNF-018</td><td>Soporte</td><td>Soporte de 12 meses incluido, respuesta &lt; 4 horas para incidentes críticos, &lt; 24 horas para menores.</td><td><strong>ALTA</strong></td><td>Acuerdo de nivel de servicio</td></tr>
+        <tr><td>RNF-019</td><td>Escalabilidad</td><td>Arquitectura que permita escalar horizontalmente añadiendo más servidores.</td><td><strong>ALTA</strong></td><td>Pruebas de escalabilidad</td></tr>
+        <tr><td>RNF-020</td><td>Recuperación</td><td>Copias de seguridad diarias automáticas, RTO &lt; 4 horas, RPO &lt; 1 hora.</td><td><strong>ALTA</strong></td><td>Pruebas de recuperación</td></tr>
+    </table>
+    <hr>
+
+    <!-- ==================== 4. VALIDACIÓN DE REQUISITOS ==================== -->
+    <h2>4. VALIDACIÓN DE REQUISITOS</h2>
+    <h5 style="font-size:15px; color:#1a3c6e;">4.1. CONSTRUCCIÓN DE PROTOTIPOS</h5>
+    <p><span class="red">(Se recomienda iniciar con prototipos de alta prioridad para validar con el usuario)</span></p>
+    <p><strong>Prototipos sugeridos para validación inicial:</strong></p>
+    <ol>
+        <li><strong>Flujo de creación de factura de venta:</strong> Prototipo del formulario de facturación (cabecera + productos) con validación de reglas, firma y envío a DIAN. Es el día a día del equipo contable.</li>
+        <li><strong>Dashboard de Gerente:</strong> Prototipo de la pantalla principal con KPIs en tiempo real (Ventas del día, Cartera vencida &gt; 60 días, Margen bruto del mes, Efectivo disponible, Facturas pendientes por enviar a DIAN).</li>
+        <li><strong>Flujo de recepción de pago/cartera:</strong> Prototipo del proceso de aplicación de pagos a cartera con antigüedad de saldos.</li>
+        <li><strong>Conciliación bancaria:</strong> Prototipo de la vista de conciliación con importación de extractos y match automático.</li>
+    </ol>
+    <p><strong>Criterios de validación de prototipos:</strong></p>
+    <ul>
+        <li>Participación del Contador Jefe (María) y el Gerente General en la revisión de cada prototipo.</li>
+        <li>Frecuencia: Cada 2 o 3 semanas (demos cortas pero constantes).</li>
+        <li>Herramientas: Figma o Balsamiq (herramientas digitales con interactividad).</li>
+        <li>Nivel de detalle: Empezar con baja fidelidad (wireframes) para definir estructura y flujo, luego pasar a alta fidelidad (colores, tipografía, datos reales) en las últimas 2 iteraciones.</li>
+        <li>Aprobación formal del cliente antes de pasar a desarrollo.</li>
+    </ul>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">4.2. FORMATO DE CASO DE PRUEBA</h5>
+    <p><span class="red">(Formato para documentar y ejecutar casos de prueba de los requisitos funcionales)</span></p>
+    <p><strong>CASO DE PRUEBA CP-001</strong></p>
+    <table>
+        <tr><th style="width:25%;">OBJETIVO DEL CASO DE PRUEBA</th><td>Validar que el sistema emita y envíe exitosamente una factura electrónica a la DIAN obteniendo el CUFE.</td></tr>
+        <tr><th>IDENTIFICADOR</th><td>CP-001</td></tr>
+        <tr><th>REQUISITO FUNCIONAL</th><td>RF-001, RF-002, RF-003, RF-006, RF-008</td></tr>
+        <tr><th>PRECONDICIONES</th><td>Usuario autenticado con rol de Auxiliar Contable. Certificado de firma digital activo. Conexión a DIAN disponible. Resolución de facturación cargada.</td></tr>
+        <tr><th>PASOS</th><td>1. Navegar al módulo de Facturación.<br>2. Seleccionar "Nueva Factura".<br>3. Ingresar datos del cliente (NIT, razón social).<br>4. Agregar productos con cantidades y precios.<br>5. Verificar cálculo de IVA y total.<br>6. Hacer clic en "Enviar a DIAN".<br>7. Esperar confirmación de la DIAN.</td></tr>
+        <tr><th>RESULTADOS ESPERADOS</th><td>1. El sistema valida los datos antes del envío.<br>2. El sistema firma el XML con el Token.<br>3. La DIAN acepta la factura y devuelve el CUFE.<br>4. El sistema muestra mensaje: "Factura enviada exitosamente. CUFE: [código]".<br>5. La factura queda en estado "Aceptada".<br>6. El asiento contable se genera automáticamente.<br>7. El PDF con código QR se genera correctamente.</td></tr>
+    </table>
+
+    <p><strong>CASO DE PRUEBA CP-002</strong></p>
+    <table>
+        <tr><th style="width:25%;">OBJETIVO DEL CASO DE PRUEBA</th><td>Validar que el sistema gestione correctamente el rechazo de una factura por la DIAN y permita su corrección.</td></tr>
+        <tr><th>IDENTIFICADOR</th><td>CP-002</td></tr>
+        <tr><th>REQUISITO FUNCIONAL</th><td>RF-004</td></tr>
+        <tr><th>PRECONDICIONES</th><td>Usuario autenticado con rol de Auxiliar Contable. Se ha creado una factura con un NIT inválido (caso de prueba).</td></tr>
+        <tr><th>PASOS</th><td>1. Crear una factura con un NIT inválido.<br>2. Enviar a DIAN.<br>3. Esperar la respuesta de rechazo.<br>4. Corregir el NIT por uno válido.<br>5. Reenviar a DIAN.</td></tr>
+        <tr><th>RESULTADOS ESPERADOS</th><td>1. La DIAN rechaza la factura indicando "NIT inválido".<br>2. El sistema bloquea la factura y muestra el error en español claro.<br>3. El sistema permite corregir el campo NIT.<br>4. El sistema conserva el mismo número de factura.<br>5. El reenvío es exitoso y se obtiene el CUFE.</td></tr>
+    </table>
+
+    <p><strong>CASO DE PRUEBA CP-003</strong></p>
+    <table>
+        <tr><th style="width:25%;">OBJETIVO DEL CASO DE PRUEBA</th><td>Validar que el sistema calcule correctamente las retenciones en la fuente para un proveedor.</td></tr>
+        <tr><th>IDENTIFICADOR</th><td>CP-003</td></tr>
+        <tr><th>REQUISITO FUNCIONAL</th><td>RF-014, RF-016</td></tr>
+        <tr><th>PRECONDICIONES</th><td>Usuario autenticado con rol de Auxiliar Contable. Proveedor registrado con régimen de retención. Factura de compra cargada.</td></tr>
+        <tr><th>PASOS</th><td>1. Navegar al módulo de Compras.<br>2. Registrar una factura de compra de un proveedor.<br>3. Ingresar el monto de la compra.<br>4. Guardar la factura.</td></tr>
+        <tr><th>RESULTADOS ESPERADOS</th><td>1. El sistema calcula automáticamente la retención de IVA según tarifa.<br>2. El sistema calcula automáticamente la retención de Renta según tarifa.<br>3. El sistema genera el asiento contable correspondiente.<br>4. El sistema muestra el cálculo detallado en la factura.</td></tr>
+    </table>
+    <hr>
+
+    <!-- ==================== 5. CRONOGRAMA DE ACTIVIDADES ==================== -->
+    <h2>5. CRONOGRAMA DE ACTIVIDADES DEL PROYECTO</h2>
+    <p><span class="red">(Planificación temporal de las actividades necesarias para la ejecución del proyecto)</span></p>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">5.1. DIAGRAMA DE GANTT INTERACTIVO</h5>
+    <p><strong>Instrucciones:</strong> Haz clic en cada celda de color para marcarla como completada (✓). El progreso se actualizará automáticamente. Los hitos (★) muestran el progreso de su fase.</p>
+    <p><strong>Leyenda de colores:</strong>
+        <span style="background-color:#2c5282; color:white; padding:2px 6px; border-radius:3px;">Inicio</span>
+        <span style="background-color:#e67e22; color:white; padding:2px 6px; border-radius:3px;">Elicitación</span>
+        <span style="background-color:#2980b9; color:white; padding:2px 6px; border-radius:3px;">Especificación</span>
+        <span style="background-color:#8e44ad; color:white; padding:2px 6px; border-radius:3px;">Validación</span>
+        <span style="background-color:#27ae60; color:white; padding:2px 6px; border-radius:3px;">Implementación</span>
+        <span style="background-color:#c0392b; color:white; padding:2px 6px; border-radius:3px;">Cierre</span>
+        <span style="background-color:#f1c40f; padding:2px 6px; border-radius:3px;">★ Hito</span>
+    </p>
+    <p><strong>Prioridades:</strong>
+        <span class="prio-alta">Alta</span> ·
+        <span class="prio-media">Media</span> ·
+        <span class="prio-baja">Baja</span>
+    </p>
+
+    <div class="gantt-wrapper">
+        <table class="gantt-table" id="ganttTable">
+            <thead>
+                <tr class="month-row">
+                    <th rowspan="2" style="min-width:180px; background-color:#2c3e50; color:white;">ACTIVIDAD</th>
+                    <th rowspan="2" style="min-width:100px; background-color:#2c3e50; color:white;">PROGRESO</th>
+                    <th colspan="4" style="background-color:#2c3e50; color:white;">JUL</th>
+                    <th colspan="4" style="background-color:#2c3e50; color:white;">AGO</th>
+                    <th colspan="4" style="background-color:#2c3e50; color:white;">SEP</th>
+                    <th colspan="4" style="background-color:#2c3e50; color:white;">OCT</th>
+                    <th colspan="4" style="background-color:#2c3e50; color:white;">NOV</th>
+                    <th colspan="4" style="background-color:#2c3e50; color:white;">DIC</th>
+                    <th rowspan="2" style="min-width:70px; background-color:#2c3e50; color:white;">PRIORIDAD</th>
+                </tr>
+                <tr class="week-row">
+                    <th>1</th><th>2</th><th>3</th><th>4</th>
+                    <th>5</th><th>6</th><th>7</th><th>8</th>
+                    <th>9</th><th>10</th><th>11</th><th>12</th>
+                    <th>13</th><th>14</th><th>15</th><th>16</th>
+                    <th>17</th><th>18</th><th>19</th><th>20</th>
+                    <th>21</th><th>22</th><th>23</th><th>24</th>
+                </tr>
+            </thead>
+            <tbody id="gantt-body"></tbody>
+        </table>
+    </div>
+
+    <h5 style="font-size:15px; color:#1a3c6e;">5.2. DESCRIPCIÓN DE ACTIVIDADES</h5>
+    <p>A continuación se detalla cada una de las actividades del cronograma:</p>
+    <table style="font-size:13px;">
+        <tr><th style="width:8%;">ID</th><th style="width:22%;">ACTIVIDAD</th><th style="width:38%;">DESCRIPCIÓN</th><th style="width:20%;">RESPONSABLE</th><th style="width:12%;">PRIORIDAD</th></tr>
+        <tr><td>1.1</td><td>Kickoff y presentación del equipo</td><td>Reunión inicial para presentar al equipo de desarrollo, definir canales de comunicación y establecer expectativas.</td><td>PM / Cliente</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>1.2</td><td>Definición de objetivos y alcance</td><td>Taller con el cliente para definir los objetivos del proyecto y el alcance detallado.</td><td>PM / Cliente</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>1.3</td><td>Estudio de viabilidad técnica</td><td>Análisis de tecnologías, infraestructura y recursos necesarios para el proyecto.</td><td>Arquitecto</td><td><span class="prio-media">Media</span></td></tr>
+        <tr><td>1.4</td><td>Planificación detallada del proyecto</td><td>Elaboración del plan de proyecto detallado con cronograma, recursos y presupuesto.</td><td>PM</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>2.1</td><td>Entrevistas con stakeholders</td><td>Realización de entrevistas con el Gerente General, Contador Jefe y personal contable.</td><td>Analista</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>2.2</td><td>Aplicación de cuestionarios</td><td>Aplicación de los 120 cuestionarios de elicitación al equipo contable.</td><td>Analista</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>2.3</td><td>Análisis de documentación existente</td><td>Revisión de procedimientos internos, manuales y flujos contables actuales.</td><td>Analista</td><td><span class="prio-media">Media</span></td></tr>
+        <tr><td>2.4</td><td>Identificación de requisitos funcionales</td><td>Identificación y documentación de los requisitos funcionales del sistema.</td><td>Analista</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>2.5</td><td>Identificación de requisitos no funcionales</td><td>Identificación de requisitos no funcionales (rendimiento, seguridad, usabilidad).</td><td>Analista</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>2.6</td><td>Priorización de requisitos (MoSCoW)</td><td>Clasificación de requisitos según prioridad (Must, Should, Could, Won't).</td><td>Cliente / PM</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>3.1</td><td>Redacción de Especificación de Requisitos</td><td>Elaboración del documento ERS completo según formato IEEE 830.</td><td>Analista</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>3.2</td><td>Definición de casos de uso</td><td>Definición de casos de uso para las funcionalidades críticas del sistema.</td><td>Analista</td><td><span class="prio-media">Media</span></td></tr>
+        <tr><td>3.3</td><td>Definición de criterios de aceptación</td><td>Definición de criterios de aceptación para cada requisito funcional.</td><td>Analista / Cliente</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>3.4</td><td>Revisión y validación del documento</td><td>Revisión del documento ERS con el cliente y ajustes necesarios.</td><td>Cliente / PM</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>3.5</td><td>Aprobación formal del documento</td><td>Firma de aprobación del documento ERS por parte del cliente.</td><td>Cliente</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>4.1</td><td>Construcción de prototipos baja fidelidad</td><td>Creación de wireframes para definir estructura y flujo de las pantallas críticas.</td><td>Diseñador</td><td><span class="prio-media">Media</span></td></tr>
+        <tr><td>4.2</td><td>Validación de prototipos con usuarios</td><td>Presentación de wireframes al equipo contable para validación de flujos.</td><td>Diseñador / Cliente</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>4.3</td><td>Construcción de prototipos alta fidelidad</td><td>Creación de prototipos interactivos con colores, tipografía y datos reales.</td><td>Diseñador</td><td><span class="prio-media">Media</span></td></tr>
+        <tr><td>4.4</td><td>Validación final de prototipos</td><td>Validación final de prototipos con el Contador Jefe y Gerente General.</td><td>Diseñador / Cliente</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>4.5</td><td>Aprobación de prototipos</td><td>Aprobación formal de prototipos para iniciar el desarrollo.</td><td>Cliente</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>5.1</td><td>Desarrollo del módulo de facturación DIAN</td><td>Desarrollo del módulo de facturación electrónica con integración DIAN (envío XML, firma, recepción CUFE).</td><td>Desarrollador</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>5.2</td><td>Desarrollo del módulo contable</td><td>Desarrollo del módulo contable con plan de cuentas, asientos automáticos y manuales, cierre mensual.</td><td>Desarrollador</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>5.3</td><td>Desarrollo del módulo de inventarios</td><td>Desarrollo del módulo de inventarios con costeo promedio ponderado, ajustes y toma física.</td><td>Desarrollador</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>5.4</td><td>Desarrollo del módulo de reportes</td><td>Desarrollo del módulo de reportes y dashboards con KPIs en tiempo real.</td><td>Desarrollador</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>5.5</td><td>Desarrollo de la integración con Salesforce (API)</td><td>Desarrollo de la API REST para conectar con Salesforce y traer clientes y pedidos.</td><td>Desarrollador</td><td><span class="prio-media">Media</span></td></tr>
+        <tr><td>5.6</td><td>Desarrollo del módulo de cartera y proveedores</td><td>Desarrollo del módulo de cartera con antigüedad de saldos, cobranzas y proveedores con retenciones.</td><td>Desarrollador</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>5.7</td><td>Desarrollo del módulo de activos fijos</td><td>Desarrollo del módulo de activos fijos con depreciación por línea recta y asientos automáticos.</td><td>Desarrollador</td><td><span class="prio-baja">Baja</span></td></tr>
+        <tr><td>5.8</td><td>Desarrollo del módulo de declaraciones tributarias</td><td>Desarrollo del módulo para generar archivos planos de IVA, Renta, Retención y Exógena.</td><td>Desarrollador</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>5.9</td><td>Pruebas unitarias y de integración (backend)</td><td>Pruebas unitarias de cada módulo y pruebas de integración entre módulos y con servicios externos.</td><td>QA / Desarrollador</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>5.10</td><td>Pruebas de integración con DIAN (Sandbox)</td><td>Pruebas de integración con la DIAN en entorno de habilitación (Sandbox) para validar envío y recepción.</td><td>QA / Desarrollador</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>5.11</td><td>Pruebas funcionales y UAT</td><td>Ejecución de casos de prueba funcionales y pruebas de aceptación de usuario (UAT).</td><td>QA / Cliente</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>5.12</td><td>Pruebas de rendimiento y carga</td><td>Pruebas de rendimiento con 1.500 facturas/hora y carga con 30 usuarios concurrentes.</td><td>QA</td><td><span class="prio-media">Media</span></td></tr>
+        <tr><td>5.13</td><td>Pruebas de seguridad (penetración)</td><td>Pruebas de seguridad, incluyendo WAF, bloqueo de intentos fallidos, cifrado y auditoría de logs.</td><td>QA / Seguridad</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>5.14</td><td>Capacitación al equipo contable</td><td>Capacitación práctica al equipo contable durante 2 semanas, simulando un mes de cierre completo.</td><td>Capacitador</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>6.1</td><td>GO LIVE y puesta en producción</td><td>Puesta en producción del sistema, migración de datos y activación para uso real.</td><td>DevOps / PM</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>6.2</td><td>Período de pruebas paralelas (30 días)</td><td>Operación en paralelo con el sistema antiguo (SIIGO) por 30 días hábiles.</td><td>Cliente / PM</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>6.3</td><td>Firma de conformidad y acta de cierre</td><td>Firma de acta de conformidad por el cliente y cierre formal del proyecto.</td><td>Cliente / PM</td><td><span class="prio-alta">Alta</span></td></tr>
+        <tr><td>6.4</td><td>Transferencia de conocimiento</td><td>Transferencia de conocimiento al equipo de TI interno de la empresa (manuales técnicos).</td><td>Desarrollador</td><td><span class="prio-alta">Alta</span></td></tr>
+    </table>
+    <hr>
+
+    <!-- ==================== CIERRE ==================== -->
+    <h5 style="font-size:16px; color:#1a3c6e;">DOCUMENTO VALIDADO POR LAS PARTES EN FECHA:</h5>
+    <table>
+        <thead><tr style="background-color:#feffff;"><th style="width:50%; font-weight:bold;">POR CLIENTE</th><th style="width:50%; font-weight:bold;">DESARROLLADOR</th></tr></thead>
+        <tbody><tr><td>FECHA: _________________</td><td>FECHA: _________________</td></tr><tr><td>NOMBRE DEL ENCARGADO: _________________</td><td>NOMBRE DEL ENCARGADO: _________________</td></tr></tbody>
+    </table>
+
+    <div class="footer">
+        <p><b>ESPECIFICACIÓN DE REQUISITOS DE SOFTWARE</b></p>
+        <p>Proyecto: Sistema Contable y de Facturación Electrónica - Visión Clara S.A.S.</p>
+        <p>Total de preguntas: 120 | Documento generado en formato IEEE 830</p>
+    </div>
+
+</div>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+    (function() {
+        const phaseActivities = {
+            'H1': ['1.1','1.2','1.3','1.4'],
+            'H2': ['2.1','2.2','2.3','2.4','2.5','2.6'],
+            'H3': ['3.1','3.2','3.3','3.4','3.5'],
+            'H4': ['4.1','4.2','4.3','4.4','4.5'],
+            'H5': ['5.1','5.2','5.3','5.4','5.5','5.6','5.7','5.8','5.9','5.10','5.11','5.12','5.13','5.14'],
+            'H6': ['6.1','6.2','6.3','6.4']
+        };
+
+        const activities = [
+            { id: '1.1', name: '1.1 Kickoff y presentación del equipo', weeks: [0], color: '#2c5282', priority: 'Alta' },
+            { id: '1.2', name: '1.2 Definición de objetivos y alcance', weeks: [0,1], color: '#2c5282', priority: 'Alta' },
+            { id: '1.3', name: '1.3 Estudio de viabilidad técnica', weeks: [1,2], color: '#2c5282', priority: 'Media' },
+            { id: '1.4', name: '1.4 Planificación detallada del proyecto', weeks: [2], color: '#2c5282', priority: 'Alta' },
+            { id: 'H1', name: '★ Hito 1: Acta de inicio', weeks: [], color: '#f1c40f', priority: 'Alta', isHito: true },
+            { id: '2.1', name: '2.1 Entrevistas con stakeholders', weeks: [3,4], color: '#e67e22', priority: 'Alta' },
+            { id: '2.2', name: '2.2 Aplicación de cuestionarios', weeks: [3,4], color: '#e67e22', priority: 'Alta' },
+            { id: '2.3', name: '2.3 Análisis de documentación existente', weeks: [4], color: '#e67e22', priority: 'Media' },
+            { id: '2.4', name: '2.4 Identificación de requisitos funcionales', weeks: [5,6], color: '#e67e22', priority: 'Alta' },
+            { id: '2.5', name: '2.5 Identificación de requisitos no funcionales', weeks: [6], color: '#e67e22', priority: 'Alta' },
+            { id: '2.6', name: '2.6 Priorización de requisitos (MoSCoW)', weeks: [7], color: '#e67e22', priority: 'Alta' },
+            { id: 'H2', name: '★ Hito 2: Requisitos priorizados', weeks: [], color: '#f1c40f', priority: 'Alta', isHito: true },
+            { id: '3.1', name: '3.1 Redacción de Especificación de Requisitos', weeks: [8,9,10], color: '#2980b9', priority: 'Alta' },
+            { id: '3.2', name: '3.2 Definición de casos de uso', weeks: [8,9], color: '#2980b9', priority: 'Media' },
+            { id: '3.3', name: '3.3 Definición de criterios de aceptación', weeks: [9], color: '#2980b9', priority: 'Alta' },
+            { id: '3.4', name: '3.4 Revisión y validación del documento', weeks: [10,11], color: '#2980b9', priority: 'Alta' },
+            { id: '3.5', name: '3.5 Aprobación formal del documento', weeks: [11], color: '#2980b9', priority: 'Alta' },
+            { id: 'H3', name: '★ Hito 3: Documento ERS aprobado', weeks: [], color: '#f1c40f', priority: 'Alta', isHito: true },
+            { id: '4.1', name: '4.1 Construcción de prototipos baja fidelidad', weeks: [12], color: '#8e44ad', priority: 'Media' },
+            { id: '4.2', name: '4.2 Validación de prototipos con usuarios', weeks: [12,13], color: '#8e44ad', priority: 'Alta' },
+            { id: '4.3', name: '4.3 Construcción de prototipos alta fidelidad', weeks: [13], color: '#8e44ad', priority: 'Media' },
+            { id: '4.4', name: '4.4 Validación final de prototipos', weeks: [13,14], color: '#8e44ad', priority: 'Alta' },
+            { id: '4.5', name: '4.5 Aprobación de prototipos', weeks: [14], color: '#8e44ad', priority: 'Alta' },
+            { id: 'H4', name: '★ Hito 4: Prototipos aprobados', weeks: [], color: '#f1c40f', priority: 'Alta', isHito: true },
+            { id: '5.1', name: '5.1 Desarrollo módulo facturación DIAN', weeks: [15,16,17], color: '#27ae60', priority: 'Alta' },
+            { id: '5.2', name: '5.2 Desarrollo módulo contable', weeks: [15,16,17], color: '#27ae60', priority: 'Alta' },
+            { id: '5.3', name: '5.3 Desarrollo módulo de inventarios', weeks: [17,18], color: '#27ae60', priority: 'Alta' },
+            { id: '5.4', name: '5.4 Desarrollo módulo de reportes', weeks: [18,19], color: '#27ae60', priority: 'Alta' },
+            { id: '5.5', name: '5.5 Integración con Salesforce (API)', weeks: [18,19], color: '#27ae60', priority: 'Media' },
+            { id: '5.6', name: '5.6 Desarrollo módulo cartera/proveedores', weeks: [17,18], color: '#27ae60', priority: 'Alta' },
+            { id: '5.7', name: '5.7 Desarrollo módulo activos fijos', weeks: [19], color: '#27ae60', priority: 'Baja' },
+            { id: '5.8', name: '5.8 Desarrollo módulo declaraciones tributarias', weeks: [18,19], color: '#27ae60', priority: 'Alta' },
+            { id: '5.9', name: '5.9 Pruebas unitarias y de integración', weeks: [19,20], color: '#27ae60', priority: 'Alta' },
+            { id: '5.10', name: '5.10 Pruebas de integración con DIAN (Sandbox)', weeks: [20,21], color: '#27ae60', priority: 'Alta' },
+            { id: '5.11', name: '5.11 Pruebas funcionales y UAT', weeks: [21,22], color: '#27ae60', priority: 'Alta' },
+            { id: '5.12', name: '5.12 Pruebas de rendimiento y carga', weeks: [22], color: '#27ae60', priority: 'Media' },
+            { id: '5.13', name: '5.13 Pruebas de seguridad (penetración)', weeks: [22], color: '#27ae60', priority: 'Alta' },
+            { id: '5.14', name: '5.14 Capacitación al equipo contable', weeks: [22,23], color: '#27ae60', priority: 'Alta' },
+            { id: 'H5', name: '★ Hito 5: Sistema listo para producción', weeks: [], color: '#f1c40f', priority: 'Alta', isHito: true },
+            { id: '6.1', name: '6.1 GO LIVE y puesta en producción', weeks: [23], color: '#c0392b', priority: 'Alta' },
+            { id: '6.2', name: '6.2 Período de pruebas paralelas (30 días)', weeks: [23], color: '#c0392b', priority: 'Alta' },
+            { id: '6.3', name: '6.3 Firma de conformidad y acta de cierre', weeks: [23], color: '#c0392b', priority: 'Alta' },
+            { id: '6.4', name: '6.4 Transferencia de conocimiento', weeks: [23], color: '#c0392b', priority: 'Alta' },
+            { id: 'H6', name: '★ Hito 6: Proyecto finalizado', weeks: [], color: '#f1c40f', priority: 'Alta', isHito: true }
+        ];
+
+        const totalWeeks = 24;
+
+        function getHitoProgress(hitoId) {
+            const actIds = phaseActivities[hitoId] || [];
+            if (actIds.length === 0) return 0;
+            let completed = 0;
+            actIds.forEach(id => {
+                const key = 'gantt_' + id;
+                const saved = localStorage.getItem(key);
+                if (saved) {
+                    const state = JSON.parse(saved);
+                    if (Array.isArray(state) && state.length > 0) {
+                        const completadas = state.filter(v => v === true).length;
+                        if (completadas === state.length) completed++;
+                    }
+                }
+            });
+            return Math.round((completed / actIds.length) * 100);
+        }
+
+        function renderGantt() {
+            const tbody = document.getElementById('gantt-body');
+            tbody.innerHTML = '';
+            activities.forEach((act) => {
+                const tr = document.createElement('tr');
+                const tdName = document.createElement('td');
+                tdName.textContent = act.name;
+                tdName.style.textAlign = 'left';
+                tdName.style.padding = '4px 8px';
+                tdName.style.whiteSpace = 'nowrap';
+                if (act.isHito) { tdName.style.fontWeight = 'bold'; tdName.style.backgroundColor = '#fef9e7'; }
+                tr.appendChild(tdName);
+
+                const tdProgress = document.createElement('td');
+                tdProgress.style.textAlign = 'center';
+                tdProgress.style.padding = '4px 8px';
+                let pct = 0;
+                if (act.isHito) { pct = getHitoProgress(act.id); } else {
+                    const totalCells = act.weeks.length;
+                    let completed = 0;
+                    if (totalCells > 0) {
+                        const key = 'gantt_' + act.id;
+                        const saved = localStorage.getItem(key);
+                        if (saved) { const state = JSON.parse(saved); completed = state.filter(v => v === true).length; }
+                    }
+                    pct = totalCells > 0 ? Math.round((completed / totalCells) * 100) : 0;
+                }
+                const progressDiv = document.createElement('div');
+                progressDiv.className = 'progress-container';
+                const barDiv = document.createElement('div');
+                barDiv.className = 'progress-bar';
+                const fillDiv = document.createElement('div');
+                fillDiv.className = 'progress-fill';
+                fillDiv.style.width = pct + '%';
+                barDiv.appendChild(fillDiv);
+                progressDiv.appendChild(barDiv);
+                const textSpan = document.createElement('span');
+                textSpan.className = 'progress-text';
+                textSpan.textContent = pct + '%';
+                progressDiv.appendChild(textSpan);
+                tdProgress.appendChild(progressDiv);
+                tr.appendChild(tdProgress);
+
+                for (let w = 0; w < totalWeeks; w++) {
+                    const td = document.createElement('td');
+                    td.style.padding = '2px';
+                    td.style.textAlign = 'center';
+                    td.style.verticalAlign = 'middle';
+                    const isActive = act.weeks.includes(w);
+                    if (isActive && !act.isHito) {
+                        const cellDiv = document.createElement('div');
+                        cellDiv.className = 'gantt-cell';
+                        cellDiv.style.backgroundColor = act.color;
+                        cellDiv.style.width = '100%';
+                        cellDiv.style.height = '24px';
+                        cellDiv.style.borderRadius = '3px';
+                        cellDiv.style.cursor = 'pointer';
+                        cellDiv.style.lineHeight = '24px';
+                        cellDiv.style.fontSize = '12px';
+                        const key = 'gantt_' + act.id;
+                        let state = [];
+                        const saved = localStorage.getItem(key);
+                        if (saved) { state = JSON.parse(saved); } else { state = new Array(act.weeks.length).fill(false); localStorage.setItem(key, JSON.stringify(state)); }
+                        const weekIndex = act.weeks.indexOf(w);
+                        if (weekIndex !== -1 && state[weekIndex] === true) { cellDiv.classList.add('completed'); cellDiv.textContent = '✓'; }
+                        cellDiv.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            const key = 'gantt_' + act.id;
+                            let state = JSON.parse(localStorage.getItem(key) || '[]');
+                            if (state.length === 0) state = new Array(act.weeks.length).fill(false);
+                            const idx = act.weeks.indexOf(w);
+                            if (idx !== -1) { state[idx] = !state[idx]; localStorage.setItem(key, JSON.stringify(state)); renderGantt(); }
+                        });
+                        td.appendChild(cellDiv);
+                    }
+                    tr.appendChild(td);
+                }
+
+                const tdPrio = document.createElement('td');
+                tdPrio.style.textAlign = 'center';
+                tdPrio.style.verticalAlign = 'middle';
+                if (act.isHito) { tdPrio.textContent = '★'; tdPrio.style.fontSize = '18px'; tdPrio.style.color = '#f1c40f'; } else {
+                    const span = document.createElement('span');
+                    if (act.priority === 'Alta') { span.className = 'prio-alta'; span.textContent = 'Alta'; }
+                    else if (act.priority === 'Media') { span.className = 'prio-media'; span.textContent = 'Media'; }
+                    else { span.className = 'prio-baja'; span.textContent = 'Baja'; }
+                    tdPrio.appendChild(span);
+                }
+                tr.appendChild(tdPrio);
+                tbody.appendChild(tr);
+            });
+        }
+        renderGantt();
+    })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mermaid Local - Sin Conexión</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: url();
+        }
+
+        h1 {
+            color: #1a1a2e;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #636e72;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .container h2 {
+            color: #2d3436;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #6c5ce7;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .badge-offline {
+            background: #00b894;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            border: 2px solid #dfe6e9;
+            border-radius: 8px;
+            resize: vertical;
+            transition: border-color 0.3s;
+            background: #fafafa;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #6c5ce7;
+            background: white;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #5f3dc4;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-ejemplo {
+            background: #00b894;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .btn-ejemplo:hover {
+            background: #00a381;
+            transform: scale(1.05);
+        }
+
+        .btn-ejemplo:active {
+            transform: scale(0.95);
+        }
+
+        #diagramaContainer {
+            min-height: 200px;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 8px;
+            border: 2px dashed #dfe6e9;
+            position: relative;
+        }
+
+        #diagramaContainer .mermaid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .error-box {
+            color: #d63031;
+            background: #ffeaa7;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #d63031;
+        }
+
+        .error-box strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .error-box .error-detail {
+            background: #2d3436;
+            color: #dfe6e9;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin-top: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .success-box {
+            color: #00b894;
+            background: #d4edda;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #00b894;
+        }
+
+        .info-box {
+            color: #0984e3;
+            background: #dfe6e9;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #0984e3;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #dfe6e9;
+        }
+
+        .stats span {
+            color: #636e72;
+            font-size: 14px;
+        }
+
+        .stats strong {
+            color: #2d3436;
+        }
+
+        .clear-btn {
+            background: #e17055;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .clear-btn:hover {
+            background: #d63031;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .toolbar {
+                flex-direction: column;
+            }
+
+            .btn-primary {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>📊 Mermaid Local</h1>
+    <p class="subtitle">Editor de diagramas <strong>sin conexión</strong> — Versión 10.9.6</p>
+
+    <div class="container">
+        <h2>
+            ✏️ Editor de Diagramas
+            <span class="badge badge-offline">📡 Offline</span>
+        </h2>
+
+        <textarea id="codigoMermaid" spellcheck="false">graph TD
+    A[Inicio] --> B{¿Es correcto?}
+    B -->|Sí| C[Continuar]
+    B -->|No| D[Corregir]
+    D --> B
+    C --> E[Fin]</textarea>
+
+        <div class="toolbar">
+            <button class="btn-primary" onclick="renderizarDiagrama()">▶ Renderizar</button>
+            <span style="color: #636e72; font-size: 14px;">— Ejemplos:</span>
+            <button class="btn-ejemplo" onclick="cargarEjemplo('flujo')">Flujo</button>
+            <button class="btn-ejemplo" onclick="cargarEjemplo('secuencia')">Secuencia</button>
+            <button class="btn-ejemplo" onclick="cargarEjemplo('gantt')">Gantt</button>
+            <button class="btn-ejemplo" onclick="cargarEjemplo('clase')">Clases</button>
+            <button class="btn-ejemplo" onclick="cargarEjemplo('estado')">Estado</button>
+            <button class="btn-ejemplo" onclick="cargarEjemplo('er')">ER</button>
+            <button class="clear-btn" onclick="limpiarDiagrama()">✕ Limpiar</button>
+        </div>
+
+        <div class="stats">
+            <span>📝 Líneas: <strong id="lineCount">0</strong></span>
+            <span>📏 Caracteres: <strong id="charCount">0</strong></span>
+            <span>🔄 Mermaid: <strong id="mermaidStatus">Cargando...</strong></span>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>📊 Diagrama Renderizado</h2>
+        <div id="diagramaContainer">
+            <div class="info-box">
+                💡 Escribe un diagrama y presiona <strong>"Renderizar"</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cargar Mermaid LOCALMENTE -->
+    <script src="mermaid.min.js"></script>
+
+    <script>
+        // =============================================
+        // VERIFICAR CARGA DE MERMAID
+        // =============================================
+        const statusEl = document.getElementById('mermaidStatus');
+
+        if (typeof mermaid === 'undefined') {
+            statusEl.textContent = '❌ No cargado';
+            statusEl.style.color = '#d63031';
+            document.getElementById('diagramaContainer').innerHTML = `
+                <div class="error-box">
+                    <strong>❌ Error crítico</strong>
+                    Mermaid no se cargó correctamente.
+                    <div class="error-detail">
+                        Asegúrate de que el archivo "mermaid.min.js" esté en la misma carpeta que este HTML.
+                    </div>
+                </div>
+            `;
+        } else {
+            // Inicializar Mermaid
+            mermaid.initialize({
+                theme: 'base',
+                themeVariables: {
+                    primaryColor: '#6c5ce7',
+                    primaryTextColor: '#2d3436',
+                    primaryBorderColor: '#6c5ce7',
+                    lineColor: '#2d3436',
+                    secondaryColor: '#dfe6e9',
+                    tertiaryColor: '#f0f2f5',
+                    fontFamily: 'Segoe UI, sans-serif'
+                },
+                startOnLoad: false,
+                logLevel: 'error',
+                securityLevel: 'loose',
+                fontFamily: 'Segoe UI, sans-serif'
+            });
+
+            statusEl.textContent = '✅ Cargado v10.9.6';
+            statusEl.style.color = '#00b894';
+        }
+
+        // =============================================
+        // CONTADOR DE LÍNEAS Y CARACTERES
+        // =============================================
+        const textarea = document.getElementById('codigoMermaid');
+
+        function actualizarContadores() {
+            const texto = textarea.value;
+            document.getElementById('lineCount').textContent = texto.split('\n').length;
+            document.getElementById('charCount').textContent = texto.length;
+        }
+
+        textarea.addEventListener('input', actualizarContadores);
+        actualizarContadores();
+
+        // =============================================
+        // RENDERIZAR DIAGRAMA
+        // =============================================
+        function renderizarDiagrama() {
+            const codigo = document.getElementById('codigoMermaid').value.trim();
+            const container = document.getElementById('diagramaContainer');
+
+            // Limpiar container
+            container.innerHTML = '';
+
+            // Verificar si hay código
+            if (!codigo) {
+                container.innerHTML = `
+                    <div class="info-box">
+                        💡 El editor está vacío. Escribe un diagrama y presiona "Renderizar".
+                    </div>
+                `;
+                return;
+            }
+
+            // Verificar Mermaid
+            if (typeof mermaid === 'undefined') {
+                container.innerHTML = `
+                    <div class="error-box">
+                        <strong>❌ Error</strong>
+                        Mermaid no está disponible.
+                        <div class="error-detail">Verifica que mermaid.min.js esté en la misma carpeta.</div>
+                    </div>
+                `;
+                return;
+            }
+
+            try {
+                // Crear contenedor para el diagrama
+                const tempDiv = document.createElement('div');
+                tempDiv.className = 'mermaid';
+                tempDiv.textContent = codigo;
+                container.appendChild(tempDiv);
+
+                // Renderizar
+                mermaid.run({
+                    nodes: [tempDiv],
+                    suppressErrors: false // Ahora capturamos errores manualmente
+                }).catch(function (error) {
+                    // Si hay error, mostrar mensaje claro
+                    container.innerHTML = `
+                        <div class="error-box">
+                            <strong>❌ Error de sintaxis</strong>
+                            El diagrama tiene un error en su estructura.
+                            <div class="error-detail">
+                                ${error.message || 'Error desconocido'}
+                                <br><br>
+                                <small>💡 Consejos comunes:</small>
+                                <br>
+                                • Usa <strong>{ }</strong> para decisiones (diamantes)
+                                • Usa <strong>[ ]</strong> para procesos (rectángulos)
+                                • Usa <strong>( )</strong> para eventos (círculos)
+                                • Las flechas: <strong>--></strong> o <strong>->></strong>
+                                • Revisa que no haya caracteres especiales sin escapar
+                            </div>
+                        </div>
+                    `;
+                });
+
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="error-box">
+                        <strong>❌ Error inesperado</strong>
+                        <div class="error-detail">${error.message || 'Error desconocido'}</div>
+                    </div>
+                `;
+            }
+        }
+
+        // =============================================
+        // LIMPIAR DIAGRAMA
+        // =============================================
+        function limpiarDiagrama() {
+            const container = document.getElementById('diagramaContainer');
+            container.innerHTML = `
+                <div class="info-box">
+                    🧹 Diagrama limpiado. Escribe uno nuevo y presiona "Renderizar".
+                </div>
+            `;
+        }
+
+        // =============================================
+        // CARGAR EJEMPLOS
+        // =============================================
+        function cargarEjemplo(tipo) {
+            const ejemplos = {
+                'ddflujo': `graph TD
+    A[Inicio] --> B{¿Tienes café?}
+    B -->|Sí| C[Programar feliz]
+    B -->|No| D[Tomar café]
+    D --> B
+    C --> E[Fin]
+    
+    style A fill:#6c5ce7,color:#fff
+    style E fill:#00b894,color:#fff
+    style D fill:#e17055,color:#fff`,
+
+                'secuencia': `sequenceDiagram
+    Usuario->>Sistema: Iniciar sesión
+    Sistema->>BaseDatos: Verificar credenciales
+    BaseDatos-->>Sistema: Usuario válido
+    Sistema-->>Usuario: ✅ Acceso concedido
+    Usuario->>Sistema: Realizar acción
+    Sistema-->>Usuario: ✅ Confirmación`,
+
+                'gantt': `gantt
+    title Proyecto de Desarrollo
+    dateFormat  YYYY-MM-DD
+    axisFormat %d/%m
+    
+    section Planificación
+    Análisis de requisitos    :a1, 2024-01-01, 7d
+    Diseño de arquitectura    :a2, after a1, 5d
+    
+    section Desarrollo
+    Implementación backend    :b1, after a2, 10d
+    Implementación frontend   :b2, after a2, 8d
+    
+    section Pruebas
+    Pruebas unitarias         :c1, after b1, 3d
+    Pruebas de integración    :c2, after b2, 3d`,
+
+                'clase': `classDiagram
+    class Animal {
+        +String nombre
+        +int edad
+        +hacerSonido() void
+    }
+    class Perro {
+        +String raza
+        +ladrar() void
+    }
+    class Gato {
+        +String color
+        +maullar() void
+    }
+    class Veterinario {
+        +String nombre
+        +atender(Animal a) void
+    }
+    
+    Animal <|-- Perro
+    Animal <|-- Gato
+    Veterinario --> Animal : atiende a`,
+
+                'estado': `stateDiagram-v2
+    [*] --> Esperando
+    Esperando --> Procesando : Recibir datos
+    Procesando --> Completado : Éxito
+    Procesando --> Error : Fallo
+    Completado --> [*]
+    Error --> Esperando : Reintentar
+    Esperando --> [*] : Cancelar`,
+
+                'er': `erDiagram
+    USUARIO ||--o{ PEDIDO : realiza
+    USUARIO {
+        int id PK
+        string nombre
+        string email
+    }
+    PEDIDO ||--|{ DETALLE : contiene
+    PEDIDO {
+        int id PK
+        date fecha
+        string estado
+    }
+    PRODUCTO ||--o{ DETALLE : incluye
+    PRODUCTO {
+        int id PK
+        string nombre
+        float precio
+    }`
+            };
+
+            document.getElementById('codigoMermaid').value = ejemplos[tipo] || '';
+            actualizarContadores();
+            renderizarDiagrama();
+        }
+
+        // =============================================
+        // AUTO-RENDERIZAR AL INICIAR (con el ejemplo)
+        // =============================================
+        window.onload = function () {
+            // Renderizar automáticamente el ejemplo
+            setTimeout(renderizarDiagrama, 100);
+        };
+
+        // =============================================
+        // ATAJO DE TECLADO: Ctrl+Enter para renderizar
+        // =============================================
+        document.addEventListener('keydown', function (e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                renderizarDiagrama();
+            }
+        });
+    </script>
+</body>
+
+</html>
