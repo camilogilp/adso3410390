@@ -43,6 +43,8 @@
 | FECHA | REVISIÓN(ES) | AUTOR(ES) |
 |-------|--------------|-----------|
 | 20/06/2026 | V1.0 | Juan Camilo Gil Perez |
+| 30/07/2026 | V2.0 | Juan Camilo Gil Perez |
+| 13/08/2026 | V3.0 | Juan Camilo Gil Perez |
 | | | |
 
 ---
@@ -51,9 +53,18 @@
 
 | POR CLIENTE | DESARROLLADOR |
 |-------------|---------------|
-| FECHA: _________________ | FECHA: _________________ |
-| NOMBRE DEL ENCARGADO: _________________ | NOMBRE DEL ENCARGADO: _________________ |
+| FECHA: 20/06/2026 | FECHA: 20/06/2026 |
+| NOMBRE DEL ENCARGADO: Jose Germán Estrada | NOMBRE DEL ENCARGADO: Juan Camilo Gil Perez|
 
+| POR CLIENTE | DESARROLLADOR |
+|-------------|---------------|
+| FECHA: 30/07/2026 | FECHA: 30/07/2026 |
+| NOMBRE DEL ENCARGADO: Jose Germán Estrada | NOMBRE DEL ENCARGADO: Juan Camilo Gil Perez|
+
+| POR CLIENTE | DESARROLLADOR |
+|-------------|---------------|
+| FECHA: 13/08/2026 | FECHA: 13/08/2026 |
+| NOMBRE DEL ENCARGADO: Jose Germán Estrada | NOMBRE DEL ENCARGADO: Juan Camilo Gil Perez|
 ---
 
 ##### CONTENIDO
@@ -79,9 +90,6 @@
 4. VALIDACIÓN DE REQUISITOS
    4.1. CONSTRUCCIÓN DE PROTOTIPOS
    4.2. FORMATO DE CASO DE PRUEBA
-5. CRONOGRAMA DE ACTIVIDADES DEL PROYECTO
-   5.1. DIAGRAMA DE GANTT
-   5.2. DESCRIPCIÓN DE ACTIVIDADES
 
 ---
 
@@ -687,8 +695,6 @@ Después del lanzamiento, las solicitudes de soporte se manejarán a través de 
 
 *(Enumerar todas y cada una de las funciones que pide el cliente para su proyecto de automatización)*
 
-##### 3.1. REQUISITOS DEL SISTEMA
-
 | ID | REQUISITO | DESCRIPCIÓN |
 |----|-----------|-------------|
 | RS-01 | Plataforma Web y Móvil | El sistema debe ser accesible desde navegador web (escritorio) y tener versión móvil (PWA) para aprobaciones rápidas. |
@@ -702,11 +708,11 @@ Después del lanzamiento, las solicitudes de soporte se manejarán a través de 
 | RS-09 | Exportación de datos | El sistema debe permitir exportar datos a Excel, PDF y CSV. |
 | RS-10 | Escalabilidad horizontal | El sistema debe permitir escalar horizontalmente añadiendo más servidores sin reescribir el núcleo. |
 
-##### 3.2. REQUISITOS FUNCIONALES
+##### 3.1. REQUISITOS DEL SISTEMA
 
 A continuación se detallan los requisitos funcionales priorizados según las necesidades del cliente. La priorización se define como **ALTA** (indispensable para el lanzamiento), **MEDIA** (deseable para el lanzamiento, pero puede postergarse), **BAJA** (para futuras fases).
 
-**3.2.1. MÓDULO DE FACTURACIÓN ELECTRÓNICA Y DIAN (Preguntas #46 - #58)**
+**3.1.1. MÓDULO DE FACTURACIÓN ELECTRÓNICA Y DIAN (Preguntas #46 - #58)**
 
 | ID | REQUISITO | DESCRIPCIÓN | PRIORIDAD |
 |----|-----------|-------------|-----------|
@@ -723,7 +729,7 @@ A continuación se detallan los requisitos funcionales priorizados según las ne
 | RF-011 | Reporte de documentos enviados | El sistema debe tener un reporte/dashboard de "Documentos Enviados" con filtros por fecha, estado y tipo de documento, exportable a Excel. | **ALTA** |
 | RF-012 | Generación de Exógena | El sistema debe generar archivos de Exógena en formato DIAN. | **ALTA** |
 
-**3.2.2. MÓDULO CONTABLE Y PLAN DE CUENTAS (Preguntas #59 - #70)**
+**3.1.2. MÓDULO CONTABLE Y PLAN DE CUENTAS (Preguntas #59 - #70)**
 
 | ID | REQUISITO | DESCRIPCIÓN | PRIORIDAD |
 |----|-----------|-------------|-----------|
@@ -740,21 +746,21 @@ A continuación se detallan los requisitos funcionales priorizados según las ne
 | RF-023 | Depreciación de activos fijos | El sistema debe calcular depreciación por línea recta y generar asiento mensual actualizando costo neto en libros. | **ALTA** |
 | RF-024 | Importación de datos | El sistema debe permitir importación de datos desde Excel/CSV para saldos iniciales, cuentas y inventario. | **ALTA** |
 
-**3.2.3. MÓDULO DE INVENTARIOS Y ACTIVOS FIJOS (Preguntas #28 - #29)**
+**3.1.3. MÓDULO DE INVENTARIOS Y ACTIVOS FIJOS (Preguntas #28 - #29)**
 
 | ID | REQUISITO | DESCRIPCIÓN | PRIORIDAD |
 |----|-----------|-------------|-----------|
 | RF-025 | Control de inventarios | El sistema debe controlar inventarios con costeo promedio ponderado, ajustes por mermas y toma física. | **ALTA** |
 | RF-026 | Gestión de activos fijos | El sistema debe gestionar activos fijos (lentómetros, autorrefractores, computadores de diagnóstico) con depreciación por línea recta. | **ALTA** |
 
-**3.2.4. MÓDULO DE CARTERA Y PROVEEDORES (Pregunta #27)**
+**3.1.4. MÓDULO DE CARTERA Y PROVEEDORES (Pregunta #27)**
 
 | ID | REQUISITO | DESCRIPCIÓN | PRIORIDAD |
 |----|-----------|-------------|-----------|
 | RF-027 | Gestión de cartera | El sistema debe gestionar cartera con antigüedad de saldos, gestión de cobranzas y aplicación de pagos. | **ALTA** |
 | RF-028 | Gestión de proveedores | El sistema debe gestionar proveedores con fechas de pago y retenciones de ley. | **ALTA** |
 
-**3.2.5. MÓDULO DE REPORTES Y DECLARACIONES (Preguntas #30 - #31, #71 - #75)**
+**3.1.5. MÓDULO DE REPORTES Y DECLARACIONES (Preguntas #30 - #31, #71 - #75)**
 
 | ID | REQUISITO | DESCRIPCIÓN | PRIORIDAD |
 |----|-----------|-------------|-----------|
@@ -764,6 +770,117 @@ A continuación se detallan los requisitos funcionales priorizados según las ne
 | RF-032 | Dashboard con KPIs | El sistema debe tener dashboard con KPIs: Ventas del día, Cartera vencida > 60 días, Margen bruto del mes, Efectivo disponible, Facturas pendientes por enviar a DIAN. | **ALTA** |
 | RF-033 | Envío programado de reportes | El sistema debe permitir envío automático programado de reportes por correo electrónico. | **MEDIA** |
 | RF-034 | Declaraciones tributarias | El sistema debe generar archivos planos para IVA (formato 300), Renta, Retención (formato 350) y Exógena. | **ALTA** |
+
+##### 3.2. REQUISITOS FUNCIONALES
+
+##### 3.2.1. DESCRIPCIÓN DE ACTIVIDADES
+
+A continuación se detalla cada una de las actividades del cronograma:
+
+| ID | ACTIVIDAD | DESCRIPCIÓN | RESPONSABLE | ENTREGABLE |
+|----|-----------|-------------|-------------|------------|
+| 1.1 | Kickoff y presentación del equipo | Reunión inicial para presentar al equipo de desarrollo, definir canales de comunicación y establecer expectativas. | Ana María Rodríguez | Acta de kickoff |
+| 1.2 | Definición de objetivos y alcance | Taller con el cliente para definir los objetivos del proyecto y el alcance detallado. | Ana María Rodríguez | Documento de alcance |
+| 1.3 | Estudio de viabilidad técnica | Análisis de tecnologías, infraestructura y recursos necesarios para el proyecto. | Carlos Alberto Pérez | Estudio de viabilidad |
+| 1.4 | Planificación detallada del proyecto | Elaboración del plan de proyecto detallado con cronograma, recursos y presupuesto. | Ana María Rodríguez | Plan de proyecto |
+| 2.1 | Entrevistas con stakeholders | Realización de entrevistas con el Gerente General, Contador Jefe y personal contable. | Laura Cristina Gómez | Actas de entrevistas |
+| 2.2 | Aplicación de cuestionarios | Aplicación de los 120 cuestionarios de elicitación al equipo contable. | Laura Cristina Gómez | Cuestionarios completos |
+| 2.3 | Análisis de documentación existente | Revisión de procedimientos internos, manuales y flujos contables actuales. | Laura Cristina Gómez | Documentación analizada |
+| 2.4 | Identificación de requisitos funcionales | Identificación y documentación de los requisitos funcionales del sistema. | Laura Cristina Gómez | Lista de RF |
+| 2.5 | Identificación de requisitos no funcionales | Identificación de requisitos no funcionales (rendimiento, seguridad, usabilidad). | Laura Cristina Gómez | Lista de RNF |
+| 2.6 | Priorización de requisitos (MoSCoW) | Clasificación de requisitos según prioridad (Must, Should, Could, Won't). | Juan David Martínez | Requisitos priorizados |
+| 3.1 | Redacción de Especificación de Requisitos | Elaboración del documento ERS completo según formato IEEE 830. | Laura Cristina Gómez | Documento ERS |
+| 3.2 | Definición de casos de uso | Definición de casos de uso para las funcionalidades críticas del sistema. | Laura Cristina Gómez | Diagramas de casos de uso |
+| 3.3 | Definición de criterios de aceptación | Definición de criterios de aceptación para cada requisito funcional. | Laura Cristina Gómez | Criterios de aceptación |
+| 3.4 | Revisión y validación del documento | Revisión del documento ERS con el cliente y ajustes necesarios. | Ana María Rodríguez | Documento ERS revisado |
+| 3.5 | Aprobación formal del documento | Firma de aprobación del documento ERS por parte del cliente. | Ana María Rodríguez | Documento ERS aprobado |
+| 4.1 | Construcción de prototipos de baja fidelidad | Creación de wireframes para definir estructura y flujo de las pantallas críticas. | María Fernanda López | Wireframes |
+| 4.2 | Validación de prototipos con usuarios | Presentación de wireframes al equipo contable para validación de flujos. | María Fernanda López | Feedback de usuarios |
+| 4.3 | Construcción de prototipos de alta fidelidad | Creación de prototipos interactivos con colores, tipografía y datos reales. | María Fernanda López | Prototipos interactivos |
+| 4.4 | Validación final de prototipos | Validación final de prototipos con el Contador Jefe y Gerente General. | María Fernanda López | Prototipos validados |
+| 4.5 | Aprobación de prototipos | Aprobación formal de prototipos para iniciar el desarrollo. | Ana María Rodríguez | Acta de aprobación |
+| 5.1 | Desarrollo de módulo de facturación DIAN | Desarrollo del módulo de facturación electrónica con integración DIAN. | Andrés Felipe Rojas | Código fuente |
+| 5.2 | Desarrollo de módulo contable | Desarrollo del módulo contable con plan de cuentas y asientos automáticos. | Andrés Felipe Rojas | Código fuente |
+| 5.3 | Desarrollo de módulo de inventarios | Desarrollo del módulo de inventarios con costeo promedio ponderado. | Andrés Felipe Rojas | Código fuente |
+| 5.4 | Desarrollo de módulo de reportes | Desarrollo del módulo de reportes y dashboards. | Andrés Felipe Rojas | Código fuente |
+| 5.5 | Pruebas de integración con DIAN (Sandbox) | Pruebas de integración con la DIAN en entorno de habilitación (Sandbox). | Karen Johanna Torres | Informe de pruebas |
+| 5.6 | Pruebas funcionales y UAT | Ejecución de casos de prueba funcionales y pruebas de aceptación de usuario. | Karen Johanna Torres | Informe UAT |
+| 5.7 | Pruebas de rendimiento y carga | Pruebas de rendimiento con 1.500 facturas/hora y carga con 30 usuarios. | Karen Johanna Torres | Informe de rendimiento |
+| 5.8 | Capacitación al equipo contable | Capacitación práctica al equipo contable durante 2 semanas. | Diana Carolina Sánchez | Plan de capacitación |
+| 6.1 | GO LIVE y puesta en producción | Puesta en producción del sistema y activación para uso real. | Luis Eduardo Ramírez | Sistema en producción |
+| 6.2 | Período de pruebas paralelas (30 días) | Operación en paralelo con el sistema antiguo (SIIGO) por 30 días hábiles. | Karen Johanna Torres | Informe de paralelo |
+| 6.3 | Firma de conformidad y acta de cierre | Firma de acta de conformidad por el cliente y cierre del proyecto. | Ana María Rodríguez | Acta de cierre |
+| 6.4 | Transferencia de conocimiento | Transferencia de conocimiento al equipo de TI interno de la empresa. | Diana Carolina Sánchez | Manuales técnicos |
+
+## 3.2.2. CRONOGRAMA DE ACTIVIDADES DEL PROYECTO (DIAGRAMA DE GANTT)
+
+*(Planificación temporal de las actividades necesarias para la ejecución del proyecto)*
+
+A continuación se presenta el cronograma de actividades del proyecto, con una duración total de **6 meses** (24 semanas), desde el **1 de julio de 2026** hasta el **31 de diciembre de 2026**, fecha estimada de GO LIVE.
+
+**Leyenda de colores:**
+- ████ Fase de Inicio y Planificación
+- ████ Fase de Elicitación y Análisis
+- ████ Fase de Especificación
+- ████ Fase de Validación
+- ████ Fase de Implementación y Pruebas
+- ████ Fase de Cierre
+- ★ Hito clave del proyecto
+
+| **ACTIVIDAD** | **RESPONSABLE** | **JUL** | **AGO** | **SEP** | **OCT** | **NOV** | **DIC** | **DURACIÓN** |
+|---------------|-----------------|---------|---------|---------|---------|---------|---------|--------------|
+| **FASE 1: INICIO Y PLANIFICACIÓN** | | | | | | | | **3 semanas** |
+| 1.1 Kickoff y presentación del equipo | Ana María Rodríguez | ████ | | | | | | Semana 1 |
+| 1.2 Definición de objetivos y alcance | Ana María Rodríguez | ████ | | | | | | Semana 1-2 |
+| 1.3 Estudio de viabilidad técnica | Carlos Alberto Pérez | ████ | | | | | | Semana 2-3 |
+| 1.4 Planificación detallada del proyecto | Ana María Rodríguez | ████ | | | | | | Semana 3 |
+| **★ Hito 1: Acta de inicio firmada** | Ana María Rodríguez | ★ | | | | | | Fin Semana 3 |
+| | | | | | | | | |
+| **FASE 2: ELICITACIÓN Y ANÁLISIS** | | | | | | | | **5 semanas** |
+| 2.1 Entrevistas con stakeholders | Laura Cristina Gómez | ████ | ████ | | | | | Semana 4-5 |
+| 2.2 Aplicación de cuestionarios | Laura Cristina Gómez | ████ | ████ | | | | | Semana 4-5 |
+| 2.3 Análisis de documentación existente | Laura Cristina Gómez | ████ | | | | | | Semana 5 |
+| 2.4 Identificación de requisitos funcionales | Laura Cristina Gómez | | ████ | | | | | Semana 6-7 |
+| 2.5 Identificación de requisitos no funcionales | Laura Cristina Gómez | | ████ | | | | | Semana 7 |
+| 2.6 Priorización de requisitos (MoSCoW) | Juan David Martínez | | ████ | | | | | Semana 8 |
+| **★ Hito 2: Listado de requisitos priorizado** | Laura Cristina Gómez | | ★ | | | | | Fin Semana 8 |
+| | | | | | | | | |
+| **FASE 3: ESPECIFICACIÓN** | | | | | | | | **4 semanas** |
+| 3.1 Redacción de Especificación de Requisitos | Laura Cristina Gómez | | | ████ | ████ | | | Semana 9-11 |
+| 3.2 Definición de casos de uso | Laura Cristina Gómez | | | ████ | | | | Semana 9-10 |
+| 3.3 Definición de criterios de aceptación | Laura Cristina Gómez | | | ████ | | | | Semana 10 |
+| 3.4 Revisión y validación del documento | Ana María Rodríguez | | | | ████ | | | Semana 11-12 |
+| 3.5 Aprobación formal del documento | Ana María Rodríguez | | | | ████ | | | Semana 12 |
+| **★ Hito 3: Documento ERS aprobado** | Ana María Rodríguez | | | | ★ | | | Fin Semana 12 |
+| | | | | | | | | |
+| **FASE 4: VALIDACIÓN** | | | | | | | | **3 semanas** |
+| 4.1 Construcción de prototipos de baja fidelidad | María Fernanda López | | | | ████ | | | Semana 13 |
+| 4.2 Validación de prototipos con usuarios | María Fernanda López | | | | ████ | | | Semana 13-14 |
+| 4.3 Construcción de prototipos de alta fidelidad | María Fernanda López | | | | ████ | | | Semana 14 |
+| 4.4 Validación final de prototipos | María Fernanda López | | | | ████ | | | Semana 14-15 |
+| 4.5 Aprobación de prototipos | Ana María Rodríguez | | | | ████ | | | Semana 15 |
+| **★ Hito 4: Prototipos validados y aprobados** | María Fernanda López | | | | ★ | | | Fin Semana 15 |
+| | | | | | | | | |
+| **FASE 5: IMPLEMENTACIÓN Y PRUEBAS** | | | | | | | | **6 semanas** |
+| 5.1 Desarrollo de módulo de facturación DIAN | Andrés Felipe Rojas | | | | | ████ | | Semana 16-18 |
+| 5.2 Desarrollo de módulo contable | Andrés Felipe Rojas | | | | | ████ | | Semana 16-18 |
+| 5.3 Desarrollo de módulo de inventarios | Andrés Felipe Rojas | | | | | ████ | | Semana 18-19 |
+| 5.4 Desarrollo de módulo de reportes | Andrés Felipe Rojas | | | | | ████ | | Semana 19-20 |
+| 5.5 Pruebas de integración con DIAN (Sandbox) | Karen Johanna Torres | | | | | ████ | ████ | Semana 20-21 |
+| 5.6 Pruebas funcionales y UAT | Karen Johanna Torres | | | | | | ████ | Semana 21-22 |
+| 5.7 Pruebas de rendimiento y carga | Karen Johanna Torres | | | | | | ████ | Semana 22 |
+| 5.8 Capacitación al equipo contable | Diana Carolina Sánchez | | | | | | ████ | Semana 22-23 |
+| **★ Hito 5: Sistema listo para producción** | Andrés Felipe Rojas | | | | | | ★ | Fin Semana 23 |
+| | | | | | | | | |
+| **FASE 6: CIERRE** | | | | | | | | **1 semana** |
+| 6.1 GO LIVE y puesta en producción | Luis Eduardo Ramírez | | | | | | ████ | Semana 24 |
+| 6.2 Período de pruebas paralelas (30 días) | Karen Johanna Torres | | | | | | ████ | Semana 24+ |
+| 6.3 Firma de conformidad y acta de cierre | Ana María Rodríguez | | | | | | ████ | Semana 24 |
+| 6.4 Transferencia de conocimiento | Diana Carolina Sánchez | | | | | | ████ | Semana 24 |
+| **★ Hito 6: Proyecto finalizado** | Ana María Rodríguez | | | | | | ★ | Fin Semana 24 |
+
+
+
 
 ##### 3.3. REQUISITOS NO FUNCIONALES *(no tiene dependencias de otros requisitos)*
 
@@ -859,113 +976,6 @@ A continuación se detallan los requisitos funcionales priorizados según las ne
 
 ---
 
-## 5. CRONOGRAMA DE ACTIVIDADES DEL PROYECTO
-
-*(Planificación temporal de las actividades necesarias para la ejecución del proyecto)*
-
-### 5.1. DIAGRAMA DE GANTT
-
-A continuación se presenta el cronograma de actividades del proyecto, con una duración total de **6 meses** (24 semanas), desde el **1 de julio de 2026** hasta el **31 de diciembre de 2026**, fecha estimada de GO LIVE.
-
-**Leyenda de colores:**
-- ████ Fase de Inicio y Planificación
-- ████ Fase de Elicitación y Análisis
-- ████ Fase de Especificación
-- ████ Fase de Validación
-- ████ Fase de Implementación y Pruebas
-- ████ Fase de Cierre
-- ★ Hito clave del proyecto
-
-| **ACTIVIDAD** | **JUL** | **AGO** | **SEP** | **OCT** | **NOV** | **DIC** | **DURACIÓN** |
-|---------------|---------|---------|---------|---------|---------|---------|--------------|
-| **FASE 1: INICIO Y PLANIFICACIÓN** | | | | | | | **3 semanas** |
-| 1.1 Kickoff y presentación del equipo | ████ | | | | | | Semana 1 |
-| 1.2 Definición de objetivos y alcance | ████ | | | | | | Semana 1-2 |
-| 1.3 Estudio de viabilidad técnica | ████ | | | | | | Semana 2-3 |
-| 1.4 Planificación detallada del proyecto | ████ | | | | | | Semana 3 |
-| **★ Hito 1: Acta de inicio firmada** | ★ | | | | | | Fin Semana 3 |
-| | | | | | | | |
-| **FASE 2: ELICITACIÓN Y ANÁLISIS** | | | | | | | **5 semanas** |
-| 2.1 Entrevistas con stakeholders | ████ | ████ | | | | | Semana 4-5 |
-| 2.2 Aplicación de cuestionarios | ████ | ████ | | | | | Semana 4-5 |
-| 2.3 Análisis de documentación existente | ████ | | | | | | Semana 5 |
-| 2.4 Identificación de requisitos funcionales | | ████ | | | | | Semana 6-7 |
-| 2.5 Identificación de requisitos no funcionales | | ████ | | | | | Semana 7 |
-| 2.6 Priorización de requisitos (MoSCoW) | | ████ | | | | | Semana 8 |
-| **★ Hito 2: Listado de requisitos priorizado** | | ★ | | | | | Fin Semana 8 |
-| | | | | | | | |
-| **FASE 3: ESPECIFICACIÓN** | | | | | | | **4 semanas** |
-| 3.1 Redacción de Especificación de Requisitos | | | ████ | ████ | | | Semana 9-11 |
-| 3.2 Definición de casos de uso | | | ████ | | | | Semana 9-10 |
-| 3.3 Definición de criterios de aceptación | | | ████ | | | | Semana 10 |
-| 3.4 Revisión y validación del documento | | | | ████ | | | Semana 11-12 |
-| 3.5 Aprobación formal del documento | | | | ████ | | | Semana 12 |
-| **★ Hito 3: Documento ERS aprobado** | | | | ★ | | | Fin Semana 12 |
-| | | | | | | | |
-| **FASE 4: VALIDACIÓN** | | | | | | | **3 semanas** |
-| 4.1 Construcción de prototipos de baja fidelidad | | | | ████ | | | Semana 13 |
-| 4.2 Validación de prototipos con usuarios | | | | ████ | | | Semana 13-14 |
-| 4.3 Construcción de prototipos de alta fidelidad | | | | ████ | | | Semana 14 |
-| 4.4 Validación final de prototipos | | | | ████ | | | Semana 14-15 |
-| 4.5 Aprobación de prototipos | | | | ████ | | | Semana 15 |
-| **★ Hito 4: Prototipos validados y aprobados** | | | | ★ | | | Fin Semana 15 |
-| | | | | | | | |
-| **FASE 5: IMPLEMENTACIÓN Y PRUEBAS** | | | | | | | **6 semanas** |
-| 5.1 Desarrollo de módulo de facturación DIAN | | | | | ████ | | Semana 16-18 |
-| 5.2 Desarrollo de módulo contable | | | | | ████ | | Semana 16-18 |
-| 5.3 Desarrollo de módulo de inventarios | | | | | ████ | | Semana 18-19 |
-| 5.4 Desarrollo de módulo de reportes | | | | | ████ | | Semana 19-20 |
-| 5.5 Pruebas de integración con DIAN (Sandbox) | | | | | ████ | ████ | Semana 20-21 |
-| 5.6 Pruebas funcionales y UAT | | | | | | ████ | Semana 21-22 |
-| 5.7 Pruebas de rendimiento y carga | | | | | | ████ | Semana 22 |
-| 5.8 Capacitación al equipo contable | | | | | | ████ | Semana 22-23 |
-| **★ Hito 5: Sistema listo para producción** | | | | | | ★ | Fin Semana 23 |
-| | | | | | | | |
-| **FASE 6: CIERRE** | | | | | | | **1 semana** |
-| 6.1 GO LIVE y puesta en producción | | | | | | ████ | Semana 24 |
-| 6.2 Período de pruebas paralelas (30 días) | | | | | | ████ | Semana 24+ |
-| 6.3 Firma de conformidad y acta de cierre | | | | | | ████ | Semana 24 |
-| 6.4 Transferencia de conocimiento | | | | | | ████ | Semana 24 |
-| **★ Hito 6: Proyecto finalizado** | | | | | | ★ | Fin Semana 24 |
-
-### 5.2. DESCRIPCIÓN DE ACTIVIDADES
-
-A continuación se detalla cada una de las actividades del cronograma:
-
-| ID | ACTIVIDAD | DESCRIPCIÓN | RESPONSABLE | ENTREGABLE |
-|----|-----------|-------------|-------------|------------|
-| 1.1 | Kickoff y presentación del equipo | Reunión inicial para presentar al equipo de desarrollo, definir canales de comunicación y establecer expectativas. | PM / Cliente | Acta de kickoff |
-| 1.2 | Definición de objetivos y alcance | Taller con el cliente para definir los objetivos del proyecto y el alcance detallado. | PM / Cliente | Documento de alcance |
-| 1.3 | Estudio de viabilidad técnica | Análisis de tecnologías, infraestructura y recursos necesarios para el proyecto. | Arquitecto | Estudio de viabilidad |
-| 1.4 | Planificación detallada del proyecto | Elaboración del plan de proyecto detallado con cronograma, recursos y presupuesto. | PM | Plan de proyecto |
-| 2.1 | Entrevistas con stakeholders | Realización de entrevistas con el Gerente General, Contador Jefe y personal contable. | Analista | Actas de entrevistas |
-| 2.2 | Aplicación de cuestionarios | Aplicación de los 120 cuestionarios de elicitación al equipo contable. | Analista | Cuestionarios completos |
-| 2.3 | Análisis de documentación existente | Revisión de procedimientos internos, manuales y flujos contables actuales. | Analista | Documentación analizada |
-| 2.4 | Identificación de requisitos funcionales | Identificación y documentación de los requisitos funcionales del sistema. | Analista | Lista de RF |
-| 2.5 | Identificación de requisitos no funcionales | Identificación de requisitos no funcionales (rendimiento, seguridad, usabilidad). | Analista | Lista de RNF |
-| 2.6 | Priorización de requisitos (MoSCoW) | Clasificación de requisitos según prioridad (Must, Should, Could, Won't). | Cliente / PM | Requisitos priorizados |
-| 3.1 | Redacción de Especificación de Requisitos | Elaboración del documento ERS completo según formato IEEE 830. | Analista | Documento ERS |
-| 3.2 | Definición de casos de uso | Definición de casos de uso para las funcionalidades críticas del sistema. | Analista | Diagramas de casos de uso |
-| 3.3 | Definición de criterios de aceptación | Definición de criterios de aceptación para cada requisito funcional. | Analista / Cliente | Criterios de aceptación |
-| 3.4 | Revisión y validación del documento | Revisión del documento ERS con el cliente y ajustes necesarios. | Cliente / PM | Documento ERS revisado |
-| 3.5 | Aprobación formal del documento | Firma de aprobación del documento ERS por parte del cliente. | Cliente | Documento ERS aprobado |
-| 4.1 | Construcción de prototipos de baja fidelidad | Creación de wireframes para definir estructura y flujo de las pantallas críticas. | Diseñador | Wireframes |
-| 4.2 | Validación de prototipos con usuarios | Presentación de wireframes al equipo contable para validación de flujos. | Diseñador / Cliente | Feedback de usuarios |
-| 4.3 | Construcción de prototipos de alta fidelidad | Creación de prototipos interactivos con colores, tipografía y datos reales. | Diseñador | Prototipos interactivos |
-| 4.4 | Validación final de prototipos | Validación final de prototipos con el Contador Jefe y Gerente General. | Diseñador / Cliente | Prototipos validados |
-| 4.5 | Aprobación de prototipos | Aprobación formal de prototipos para iniciar el desarrollo. | Cliente | Acta de aprobación |
-| 5.1 | Desarrollo de módulo de facturación DIAN | Desarrollo del módulo de facturación electrónica con integración DIAN. | Desarrollador | Código fuente |
-| 5.2 | Desarrollo de módulo contable | Desarrollo del módulo contable con plan de cuentas y asientos automáticos. | Desarrollador | Código fuente |
-| 5.3 | Desarrollo de módulo de inventarios | Desarrollo del módulo de inventarios con costeo promedio ponderado. | Desarrollador | Código fuente |
-| 5.4 | Desarrollo de módulo de reportes | Desarrollo del módulo de reportes y dashboards. | Desarrollador | Código fuente |
-| 5.5 | Pruebas de integración con DIAN (Sandbox) | Pruebas de integración con la DIAN en entorno de habilitación (Sandbox). | QA / Desarrollador | Informe de pruebas |
-| 5.6 | Pruebas funcionales y UAT | Ejecución de casos de prueba funcionales y pruebas de aceptación de usuario. | QA / Cliente | Informe UAT |
-| 5.7 | Pruebas de rendimiento y carga | Pruebas de rendimiento con 1.500 facturas/hora y carga con 30 usuarios. | QA | Informe de rendimiento |
-| 5.8 | Capacitación al equipo contable | Capacitación práctica al equipo contable durante 2 semanas. | Capacitador | Plan de capacitación |
-| 6.1 | GO LIVE y puesta en producción | Puesta en producción del sistema y activación para uso real. | DevOps / PM | Sistema en producción |
-| 6.2 | Período de pruebas paralelas (30 días) | Operación en paralelo con el sistema antiguo (SIIGO) por 30 días hábiles. | Cliente / PM | Informe de paralelo |
-| 6.3 | Firma de conformidad y acta de cierre | Firma de acta de conformidad por el cliente y cierre del proyecto. | Cliente / PM | Acta de cierre |
-| 6.4 | Transferencia de conocimiento | Transferencia de conocimiento al equipo de TI interno de la empresa. | Desarrollador | Manuales técnicos |
 
 ---
 
