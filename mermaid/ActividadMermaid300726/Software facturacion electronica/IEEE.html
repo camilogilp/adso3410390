@@ -575,8 +575,6 @@
     <!-- ==================== 3. REQUISITOS ESPECIFICOS ==================== -->
     <h2>3. REQUISITOS ESPECIFICOS</h2>
     <p><span class="red">(Enumerar todas y cada una de las funciones que pide el cliente para su proyecto de automatización)</span></p>
-
-    <h5 style="font-size:15px;">3.1. REQUISITOS DEL SISTEMA</h5>
     <table>
         <tr><th style="width:10%;">ID</th><th style="width:25%;">REQUISITO</th><th style="width:65%;">DESCRIPCIÓN</th></tr>
         <tr><td>RS-01</td><td>Plataforma Web y Móvil</td><td>El sistema debe ser accesible desde navegador web (escritorio) y tener versión móvil (PWA) para aprobaciones rápidas.</td></tr>
@@ -591,10 +589,10 @@
         <tr><td>RS-10</td><td>Escalabilidad horizontal</td><td>El sistema debe permitir escalar horizontalmente añadiendo más servidores sin reescribir el núcleo.</td></tr>
     </table>
 
-    <h5 style="font-size:15px;">3.2. REQUISITOS FUNCIONALES</h5>
+    <h5 style="font-size:15px;">3.1. REQUISITOS DEL SISTEMA</h5>
     <p>A continuación se detallan los requisitos funcionales priorizados según las necesidades del cliente. La priorización se define como <strong>ALTA</strong> (indispensable para el lanzamiento), <strong>MEDIA</strong> (deseable para el lanzamiento, pero puede postergarse), <strong>BAJA</strong> (para futuras fases).</p>
 
-    <h6>3.2.1. MÓDULO DE FACTURACIÓN ELECTRÓNICA Y DIAN (Preguntas #46 - #58)</h6>
+    <h6>3.1.1. MÓDULO DE FACTURACIÓN ELECTRÓNICA Y DIAN (Preguntas #46 - #58)</h6>
     <table>
         <tr><th style="width:8%;">ID</th><th style="width:30%;">REQUISITO</th><th style="width:47%;">DESCRIPCIÓN</th><th style="width:15%;">PRIORIDAD</th></tr>
         <tr><td>RF-001</td><td>Generación de documentos electrónicos</td><td>El sistema debe generar Factura Electrónica de Venta, Nota Débito, Nota Crédito y Documento Soporte con sus respectivos CUDES.</td><td><strong>ALTA</strong></td></tr>
@@ -610,8 +608,7 @@
         <tr><td>RF-011</td><td>Reporte de documentos enviados</td><td>El sistema debe tener un reporte/dashboard de "Documentos Enviados" con filtros por fecha, estado y tipo de documento, exportable a Excel.</td><td><strong>ALTA</strong></td></tr>
         <tr><td>RF-012</td><td>Generación de Exógena</td><td>El sistema debe generar archivos de Exógena en formato DIAN.</td><td><strong>ALTA</strong></td></tr>
     </table>
-
-    <h6>3.2.2. MÓDULO CONTABLE Y PLAN DE CUENTAS (Preguntas #59 - #70)</h6>
+    <h6>3.1.2. MÓDULO CONTABLE Y PLAN DE CUENTAS (Preguntas #59 - #70)</h6>
     <table>
         <tr><th style="width:8%;">ID</th><th style="width:30%;">REQUISITO</th><th style="width:47%;">DESCRIPCIÓN</th><th style="width:15%;">PRIORIDAD</th></tr>
         <tr><td>RF-013</td><td>Plan de cuentas personalizable</td><td>El sistema debe manejar un PUC estándar colombiano base, completamente personalizable.</td><td><strong>ALTA</strong></td></tr>
@@ -628,21 +625,21 @@
         <tr><td>RF-024</td><td>Importación de datos</td><td>El sistema debe permitir importación de datos desde Excel/CSV para saldos iniciales, cuentas y inventario.</td><td><strong>ALTA</strong></td></tr>
     </table>
 
-    <h6>3.2.3. MÓDULO DE INVENTARIOS Y ACTIVOS FIJOS (Preguntas #28 - #29)</h6>
+    <h6>3.1.3. MÓDULO DE INVENTARIOS Y ACTIVOS FIJOS (Preguntas #28 - #29)</h6>
     <table>
         <tr><th style="width:8%;">ID</th><th style="width:30%;">REQUISITO</th><th style="width:47%;">DESCRIPCIÓN</th><th style="width:15%;">PRIORIDAD</th></tr>
         <tr><td>RF-025</td><td>Control de inventarios</td><td>El sistema debe controlar inventarios con costeo promedio ponderado, ajustes por mermas y toma física.</td><td><strong>ALTA</strong></td></tr>
         <tr><td>RF-026</td><td>Gestión de activos fijos</td><td>El sistema debe gestionar activos fijos (lentómetros, autorrefractores, computadores de diagnóstico) con depreciación por línea recta.</td><td><strong>ALTA</strong></td></tr>
     </table>
 
-    <h6>3.2.4. MÓDULO DE CARTERA Y PROVEEDORES (Pregunta #27)</h6>
+    <h6>3.1.4. MÓDULO DE CARTERA Y PROVEEDORES (Pregunta #27)</h6>
     <table>
         <tr><th style="width:8%;">ID</th><th style="width:30%;">REQUISITO</th><th style="width:47%;">DESCRIPCIÓN</th><th style="width:15%;">PRIORIDAD</th></tr>
         <tr><td>RF-027</td><td>Gestión de cartera</td><td>El sistema debe gestionar cartera con antigüedad de saldos, gestión de cobranzas y aplicación de pagos.</td><td><strong>ALTA</strong></td></tr>
         <tr><td>RF-028</td><td>Gestión de proveedores</td><td>El sistema debe gestionar proveedores con fechas de pago y retenciones de ley.</td><td><strong>ALTA</strong></td></tr>
     </table>
 
-    <h6>3.2.5. MÓDULO DE REPORTES Y DECLARACIONES (Preguntas #30 - #31, #71 - #75)</h6>
+    <h6>3.1.5. MÓDULO DE REPORTES Y DECLARACIONES (Preguntas #30 - #31, #71 - #75)</h6>
     <table>
         <tr><th style="width:8%;">ID</th><th style="width:30%;">REQUISITO</th><th style="width:47%;">DESCRIPCIÓN</th><th style="width:15%;">PRIORIDAD</th></tr>
         <tr><td>RF-029</td><td>Reportes predefinidos</td><td>El sistema debe generar Balance de Comprobación, Balance General, Estado de Resultados, Flujo de Efectivo, Antigüedad de Cartera.</td><td><strong>ALTA</strong></td></tr>
@@ -653,92 +650,48 @@
         <tr><td>RF-034</td><td>Declaraciones tributarias</td><td>El sistema debe generar archivos planos para IVA (formato 300), Renta, Retención (formato 350) y Exógena.</td><td><strong>ALTA</strong></td></tr>
     </table>
 
-    <h5 style="font-size:15px;">3.3. REQUISITOS NO FUNCIONALES <span class="red">*(no tiene dependencias de otros requisitos)*</span></h5>
-    <table>
-        <tr><th style="width:8%;">ID</th><th style="width:18%;">CATEGORÍA</th><th style="width:44%;">DESCRIPCIÓN</th><th style="width:15%;">PRIORIDAD</th><th style="width:15%;">MÉTODO DE VERIFICACIÓN</th></tr>
-        <tr><td>RNF-001</td><td>Rendimiento</td><td>Tiempo de respuesta: < 2 segundos para consultas complejas (reportes), < 1 segundo para transacciones (guardar factura).</td><td><strong>ALTA</strong></td><td>Pruebas de carga</td></tr>
-        <tr><td>RNF-002</td><td>Rendimiento</td><td>Soporte para 1.500 facturas/día en pico (diciembre).</td><td><strong>ALTA</strong></td><td>Pruebas de rendimiento</td></tr>
-        <tr><td>RNF-003</td><td>Rendimiento</td><td>Soporte para 15 usuarios concurrentes en cierre de mes, hasta 30 para pruebas de carga.</td><td><strong>ALTA</strong></td><td>Pruebas de estrés</td></tr>
-        <tr><td>RNF-004</td><td>Disponibilidad</td><td>Disponibilidad del sistema: 99.7% (22 horas de caída/año máximo).</td><td><strong>ALTA</strong></td><td>Monitoreo de uptime</td></tr>
-        <tr><td>RNF-005</td><td>Usabilidad</td><td>Interfaz simple y rápida para el día a día, con opciones avanzadas desplegables.</td><td><strong>ALTA</strong></td><td>Pruebas de usuario</td></tr>
-        <tr><td>RNF-006</td><td>Usabilidad</td><td>Un auxiliar nuevo debe poder facturar después de 1 hora de entrenamiento.</td><td><strong>ALTA</strong></td><td>Pruebas de usabilidad</td></tr>
-        <tr><td>RNF-007</td><td>Usabilidad</td><td>Diseño responsive para escritorio y tablet.</td><td><strong>ALTA</strong></td><td>Pruebas de compatibilidad</td></tr>
-        <tr><td>RNF-008</td><td>Seguridad</td><td>Autenticación con usuario/contraseña con políticas de complejidad.</td><td><strong>ALTA</strong></td><td>Pruebas de autenticación</td></tr>
-        <tr><td>RNF-009</td><td>Seguridad</td><td>Autenticación de dos factores (2FA) para accesos remotos y rol de Administrador.</td><td><strong>MEDIA</strong></td><td>Pruebas de 2FA</td></tr>
-        <tr><td>RNF-010</td><td>Seguridad</td><td>Cifrado AES-256 para datos sensibles en reposo y TLS 1.3 para transmisión.</td><td><strong>ALTA</strong></td><td>Auditoría de seguridad</td></tr>
-        <tr><td>RNF-011</td><td>Seguridad</td><td>WAF, bloqueo de intentos fallidos (5 intentos bloquea IP 15 min), sesiones expiran a los 30 min.</td><td><strong>ALTA</strong></td><td>Pruebas de penetración</td></tr>
-        <tr><td>RNF-012</td><td>Seguridad</td><td>Bitácora de auditoría inmutable registrando quién, cuándo, IP y acción.</td><td><strong>ALTA</strong></td><td>Revisión de logs</td></tr>
-        <tr><td>RNF-013</td><td>Conectividad</td><td>Integración con DIAN vía SOAP/REST en tiempo real, con modo contingencia offline.</td><td><strong>ALTA</strong></td><td>Pruebas de integración</td></tr>
-        <tr><td>RNF-014</td><td>Legal</td><td>Cumplimiento de Ley 1581 de Habeas Data (protección de datos).</td><td><strong>ALTA</strong></td><td>Auditoría legal</td></tr>
-        <tr><td>RNF-015</td><td>Legal</td><td>Cumplimiento de facturación electrónica DIAN y entidades estatales.</td><td><strong>ALTA</strong></td><td>Auditoría legal</td></tr>
-        <tr><td>RNF-016</td><td>Idioma</td><td>Sistema 100% en español con términos contables colombianos.</td><td><strong>ALTA</strong></td><td>Revisión de contenido</td></tr>
-        <tr><td>RNF-017</td><td>Mantenibilidad</td><td>Arquitectura limpia y desacoplada para despliegues frecuentes (CI/CD).</td><td><strong>MEDIA</strong></td><td>Revisión de arquitectura</td></tr>
-        <tr><td>RNF-018</td><td>Soporte</td><td>Soporte de 12 meses incluido, respuesta < 4 horas para incidentes críticos, < 24 horas para menores.</td><td><strong>ALTA</strong></td><td>Acuerdo de nivel de servicio</td></tr>
-        <tr><td>RNF-019</td><td>Escalabilidad</td><td>Arquitectura que permita escalar horizontalmente añadiendo más servidores.</td><td><strong>ALTA</strong></td><td>Pruebas de escalabilidad</td></tr>
-        <tr><td>RNF-020</td><td>Recuperación</td><td>Copias de seguridad diarias automáticas, RTO < 4 horas, RPO < 1 hora.</td><td><strong>ALTA</strong></td><td>Pruebas de recuperación</td></tr>
+    <h5 style="font-size:15px;">3.2. REQUISITOS FUNCIONALES</h5>
+    <h5 style="font-size:15px;">3.2.1. DESCRIPCIÓN DE ACTIVIDADES</h5>
+    <p>A continuación se detalla cada una de las actividades del cronograma:</p>
+    <table style="font-size:13px;">
+        <tr><th style="width:8%;">ID</th><th style="width:22%;">ACTIVIDAD</th><th style="width:38%;">DESCRIPCIÓN</th><th style="width:20%;">RESPONSABLE</th><th style="width:12%;">ENTREGABLE</th></tr>
+        <tr><td>1.1</td><td>Kickoff y presentación del equipo</td><td>Reunión inicial para presentar al equipo de desarrollo, definir canales de comunicación y establecer expectativas.</td><td>Ana María Rodríguez</td><td>Acta de kickoff</td></tr>
+        <tr><td>1.2</td><td>Definición de objetivos y alcance</td><td>Taller con el cliente para definir los objetivos del proyecto y el alcance detallado.</td><td>Ana María Rodríguez</td><td>Documento de alcance</td></tr>
+        <tr><td>1.3</td><td>Estudio de viabilidad técnica</td><td>Análisis de tecnologías, infraestructura y recursos necesarios para el proyecto.</td><td>Carlos Alberto Pérez</td><td>Estudio de viabilidad</td></tr>
+        <tr><td>1.4</td><td>Planificación detallada del proyecto</td><td>Elaboración del plan de proyecto detallado con cronograma, recursos y presupuesto.</td><td>Ana María Rodríguez</td><td>Plan de proyecto</td></tr>
+        <tr><td>2.1</td><td>Entrevistas con stakeholders</td><td>Realización de entrevistas con el Gerente General, Contador Jefe y personal contable.</td><td>Laura Cristina Gómez</td><td>Actas de entrevistas</td></tr>
+        <tr><td>2.2</td><td>Aplicación de cuestionarios</td><td>Aplicación de los 120 cuestionarios de elicitación al equipo contable.</td><td>Laura Cristina Gómez</td><td>Cuestionarios completos</td></tr>
+        <tr><td>2.3</td><td>Análisis de documentación existente</td><td>Revisión de procedimientos internos, manuales y flujos contables actuales.</td><td>Laura Cristina Gómez</td><td>Documentación analizada</td></tr>
+        <tr><td>2.4</td><td>Identificación de requisitos funcionales</td><td>Identificación y documentación de los requisitos funcionales del sistema.</td><td>Laura Cristina Gómez</td><td>Lista de RF</td></tr>
+        <tr><td>2.5</td><td>Identificación de requisitos no funcionales</td><td>Identificación de requisitos no funcionales (rendimiento, seguridad, usabilidad).</td><td>Laura Cristina Gómez</td><td>Lista de RNF</td></tr>
+        <tr><td>2.6</td><td>Priorización de requisitos (MoSCoW)</td><td>Clasificación de requisitos según prioridad (Must, Should, Could, Won't).</td><td>Juan David Martínez</td><td>Requisitos priorizados</td></tr>
+        <tr><td>3.1</td><td>Redacción de Especificación de Requisitos</td><td>Elaboración del documento ERS completo según formato IEEE 830.</td><td>Laura Cristina Gómez</td><td>Documento ERS</td></tr>
+        <tr><td>3.2</td><td>Definición de casos de uso</td><td>Definición de casos de uso para las funcionalidades críticas del sistema.</td><td>Laura Cristina Gómez</td><td>Diagramas de casos de uso</td></tr>
+        <tr><td>3.3</td><td>Definición de criterios de aceptación</td><td>Definición de criterios de aceptación para cada requisito funcional.</td><td>Laura Cristina Gómez</td><td>Criterios de aceptación</td></tr>
+        <tr><td>3.4</td><td>Revisión y validación del documento</td><td>Revisión del documento ERS con el cliente y ajustes necesarios.</td><td>Ana María Rodríguez</td><td>Documento ERS revisado</td></tr>
+        <tr><td>3.5</td><td>Aprobación formal del documento</td><td>Firma de aprobación del documento ERS por parte del cliente.</td><td>Ana María Rodríguez</td><td>Documento ERS aprobado</td></tr>
+        <tr><td>4.1</td><td>Construcción de prototipos de baja fidelidad</td><td>Creación de wireframes para definir estructura y flujo de las pantallas críticas.</td><td>María Fernanda López</td><td>Wireframes</td></tr>
+        <tr><td>4.2</td><td>Validación de prototipos con usuarios</td><td>Presentación de wireframes al equipo contable para validación de flujos.</td><td>María Fernanda López</td><td>Feedback de usuarios</td></tr>
+        <tr><td>4.3</td><td>Construcción de prototipos de alta fidelidad</td><td>Creación de prototipos interactivos con colores, tipografía y datos reales.</td><td>María Fernanda López</td><td>Prototipos interactivos</td></tr>
+        <tr><td>4.4</td><td>Validación final de prototipos</td><td>Validación final de prototipos con el Contador Jefe y Gerente General.</td><td>María Fernanda López</td><td>Prototipos validados</td></tr>
+        <tr><td>4.5</td><td>Aprobación de prototipos</td><td>Aprobación formal de prototipos para iniciar el desarrollo.</td><td>Ana María Rodríguez</td><td>Acta de aprobación</td></tr>
+        <tr><td>5.1</td><td>Desarrollo de módulo de facturación DIAN</td><td>Desarrollo del módulo de facturación electrónica con integración DIAN.</td><td>Andrés Felipe Rojas</td><td>Código fuente</td></tr>
+        <tr><td>5.2</td><td>Desarrollo de módulo contable</td><td>Desarrollo del módulo contable con plan de cuentas y asientos automáticos.</td><td>Andrés Felipe Rojas</td><td>Código fuente</td></tr>
+        <tr><td>5.3</td><td>Desarrollo de módulo de inventarios</td><td>Desarrollo del módulo de inventarios con costeo promedio ponderado.</td><td>Andrés Felipe Rojas</td><td>Código fuente</td></tr>
+        <tr><td>5.4</td><td>Desarrollo de módulo de reportes</td><td>Desarrollo del módulo de reportes y dashboards.</td><td>Andrés Felipe Rojas</td><td>Código fuente</td></tr>
+        <tr><td>5.5</td><td>Pruebas de integración con DIAN (Sandbox)</td><td>Pruebas de integración con la DIAN en entorno de habilitación (Sandbox).</td><td>Karen Johanna Torres</td><td>Informe de pruebas</td></tr>
+        <tr><td>5.6</td><td>Pruebas funcionales y UAT</td><td>Ejecución de casos de prueba funcionales y pruebas de aceptación de usuario.</td><td>Karen Johanna Torres</td><td>Informe UAT</td></tr>
+        <tr><td>5.7</td><td>Pruebas de rendimiento y carga</td><td>Pruebas de rendimiento con 1.500 facturas/hora y carga con 30 usuarios.</td><td>Karen Johanna Torres</td><td>Informe de rendimiento</td></tr>
+        <tr><td>5.8</td><td>Capacitación al equipo contable</td><td>Capacitación práctica al equipo contable durante 2 semanas.</td><td>Diana Carolina Sánchez</td><td>Plan de capacitación</td></tr>
+        <tr><td>6.1</td><td>GO LIVE y puesta en producción</td><td>Puesta en producción del sistema y activación para uso real.</td><td>Luis Eduardo Ramírez</td><td>Sistema en producción</td></tr>
+        <tr><td>6.2</td><td>Período de pruebas paralelas (30 días)</td><td>Operación en paralelo con el sistema antiguo (SIIGO) por 30 días hábiles.</td><td>Karen Johanna Torres</td><td>Informe de paralelo</td></tr>
+        <tr><td>6.3</td><td>Firma de conformidad y acta de cierre</td><td>Firma de acta de conformidad por el cliente y cierre del proyecto.</td><td>Ana María Rodríguez</td><td>Acta de cierre</td></tr>
+        <tr><td>6.4</td><td>Transferencia de conocimiento</td><td>Transferencia de conocimiento al equipo de TI interno de la empresa.</td><td>Diana Carolina Sánchez</td><td>Manuales técnicos</td></tr>
     </table>
-    <hr>
-
-    <!-- ==================== 4. VALIDACIÓN DE REQUISITOS ==================== -->
-    <h2>4. VALIDACIÓN DE REQUISITOS</h2>
-
-    <h5 style="font-size:15px;">4.1. CONSTRUCCIÓN DE PROTOTIPOS</h5>
-    <p><span class="red">(Se recomienda iniciar con prototipos de alta prioridad para validar con el usuario)</span></p>
-    <p><strong>Prototipos sugeridos para validación inicial:</strong></p>
-    <ol>
-        <li><strong>Flujo de creación de factura de venta:</strong> Prototipo del formulario de facturación (cabecera + productos) con validación de reglas, firma y envío a DIAN. Es el día a día del equipo contable.</li>
-        <li><strong>Dashboard de Gerente:</strong> Prototipo de la pantalla principal con KPIs en tiempo real (Ventas del día, Cartera vencida > 60 días, Margen bruto del mes, Efectivo disponible, Facturas pendientes por enviar a DIAN).</li>
-        <li><strong>Flujo de recepción de pago/cartera:</strong> Prototipo del proceso de aplicación de pagos a cartera con antigüedad de saldos.</li>
-        <li><strong>Conciliación bancaria:</strong> Prototipo de la vista de conciliación con importación de extractos y match automático.</li>
-    </ol>
-    <p><strong>Criterios de validación de prototipos:</strong></p>
-    <ul>
-        <li>Participación del Contador Jefe (María) y el Gerente General en la revisión de cada prototipo.</li>
-        <li>Frecuencia: Cada 2 o 3 semanas (demos cortas pero constantes).</li>
-        <li>Herramientas: Figma o Balsamiq (herramientas digitales con interactividad).</li>
-        <li>Nivel de detalle: Empezar con baja fidelidad (wireframes) para definir estructura y flujo, luego pasar a alta fidelidad (colores, tipografía, datos reales) en las últimas 2 iteraciones.</li>
-        <li>Aprobación formal del cliente antes de pasar a desarrollo.</li>
-    </ul>
-
-    <h5 style="font-size:15px;">4.2. FORMATO DE CASO DE PRUEBA</h5>
-    <p><span class="red">(Formato para documentar y ejecutar casos de prueba de los requisitos funcionales)</span></p>
-
-    <p><strong>CASO DE PRUEBA CP-001</strong></p>
-    <table>
-        <tr><th style="width:25%;">OBJETIVO DEL CASO DE PRUEBA</th><td>Validar que el sistema emita y envíe exitosamente una factura electrónica a la DIAN obteniendo el CUFE.</td></tr>
-        <tr><th>IDENTIFICADOR</th><td>CP-001</td></tr>
-        <tr><th>REQUISITO FUNCIONAL</th><td>RF-001, RF-002, RF-003, RF-006, RF-008</td></tr>
-        <tr><th>PRECONDICIONES</th><td>Usuario autenticado con rol de Auxiliar Contable. Certificado de firma digital activo. Conexión a DIAN disponible. Resolución de facturación cargada.</td></tr>
-        <tr><th>PASOS</th><td>1. Navegar al módulo de Facturación.<br>2. Seleccionar "Nueva Factura".<br>3. Ingresar datos del cliente (NIT, razón social).<br>4. Agregar productos con cantidades y precios.<br>5. Verificar cálculo de IVA y total.<br>6. Hacer clic en "Enviar a DIAN".<br>7. Esperar confirmación de la DIAN.</td></tr>
-        <tr><th>RESULTADOS ESPERADOS</th><td>1. El sistema valida los datos antes del envío.<br>2. El sistema firma el XML con el Token.<br>3. La DIAN acepta la factura y devuelve el CUFE.<br>4. El sistema muestra mensaje: "Factura enviada exitosamente. CUFE: [código]".<br>5. La factura queda en estado "Aceptada".<br>6. El asiento contable se genera automáticamente.<br>7. El PDF con código QR se genera correctamente.</td></tr>
-    </table>
-
-    <p><strong>CASO DE PRUEBA CP-002</strong></p>
-    <table>
-        <tr><th style="width:25%;">OBJETIVO DEL CASO DE PRUEBA</th><td>Validar que el sistema gestione correctamente el rechazo de una factura por la DIAN y permita su corrección.</td></tr>
-        <tr><th>IDENTIFICADOR</th><td>CP-002</td></tr>
-        <tr><th>REQUISITO FUNCIONAL</th><td>RF-004</td></tr>
-        <tr><th>PRECONDICIONES</th><td>Usuario autenticado con rol de Auxiliar Contable. Se ha creado una factura con un NIT inválido (caso de prueba).</td></tr>
-        <tr><th>PASOS</th><td>1. Crear una factura con un NIT inválido.<br>2. Enviar a DIAN.<br>3. Esperar la respuesta de rechazo.<br>4. Corregir el NIT por uno válido.<br>5. Reenviar a DIAN.</td></tr>
-        <tr><th>RESULTADOS ESPERADOS</th><td>1. La DIAN rechaza la factura indicando "NIT inválido".<br>2. El sistema bloquea la factura y muestra el error en español claro.<br>3. El sistema permite corregir el campo NIT.<br>4. El sistema conserva el mismo número de factura.<br>5. El reenvío es exitoso y se obtiene el CUFE.</td></tr>
-    </table>
-
-    <p><strong>CASO DE PRUEBA CP-003</strong></p>
-    <table>
-        <tr><th style="width:25%;">OBJETIVO DEL CASO DE PRUEBA</th><td>Validar que el sistema calcule correctamente las retenciones en la fuente para un proveedor.</td></tr>
-        <tr><th>IDENTIFICADOR</th><td>CP-003</td></tr>
-        <tr><th>REQUISITO FUNCIONAL</th><td>RF-014, RF-016</td></tr>
-        <tr><th>PRECONDICIONES</th><td>Usuario autenticado con rol de Auxiliar Contable. Proveedor registrado con régimen de retención. Factura de compra cargada.</td></tr>
-        <tr><th>PASOS</th><td>1. Navegar al módulo de Compras.<br>2. Registrar una factura de compra de un proveedor.<br>3. Ingresar el monto de la compra.<br>4. Guardar la factura.</td></tr>
-        <tr><th>RESULTADOS ESPERADOS</th><td>1. El sistema calcula automáticamente la retención de IVA según tarifa.<br>2. El sistema calcula automáticamente la retención de Renta según tarifa.<br>3. El sistema genera el asiento contable correspondiente.<br>4. El sistema muestra el cálculo detallado en la factura.</td></tr>
-    </table>
-    <hr>
-
-    <!-- ==================== 5. CRONOGRAMA DE ACTIVIDADES DEL PROYECTO ==================== -->
-    <h2>5. CRONOGRAMA DE ACTIVIDADES DEL PROYECTO</h2>
+    <h2>3.2.2 CRONOGRAMA DE ACTIVIDADES DEL PROYECTO</h2>
     <p><span class="red">(Planificación temporal de las actividades necesarias para la ejecución del proyecto)</span></p>
 
-    <h5 style="font-size:15px;">5.1. DIAGRAMA DE GANTT</h5>
+    <h5 style="font-size:15px;"> DIAGRAMA DE GANTT</h5>
     <p><strong>Instrucciones:</strong> Haz clic en cada celda de color para marcarla como completada (✓). El progreso se actualizará automáticamente. Los hitos (★) muestran el progreso de su fase.</p>
     <p><strong>Leyenda de colores:</strong>
         <span style="background-color:#2c5282; color:white; padding:2px 6px; border-radius:3px;">Inicio</span>
@@ -783,43 +736,7 @@
         </table>
     </div>
 
-    <h5 style="font-size:15px;">5.2. DESCRIPCIÓN DE ACTIVIDADES</h5>
-    <p>A continuación se detalla cada una de las actividades del cronograma:</p>
-    <table style="font-size:13px;">
-        <tr><th style="width:8%;">ID</th><th style="width:22%;">ACTIVIDAD</th><th style="width:38%;">DESCRIPCIÓN</th><th style="width:20%;">RESPONSABLE</th><th style="width:12%;">ENTREGABLE</th></tr>
-        <tr><td>1.1</td><td>Kickoff y presentación del equipo</td><td>Reunión inicial para presentar al equipo de desarrollo, definir canales de comunicación y establecer expectativas.</td><td>Ana María Rodríguez</td><td>Acta de kickoff</td></tr>
-        <tr><td>1.2</td><td>Definición de objetivos y alcance</td><td>Taller con el cliente para definir los objetivos del proyecto y el alcance detallado.</td><td>Ana María Rodríguez</td><td>Documento de alcance</td></tr>
-        <tr><td>1.3</td><td>Estudio de viabilidad técnica</td><td>Análisis de tecnologías, infraestructura y recursos necesarios para el proyecto.</td><td>Carlos Alberto Pérez</td><td>Estudio de viabilidad</td></tr>
-        <tr><td>1.4</td><td>Planificación detallada del proyecto</td><td>Elaboración del plan de proyecto detallado con cronograma, recursos y presupuesto.</td><td>Ana María Rodríguez</td><td>Plan de proyecto</td></tr>
-        <tr><td>2.1</td><td>Entrevistas con stakeholders</td><td>Realización de entrevistas con el Gerente General, Contador Jefe y personal contable.</td><td>Laura Cristina Gómez</td><td>Actas de entrevistas</td></tr>
-        <tr><td>2.2</td><td>Aplicación de cuestionarios</td><td>Aplicación de los 120 cuestionarios de elicitación al equipo contable.</td><td>Laura Cristina Gómez</td><td>Cuestionarios completos</td></tr>
-        <tr><td>2.3</td><td>Análisis de documentación existente</td><td>Revisión de procedimientos internos, manuales y flujos contables actuales.</td><td>Laura Cristina Gómez</td><td>Documentación analizada</td></tr>
-        <tr><td>2.4</td><td>Identificación de requisitos funcionales</td><td>Identificación y documentación de los requisitos funcionales del sistema.</td><td>Laura Cristina Gómez</td><td>Lista de RF</td></tr>
-        <tr><td>2.5</td><td>Identificación de requisitos no funcionales</td><td>Identificación de requisitos no funcionales (rendimiento, seguridad, usabilidad).</td><td>Laura Cristina Gómez</td><td>Lista de RNF</td></tr>
-        <tr><td>2.6</td><td>Priorización de requisitos (MoSCoW)</td><td>Clasificación de requisitos según prioridad (Must, Should, Could, Won't).</td><td>Juan David Martínez</td><td>Requisitos priorizados</td></tr>
-        <tr><td>3.1</td><td>Redacción de Especificación de Requisitos</td><td>Elaboración del documento ERS completo según formato IEEE 830.</td><td>Laura Cristina Gómez</td><td>Documento ERS</td></tr>
-        <tr><td>3.2</td><td>Definición de casos de uso</td><td>Definición de casos de uso para las funcionalidades críticas del sistema.</td><td>Laura Cristina Gómez</td><td>Diagramas de casos de uso</td></tr>
-        <tr><td>3.3</td><td>Definición de criterios de aceptación</td><td>Definición de criterios de aceptación para cada requisito funcional.</td><td>Laura Cristina Gómez</td><td>Criterios de aceptación</td></tr>
-        <tr><td>3.4</td><td>Revisión y validación del documento</td><td>Revisión del documento ERS con el cliente y ajustes necesarios.</td><td>Ana María Rodríguez</td><td>Documento ERS revisado</td></tr>
-        <tr><td>3.5</td><td>Aprobación formal del documento</td><td>Firma de aprobación del documento ERS por parte del cliente.</td><td>Ana María Rodríguez</td><td>Documento ERS aprobado</td></tr>
-        <tr><td>4.1</td><td>Construcción de prototipos de baja fidelidad</td><td>Creación de wireframes para definir estructura y flujo de las pantallas críticas.</td><td>María Fernanda López</td><td>Wireframes</td></tr>
-        <tr><td>4.2</td><td>Validación de prototipos con usuarios</td><td>Presentación de wireframes al equipo contable para validación de flujos.</td><td>María Fernanda López</td><td>Feedback de usuarios</td></tr>
-        <tr><td>4.3</td><td>Construcción de prototipos de alta fidelidad</td><td>Creación de prototipos interactivos con colores, tipografía y datos reales.</td><td>María Fernanda López</td><td>Prototipos interactivos</td></tr>
-        <tr><td>4.4</td><td>Validación final de prototipos</td><td>Validación final de prototipos con el Contador Jefe y Gerente General.</td><td>María Fernanda López</td><td>Prototipos validados</td></tr>
-        <tr><td>4.5</td><td>Aprobación de prototipos</td><td>Aprobación formal de prototipos para iniciar el desarrollo.</td><td>Ana María Rodríguez</td><td>Acta de aprobación</td></tr>
-        <tr><td>5.1</td><td>Desarrollo de módulo de facturación DIAN</td><td>Desarrollo del módulo de facturación electrónica con integración DIAN.</td><td>Andrés Felipe Rojas</td><td>Código fuente</td></tr>
-        <tr><td>5.2</td><td>Desarrollo de módulo contable</td><td>Desarrollo del módulo contable con plan de cuentas y asientos automáticos.</td><td>Andrés Felipe Rojas</td><td>Código fuente</td></tr>
-        <tr><td>5.3</td><td>Desarrollo de módulo de inventarios</td><td>Desarrollo del módulo de inventarios con costeo promedio ponderado.</td><td>Andrés Felipe Rojas</td><td>Código fuente</td></tr>
-        <tr><td>5.4</td><td>Desarrollo de módulo de reportes</td><td>Desarrollo del módulo de reportes y dashboards.</td><td>Andrés Felipe Rojas</td><td>Código fuente</td></tr>
-        <tr><td>5.5</td><td>Pruebas de integración con DIAN (Sandbox)</td><td>Pruebas de integración con la DIAN en entorno de habilitación (Sandbox).</td><td>Karen Johanna Torres</td><td>Informe de pruebas</td></tr>
-        <tr><td>5.6</td><td>Pruebas funcionales y UAT</td><td>Ejecución de casos de prueba funcionales y pruebas de aceptación de usuario.</td><td>Karen Johanna Torres</td><td>Informe UAT</td></tr>
-        <tr><td>5.7</td><td>Pruebas de rendimiento y carga</td><td>Pruebas de rendimiento con 1.500 facturas/hora y carga con 30 usuarios.</td><td>Karen Johanna Torres</td><td>Informe de rendimiento</td></tr>
-        <tr><td>5.8</td><td>Capacitación al equipo contable</td><td>Capacitación práctica al equipo contable durante 2 semanas.</td><td>Diana Carolina Sánchez</td><td>Plan de capacitación</td></tr>
-        <tr><td>6.1</td><td>GO LIVE y puesta en producción</td><td>Puesta en producción del sistema y activación para uso real.</td><td>Luis Eduardo Ramírez</td><td>Sistema en producción</td></tr>
-        <tr><td>6.2</td><td>Período de pruebas paralelas (30 días)</td><td>Operación en paralelo con el sistema antiguo (SIIGO) por 30 días hábiles.</td><td>Karen Johanna Torres</td><td>Informe de paralelo</td></tr>
-        <tr><td>6.3</td><td>Firma de conformidad y acta de cierre</td><td>Firma de acta de conformidad por el cliente y cierre del proyecto.</td><td>Ana María Rodríguez</td><td>Acta de cierre</td></tr>
-        <tr><td>6.4</td><td>Transferencia de conocimiento</td><td>Transferencia de conocimiento al equipo de TI interno de la empresa.</td><td>Diana Carolina Sánchez</td><td>Manuales técnicos</td></tr>
-    </table>
+    
 
 </div>
 
@@ -1007,5 +924,87 @@
     })();
 </script>
 
+    
+
+    <h5 style="font-size:15px;">3.3. REQUISITOS NO FUNCIONALES <span class="red">*(no tiene dependencias de otros requisitos)*</span></h5>
+    <table>
+        <tr><th style="width:8%;">ID</th><th style="width:18%;">CATEGORÍA</th><th style="width:44%;">DESCRIPCIÓN</th><th style="width:15%;">PRIORIDAD</th><th style="width:15%;">MÉTODO DE VERIFICACIÓN</th></tr>
+        <tr><td>RNF-001</td><td>Rendimiento</td><td>Tiempo de respuesta: < 2 segundos para consultas complejas (reportes), < 1 segundo para transacciones (guardar factura).</td><td><strong>ALTA</strong></td><td>Pruebas de carga</td></tr>
+        <tr><td>RNF-002</td><td>Rendimiento</td><td>Soporte para 1.500 facturas/día en pico (diciembre).</td><td><strong>ALTA</strong></td><td>Pruebas de rendimiento</td></tr>
+        <tr><td>RNF-003</td><td>Rendimiento</td><td>Soporte para 15 usuarios concurrentes en cierre de mes, hasta 30 para pruebas de carga.</td><td><strong>ALTA</strong></td><td>Pruebas de estrés</td></tr>
+        <tr><td>RNF-004</td><td>Disponibilidad</td><td>Disponibilidad del sistema: 99.7% (22 horas de caída/año máximo).</td><td><strong>ALTA</strong></td><td>Monitoreo de uptime</td></tr>
+        <tr><td>RNF-005</td><td>Usabilidad</td><td>Interfaz simple y rápida para el día a día, con opciones avanzadas desplegables.</td><td><strong>ALTA</strong></td><td>Pruebas de usuario</td></tr>
+        <tr><td>RNF-006</td><td>Usabilidad</td><td>Un auxiliar nuevo debe poder facturar después de 1 hora de entrenamiento.</td><td><strong>ALTA</strong></td><td>Pruebas de usabilidad</td></tr>
+        <tr><td>RNF-007</td><td>Usabilidad</td><td>Diseño responsive para escritorio y tablet.</td><td><strong>ALTA</strong></td><td>Pruebas de compatibilidad</td></tr>
+        <tr><td>RNF-008</td><td>Seguridad</td><td>Autenticación con usuario/contraseña con políticas de complejidad.</td><td><strong>ALTA</strong></td><td>Pruebas de autenticación</td></tr>
+        <tr><td>RNF-009</td><td>Seguridad</td><td>Autenticación de dos factores (2FA) para accesos remotos y rol de Administrador.</td><td><strong>MEDIA</strong></td><td>Pruebas de 2FA</td></tr>
+        <tr><td>RNF-010</td><td>Seguridad</td><td>Cifrado AES-256 para datos sensibles en reposo y TLS 1.3 para transmisión.</td><td><strong>ALTA</strong></td><td>Auditoría de seguridad</td></tr>
+        <tr><td>RNF-011</td><td>Seguridad</td><td>WAF, bloqueo de intentos fallidos (5 intentos bloquea IP 15 min), sesiones expiran a los 30 min.</td><td><strong>ALTA</strong></td><td>Pruebas de penetración</td></tr>
+        <tr><td>RNF-012</td><td>Seguridad</td><td>Bitácora de auditoría inmutable registrando quién, cuándo, IP y acción.</td><td><strong>ALTA</strong></td><td>Revisión de logs</td></tr>
+        <tr><td>RNF-013</td><td>Conectividad</td><td>Integración con DIAN vía SOAP/REST en tiempo real, con modo contingencia offline.</td><td><strong>ALTA</strong></td><td>Pruebas de integración</td></tr>
+        <tr><td>RNF-014</td><td>Legal</td><td>Cumplimiento de Ley 1581 de Habeas Data (protección de datos).</td><td><strong>ALTA</strong></td><td>Auditoría legal</td></tr>
+        <tr><td>RNF-015</td><td>Legal</td><td>Cumplimiento de facturación electrónica DIAN y entidades estatales.</td><td><strong>ALTA</strong></td><td>Auditoría legal</td></tr>
+        <tr><td>RNF-016</td><td>Idioma</td><td>Sistema 100% en español con términos contables colombianos.</td><td><strong>ALTA</strong></td><td>Revisión de contenido</td></tr>
+        <tr><td>RNF-017</td><td>Mantenibilidad</td><td>Arquitectura limpia y desacoplada para despliegues frecuentes (CI/CD).</td><td><strong>MEDIA</strong></td><td>Revisión de arquitectura</td></tr>
+        <tr><td>RNF-018</td><td>Soporte</td><td>Soporte de 12 meses incluido, respuesta < 4 horas para incidentes críticos, < 24 horas para menores.</td><td><strong>ALTA</strong></td><td>Acuerdo de nivel de servicio</td></tr>
+        <tr><td>RNF-019</td><td>Escalabilidad</td><td>Arquitectura que permita escalar horizontalmente añadiendo más servidores.</td><td><strong>ALTA</strong></td><td>Pruebas de escalabilidad</td></tr>
+        <tr><td>RNF-020</td><td>Recuperación</td><td>Copias de seguridad diarias automáticas, RTO < 4 horas, RPO < 1 hora.</td><td><strong>ALTA</strong></td><td>Pruebas de recuperación</td></tr>
+    </table>
+    <hr>
+
+    <!-- ==================== 4. VALIDACIÓN DE REQUISITOS ==================== -->
+    <h2>4. VALIDACIÓN DE REQUISITOS</h2>
+
+    <h5 style="font-size:15px;">4.1. CONSTRUCCIÓN DE PROTOTIPOS</h5>
+    <p><span class="red">(Se recomienda iniciar con prototipos de alta prioridad para validar con el usuario)</span></p>
+    <p><strong>Prototipos sugeridos para validación inicial:</strong></p>
+    <ol>
+        <li><strong>Flujo de creación de factura de venta:</strong> Prototipo del formulario de facturación (cabecera + productos) con validación de reglas, firma y envío a DIAN. Es el día a día del equipo contable.</li>
+        <li><strong>Dashboard de Gerente:</strong> Prototipo de la pantalla principal con KPIs en tiempo real (Ventas del día, Cartera vencida > 60 días, Margen bruto del mes, Efectivo disponible, Facturas pendientes por enviar a DIAN).</li>
+        <li><strong>Flujo de recepción de pago/cartera:</strong> Prototipo del proceso de aplicación de pagos a cartera con antigüedad de saldos.</li>
+        <li><strong>Conciliación bancaria:</strong> Prototipo de la vista de conciliación con importación de extractos y match automático.</li>
+    </ol>
+    <p><strong>Criterios de validación de prototipos:</strong></p>
+    <ul>
+        <li>Participación del Contador Jefe (María) y el Gerente General en la revisión de cada prototipo.</li>
+        <li>Frecuencia: Cada 2 o 3 semanas (demos cortas pero constantes).</li>
+        <li>Herramientas: Figma o Balsamiq (herramientas digitales con interactividad).</li>
+        <li>Nivel de detalle: Empezar con baja fidelidad (wireframes) para definir estructura y flujo, luego pasar a alta fidelidad (colores, tipografía, datos reales) en las últimas 2 iteraciones.</li>
+        <li>Aprobación formal del cliente antes de pasar a desarrollo.</li>
+    </ul>
+
+    <h5 style="font-size:15px;">4.2. FORMATO DE CASO DE PRUEBA</h5>
+    <p><span class="red">(Formato para documentar y ejecutar casos de prueba de los requisitos funcionales)</span></p>
+
+    <p><strong>CASO DE PRUEBA CP-001</strong></p>
+    <table>
+        <tr><th style="width:25%;">OBJETIVO DEL CASO DE PRUEBA</th><td>Validar que el sistema emita y envíe exitosamente una factura electrónica a la DIAN obteniendo el CUFE.</td></tr>
+        <tr><th>IDENTIFICADOR</th><td>CP-001</td></tr>
+        <tr><th>REQUISITO FUNCIONAL</th><td>RF-001, RF-002, RF-003, RF-006, RF-008</td></tr>
+        <tr><th>PRECONDICIONES</th><td>Usuario autenticado con rol de Auxiliar Contable. Certificado de firma digital activo. Conexión a DIAN disponible. Resolución de facturación cargada.</td></tr>
+        <tr><th>PASOS</th><td>1. Navegar al módulo de Facturación.<br>2. Seleccionar "Nueva Factura".<br>3. Ingresar datos del cliente (NIT, razón social).<br>4. Agregar productos con cantidades y precios.<br>5. Verificar cálculo de IVA y total.<br>6. Hacer clic en "Enviar a DIAN".<br>7. Esperar confirmación de la DIAN.</td></tr>
+        <tr><th>RESULTADOS ESPERADOS</th><td>1. El sistema valida los datos antes del envío.<br>2. El sistema firma el XML con el Token.<br>3. La DIAN acepta la factura y devuelve el CUFE.<br>4. El sistema muestra mensaje: "Factura enviada exitosamente. CUFE: [código]".<br>5. La factura queda en estado "Aceptada".<br>6. El asiento contable se genera automáticamente.<br>7. El PDF con código QR se genera correctamente.</td></tr>
+    </table>
+
+    <p><strong>CASO DE PRUEBA CP-002</strong></p>
+    <table>
+        <tr><th style="width:25%;">OBJETIVO DEL CASO DE PRUEBA</th><td>Validar que el sistema gestione correctamente el rechazo de una factura por la DIAN y permita su corrección.</td></tr>
+        <tr><th>IDENTIFICADOR</th><td>CP-002</td></tr>
+        <tr><th>REQUISITO FUNCIONAL</th><td>RF-004</td></tr>
+        <tr><th>PRECONDICIONES</th><td>Usuario autenticado con rol de Auxiliar Contable. Se ha creado una factura con un NIT inválido (caso de prueba).</td></tr>
+        <tr><th>PASOS</th><td>1. Crear una factura con un NIT inválido.<br>2. Enviar a DIAN.<br>3. Esperar la respuesta de rechazo.<br>4. Corregir el NIT por uno válido.<br>5. Reenviar a DIAN.</td></tr>
+        <tr><th>RESULTADOS ESPERADOS</th><td>1. La DIAN rechaza la factura indicando "NIT inválido".<br>2. El sistema bloquea la factura y muestra el error en español claro.<br>3. El sistema permite corregir el campo NIT.<br>4. El sistema conserva el mismo número de factura.<br>5. El reenvío es exitoso y se obtiene el CUFE.</td></tr>
+    </table>
+
+    <p><strong>CASO DE PRUEBA CP-003</strong></p>
+    <table>
+        <tr><th style="width:25%;">OBJETIVO DEL CASO DE PRUEBA</th><td>Validar que el sistema calcule correctamente las retenciones en la fuente para un proveedor.</td></tr>
+        <tr><th>IDENTIFICADOR</th><td>CP-003</td></tr>
+        <tr><th>REQUISITO FUNCIONAL</th><td>RF-014, RF-016</td></tr>
+        <tr><th>PRECONDICIONES</th><td>Usuario autenticado con rol de Auxiliar Contable. Proveedor registrado con régimen de retención. Factura de compra cargada.</td></tr>
+        <tr><th>PASOS</th><td>1. Navegar al módulo de Compras.<br>2. Registrar una factura de compra de un proveedor.<br>3. Ingresar el monto de la compra.<br>4. Guardar la factura.</td></tr>
+        <tr><th>RESULTADOS ESPERADOS</th><td>1. El sistema calcula automáticamente la retención de IVA según tarifa.<br>2. El sistema calcula automáticamente la retención de Renta según tarifa.<br>3. El sistema genera el asiento contable correspondiente.<br>4. El sistema muestra el cálculo detallado en la factura.</td></tr>
+    </table>
+    <hr>
 </body>
 </html>
