@@ -49,6 +49,39 @@ body {
                     font-weight: 500;
                     font-size: 1.05rem;
                 }
+                menu{
+                    align-items: center;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                    justify-content: center;
+                    padding: 0;
+                    a:ist(:link, :visited){
+                        border-radius: 5rem;
+                        background-color: #fff9;
+                        display: flex;
+                        align-items: center;
+                        color: #666;
+                        padding: 0.6rem;
+                        width: 320px;
+                        text-decoration: none;
+                        transition: all 0.4s ease-in;
+                        &:is(:hover){
+                            background-color: #000c;
+                            transform: scale(1.04) /*rotate(360deg)*/ translateX(18px);
+                        }
+                        span {
+                            background-color: crimson;
+                            display: flex;
+                            font-size: 1.8rem;
+                            height: 60px;
+                            width: 60px;
+                            border-radius: 50%;
+                            justify-content: center;
+
+                        }
+                    }
+                }
 
             }
 
