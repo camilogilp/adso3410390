@@ -17,8 +17,46 @@ body {
     padding: 1.5rem;
 }
 
+&.mainmenu.layout {
+    background: linear-gradient(45deg, rgb(48, 1, 48), black);
+
+    main {
+        header {
+            h1 {
+                margin: 0;
+            }
+
+            h3 {
+                font-weight: 200;
+            }
+
+            img {
+                background-color: #0006;
+            }
+
+        }
+
+        menu {
+            gap: 0.4rem;
+            a:is(:link, :visited) {
+                span {
+                    background-color: orchid;
+                }
+                aside{
+                    h3{
+                        font-size: 1rem;
+                    }
+                }
+                &:is(:hover){
+                    background-color: orchid;
+                }
+            }
+        }
+    }
+}
+
 main {
-    max-width: 420px;
+    max-width: 500px;
     width: 100%;
     background: rgb(190, 191, 219);
     backdrop-filter: blur(4px);
@@ -52,7 +90,7 @@ body.mainmenu {
                 object-position: top;
                 display: inline-block;
                 margin: 0 auto 1rem;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             }
 
             h2 {
@@ -86,17 +124,17 @@ body.mainmenu {
 
             /* Menú */
             menu {
-                display: flex;
-                flex-direction: column;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
                 gap: 1.2rem;
-                align-items: center;
+                align-items: row;
                 padding: 0;
                 margin: 0;
                 list-style: none;
 
                 a {
                     display: flex;
-                    align-items: center;
+                    align-items: column;
                     background: rgba(232, 227, 227, 0.7);
                     backdrop-filter: blur(2px);
                     border-radius: 5rem;
@@ -107,7 +145,7 @@ body.mainmenu {
                     text-decoration: none;
                     transition: all 0.3s ease;
                     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-                    border: 1px solid rgba(255,255,255,0.3);
+                    border: 1px solid rgba(255, 255, 255, 0.3);
 
                     &:hover {
                         background-color: #6354e8;
