@@ -1015,7 +1015,6 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | ESCENARIOS DE ESCEPCION    | • La contraseña actual ingresada no coincide con la almacenada (mensaje: "Contraseña actual incorrecta")<br>• La nueva contraseña no cumple con los requisitos de complejidad (mensaje detallado)<br>• La nueva contraseña ya fue utilizada anteriormente (mensaje: "No puede usar una contraseña que haya usado antes")<br>• El usuario ingresa la misma contraseña que la actual (mensaje: "La nueva contraseña debe ser diferente")<br>• El usuario no recuerda su contraseña actual (se redirige a recuperación)<br>• La cuenta del usuario está bloqueada o inactiva (no permite cambio)<br>• El sistema no puede actualizar la contraseña por error de base de datos |
 | CONDICIÓN DE ÉXITO    | La contraseña del usuario se actualiza correctamente, se registra la fecha de cambio y se aplica la nueva política de seguridad, permitiendo al usuario continuar con sus operaciones |
 | CUESTIONES A RESOLVER    | Configuración de período de vigencia (días), política de historial de contraseñas (número a recordar), notificaciones de vencimiento anticipado (ej. 7 días antes), bloqueo de acceso si no se cambia después de la expiración, integración con directorio activo si se usa, registro de cambios en el log de auditoría para cumplimiento normativo |
-
 ---
 ## 6. REGISTRAR PRODUCTO EN INVENTARIO
 
