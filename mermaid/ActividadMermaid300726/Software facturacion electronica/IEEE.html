@@ -109,7 +109,7 @@
 
         th,
         td {
-            border: 1px solid #7f7f7f;
+            border: 1px solid #0e0e0e;
             padding: 8px 12px;
             text-align: left;
             vertical-align: top;
@@ -376,7 +376,7 @@
             color: #ffffff;
             padding: 10px 18px;
             margin: 0;
-            border-bottom: 2px solid #2a6f97;
+            border-bottom: 2px solid #126290;
         }
 
         @media (max-width: 768px) {
@@ -520,9 +520,9 @@
                     <td>Juan Camilo Gil Perez</td>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>25/08/2026</td>
+                    <td>V5.0</td>
+                    <td>Juan Camilo Gil Perez</td>
                 </tr>
             </tbody>
         </table>
@@ -593,6 +593,24 @@
                 <tr>
                     <td>FECHA: _________________</td>
                     <td>FECHA: 20/08/2026</td>
+                </tr>
+                <tr>
+                    <td>NOMBRE DEL ENCARGADO: JOSE GERMAN ESTRADA CLAVIJO</td>
+                    <td>NOMBRE DEL ENCARGADO: JUAN CAMILO GIL PEREZ</td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:50%;">POR CLIENTE</th>
+                    <th style="width:50%;">DESARROLLADOR</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>FECHA: _________________</td>
+                    <td>FECHA: 25/08/2026</td>
                 </tr>
                 <tr>
                     <td>NOMBRE DEL ENCARGADO: JOSE GERMAN ESTRADA CLAVIJO</td>
@@ -4031,118 +4049,118 @@
                     }
 
                     class EstadoPedido {
-                   
-                        +cotizado
-                        +confirmado
-                        +despachado
-                        +entregado
-                        }
 
-                        class EstadoPago {
-                       
-                            +pendiente
-                            +pagado
-                            +vencido
-                            }
+                    +cotizado
+                    +confirmado
+                    +despachado
+                    +entregado
+                    }
 
-                            class DetalleFactura {
-                            + Long id
-                            + Integer cantidad
-                            + Double precioUnitario
-                            + Double subtotal
-                            + calcularSubtotal() Double
-                            }
+                    class EstadoPago {
 
-                            class DetallePedido {
-                            + Long id
-                            + Integer cantidad
-                            + Double precioUnitario
-                            + Double descuentoLinea
-                            + Double subtotal
-                            + calcularSubtotal() Double
-                            }
+                    +pendiente
+                    +pagado
+                    +vencido
+                    }
 
-                            class Producto {
-                            + Long id
-                            + String sku
-                            + String nombre
-                            + String descripcion
-                            + Double precioVenta
-                            + Double impuestoPorcentaje
-                            + Integer stockMinimo
-                            + Integer stockMaximo
-                            + actualizarPrecio(Double nuevoPrecio) void
-                            + verificarDisponibilidad(Integer cantidad) Boolean
-                            + calcularPrecioConImpuesto() Double
-                            }
+                    class DetalleFactura {
+                    + Long id
+                    + Integer cantidad
+                    + Double precioUnitario
+                    + Double subtotal
+                    + calcularSubtotal() Double
+                    }
 
-                            class Categoria {
-                            + Long id
-                            + String nombre
-                            + String descripcion
-                            }
+                    class DetallePedido {
+                    + Long id
+                    + Integer cantidad
+                    + Double precioUnitario
+                    + Double descuentoLinea
+                    + Double subtotal
+                    + calcularSubtotal() Double
+                    }
 
-                            class Stock {
-                            + Long id
-                            + Integer cantidadDisponible
-                            + Integer puntoReorden
-                            + ajustar(Integer cantidad) void
-                            + estaCritico() Boolean
-                            + validarStock(Integer cantidad) Boolean
-                            }
+                    class Producto {
+                    + Long id
+                    + String sku
+                    + String nombre
+                    + String descripcion
+                    + Double precioVenta
+                    + Double impuestoPorcentaje
+                    + Integer stockMinimo
+                    + Integer stockMaximo
+                    + actualizarPrecio(Double nuevoPrecio) void
+                    + verificarDisponibilidad(Integer cantidad) Boolean
+                    + calcularPrecioConImpuesto() Double
+                    }
 
-                            class MovimientoInventario {
-                            + Long id
-                            + Integer cantidad
-                            + LocalDateTime fecha
-                            + String motivo
-                            + Double costoPromedio
-                            + ejecutar() void
-                            }
+                    class Categoria {
+                    + Long id
+                    + String nombre
+                    + String descripcion
+                    }
 
-                            class TipoMovimiento {
-                                +entrada
-                                +salida
-                                +ajuste
-                                }
+                    class Stock {
+                    + Long id
+                    + Integer cantidadDisponible
+                    + Integer puntoReorden
+                    + ajustar(Integer cantidad) void
+                    + estaCritico() Boolean
+                    + validarStock(Integer cantidad) Boolean
+                    }
 
-                                class Bodega {
-                                + Long id
-                                + String nombre
-                                + String ubicacion
-                                + Integer capacidad
-                                }
+                    class MovimientoInventario {
+                    + Long id
+                    + Integer cantidad
+                    + LocalDateTime fecha
+                    + String motivo
+                    + Double costoPromedio
+                    + ejecutar() void
+                    }
 
-                                %% Relaciones Capa 1 -> Capa 2
-                                Usuario "1" --> "1..*" Rol : tiene
-                                Usuario "1" --> "*" Pedido : crea
-                                Cliente "1" --> "*" Pedido : realiza
-                                Usuario "1" --> "*" Factura : emite
+                    class TipoMovimiento {
+                    +entrada
+                    +salida
+                    +ajuste
+                    }
 
-                                %% Relaciones Capa 2 -> Capa 2
-                                Pedido "1" --> "0..1" Factura : genera
-                                Pedido --> EstadoPedido : define
-                                Factura --> EstadoPago : define
+                    class Bodega {
+                    + Long id
+                    + String nombre
+                    + String ubicacion
+                    + Integer capacidad
+                    }
 
-                                %% Relaciones Capa 2 -> Capa 3 (Composicion)
-                                Factura "1" *-- "1..*" DetalleFactura : compone
-                                Pedido "1" *-- "1..*" DetallePedido : compone
+                    %% Relaciones Capa 1 -> Capa 2
+                    Usuario "1" --> "1..*" Rol : tiene
+                    Usuario "1" --> "*" Pedido : crea
+                    Cliente "1" --> "*" Pedido : realiza
+                    Usuario "1" --> "*" Factura : emite
 
-                                %% Relaciones Capa 3 -> Capa 4
-                                DetalleFactura "*" --> "1" Producto : referencia
-                                DetallePedido "*" --> "1" Producto : referencia
+                    %% Relaciones Capa 2 -> Capa 2
+                    Pedido "1" --> "0..1" Factura : genera
+                    Pedido --> EstadoPedido : define
+                    Factura --> EstadoPago : define
 
-                                %% Relaciones Capa 4 -> Capa 4
-                                Producto "*" --> "1" Categoria : pertenece
+                    %% Relaciones Capa 2 -> Capa 3 (Composicion)
+                    Factura "1" *-- "1..*" DetalleFactura : compone
+                    Pedido "1" *-- "1..*" DetallePedido : compone
 
-                                %% Relaciones Capa 4 -> Capa 5
-                                Producto "1" --> "*" Stock : posee
-                                Producto "1" --> "*" MovimientoInventario : origina
-                                MovimientoInventario --> TipoMovimiento : clasifica
+                    %% Relaciones Capa 3 -> Capa 4
+                    DetalleFactura "*" --> "1" Producto : referencia
+                    DetallePedido "*" --> "1" Producto : referencia
 
-                                %% Relaciones Capa 5 -> Capa 6
-                                Stock "*" --> "1" Bodega : almacena
-                                MovimientoInventario "*" --> "1" Bodega : ejecuta
+                    %% Relaciones Capa 4 -> Capa 4
+                    Producto "*" --> "1" Categoria : pertenece
+
+                    %% Relaciones Capa 4 -> Capa 5
+                    Producto "1" --> "*" Stock : posee
+                    Producto "1" --> "*" MovimientoInventario : origina
+                    MovimientoInventario --> TipoMovimiento : clasifica
+
+                    %% Relaciones Capa 5 -> Capa 6
+                    Stock "*" --> "1" Bodega : almacena
+                    MovimientoInventario "*" --> "1" Bodega : ejecuta
                 </div>
             </div>
 
