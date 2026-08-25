@@ -1,61 +1,100 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>01. LayOut</title>
+    <title>ADSO 3410390</title>
     <link rel="stylesheet" href="src/css/master.css">
-    
 </head>
-
-<body class="mainmenu">
+<body>
     <main>
-        <header>
-            <h1><strong>01. LayOut</strong></h1>
-            <img src="src/imgs/JCGP.jpg" alt="Foto de perfil">
-            <p></p> <!--Espacio destinado para la descripcion del tema -->
+        <!-- ===== MENÚ PRINCIPAL ===== -->
+        <div id="menu-principal" class="seccion activa">
+            <header>
+                <h1>ADSO 3410390</h1>
+                <img src="src/imgs/JCGP.jpg" alt="Foto de perfil">
+                <h2>JUAN CAMILO GIL PEREZ</h2>
+                <h3>Análisis y Desarrollo de Software</h3>
+                <h4>Centro de Procesos Industriales y Construcción</h4>
+                <h5>SENA - Regional Caldas</h5>
 
-            <!-- Menú ahora dentro del header para que los estilos funcionen -->
-            <menu>
-                <a href="01-WireFrame Lo-Fi/index2.html">
-                    <span>01</span>
-                    <aside>
-                        <h3>Wireframe Lo-Fi</h3>
-                    </aside>
-                </a>
-                <a href="02-JavaScript/index.html">
-                    <span>02</span>
-                    <aside>
-                        <h3>Wireframe Hi-Fi</h3>
-                    </aside>
-                </a>
-                <a href="02-JavaScript/index.html">
-                    <span>03</span>
-                    <aside>
-                        <h3>Style Guide</h3>
-                    </aside>
-                </a>
-                <a href="02-JavaScript/index.html">
-                    <span>04</span>
-                    <aside>
-                        <h3>Mock Up</h3>
-                    </aside>
-                </a>
-                <a href="02-JavaScript/index.html">
-                    <span>05</span>
-                    <aside>
-                        <h3>LayOut</h3>
-                    </aside>
-                </a>
-                <a href="index.html">
-                    <aside>
-                        <h3>Volver al menu anterior</h3>
-                    </aside>
-                </a>
-            </menu>
-        </header>
+                <menu>
+                    <a onclick="mostrarSubmenu()">
+                        <span>01</span>
+                        <aside>
+                            <h3>Layout</h3>
+                            <small>Wireframe | Style Guide | Mock Up</small>
+                        </aside>
+                    </a>
+                    <a href="02-JavaScript/index.html">
+                        <span>02</span>
+                        <aside>
+                            <h3>JavaScript</h3>
+                            <small>Behavior | Vanilla</small>
+                        </aside>
+                    </a>
+                </menu>
+            </header>
+        </div>
+
+        <!-- ===== SUBMENÚ DE LAYOUT ===== -->
+        <div id="submenu-layout" class="seccion">
+            <header>
+                <h1><strong>01. LayOut</strong></h1>
+                <img src="src/imgs/JCGP.jpg" alt="Foto de perfil">
+                <p></p>
+
+                <menu>
+                    <a href="01-WireFrame Lo-Fi/index2.html">
+                        <span>01</span>
+                        <aside>
+                            <h3>Wireframe Lo-Fi</h3>
+                        </aside>
+                    </a>
+                    <a href="02-JavaScript/index.html">
+                        <span>02</span>
+                        <aside>
+                            <h3>Wireframe Hi-Fi</h3>
+                        </aside>
+                    </a>
+                    <a href="02-JavaScript/index.html">
+                        <span>03</span>
+                        <aside>
+                            <h3>Style Guide</h3>
+                        </aside>
+                    </a>
+                    <a href="02-JavaScript/index.html">
+                        <span>04</span>
+                        <aside>
+                            <h3>Mock Up</h3>
+                        </aside>
+                    </a>
+                    <a href="02-JavaScript/index.html">
+                        <span>05</span>
+                        <aside>
+                            <h3>LayOut</h3>
+                        </aside>
+                    </a>
+                    <a onclick="mostrarPrincipal()">
+                        <aside>
+                            <h3>Volver al menú anterior</h3>
+                        </aside>
+                    </a>
+                </menu>
+            </header>
+        </div>
     </main>
-</body>
 
+    <script>
+        function mostrarSubmenu() {
+            document.getElementById('menu-principal').classList.remove('activa');
+            document.getElementById('submenu-layout').classList.add('activa');
+        }
+
+        function mostrarPrincipal() {
+            document.getElementById('submenu-layout').classList.remove('activa');
+            document.getElementById('menu-principal').classList.add('activa');
+        }
+    </script>
+</body>
 </html>

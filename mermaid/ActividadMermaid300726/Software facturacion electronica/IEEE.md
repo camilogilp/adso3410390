@@ -928,7 +928,7 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 
 ---
 
-# DEFINICIÓN DEL CASO DE USO
+# 4.1.1.DEFINICIÓN DEL CASO DE USO
 
 ## 1.INICIO DE SESION EN EL SISTEMA
 
@@ -1202,6 +1202,234 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | ESCENARIOS DE ESCEPCION    | • No hay ventas en el período seleccionado (se muestra mensaje)<br>• El volumen de datos es excesivo y se recomienda ajustar el rango<br>• El usuario no tiene permisos para ver datos financieros detallados (costos, márgenes) |
 | CONDICIÓN DE ÉXITO    | El reporte de ventas se genera correctamente, permitiendo al gerente tomar decisiones estratégicas basadas en los datos de ventas |
 | CUESTIONES A RESOLVER    | Cálculo de comisiones por vendedor, integración con datos de costos para calcular márgenes, formatos de exportación con gráficos interactivos, análisis de tendencias (mes a mes, año a año), manejo de grandes volúmenes de datos con agregaciones precalculadas |
+
+# 4.1.2.CREACION DE DIAGRAMAS DE CLASE DEL PROYECTO
+
+
+```mermaid
+classDiagram
+    direction TB
+
+    class Usuario {
+        +int idUsuario
+        +String nombreCompleto
+        +String identificacion
+        +String correo
+        +String nombreUsuario
+        +String contrasenaHash
+        +Date fechaUltimoCambio
+        +String estado
+        +Date fechaVigencia
+        +int intentosFallidos
+        +boolean bloqueado
+        +autenticar(String usuario, String contrasena) boolean
+        +cambiarContrasena(String actual, String nueva) boolean
+        +resetearContrasena(String token, String nueva) boolean
+        +bloquearCuenta() void
+        +desbloquearCuenta() void
+    }
+
+    class Rol {
+        +int idRol
+        +String nombreRol
+        +String descripcion
+        +asignarPermiso(Permiso permiso) void
+        +quitarPermiso(Permiso permiso) void
+    }
+
+    class Permiso {
+        +int idPermiso
+        +String nombrePermiso
+        +String modulo
+        +String accion
+    }
+
+    class Auditoria {
+        +int idAuditoria
+        +Date fecha
+        +String accion
+        +String ipOrigen
+        +String detalle
+        +registrarEvento(Usuario usuario, String accion) void
+    }
+
+    class Categoria {
+        +int idCategoria
+        +String nombreCategoria
+        +String descripcion
+    }
+
+    class Producto {
+        +int idProducto
+        +String codigo
+        +String nombre
+        +String descripcion
+        +String unidadMedida
+        +double precioCompra
+        +double precioVenta
+        +String impuesto
+        +int stockActual
+        +int stockMinimo
+        +String ubicacionBodega
+        +actualizarStock(int cantidad, String tipoMovimiento) void
+        +calcularValorInventario() double
+        +verificarStockMinimo() boolean
+        +asignarProveedor(Proveedor proveedor) void
+    }
+
+    class Proveedor {
+        +int idProveedor
+        +String tipoIdentificacion
+        +String numIdentificacion
+        +String razonSocial
+        +String nombreComercial
+        +String contacto
+        +String telefono
+        +String correo
+        +String direccion
+        +String condicionesPago
+        +String calificacion
+        +String categoria
+        +registrar() void
+        +calificar(int calificacion) void
+        +evaluarDesempeno() String
+    }
+
+    class ProductoProveedor {
+        +int idProductoProveedor
+        +double precioProveedor
+        +int plazoEntrega
+        +String estado
+    }
+
+    class MovimientoInventario {
+        +int idMovimiento
+        +String tipoMovimiento
+        +int cantidad
+        +double costoUnitario
+        +String referenciaDocumento
+        +Date fecha
+        +String motivo
+        +registrarMovimiento() void
+        +revertirMovimiento() void
+    }
+
+    class Compra {
+        +int idCompra
+        +Date fecha
+        +double total
+        +String estado
+        +calcularTotal() double
+        +recibirMercancia() void
+    }
+
+    class DetalleCompra {
+        +int idDetalleCompra
+        +int cantidad
+        +double costoUnitario
+        +double subtotal
+        +calcularSubtotal() double
+    }
+
+    class Cliente {
+        +int idCliente
+        +String tipoIdentificacion
+        +String numIdentificacion
+        +String razonSocial
+        +String nombreComercial
+        +String direccion
+        +String telefono
+        +String correo
+        +String regimenFiscal
+        +String condicionesPago
+        +double limiteCredito
+        +double descuentoDefecto
+        +String estado
+        +registrar() void
+        +actualizarDatos() void
+        +consultarSaldo() double
+        +validarIdentificacion() boolean
+    }
+
+    class Venta {
+        +int idVenta
+        +Date fecha
+        +String metodoPago
+        +double subtotal
+        +double descuento
+        +double impuesto
+        +double total
+        +String estado
+        +calcularTotal() double
+        +anular(String motivo) void
+        +generarFactura() Factura
+        +aplicarDescuento(double porcentaje) void
+    }
+
+    class DetalleVenta {
+        +int idDetalleVenta
+        +int cantidad
+        +double precioUnitario
+        +double descuento
+        +double subtotal
+        +calcularSubtotal() double
+    }
+
+    class Factura {
+        +int idFactura
+        +Date fechaEmision
+        +String xml
+        +String cufe
+        +String pdf
+        +String estado
+        +generarXML() String
+        +firmarDigitalmente() String
+        +enviarDIAN() boolean
+        +generarPDF() void
+    }
+
+    class NotaCredito {
+        +int idNotaCredito
+        +Date fecha
+        +String motivo
+        +double total
+        +generarXML() String
+        +enviarDIAN() boolean
+    }
+
+    class Reporte {
+        +int idReporte
+        +String nombre
+        +String tipo
+        +Date fechaGeneracion
+        +String formato
+        +generar() void
+        +exportar(String formato) void
+        +enviarCorreo(String destinatario) void
+    }
+
+    Usuario "1" --> "1" Rol : tiene
+    Rol "1" --> "0..*" Permiso : contiene
+    Usuario "1" --> "0..*" Auditoria : genera
+
+    Producto "1" --> "1" Categoria : pertenece
+    ProductoProveedor "1" --> "1" Producto : relaciona
+    ProductoProveedor "1" --> "1" Proveedor : relaciona
+    Producto "1" --> "0..*" MovimientoInventario : tiene
+    Usuario "1" --> "0..*" MovimientoInventario : registra
+
+    Proveedor "1" --> "0..*" Compra : suministra
+    Compra "1" --> "1..*" DetalleCompra : contiene
+    Producto "1" --> "0..*" DetalleCompra : es comprado en
+    Usuario "1" --> "0..*" Compra : realiza
+
+    Cliente "1" --> "0..*" Venta : realiza
+    Venta "1" --> "1..*" DetalleVenta : contiene
+    Producto "1" --> "0..*" DetalleVenta : es vendido en
+    Venta "1" --> "0..1" Factura : genera
+    Usuario "1" --> "0..*" Venta : atiende
+```
+
 
 ##### 4.2. FORMATO DE CASO DE PRUEBA
 

@@ -1,10 +1,3 @@
-
-IEEE.html
-Página
-24
-de
-1
-100%
 <!DOCTYPE html>
 <html lang="es">
 
@@ -12,6 +5,8 @@ de
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ESPECIFICACIÓN DE REQUISITOS - VISIÓN CLARA S.A.S.</title>
+    <!-- ===== Carga de Mermaid v11.4.1 (versión estable) ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
     <style>
         /* ===== Estilos originales (se mantienen) ===== */
         * {
@@ -448,6 +443,16 @@ de
             .table-wrap {
                 border: 1px solid #cbd8e8;
             }
+        }
+
+        /* ===== Estilo adicional para el diagrama Mermaid ===== */
+        .mermaid-container {
+            background: #fafbfc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #dbe4ee;
+            margin: 20px 0;
+            overflow-x: auto;
         }
     </style>
 </head>
@@ -3948,6 +3953,204 @@ de
                 </div>
             </div>
 
+            <!-- ==================== 4.1.2. CREACIÓN DE DIAGRAMAS DE CLASE ==================== -->
+            <h5 style="font-size:15px; margin-top:40px;">4.1.2. CREACIÓN DE DIAGRAMAS DE CLASE DEL PROYECTO</h5>
+            <p>A continuación se presenta el diagrama de clases del sistema, que representa la estructura estática del
+                software. El modelo está organizado en cinco paquetes funcionales que agrupan las entidades según su
+                responsabilidad:</p>
+            <ol>
+                <li><strong>Seguridad y Usuarios</strong> – Gestión de autenticación, roles, permisos y auditoría.</li>
+                <li><strong>Inventario y Productos</strong> – Catálogo de productos, categorías, proveedores y
+                    movimientos de stock.</li>
+                <li><strong>Compras</strong> – Órdenes de compra y recepción de mercancía.</li>
+                <li><strong>Ventas y Clientes</strong> – Gestión de clientes, ventas, facturación electrónica y notas de
+                    crédito.</li>
+                <li><strong>Reportes</strong> – Generación y exportación de informes.</li>
+            </ol>
+            <p>Cada clase incluye sus atributos principales (con tipo y visibilidad) y los métodos más relevantes. Las
+                relaciones muestran las cardinalidades y el tipo de asociación entre las entidades. Se han integrado
+                explícitamente los módulos de <strong>Reportes</strong> y <strong>Notas de Crédito</strong> con el resto
+                de los paquetes, asegurando trazabilidad y coherencia en el flujo de información.</p>
+
+            <div class="mermaid-container">
+                <div class="mermaid">
+                    classDiagram
+                    direction LR
+
+                    class Usuario {
+                    + Long id
+                    + String nombre
+                    + String email
+                    + String contraseniaHash
+                    + LocalDateTime fechaRegistro
+                    + Boolean activo
+                    + autenticar(String contrasenia) Boolean
+                    + cambiarRol(Rol nuevoRol) void
+                    }
+
+                    class Rol {
+                    + Long id
+                    + String nombre
+                    + String descripcion
+                    }
+
+                    class Cliente {
+                    + Long id
+                    + String identificacion
+                    + String nombreCompleto
+                    + String telefono
+                    + String direccion
+                    + String email
+                    + String tipoCliente
+                    + actualizarDatos() void
+                    }
+
+                    class Factura {
+                    + Long id
+                    + String numeroFactura
+                    + LocalDateTime fechaEmision
+                    + LocalDateTime fechaVencimiento
+                    + Double total
+                    + String estadoPago
+                    + generarNumeroFactura() String
+                    + calcularTotal() Double
+                    + pagar() Boolean
+                    }
+
+                    class Pedido {
+                    + Long id
+                    + LocalDateTime fechaCreacion
+                    + String estado
+                    + Double subtotal
+                    + Double descuento
+                    + Double total
+                    + String observaciones
+                    + calcularTotales() void
+                    + confirmarPedido() Boolean
+                    + agregarDetalle(Producto producto, Integer cantidad) void
+                    }
+
+                    class EstadoPedido {
+                   
+                        +cotizado
+                        +confirmado
+                        +despachado
+                        +entregado
+                        }
+
+                        class EstadoPago {
+                       
+                            +pendiente
+                            +pagado
+                            +vencido
+                            }
+
+                            class DetalleFactura {
+                            + Long id
+                            + Integer cantidad
+                            + Double precioUnitario
+                            + Double subtotal
+                            + calcularSubtotal() Double
+                            }
+
+                            class DetallePedido {
+                            + Long id
+                            + Integer cantidad
+                            + Double precioUnitario
+                            + Double descuentoLinea
+                            + Double subtotal
+                            + calcularSubtotal() Double
+                            }
+
+                            class Producto {
+                            + Long id
+                            + String sku
+                            + String nombre
+                            + String descripcion
+                            + Double precioVenta
+                            + Double impuestoPorcentaje
+                            + Integer stockMinimo
+                            + Integer stockMaximo
+                            + actualizarPrecio(Double nuevoPrecio) void
+                            + verificarDisponibilidad(Integer cantidad) Boolean
+                            + calcularPrecioConImpuesto() Double
+                            }
+
+                            class Categoria {
+                            + Long id
+                            + String nombre
+                            + String descripcion
+                            }
+
+                            class Stock {
+                            + Long id
+                            + Integer cantidadDisponible
+                            + Integer puntoReorden
+                            + ajustar(Integer cantidad) void
+                            + estaCritico() Boolean
+                            + validarStock(Integer cantidad) Boolean
+                            }
+
+                            class MovimientoInventario {
+                            + Long id
+                            + Integer cantidad
+                            + LocalDateTime fecha
+                            + String motivo
+                            + Double costoPromedio
+                            + ejecutar() void
+                            }
+
+                            class TipoMovimiento {
+                                +entrada
+                                +salida
+                                +ajuste
+                                }
+
+                                class Bodega {
+                                + Long id
+                                + String nombre
+                                + String ubicacion
+                                + Integer capacidad
+                                }
+
+                                %% Relaciones Capa 1 -> Capa 2
+                                Usuario "1" --> "1..*" Rol : tiene
+                                Usuario "1" --> "*" Pedido : crea
+                                Cliente "1" --> "*" Pedido : realiza
+                                Usuario "1" --> "*" Factura : emite
+
+                                %% Relaciones Capa 2 -> Capa 2
+                                Pedido "1" --> "0..1" Factura : genera
+                                Pedido --> EstadoPedido : define
+                                Factura --> EstadoPago : define
+
+                                %% Relaciones Capa 2 -> Capa 3 (Composicion)
+                                Factura "1" *-- "1..*" DetalleFactura : compone
+                                Pedido "1" *-- "1..*" DetallePedido : compone
+
+                                %% Relaciones Capa 3 -> Capa 4
+                                DetalleFactura "*" --> "1" Producto : referencia
+                                DetallePedido "*" --> "1" Producto : referencia
+
+                                %% Relaciones Capa 4 -> Capa 4
+                                Producto "*" --> "1" Categoria : pertenece
+
+                                %% Relaciones Capa 4 -> Capa 5
+                                Producto "1" --> "*" Stock : posee
+                                Producto "1" --> "*" MovimientoInventario : origina
+                                MovimientoInventario --> TipoMovimiento : clasifica
+
+                                %% Relaciones Capa 5 -> Capa 6
+                                Stock "*" --> "1" Bodega : almacena
+                                MovimientoInventario "*" --> "1" Bodega : ejecuta
+                </div>
+            </div>
+
+            <!-- ==================== 4.2. FORMATO DE CASO DE PRUEBA (sin cambios) ==================== -->
+            <h5 style="font-size:15px;">4.2. FORMATO DE CASO DE PRUEBA</h5>
+            <p><span class="red">(Formato para documentar y ejecutar casos de prueba de los requisitos
+                    funcionales)</span></p>
+
             <!-- ==================== JAVASCRIPT PARA GANTT (sin cambios) ==================== -->
             <script>
                 (function () {
@@ -4132,6 +4335,18 @@ de
                 })();
             </script>
 
+            <!-- ===== Inicialización de Mermaid ===== -->
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    mermaid.initialize({
+                        theme: 'default',
+                        securityLevel: 'loose',
+                        fontFamily: 'Times New Roman, serif'
+                    });
+                });
+            </script>
+
+        </div>
 </body>
 
 </html>
