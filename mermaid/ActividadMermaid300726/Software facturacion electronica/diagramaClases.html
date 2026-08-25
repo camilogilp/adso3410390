@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESPECIFICACIÓN DE REQUISITOS - VISIÓN CLARA S.A.S.</title>
+    <!-- ===== Carga de Mermaid v11.4.1 (versión estable) ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+    <style>
+        /* ===== Estilos originales (se mantienen) ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+            color: #000;
+            line-height: 1.6;
+        }
+
+        .container {
+            background: white;
+            padding: 50px 60px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2{
+            text-align: center;
+            font-size: 20px;
+            border-bottom: 2px solid #02132d;
+            padding-bottom: 12px;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-top: 35px;
+            border-bottom: 1px solid #999;
+            padding-bottom: 6px;
+            color: #1a3c6e;
+        }
+
+        h3 {
+            font-size: 18px;
+            margin-top: 25px;
+            color: #2c3e50;
+        }
+
+        h4 {
+            font-size: 16px;
+            margin-top: 20px;
+            color: #2c3e50;
+        }
+
+        h5 {
+            font-size: 15px;
+            margin-top: 18px;
+            color: #1a3c6e;
+        }
+
+        h6 {
+            font-size: 14px;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #021026;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .red {
+            color: #c0392b;
+        }
+
+        .mt-60 {
+            margin-top: 60px;
+        }
+
+        .mt-6rem {
+            margin-top: 6rem;
+        }
+
+        hr {
+            border: none;
+            border-top: 2px solid #ccc;
+            margin: 30px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        th,
+        td {
+            border: 1px solid #0e0e0e;
+            padding: 8px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #e9ecef;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        ul,
+        ol {
+            padding-left: 25px;
+            margin: 10px 0;
+        }
+
+        li {
+            margin-bottom: 4px;
+        }
+
+        .qa-item {
+            margin: 16px 0;
+            padding: 14px 18px;
+            background: #fafbfc;
+            border-left: 4px solid #032033;
+            border-radius: 3px;
+        }
+
+        .qa-item .question {
+            font-weight: bold;
+            color: #1a3c6e;
+            font-size: 15px;
+        }
+
+        .qa-item .answer {
+            margin-top: 6px;
+            padding-left: 10px;
+            font-size: 14.5px;
+        }
+
+        .qa-number {
+            font-weight: bold;
+            color: #021521;
+            margin-right: 5px;
+        }
+
+        .category {
+            background: #eef3f9;
+            padding: 10px 18px;
+            border-left: 5px solid #011022;
+            margin: 25px 0 15px 0;
+            border-radius: 3px;
+        }
+
+        .category h3 {
+            margin: 0;
+            color: #1a3c6e;
+            font-size: 17px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 12px;
+            color: #555;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+
+        .prio-alta {
+            background-color: #e74c3c;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+            font-size: 12px;
+        }
+
+        .prio-media {
+            background-color: #f1c40f;
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+            font-size: 12px;
+        }
+
+        .prio-baja {
+            background-color: #2ecc71;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+            font-size: 12px;
+        }
+
+        /* ===== Estilos del Gantt (se mantienen) ===== */
+        .gantt-wrapper {
+            height: 550px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .gantt-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        .gantt-table th,
+        .gantt-table td {
+            border: 1px solid #7f7f7f;
+            padding: 4px 2px;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        .gantt-table thead th {
+            position: sticky;
+            top: 0;
+            background-color: #b1b1b1;
+            z-index: 20;
+        }
+
+        .gantt-table .month-row th {
+            background-color: #2c3e50;
+            color: white;
+            font-weight: bold;
+        }
+
+        .gantt-table .week-row th {
+            background-color: #ecf0f1;
+            font-weight: normal;
+            color: #333;
+        }
+
+        .gantt-table thead tr:first-child th {
+            top: 0;
+        }
+
+        .gantt-table thead tr:last-child th {
+            top: 28px;
+        }
+
+        .gantt-cell {
+            display: inline-block;
+            width: 100%;
+            height: 24px;
+            border-radius: 3px;
+            line-height: 24px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s, opacity 0.2s;
+        }
+
+        .gantt-cell.completed {
+            background-color: #27ae60 !important;
+            color: white;
+        }
+
+        .gantt-cell.completed::after {
+            content: "✓";
+            font-weight: bold;
+        }
+
+        .gantt-cell:not(.completed) {
+            opacity: 0.75;
+        }
+
+        .gantt-cell:not(.completed):hover {
+            opacity: 1;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        .progress-bar {
+            width: 60px;
+            height: 12px;
+            background-color: #ecf0f1;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: #2ecc71;
+            border-radius: 6px;
+            transition: width 0.3s;
+            width: 0%;
+        }
+
+        .progress-text {
+            font-size: 11px;
+            font-weight: bold;
+            min-width: 32px;
+            text-align: right;
+        }
+
+        /* ===== NUEVOS ESTILOS para la tabla de catalogación de casos de uso (integrados desde el archivo de casos de uso) ===== */
+        .ucase-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            font-size: 0.95rem;
+        }
+
+        .ucase-table td {
+            padding: 12px 18px;
+            border-bottom: 1px solid #e7edf5;
+            vertical-align: top;
+            line-height: 1.5;
+        }
+
+        .ucase-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .ucase-table .label {
+            font-weight: 600;
+            color: #0b2a4a;
+            background: #f0f5fc;
+            width: 26%;
+            white-space: nowrap;
+        }
+
+        .ucase-table .value {
+            background: #ffffff;
+            width: 74%;
+        }
+
+        .catalog .label {
+            background: #e3ecf7;
+        }
+
+        .table-wrap {
+            margin-bottom: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #dbe4ee;
+        }
+
+        .table-wrap h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #1e3a5f;
+            color: #ffffff;
+            padding: 10px 18px;
+            margin: 0;
+            border-bottom: 2px solid #011520;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 13px;
+            }
+
+            th,
+            td {
+                padding: 6px 8px;
+            }
+
+            .progress-bar {
+                width: 40px;
+            }
+
+            .gantt-wrapper {
+                height: 400px;
+            }
+
+            .ucase-table .label {
+                width: 34%;
+                white-space: normal;
+            }
+
+            .ucase-table .value {
+                width: 66%;
+            }
+
+            .ucase-table td {
+                padding: 10px 12px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .ucase-table td {
+                display: block;
+                width: 100% !important;
+                border-bottom: none;
+            }
+
+            .ucase-table tr {
+                display: block;
+                border-bottom: 1px solid #dbe4ee;
+                margin-bottom: 6px;
+            }
+
+            .ucase-table .label {
+                background: #e9f0f9;
+                font-weight: 700;
+                padding-bottom: 2px;
+            }
+
+            .ucase-table .value {
+                padding-top: 2px;
+                padding-bottom: 10px;
+            }
+
+            .table-wrap {
+                border: 1px solid #cbd8e8;
+            }
+        }
+
+        /* ===== Estilo adicional para el diagrama Mermaid ===== */
+        .mermaid-container {
+            background: #fafbfc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #dbe4ee;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- PORTADA (sin cambios) -->
+        <div class="mt-60"></div>
+        <p class="center bold" style="font-size:22px;">ESPECIFICACIÓN DE REQUISITOS DE SOFTWARE</p>
+        <div class="mt-60"></div>
+        <p class="center bold" style="font-size:18px;">PROYECTO: SISTEMA CONTABLE Y DE FACTURACIÓN ELECTRÓNICA</p>
+        <div class="mt-60"></div>
+        <p class="center bold" style="font-size:17px;">VISIÓN CLARA S.A.S.</p>
+        <div class="mt-60"></div>
+        <p class="center bold">FICHA 3410390</p>
+        <div class="mt-60"></div>
+        <p class="center bold">JUAN CAMILO GIL PEREZ</p>
+        <div class="mt-60"></div>
+        <p class="center bold">JOSE GERMAN ESTRADA</p>
+        <div class="mt-60"></div>
+        <p class="center bold">SERVICIO NACIONAL DE APRENDIZAJE (SENA)</p>
+        <div class="mt-60"></div>
+        <p class="center bold">CENTRO DE PROCESOS INDUSTRIALES Y CONSTRUCCION</p>
+        <div class="mt-60"></div>
+        <p class="center bold">TECNOLOGIA EN ANALISIS Y DESARROLLO DE SOFTWARE</p>
+        <div class="mt-60"></div>
+        <p class="center bold">DIAGRAMA DE CLASES DEL PROYECTO</p>
+        <div class="mt-60"></div>
+        <p class="center bold">FORMACION PRESENCIAL JORNADA DE LA MAÑANA</p>
+        <div class="mt-60"></div>
+        <p class="center bold">25 DE AGOSTO 2026</p>
+        <div class="mt-6rem"></div>
+        <hr>
+
+<div class="mermaid-container">
+                <div class="mermaid">
+                    classDiagram
+                    direction LR
+
+                    class Usuario {
+                    + Long id
+                    + String nombre
+                    + String email
+                    + String contraseniaHash
+                    + LocalDateTime fechaRegistro
+                    + Boolean activo
+                    + autenticar(String contrasenia) Boolean
+                    + cambiarRol(Rol nuevoRol) void
+                    }
+
+                    class Rol {
+                    + Long id
+                    + String nombre
+                    + String descripcion
+                    }
+
+                    class Cliente {
+                    + Long id
+                    + String identificacion
+                    + String nombreCompleto
+                    + String telefono
+                    + String direccion
+                    + String email
+                    + String tipoCliente
+                    + actualizarDatos() void
+                    }
+
+                    class Factura {
+                    + Long id
+                    + String numeroFactura
+                    + LocalDateTime fechaEmision
+                    + LocalDateTime fechaVencimiento
+                    + Double total
+                    + String estadoPago
+                    + generarNumeroFactura() String
+                    + calcularTotal() Double
+                    + pagar() Boolean
+                    }
+
+                    class Pedido {
+                    + Long id
+                    + LocalDateTime fechaCreacion
+                    + String estado
+                    + Double subtotal
+                    + Double descuento
+                    + Double total
+                    + String observaciones
+                    + calcularTotales() void
+                    + confirmarPedido() Boolean
+                    + agregarDetalle(Producto producto, Integer cantidad) void
+                    }
+
+                    class EstadoPedido {
+
+                    +cotizado
+                    +confirmado
+                    +despachado
+                    +entregado
+                    }
+
+                    class EstadoPago {
+
+                    +pendiente
+                    +pagado
+                    +vencido
+                    }
+
+                    class DetalleFactura {
+                    + Long id
+                    + Integer cantidad
+                    + Double precioUnitario
+                    + Double subtotal
+                    + calcularSubtotal() Double
+                    }
+
+                    class DetallePedido {
+                    + Long id
+                    + Integer cantidad
+                    + Double precioUnitario
+                    + Double descuentoLinea
+                    + Double subtotal
+                    + calcularSubtotal() Double
+                    }
+
+                    class Producto {
+                    + Long id
+                    + String sku
+                    + String nombre
+                    + String descripcion
+                    + Double precioVenta
+                    + Double impuestoPorcentaje
+                    + Integer stockMinimo
+                    + Integer stockMaximo
+                    + actualizarPrecio(Double nuevoPrecio) void
+                    + verificarDisponibilidad(Integer cantidad) Boolean
+                    + calcularPrecioConImpuesto() Double
+                    }
+
+                    class Categoria {
+                    + Long id
+                    + String nombre
+                    + String descripcion
+                    }
+
+                    class Stock {
+                    + Long id
+                    + Integer cantidadDisponible
+                    + Integer puntoReorden
+                    + ajustar(Integer cantidad) void
+                    + estaCritico() Boolean
+                    + validarStock(Integer cantidad) Boolean
+                    }
+
+                    class MovimientoInventario {
+                    + Long id
+                    + Integer cantidad
+                    + LocalDateTime fecha
+                    + String motivo
+                    + Double costoPromedio
+                    + ejecutar() void
+                    }
+
+                    class TipoMovimiento {
+                    +entrada
+                    +salida
+                    +ajuste
+                    }
+
+                    class Bodega {
+                    + Long id
+                    + String nombre
+                    + String ubicacion
+                    + Integer capacidad
+                    }
+
+                    %% Relaciones Capa 1 -> Capa 2
+                    Usuario "1" --> "1..*" Rol : tiene
+                    Usuario "1" --> "*" Pedido : crea
+                    Cliente "1" --> "*" Pedido : realiza
+                    Usuario "1" --> "*" Factura : emite
+
+                    %% Relaciones Capa 2 -> Capa 2
+                    Pedido "1" --> "0..1" Factura : genera
+                    Pedido --> EstadoPedido : define
+                    Factura --> EstadoPago : define
+
+                    %% Relaciones Capa 2 -> Capa 3 (Composicion)
+                    Factura "1" *-- "1..*" DetalleFactura : compone
+                    Pedido "1" *-- "1..*" DetallePedido : compone
+
+                    %% Relaciones Capa 3 -> Capa 4
+                    DetalleFactura "*" --> "1" Producto : referencia
+                    DetallePedido "*" --> "1" Producto : referencia
+
+                    %% Relaciones Capa 4 -> Capa 4
+                    Producto "*" --> "1" Categoria : pertenece
+
+                    %% Relaciones Capa 4 -> Capa 5
+                    Producto "1" --> "*" Stock : posee
+                    Producto "1" --> "*" MovimientoInventario : origina
+                    MovimientoInventario --> TipoMovimiento : clasifica
+
+                    %% Relaciones Capa 5 -> Capa 6
+                    Stock "*" --> "1" Bodega : almacena
+                    MovimientoInventario "*" --> "1" Bodega : ejecuta
+                </div>
+            </div>
+            </body>
+
+</html>
