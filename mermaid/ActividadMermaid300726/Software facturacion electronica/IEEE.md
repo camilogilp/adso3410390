@@ -1207,227 +1207,175 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 
 
 ```mermaid
-classDiagram
-    direction TB
+ classDiagram
+                    direction LR
 
-    class Usuario {
-        +int idUsuario
-        +String nombreCompleto
-        +String identificacion
-        +String correo
-        +String nombreUsuario
-        +String contrasenaHash
-        +Date fechaUltimoCambio
-        +String estado
-        +Date fechaVigencia
-        +int intentosFallidos
-        +boolean bloqueado
-        +autenticar(String usuario, String contrasena) boolean
-        +cambiarContrasena(String actual, String nueva) boolean
-        +resetearContrasena(String token, String nueva) boolean
-        +bloquearCuenta() void
-        +desbloquearCuenta() void
-    }
+                    class Usuario {
+                    + Long id
+                    + String nombre
+                    + String email
+                    + String contraseniaHash
+                    + LocalDateTime fechaRegistro
+                    + Boolean activo
+                    + autenticar(String contrasenia) Boolean
+                    + cambiarRol(Rol nuevoRol) void
+                    }
 
-    class Rol {
-        +int idRol
-        +String nombreRol
-        +String descripcion
-        +asignarPermiso(Permiso permiso) void
-        +quitarPermiso(Permiso permiso) void
-    }
+                    class Rol {
+                    + Long id
+                    + String nombre
+                    + String descripcion
+                    }
 
-    class Permiso {
-        +int idPermiso
-        +String nombrePermiso
-        +String modulo
-        +String accion
-    }
+                    class Cliente {
+                    + Long id
+                    + String identificacion
+                    + String nombreCompleto
+                    + String telefono
+                    + String direccion
+                    + String email
+                    + String tipoCliente
+                    + actualizarDatos() void
+                    }
 
-    class Auditoria {
-        +int idAuditoria
-        +Date fecha
-        +String accion
-        +String ipOrigen
-        +String detalle
-        +registrarEvento(Usuario usuario, String accion) void
-    }
+                    class Factura {
+                    + Long id
+                    + String numeroFactura
+                    + LocalDateTime fechaEmision
+                    + LocalDateTime fechaVencimiento
+                    + Double total
+                    + String estadoPago
+                    + generarNumeroFactura() String
+                    + calcularTotal() Double
+                    + pagar() Boolean
+                    }
 
-    class Categoria {
-        +int idCategoria
-        +String nombreCategoria
-        +String descripcion
-    }
+                    class Pedido {
+                    + Long id
+                    + LocalDateTime fechaCreacion
+                    + String estado
+                    + Double subtotal
+                    + Double descuento
+                    + Double total
+                    + String observaciones
+                    + calcularTotales() void
+                    + confirmarPedido() Boolean
+                    + agregarDetalle(Producto producto, Integer cantidad) void
+                    }
 
-    class Producto {
-        +int idProducto
-        +String codigo
-        +String nombre
-        +String descripcion
-        +String unidadMedida
-        +double precioCompra
-        +double precioVenta
-        +String impuesto
-        +int stockActual
-        +int stockMinimo
-        +String ubicacionBodega
-        +actualizarStock(int cantidad, String tipoMovimiento) void
-        +calcularValorInventario() double
-        +verificarStockMinimo() boolean
-        +asignarProveedor(Proveedor proveedor) void
-    }
+                    class EstadoPedido {
+                   
+                        +cotizado
+                        +confirmado
+                        +despachado
+                        +entregado
+                        }
 
-    class Proveedor {
-        +int idProveedor
-        +String tipoIdentificacion
-        +String numIdentificacion
-        +String razonSocial
-        +String nombreComercial
-        +String contacto
-        +String telefono
-        +String correo
-        +String direccion
-        +String condicionesPago
-        +String calificacion
-        +String categoria
-        +registrar() void
-        +calificar(int calificacion) void
-        +evaluarDesempeno() String
-    }
+                        class EstadoPago {
+                       
+                            +pendiente
+                            +pagado
+                            +vencido
+                            }
 
-    class ProductoProveedor {
-        +int idProductoProveedor
-        +double precioProveedor
-        +int plazoEntrega
-        +String estado
-    }
+                            class DetalleFactura {
+                            + Long id
+                            + Integer cantidad
+                            + Double precioUnitario
+                            + Double subtotal
+                            + calcularSubtotal() Double
+                            }
 
-    class MovimientoInventario {
-        +int idMovimiento
-        +String tipoMovimiento
-        +int cantidad
-        +double costoUnitario
-        +String referenciaDocumento
-        +Date fecha
-        +String motivo
-        +registrarMovimiento() void
-        +revertirMovimiento() void
-    }
+                            class DetallePedido {
+                            + Long id
+                            + Integer cantidad
+                            + Double precioUnitario
+                            + Double descuentoLinea
+                            + Double subtotal
+                            + calcularSubtotal() Double
+                            }
 
-    class Compra {
-        +int idCompra
-        +Date fecha
-        +double total
-        +String estado
-        +calcularTotal() double
-        +recibirMercancia() void
-    }
+                            class Producto {
+                            + Long id
+                            + String sku
+                            + String nombre
+                            + String descripcion
+                            + Double precioVenta
+                            + Double impuestoPorcentaje
+                            + Integer stockMinimo
+                            + Integer stockMaximo
+                            + actualizarPrecio(Double nuevoPrecio) void
+                            + verificarDisponibilidad(Integer cantidad) Boolean
+                            + calcularPrecioConImpuesto() Double
+                            }
 
-    class DetalleCompra {
-        +int idDetalleCompra
-        +int cantidad
-        +double costoUnitario
-        +double subtotal
-        +calcularSubtotal() double
-    }
+                            class Categoria {
+                            + Long id
+                            + String nombre
+                            + String descripcion
+                            }
 
-    class Cliente {
-        +int idCliente
-        +String tipoIdentificacion
-        +String numIdentificacion
-        +String razonSocial
-        +String nombreComercial
-        +String direccion
-        +String telefono
-        +String correo
-        +String regimenFiscal
-        +String condicionesPago
-        +double limiteCredito
-        +double descuentoDefecto
-        +String estado
-        +registrar() void
-        +actualizarDatos() void
-        +consultarSaldo() double
-        +validarIdentificacion() boolean
-    }
+                            class Stock {
+                            + Long id
+                            + Integer cantidadDisponible
+                            + Integer puntoReorden
+                            + ajustar(Integer cantidad) void
+                            + estaCritico() Boolean
+                            + validarStock(Integer cantidad) Boolean
+                            }
 
-    class Venta {
-        +int idVenta
-        +Date fecha
-        +String metodoPago
-        +double subtotal
-        +double descuento
-        +double impuesto
-        +double total
-        +String estado
-        +calcularTotal() double
-        +anular(String motivo) void
-        +generarFactura() Factura
-        +aplicarDescuento(double porcentaje) void
-    }
+                            class MovimientoInventario {
+                            + Long id
+                            + Integer cantidad
+                            + LocalDateTime fecha
+                            + String motivo
+                            + Double costoPromedio
+                            + ejecutar() void
+                            }
 
-    class DetalleVenta {
-        +int idDetalleVenta
-        +int cantidad
-        +double precioUnitario
-        +double descuento
-        +double subtotal
-        +calcularSubtotal() double
-    }
+                            class TipoMovimiento {
+                                +entrada
+                                +salida
+                                +ajuste
+                                }
 
-    class Factura {
-        +int idFactura
-        +Date fechaEmision
-        +String xml
-        +String cufe
-        +String pdf
-        +String estado
-        +generarXML() String
-        +firmarDigitalmente() String
-        +enviarDIAN() boolean
-        +generarPDF() void
-    }
+                                class Bodega {
+                                + Long id
+                                + String nombre
+                                + String ubicacion
+                                + Integer capacidad
+                                }
 
-    class NotaCredito {
-        +int idNotaCredito
-        +Date fecha
-        +String motivo
-        +double total
-        +generarXML() String
-        +enviarDIAN() boolean
-    }
+                                %% Relaciones Capa 1 -> Capa 2
+                                Usuario "1" --> "1..*" Rol : tiene
+                                Usuario "1" --> "*" Pedido : crea
+                                Cliente "1" --> "*" Pedido : realiza
+                                Usuario "1" --> "*" Factura : emite
 
-    class Reporte {
-        +int idReporte
-        +String nombre
-        +String tipo
-        +Date fechaGeneracion
-        +String formato
-        +generar() void
-        +exportar(String formato) void
-        +enviarCorreo(String destinatario) void
-    }
+                                %% Relaciones Capa 2 -> Capa 2
+                                Pedido "1" --> "0..1" Factura : genera
+                                Pedido --> EstadoPedido : define
+                                Factura --> EstadoPago : define
 
-    Usuario "1" --> "1" Rol : tiene
-    Rol "1" --> "0..*" Permiso : contiene
-    Usuario "1" --> "0..*" Auditoria : genera
+                                %% Relaciones Capa 2 -> Capa 3 (Composicion)
+                                Factura "1" *-- "1..*" DetalleFactura : compone
+                                Pedido "1" *-- "1..*" DetallePedido : compone
 
-    Producto "1" --> "1" Categoria : pertenece
-    ProductoProveedor "1" --> "1" Producto : relaciona
-    ProductoProveedor "1" --> "1" Proveedor : relaciona
-    Producto "1" --> "0..*" MovimientoInventario : tiene
-    Usuario "1" --> "0..*" MovimientoInventario : registra
+                                %% Relaciones Capa 3 -> Capa 4
+                                DetalleFactura "*" --> "1" Producto : referencia
+                                DetallePedido "*" --> "1" Producto : referencia
 
-    Proveedor "1" --> "0..*" Compra : suministra
-    Compra "1" --> "1..*" DetalleCompra : contiene
-    Producto "1" --> "0..*" DetalleCompra : es comprado en
-    Usuario "1" --> "0..*" Compra : realiza
+                                %% Relaciones Capa 4 -> Capa 4
+                                Producto "*" --> "1" Categoria : pertenece
 
-    Cliente "1" --> "0..*" Venta : realiza
-    Venta "1" --> "1..*" DetalleVenta : contiene
-    Producto "1" --> "0..*" DetalleVenta : es vendido en
-    Venta "1" --> "0..1" Factura : genera
-    Usuario "1" --> "0..*" Venta : atiende
+                                %% Relaciones Capa 4 -> Capa 5
+                                Producto "1" --> "*" Stock : posee
+                                Producto "1" --> "*" MovimientoInventario : origina
+                                MovimientoInventario --> TipoMovimiento : clasifica
+
+                                %% Relaciones Capa 5 -> Capa 6
+                                Stock "*" --> "1" Bodega : almacena
+                                MovimientoInventario "*" --> "1" Bodega : ejecuta
 ```
 
 
