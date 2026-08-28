@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADSO 3410390</title>
     <style>
         /* ============================================================
-           FUENTES Y RESET
+           FUENTES Y RESET (NO MODIFICADO)
            ============================================================ */
         @import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
@@ -21,7 +22,7 @@
             font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
-            align-items: flex-start;  /* <-- Contenido pegado arriba */
+            align-items: flex-start;
             min-height: 100dvh;
             padding: 1.5rem;
         }
@@ -39,7 +40,7 @@
         }
 
         /* ============================================================
-           ESTILOS COMUNES PARA AMBOS MENÚS
+           ESTILOS COMUNES (NO MODIFICADOS)
            ============================================================ */
         header {
             text-align: center;
@@ -98,8 +99,8 @@
         /* ---- MENÚ EN COLUMNA (FLEX) ---- */
         menu {
             display: flex;
-            flex-direction: column;   /* Apilados verticalmente */
-            align-items: stretch;     /* Ocupan todo el ancho */
+            flex-direction: column;
+            align-items: stretch;
             gap: 1.2rem;
             padding: 0;
             margin: 0;
@@ -178,24 +179,22 @@
         }
 
         /* ============================================================
-           CONTROL DE VISIBILIDAD DE SECCIONES
+           CONTROL DE VISIBILIDAD (NO MODIFICADO)
            ============================================================ */
         .seccion {
-            display: none;   /* Ocultas por defecto */
+            display: none;
         }
 
         .seccion.activa {
-            display: block;  /* Solo la que tenga la clase .activa se muestra */
+            display: block;
         }
-
-        /* La foto y los datos personales se muestran en ambas secciones,
-           pero los títulos y menús varían. Por eso usamos dos <header> distintos. */
     </style>
 </head>
+
 <body>
     <main>
         <!-- ============================================================
-             SECCIÓN 1: MENÚ PRINCIPAL
+             SECCIÓN 1: MENÚ PRINCIPAL (NO MODIFICADO)
              ============================================================ -->
         <div id="menu-principal" class="seccion activa">
             <header>
@@ -226,7 +225,7 @@
         </div>
 
         <!-- ============================================================
-             SECCIÓN 2: SUBMENÚ DE LAYOUT
+             SECCIÓN 2: SUBMENÚ DE LAYOUT (MODIFICADO: ENLACE CAMBIADO)
              ============================================================ -->
         <div id="submenu-layout" class="seccion">
             <header>
@@ -235,7 +234,8 @@
                 <p></p> <!-- Espacio para descripción -->
 
                 <menu>
-                    <a href="01-WireFrame Lo-Fi/index2.html">
+                    <!-- El enlace "01. Wireframe Lo-Fi" ahora usa onclick en lugar de href -->
+                    <a onclick="mostrarWireframe()">
                         <span>01</span>
                         <aside>
                             <h3>Wireframe Lo-Fi</h3>
@@ -274,21 +274,57 @@
             </header>
         </div>
 
+        <!-- ============================================================
+             SECCIÓN 3: NUEVO MENÚ "01. WIREFRAME LO-FI" (AGREGADO)
+             ============================================================ -->
+        <div id="submenu-wireframe" class="seccion">
+            <header>
+                <h1><strong>01. Wireframe Lo-Fi</strong></h1>
+                <!-- Espacio para la imagen -->
+                <div class="espacio-imagen">
+                    <span>📸 Espacio para imagen</span>
+                </div>
+                <!-- Botón para volver al submenú anterior -->
+                <menu>
+                    <a onclick="mostrarSubmenu()">
+                        <aside>
+                            <h3>Volver al menú anterior</h3>
+                        </aside>
+                    </a>
+                </menu>
+            </header>
+            <section>
+                <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="100%" height="450"
+                    src="https://embed.figma.com/design/EZSciZG95AoM5xauD39Saa/Layout?node-id=1-2&embed-host=share"
+                    allowfullscreen></iframe>
+            </section>
+        </div>
+
     </main>
 
     <script>
         /* ============================================================
-           FUNCIONES PARA ALTERNAR ENTRE MENÚS
+           FUNCIONES PARA ALTERNAR ENTRE MENÚS (SE AGREGA mostrarWireframe)
            ============================================================ */
         function mostrarSubmenu() {
             document.getElementById('menu-principal').classList.remove('activa');
             document.getElementById('submenu-layout').classList.add('activa');
+            document.getElementById('submenu-wireframe').classList.remove('activa');
         }
 
         function mostrarPrincipal() {
             document.getElementById('submenu-layout').classList.remove('activa');
             document.getElementById('menu-principal').classList.add('activa');
+            document.getElementById('submenu-wireframe').classList.remove('activa');
+        }
+
+        // Nueva función para mostrar la sección de Wireframe Lo-Fi
+        function mostrarWireframe() {
+            document.getElementById('menu-principal').classList.remove('activa');
+            document.getElementById('submenu-layout').classList.remove('activa');
+            document.getElementById('submenu-wireframe').classList.add('activa');
         }
     </script>
 </body>
+
 </html>

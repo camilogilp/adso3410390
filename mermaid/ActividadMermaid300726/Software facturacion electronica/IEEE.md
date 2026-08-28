@@ -43,8 +43,10 @@
 | FECHA | REVISIÓN(ES) | AUTOR(ES) |
 |-------|--------------|-----------|
 | 20/06/2026 | V1.0 | Juan Camilo Gil Perez |
-| 30/07/2026 | V2.0 | Juan Camilo Gil Perez |
-| 13/08/2026 | V3.0 | Juan Camilo Gil Perez |
+| 30/07/2026 | V1.1 | Juan Camilo Gil Perez |
+| 13/08/2026 | V1.2 | Juan Camilo Gil Perez |
+| 20/08/2026 | V1.3 | Juan Camilo Gil Perez |
+| 25/08/2026 | V1.4 | Juan Camilo Gil Perez |
 | | | |
 
 ---
@@ -69,6 +71,11 @@
 | POR CLIENTE | DESARROLLADOR |
 |-------------|---------------|
 | FECHA: 20/08/2026 | FECHA: 20/08/2026 |
+| NOMBRE DEL ENCARGADO: Jose Germán Estrada | NOMBRE DEL ENCARGADO: Juan Camilo Gil Perez|
+
+| POR CLIENTE | DESARROLLADOR |
+|-------------|---------------|
+| FECHA: 25/08/2026 | FECHA: 25/08/2026 |
 | NOMBRE DEL ENCARGADO: Jose Germán Estrada | NOMBRE DEL ENCARGADO: Juan Camilo Gil Perez|
 ---
 
