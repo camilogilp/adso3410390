@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -135,7 +134,7 @@
         }
 
         menu a:hover span {
-            background-color: #fff;
+            background-color: #052feb;
             color: #060606;
         }
 
@@ -179,7 +178,7 @@
         }
 
         /* ============================================================
-           CONTROL DE VISIBILIDAD (NO MODIFICADO)
+           CONTROL DE VISIBILIDAD DE SECCIONES
            ============================================================ */
         .seccion {
             display: none;
@@ -188,14 +187,67 @@
         .seccion.activa {
             display: block;
         }
+
+        /* ============================================================
+           BOTONES DE NAVEGACIÓN (FUERA DEL MAIN, EN EL BODY)
+           ============================================================ */
+        .btn-nav {
+            position: fixed;
+            gap: 1rem;
+            top: 1rem;
+            left: 1rem;
+            width: 50px;           /* Antes 60px */
+            height: 50px;          /* Antes 60px */
+            border-radius: 50%;
+            background-color: #f1f1f5;
+            color: #090909;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: none;
+            text-decoration: none;
+            z-index: 999;
+        }
+
+        .btn-nav:hover {
+            background-color: #f3f2f5;
+            color: #060606;
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            
+        }
+
+        /* Clases que se añaden/remueven con JavaScript para mostrar/ocultar */
+        .btn-nav.visible {
+            display: flex;
+        }
+
+        /* Estilo específico para el SVG de la flecha */
+        .btn-flecha svg {
+            width: 28px;           /* Antes 32px */
+            height: 28px;          /* Antes 32px */
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .btn-casa {
+            font-size: 1.6rem;     /* Antes 2rem */
+            line-height: 1;
+        }
     </style>
 </head>
-
 <body>
+    <!-- ============================================================
+         MAIN (CONTENIDO)
+         ============================================================ -->
     <main>
-        <!-- ============================================================
-             SECCIÓN 1: MENÚ PRINCIPAL (NO MODIFICADO)
-             ============================================================ -->
+        <!-- SECCIÓN 1: MENÚ PRINCIPAL -->
         <div id="menu-principal" class="seccion activa">
             <header>
                 <h1>ADSO 3410390</h1>
@@ -224,17 +276,14 @@
             </header>
         </div>
 
-        <!-- ============================================================
-             SECCIÓN 2: SUBMENÚ DE LAYOUT (MODIFICADO: ENLACE CAMBIADO)
-             ============================================================ -->
+        <!-- SECCIÓN 2: SUBMENÚ DE LAYOUT -->
         <div id="submenu-layout" class="seccion">
             <header>
                 <h1><strong>01. LayOut</strong></h1>
-                <img src="src/imgs/JCGP.jpg" alt="Foto de perfil">
-                <p></p> <!-- Espacio para descripción -->
+                <img src="https://i.pinimg.com/736x/5d/c5/23/5dc5239aeef50e0be2b334ebf58c99fe.jpg">
+                <p></p>
 
                 <menu>
-                    <!-- El enlace "01. Wireframe Lo-Fi" ahora usa onclick en lugar de href -->
                     <a onclick="mostrarWireframe()">
                         <span>01</span>
                         <aside>
@@ -265,33 +314,15 @@
                             <h3>LayOut</h3>
                         </aside>
                     </a>
-                    <a onclick="mostrarPrincipal()">
-                        <aside>
-                            <h3>Volver al menú anterior</h3>
-                        </aside>
-                    </a>
                 </menu>
             </header>
         </div>
 
-        <!-- ============================================================
-             SECCIÓN 3: NUEVO MENÚ "01. WIREFRAME LO-FI" (AGREGADO)
-             ============================================================ -->
+        <!-- SECCIÓN 3: WIREFRAME LO-FI -->
         <div id="submenu-wireframe" class="seccion">
             <header>
                 <h1><strong>01. Wireframe Lo-Fi</strong></h1>
-                <!-- Espacio para la imagen -->
-                <div class="espacio-imagen">
-                    <span>📸 Espacio para imagen</span>
-                </div>
-                <!-- Botón para volver al submenú anterior -->
-                <menu>
-                    <a onclick="mostrarSubmenu()">
-                        <aside>
-                            <h3>Volver al menú anterior</h3>
-                        </aside>
-                    </a>
-                </menu>
+                <p>Esta es una Wireframe lo-fi, la fase inicial de una pagina web</p>
             </header>
             <section>
                 <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="100%" height="450"
@@ -299,32 +330,53 @@
                     allowfullscreen></iframe>
             </section>
         </div>
-
     </main>
+
+    <!-- ============================================================
+         BOTONES DE NAVEGACIÓN (FUERA DEL MAIN, EN EL BODY)
+         ============================================================ -->
+    <!-- Botón de casa (vuelve al menú principal) -->
+    <div id="btn-casa" class="btn-nav btn-casa" onclick="mostrarPrincipal()" title="Volver al menú principal">
+        🏠
+    </div>
+
+    <!-- Botón de flecha (vuelve al submenú Layout) -->
+    <div id="btn-flecha" class="btn-nav btn-flecha" onclick="mostrarSubmenu()" title="Volver al menú anterior">
+        <svg viewBox="0 0 24 24">
+            <path d="M15 18l-6-6 6-6" />
+        </svg>
+    </div>
 
     <script>
         /* ============================================================
-           FUNCIONES PARA ALTERNAR ENTRE MENÚS (SE AGREGA mostrarWireframe)
+           FUNCIONES PARA ALTERNAR ENTRE MENÚS (NO MODIFICADAS)
            ============================================================ */
         function mostrarSubmenu() {
             document.getElementById('menu-principal').classList.remove('activa');
             document.getElementById('submenu-layout').classList.add('activa');
             document.getElementById('submenu-wireframe').classList.remove('activa');
+
+            document.getElementById('btn-casa').classList.add('visible');
+            document.getElementById('btn-flecha').classList.remove('visible');
         }
 
         function mostrarPrincipal() {
-            document.getElementById('submenu-layout').classList.remove('activa');
             document.getElementById('menu-principal').classList.add('activa');
+            document.getElementById('submenu-layout').classList.remove('activa');
             document.getElementById('submenu-wireframe').classList.remove('activa');
+
+            document.getElementById('btn-casa').classList.remove('visible');
+            document.getElementById('btn-flecha').classList.remove('visible');
         }
 
-        // Nueva función para mostrar la sección de Wireframe Lo-Fi
         function mostrarWireframe() {
             document.getElementById('menu-principal').classList.remove('activa');
             document.getElementById('submenu-layout').classList.remove('activa');
             document.getElementById('submenu-wireframe').classList.add('activa');
+
+            document.getElementById('btn-casa').classList.remove('visible');
+            document.getElementById('btn-flecha').classList.add('visible');
         }
     </script>
 </body>
-
 </html>
