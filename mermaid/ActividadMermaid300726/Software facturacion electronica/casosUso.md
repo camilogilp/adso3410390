@@ -10,6 +10,8 @@
 
 # DEFINICIÓN DEL CASO DE USO
 
+## CASO DE USO 1
+
 | CÓDIGO    | SEG-LOGIN-001    |
 |---|---|
 | NOMBRE    | Login del sistema    |
@@ -24,6 +26,8 @@
 | CUESTIONES A RESOLVER    | Implementación de hash seguro (bcrypt/Argon2), manejo de sesiones con JWT y expiración, registro de intentos fallidos para análisis de seguridad, política de bloqueo de cuentas (número de intentos y tiempo de desbloqueo), integración con LDAP/Active Directory si se requiere, manejo de autenticación de dos factores (2FA) en el futuro |
 
 ---
+
+## CASO DE USO 2
 
 | CÓDIGO    | SEG-REGISTRO-001    |
 |---|---|
@@ -40,6 +44,8 @@
 
 ---
 
+## CASO DE USO 3
+
 | CÓDIGO    | SEG-RECUPERAR-CLAVE-001    |
 |---|---|
 | NOMBRE    | Recuperar contraseña olvidada    |
@@ -54,6 +60,8 @@
 | CUESTIONES A RESOLVER    | Generación de tokens seguros con expiración, política de historial de contraseñas (no repetir las últimas N), protección contra ataques de fuerza bruta en el formulario de recuperación, registro de intentos fallidos para monitoreo de seguridad, integración con preguntas de seguridad como alternativa, notificación al usuario sobre el cambio (correo de confirmación) |
 
 ---
+
+## CASO DE USO 4
 
 | CÓDIGO    | SEG-RECUPERAR-USUARIO-001    |
 |---|---|
@@ -70,6 +78,8 @@
 
 ---
 
+## CASO DE USO 5
+
 | CÓDIGO    | SEG-CAMBIAR-CLAVE-001    |
 |---|---|
 | NOMBRE    | Cambiar contraseña de manera periódica por seguridad informática    |
@@ -84,6 +94,8 @@
 | CUESTIONES A RESOLVER    | Configuración de período de vigencia (días), política de historial de contraseñas (número a recordar), notificaciones de vencimiento anticipado (ej. 7 días antes), bloqueo de acceso si no se cambia después de la expiración, integración con directorio activo si se usa, registro de cambios en el log de auditoría para cumplimiento normativo |
 
 ---
+
+## CASO DE USO 6
 
 | CÓDIGO    | INV-REGISTRAR-001    |
 |---|---|
@@ -100,6 +112,8 @@
 
 ---
 
+## CASO DE USO 7
+
 | CÓDIGO    | INV-ACTUALIZAR-STOCK-001    |
 |---|---|
 | NOMBRE    | Actualizar stock de producto    |
@@ -114,6 +128,8 @@
 | CUESTIONES A RESOLVER    | Cálculo del costo promedio ponderado al ingresar compras, control de lotes y fechas de vencimiento, integración con los módulos de compras y ventas para actualización automática, políticas de ajuste (máximo permitido sin aprobación), auditoría completa de movimientos para trazabilidad |
 
 ---
+
+## CASO DE USO 8
 
 | CÓDIGO    | INV-CONSULTAR-001    |
 |---|---|
@@ -130,6 +146,8 @@
 
 ---
 
+## CASO DE USO 9
+
 | CÓDIGO    | VEN-REGISTRAR-001    |
 |---|---|
 | NOMBRE    | Registrar venta    |
@@ -144,6 +162,8 @@
 | CUESTIONES A RESOLVER    | Control de stock concurrente (evitar sobreventa), integración con facturación electrónica, manejo de descuentos y promociones, formas de pago (efectivo, crédito, tarjeta, transferencia), políticas de crédito para clientes (límite y plazos), generación de comprobantes en diferentes formatos (ticket, factura, nota de venta) |
 
 ---
+
+## CASO DE USO 10
 
 | CÓDIGO    | VEN-ANULAR-001    |
 |---|---|
@@ -160,6 +180,8 @@
 
 ---
 
+## CASO DE USO 11
+
 | CÓDIGO    | CLI-REGISTRAR-001    |
 |---|---|
 | NOMBRE    | Registrar cliente    |
@@ -174,6 +196,8 @@
 | CUESTIONES A RESOLVER    | Verificación contra listas de terceros (DIAN), manejo de personas naturales y jurídicas, integración con facturación electrónica, gestión de direcciones múltiples, historial de cambios de datos del cliente, políticas de crédito y límite de endeudamiento |
 
 ---
+
+## CASO DE USO 12
 
 | CÓDIGO    | CLI-CONSULTAR-001    |
 |---|---|
@@ -190,6 +214,8 @@
 
 ---
 
+## CASO DE USO 13
+
 | CÓDIGO    | PROV-REGISTRAR-001    |
 |---|---|
 | NOMBRE    | Registrar proveedor    |
@@ -204,6 +230,8 @@
 | CUESTIONES A RESOLVER    | Validación de NIT contra listas de terceros (DIAN), manejo de proveedores del exterior, historial de calificaciones, gestión de documentos adjuntos, integración con módulo de compras para evaluar desempeño |
 
 ---
+
+## CASO DE USO 14
 
 | CÓDIGO    | PROV-CONSULTAR-001    |
 |---|---|
@@ -220,6 +248,8 @@
 
 ---
 
+## CASO DE USO 15
+
 | CÓDIGO    | REP-INVENTARIO-001    |
 |---|---|
 | NOMBRE    | Generar reporte de inventario    |
@@ -234,6 +264,8 @@
 | CUESTIONES A RESOLVER    | Optimización de consultas para grandes volúmenes de datos, formatos de exportación (Excel con fórmulas, PDF con gráficos), definición de KPIs (rotación, días de inventario), personalización de reportes según rol (gerente ve todo, administrador ve costos, etc.) |
 
 ---
+
+## CASO DE USO 16
 
 | CÓDIGO    | REP-VENTAS-001    |
 |---|---|
