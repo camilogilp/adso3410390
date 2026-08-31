@@ -942,8 +942,6 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 ### CASO DE USO 1
 
 
-*Figura 1: Interfaz de inicio de sesión del sistema*
-
 | CÓDIGO    | LOGIN-001    |
 |---|---|
 | NOMBRE    | Login del sistema    |
@@ -958,7 +956,7 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CUESTIONES A RESOLVER    | Implementación de hash seguro (bcrypt/Argon2), manejo de sesiones con JWT y expiración, registro de intentos fallidos para análisis de seguridad, política de bloqueo de cuentas (número de intentos y tiempo de desbloqueo), integración con LDAP/Active Directory si se requiere, manejo de autenticación de dos factores (2FA) en el futuro |
 
 ###### VISTA CASO DE USO 1
-![LogIn](https://i.postimg.cc/QC9ZNX0c/1-Log-In.webp)
+![LogIn](https://i.postimg.cc/SQCXk8tL/1-Log-In.webp)
 
 ---
 ## 2. REGISTAR USUARIO EN SISTEMA
