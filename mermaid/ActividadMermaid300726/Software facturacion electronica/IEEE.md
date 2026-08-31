@@ -956,7 +956,7 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CUESTIONES A RESOLVER    | Implementación de hash seguro (bcrypt/Argon2), manejo de sesiones con JWT y expiración, registro de intentos fallidos para análisis de seguridad, política de bloqueo de cuentas (número de intentos y tiempo de desbloqueo), integración con LDAP/Active Directory si se requiere, manejo de autenticación de dos factores (2FA) en el futuro |
 
 ###### VISTA CASO DE USO 1
-![LogIn](https://i.postimg.cc/SQCXk8tL/1-Log-In.webp)
+![LogIn](VistasIEEE/1.LogIn.webp)
 
 ---
 ## 2. REGISTAR USUARIO EN SISTEMA
@@ -979,7 +979,7 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 
 ###### VISTA CASO DE USO 2
 
-![Registrar usuario en sistema](https://i.postimg.cc/T1Lv2RCc/2-Registrar-Nuevo-Usuario.webp)
+![Registrar usuario en sistema](VistasIEEE/2.RegistrarNuevoUsuario.webp)
 
 ---
 ## 3. RECUPERAR CLAVE DE USUARIO
@@ -1000,9 +1000,9 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 
 ###### VISTA CASO DE USO 3
 
-![Reuperar clave de usuario](https://i.postimg.cc/D0J3f2Bg/3-Recuperar-Contrasena-1.webp)
-![Reuperar clave de usuario](https://i.postimg.cc/d3kcQq46/3-Recuperar-Contrasena-2.webp)
-![Reuperar clave de usuario](https://i.postimg.cc/tJKQYLMV/3-Recuperar-Contrasena-3.webp)
+![Reuperar clave de usuario](VistasIEEE/3.RecuperarContraseña_1.webp)
+![Reuperar clave de usuario](VistasIEEE/3.RecuperarContraseña_2.webp)
+![Reuperar clave de usuario](VistasIEEE/3.RecuperarContraseña_3.webp)
 
 
 ---
@@ -1024,7 +1024,7 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 
 ###### VISTA CASO DE USO 4
 
-![Recuperar usuario en sistema](https://i.postimg.cc/T1Lv2RCc/2-Registrar-Nuevo-Usuario.webp)
+![Recuperar usuario en sistema](VistasIEEE/4.RecuperarNombreUsuario.webp)
 
 
 ---
@@ -1046,7 +1046,7 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 
 ##### VISTA CASO DE USO 5
 
-![Cambiar Contraseña periodicamente](https://i.postimg.cc/XqRSpTzF/5-Cambio-Periodicocontrasena.webp)
+![Cambiar Contraseña periodicamente](VistasIEEE/5.CambioPeriodicocontraseña.webp)
 
 ---
 ## 6. REGISTRAR PRODUCTO EN INVENTARIO
@@ -1067,7 +1067,7 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 
 ## VISTA CASO DE USO 6
 
-![Registrar Producto en Inventario](https://lens.usercontent.google.com/banana?agsi=CmdnbG9iYWw6OjAwMDA1NWNmZWM3MDAyNmQ6MDAwMDAwZWI6MTpiMWYxN2NlNzFmZDU2NTk2OjAwMDA1NWNmZWM3MDAyNmQ6MDAwMDAzNjA3NDIwMzM2ODowMDA2NWE0YTEwZGJiNGZmEAIYASIJaW1hZ2UvcG5n)
+![Registrar Producto en Inventario](VistasIEEE/6.RegistrarProducto.webp)
 
 ---
 ## 7. ACTUALIZAR STOCK DE PRODUCTO
