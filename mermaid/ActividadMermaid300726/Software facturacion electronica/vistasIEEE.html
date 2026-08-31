@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecnologías del Futuro S.A.S.</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            background: #f0f4f8;
+            color: #1a2332;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 260px;
+            background: #0a1e3d;
+            color: #fff;
+            padding: 24px 0 16px;
+            overflow-y: auto;
+            flex-shrink: 0;
+            box-shadow: 2px 0 12px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar .logo-area {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid #1c3a5e;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .sidebar .logo-area .company {
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
+        }
+        .sidebar .logo-area .company strong {
+            font-weight: 700;
+            color: #00b4d8;
+            display: block;
+            font-size: 22px;
+        }
+        .sidebar .logo-area .company .sas {
+            font-size: 11px;
+            letter-spacing: 2px;
+            opacity: 0.6;
+            display: block;
+            margin-top: 2px;
+        }
+        .sidebar .menu-item {
+            padding: 11px 24px;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: all 0.15s;
+            font-size: 14px;
+            color: #b0c9e8;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sidebar .menu-item:hover {
+            background: #122c4f;
+            color: #fff;
+            border-left-color: #00b4d8;
+        }
+        .sidebar .menu-item.active {
+            background: #122c4f;
+            color: #fff;
+            border-left-color: #f77f00;
+            font-weight: 600;
+        }
+        .sidebar .group-title {
+            padding: 14px 24px 6px;
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #5a7da0;
+            letter-spacing: 1.2px;
+            font-weight: 700;
+        }
+        .sidebar .footer-version {
+            margin-top: auto;
+            padding: 16px 24px 8px;
+            font-size: 11px;
+            color: #4a6a8a;
+            border-top: 1px solid #1c3a5e;
+            text-align: center;
+        }
+
+        /* ===== CONTENT ===== */
+        .content {
+            flex: 1;
+            padding: 28px 36px;
+            overflow-y: auto;
+            background: #f0f4f8;
+        }
+        .view {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+        .view.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 28px 32px;
+            box-shadow: 0 4px 20px rgba(10,30,61,0.06);
+            margin-bottom: 24px;
+            border: 1px solid #e9edf4;
+        }
+        .card-header {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0a1e3d;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid #f0f4f8;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .card-header .logo-badge {
+            font-weight: 700;
+            color: #0a1e3d;
+            font-size: 13px;
+            background: #f0f4f8;
+            padding: 3px 14px;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+        }
+        .card-header .logo-badge strong {
+            color: #00b4d8;
+        }
+
+        /* ===== PASOS ===== */
+        .steps {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 16px 0 22px;
+            flex-wrap: wrap;
+        }
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f0f4f8;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #2d4059;
+        }
+        .step.active {
+            background: #0a1e3d;
+            color: #fff;
+        }
+        .step .num {
+            background: #fff;
+            color: #0a1e3d;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
+        }
+        .step.active .num {
+            background: #00b4d8;
+            color: #fff;
+        }
+
+        /* ===== FORM ===== */
+        .row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        .col {
+            flex: 1;
+            min-width: 200px;
+        }
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #2d4059;
+            margin-bottom: 5px;
+        }
+        .input, .select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d8e0ea;
+            border-radius: 10px;
+            font-size: 14px;
+            background: #fafcff;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .input:focus, .select:focus, textarea:focus {
+            border-color: #00b4d8;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(0,180,216,0.10);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        /* ===== BOTONES ===== */
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+        .btn-primary {
+            background: #0a1e3d;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: #122c4f;
+        }
+        .btn-success {
+            background: #00b4d8;
+            color: #fff;
+        }
+        .btn-success:hover {
+            background: #0099b8;
+        }
+        .btn-danger {
+            background: #d62828;
+            color: #fff;
+        }
+        .btn-danger:hover {
+            background: #b71c1c;
+        }
+        .btn-warning {
+            background: #f77f00;
+            color: #fff;
+        }
+        .btn-warning:hover {
+            background: #d96a00;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #d8e0ea;
+            color: #2d4059;
+        }
+        .btn-outline:hover {
+            border-color: #0a1e3d;
+            background: #f0f4f8;
+        }
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 12px;
+        }
+
+        /* ===== TABLAS ===== */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .table th {
+            text-align: left;
+            padding: 14px 12px;
+            background: #f7fafc;
+            color: #2d4059;
+            border-bottom: 2px solid #e2e8f0;
+            font-weight: 600;
+        }
+        .table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #edf2f7;
+            color: #1a2b3c;
+        }
+
+        /* ===== BADGES ===== */
+        .badge {
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .badge-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* ===== LOGIN ===== */
+        .login-container {
+            max-width: 440px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 36px 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(10,30,61,0.10);
+            border: 1px solid #e9edf4;
+        }
+        .login-container .logo-big {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .login-container .logo-big h1 {
+            font-size: 24px;
+            font-weight: 300;
+            color: #0a1e3d;
+            letter-spacing: 0.5px;
+        }
+        .login-container .logo-big h1 strong {
+            color: #00b4d8;
+            font-weight: 700;
+            display: block;
+            font-size: 26px;
+        }
+        .login-container .logo-big .sub {
+            font-size: 12px;
+            color: #5a7a9a;
+            letter-spacing: 4px;
+            margin-top: 4px;
+        }
+
+        /* ===== SEGURIDAD (checks) ===== */
+        .security-checks {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 12px 0 16px;
+        }
+        .security-checks .check-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #1a2b3c;
+            padding: 4px 0;
+        }
+        .security-checks .check-item .icon {
+            color: #00b4d8;
+            font-weight: 700;
+        }
+        .security-checks .check-item .icon.danger {
+            color: #d62828;
+        }
+
+        .session-status {
+            background: #f0f4f8;
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin: 12px 0 16px;
+            font-size: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: space-between;
+        }
+        .session-status .item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .session-status .item .label {
+            color: #5a7a9a;
+            font-weight: 500;
+        }
+        .session-status .item .value {
+            font-weight: 600;
+            color: #0a1e3d;
+        }
+        .session-status .item .value.valid {
+            color: #00b4d8;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer-bar {
+            margin-top: 28px;
+            padding-top: 14px;
+            border-top: 1px solid #e9edf4;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #8a9cb0;
+            flex-wrap: wrap;
+        }
+        .footer-bar .brand {
+            color: #4a6a8a;
+            font-weight: 500;
+        }
+
+        /* ===== MISC ===== */
+        .alert {
+            padding: 14px 20px;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            display: none;
+            font-weight: 500;
+        }
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            display: block;
+        }
+        .flex {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .space-between {
+            justify-content: space-between;
+        }
+        .mt-20 {
+            margin-top: 20px;
+        }
+        .mb-10 {
+            margin-bottom: 10px;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .link {
+            color: #00b4d8;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .link:hover {
+            text-decoration: underline;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .checkbox-group input {
+            width: 18px;
+            height: 18px;
+            accent-color: #00b4d8;
+        }
+        .mt-10 { margin-top: 10px; }
+        .mb-20 { margin-bottom: 20px; }
+        .text-muted { color: #5a7a9a; font-size: 13px; }
+        .text-small { font-size: 13px; }
+        .gap-8 { gap: 8px; }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="logo-area">
+            <div class="company">
+                <strong>Tecnologías del Futuro</strong>
+                <span class="sas">S.A.S.</span>
+            </div>
+        </div>
+
+        <div class="group-title">Seguridad</div>
+        <div class="menu-item active" onclick="showView('login')">🔐 Login</div>
+        <div class="menu-item" onclick="showView('recover')">🔑 Recuperar Acceso</div>
+        <div class="menu-item" onclick="showView('register-user')">👤 Registrar Usuario</div>
+        <div class="menu-item" onclick="showView('change-pass')">🔄 Cambiar Contraseña</div>
+
+        <div class="group-title">Inventario</div>
+        <div class="menu-item" onclick="showView('register-product')">📦 Registrar Producto</div>
+        <div class="menu-item" onclick="showView('update-stock')">📊 Actualizar Stock</div>
+        <div class="menu-item" onclick="showView('consult-inventory')">🔍 Consultar Inventario</div>
+
+        <div class="group-title">Ventas</div>
+        <div class="menu-item" onclick="showView('register-sale')">🧾 Registrar Venta</div>
+        <div class="menu-item" onclick="showView('annul-sale')">🚫 Anular Venta</div>
+
+        <div class="group-title">Clientes & Proveedores</div>
+        <div class="menu-item" onclick="showView('register-client')">👥 Registrar Cliente</div>
+        <div class="menu-item" onclick="showView('consult-client')">🔎 Consultar Cliente</div>
+        <div class="menu-item" onclick="showView('register-supplier')">🏢 Registrar Proveedor</div>
+        <div class="menu-item" onclick="showView('consult-supplier')">🔎 Consultar Proveedor</div>
+
+        <div class="group-title">Reportes</div>
+        <div class="menu-item" onclick="showView('report-inventory')">📈 Reporte Inventario</div>
+        <div class="menu-item" onclick="showView('report-sales')">📊 Reporte Ventas</div>
+
+        <div class="footer-version">v1.2.3.c · 11:30 AM · 30 Oct 2023</div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <!-- ==================== LOGIN ==================== -->
+        <div id="view-login" class="view active">
+            <div class="login-container">
+                <div class="logo-big">
+                    <h1><strong>Tecnologías del Futuro</strong> S.A.S.</h1>
+                    <div class="sub">SISTEMA DE INVENTARIO</div>
+                </div>
+                <div id="loginAlert" class="alert"></div>
+                <div class="mb-10">
+                    <label>Usuario</label>
+                    <input id="loginUser" class="input" value="juan.perez" placeholder="Ingresa tu usuario">
+                </div>
+                <div class="mb-10">
+                    <label>Contraseña</label>
+                    <input id="loginPass" class="input" type="password" value="123456" placeholder="Ingresa tu contraseña">
+                </div>
+                <div class="flex space-between mb-10">
+                    <div class="checkbox-group">
+                        <input type="checkbox" checked> <span style="font-size:14px;">Recordar contraseña</span>
+                    </div>
+                    <div>
+                        <a class="link" onclick="showView('recover')">¿Olvidó su contraseña?</a> |
+                        <a class="link" onclick="showView('recover')">¿Olvidó su usuario?</a>
+                    </div>
+                </div>
+                <button class="btn btn-primary" style="width:100%; padding:14px;" onclick="doLogin()">Ingresar</button>
+                <div class="footer-bar" style="margin-top:24px; border-top:1px solid #e9edf4; padding-top:14px;">
+                    <span>v1.2.3.c</span>
+                    <span>11:30 AM · 30 Oct 2023</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== RECOVER (ESTILO IMAGEN) ==================== -->
+        <div id="view-recover" class="view">
+            <div class="card" style="max-width:620px; margin:20px auto;">
+                <div class="card-header" style="justify-content:space-between;">
+                    <span>🔑 Recuperar Contraseña</span>
+                    <span class="logo-badge"><strong>Tecnologías</strong> del Futuro</span>
+                </div>
+                <p style="color:#4a5a72; margin-bottom:6px; font-size:14px;">Siga los pasos para restablecer el acceso a su cuenta</p>
+
+                <div class="steps">
+                    <div class="step active"><span class="num">1</span> Identificación</div>
+                    <div class="step"><span class="num">2</span> Verificación</div>
+                    <div class="step"><span class="num">3</span> Nueva Clave</div>
+                </div>
+
+                <div id="recoverAlert" class="alert"></div>
+
+                <h3 style="color:#0a1e3d; margin-bottom:14px; font-weight:600; font-size:18px;">IDENTIFICACIÓN DEL USUARIO</h3>
+                <div class="mb-10">
+                    <label>Correo Electrónico Registrado</label>
+                    <input id="recoverEmail" class="input" placeholder="ej. jcastro@tfuture.com" value="jcastro@tfuture.com">
+                </div>
+                <div class="mb-10">
+                    <label>Nombre de Usuario</label>
+                    <input id="recoverUser" class="input" placeholder="Ej. Juancastro" value="Juancastro">
+                </div>
+                <p style="font-size:13px; color:#5a7a9a; margin-bottom:20px;">Se enviará un código de verificación de 6 dígitos a su correo electrónico registrado</p>
+
+                <div class="flex space-between">
+                    <button class="btn btn-success" onclick="doRecover()">📨 Enviar Código de Verificación</button>
+                    <button class="btn btn-outline" onclick="showView('login')">Volver al inicio</button>
+                </div>
+
+                <div style="margin-top:18px; display:flex; gap:16px; font-size:13px; color:#4a6a8a; flex-wrap:wrap;">
+                    <a class="link">❓ Preguntas Frecuentes (FAQ)</a>
+                    <a class="link">💬 Contacto en anexa rápido por un soporte técnico</a>
+                </div>
+
+                <div class="footer-bar" style="margin-top:22px; border-top:1px solid #e9edf4; padding-top:12px;">
+                    <span class="brand">Tecnologías del Futuro S.A.S.</span>
+                    <span>v1.2.3.c · 11:30 AM</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== REGISTER USER ==================== -->
+        <div id="view-register-user" class="view">
+            <div class="card">
+                <div class="card-header">
+                    <span>👤 Registrar Nuevo Usuario</span>
+                    <span class="logo-badge"><strong>Tecnologías</strong> del Futuro</span>
+                </div>
+                <div id="regUserAlert" class="alert"></div>
+                <div class="row">
+                    <div class="col"><label>Nombre completo</label><input id="regName" class="input" value="Carlos López"></div>
+                    <div class="col"><label>Identificación</label><input id="regId" class="input" value="123456789"></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>Correo electrónico</label><input id="regEmail" class="input" value="carlos@empresa.com"></div>
+                    <div class="col"><label>Nombre de usuario</label><input id="regUsername" class="input" value="carlos.lopez"></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>Contraseña</label><input id="regPass" class="input" type="password" value="Abc123!@#"></div>
+                    <div class="col"><label>Confirmar contraseña</label><input id="regPassConfirm" class="input" type="password" value="Abc123!@#"></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>Rol</label><select id="regRol" class="select"><option>Administrador</option><option selected>Vendedor</option><option>Bodeguero</option><option>Auditor</option></select></div>
+                    <div class="col"><label>Estado</label><select id="regStatus" class="select"><option selected>Activo</option><option>Inactivo</option></select></div>
+                </div>
+                <div class="checkbox-group mb-10"><input type="checkbox" id="regChangePass"> <span>Usuario debe cambiar contraseña al primer inicio</span></div>
+                <div class="flex">
+                    <button class="btn btn-success" onclick="doRegisterUser()">Guardar / Enviar invitación</button>
+                    <button class="btn btn-outline" onclick="showView('login')">Cancelar</button>
+                </div>
+                <div class="footer-bar"><span class="brand">Tecnologías del Futuro S.A.S.</span><span>v1.2.3.c</span></div>
+            </div>
+        </div>
+
+        <!-- ==================== CHANGE PASS (ESTILO IMAGEN) ==================== -->
+        <div id="view-change-pass" class="view">
+            <div class="card" style="max-width:560px; margin:20px auto;">
+                <div class="card-header" style="justify-content:space-between;">
+                    <span>🔄 Establecer Nueva Clave</span>
+                    <span class="logo-badge"><strong>Tecnologías</strong> del Futuro</span>
+                </div>
+
+                <div class="steps">
+                    <div class="step active"><span class="num">1</span> Identificación</div>
+                    <div class="step active"><span class="num">2</span> Verificación</div>
+                    <div class="step active"><span class="num">3</span> Nueva Clave</div>
+                </div>
+
+                <div id="changePassAlert" class="alert"></div>
+
+                <h3 style="color:#0a1e3d; margin-bottom:16px; font-weight:600; font-size:18px;">CREAR NUEVA CONTRASEÑA</h3>
+
+                <div class="mb-10">
+                    <label>NUEVA CONTRASEÑA</label>
+                    <input id="newPass" class="input" type="password" value="Nueva123!@#">
+                </div>
+                <div class="mb-10">
+                    <label>CONFIRMAR NUEVA CONTRASEÑA</label>
+                    <input id="newPassConfirm" class="input" type="password" value="Nueva123!@#">
+                </div>
+
+                <div class="session-status">
+                    <div class="item"><span class="label">Token Verificado:</span> <span class="value valid">✓</span></div>
+                    <div class="item"><span class="label">Expiración:</span> <span class="value" style="color:#d62828;">&lt; 5 min</span></div>
+                    <div class="item"><span class="label">Origen:</span> <span class="value">192.168.x.x</span></div>
+                </div>
+
+                <div class="security-checks">
+                    <div style="font-weight:600; margin-bottom:6px;">NIVEL DE SEGURIDAD</div>
+                    <div style="font-size:14px; color:#00b4d8; font-weight:600; margin-bottom:6px;">Complejidad: ALTA (Óptima)</div>
+                    <div class="check-item"><span class="icon">✓</span> Mínimo 10 caracteres</div>
+                    <div class="check-item"><span class="icon">✓</span> Al menos una mayúscula (A-Z)</div>
+                    <div class="check-item"><span class="icon">✓</span> Al menos una minúscula (a-z)</div>
+                    <div class="check-item"><span class="icon">✓</span> Al menos un número (0-9)</div>
+                    <div class="check-item"><span class="icon">✓</span> Al menos un símbolo (!@$%)</div>
+                </div>
+
+                <div class="flex space-between mt-20">
+                    <button class="btn btn-success" onclick="doChangePass()">Actualizar Credenciales</button>
+                    <button class="btn btn-outline" onclick="showView('login')">Cancelar</button>
+                </div>
+
+                <div style="margin-top:12px; font-size:13px; color:#5a7a9a;">
+                    Si ha olvidado sus datos de Paso 1, solicite ayuda al Administrador
+                </div>
+
+                <div class="footer-bar" style="margin-top:18px; border-top:1px solid #e9edf4; padding-top:12px;">
+                    <span class="brand">Tecnologías del Futuro S.A.S.</span>
+                    <span>v1.2.3.c · 11:30 AM</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== REGISTER PRODUCT ==================== -->
+        <div id="view-register-product" class="view">
+            <div class="card">
+                <div class="card-header">
+                    <span>📦 Registrar Producto</span>
+                    <span class="logo-badge"><strong>Tecnologías</strong> del Futuro</span>
+                </div>
+                <div id="regProdAlert" class="alert"></div>
+                <div class="row">
+                    <div class="col"><label>Código interno</label><input id="prodCode" class="input" value="PROD-001"></div>
+                    <div class="col"><label>Nombre del producto</label><input id="prodName" class="input" value="Laptop Gamer XT"></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>Categoría</label><select id="prodCat" class="select"><option>Electrónica</option><option selected>Computación</option><option>Oficina</option></select></div>
+                    <div class="col"><label>Unidad</label><select id="prodUnit" class="select"><option selected>Unidad</option><option>Kg</option><option>Litro</option></select></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>Precio compra</label><input id="prodCost" class="input" value="850000"></div>
+                    <div class="col"><label>Precio venta</label><input id="prodPrice" class="input" value="1200000"></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>IVA</label><select id="prodTax" class="select"><option>0%</option><option>5%</option><option selected>19%</option><option>Exento</option></select></div>
+                    <div class="col"><label>Stock inicial</label><input id="prodStock" class="input" value="15"></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>Ubicación</label><input id="prodLoc" class="input" value="Pasillo A, Estante 3"></div>
+                    <div class="col"><label>Proveedores</label><select id="prodSuppliers" class="select" multiple><option>Proveedor 1</option><option selected>Proveedor 2</option></select></div>
+                </div>
+                <div class="flex">
+                    <button class="btn btn-success" onclick="doRegisterProduct()">Guardar</button>
+                    <button class="btn btn-outline" onclick="showView('consult-inventory')">Cancelar</button>
+                </div>
+                <div class="footer-bar"><span class="brand">Tecnologías del Futuro S.A.S.</span><span>v1.2.3.c</span></div>
+            </div>
+        </div>
+
+        <!-- ==================== UPDATE STOCK ==================== -->
+        <div id="view-update-stock" class="view">
+            <div class="card">
+                <div class="card-header">
+                    <span>📊 Actualizar Stock</span>
+                    <span class="logo-badge"><strong>Tecnologías</strong> del Futuro</span>
+                </div>
+                <div id="stockAlert" class="alert"></div>
+                <p><strong>Producto:</strong> Laptop Gamer XT (PROD-001) | <strong>Stock actual:</strong> 15 unidades</p>
+                <hr style="margin:16px 0; border:1px solid #e9edf4;">
+                <div class="row">
+                    <div class="col"><label>Tipo de movimiento</label><select id="movType" class="select"><option selected>Compra</option><option>Venta</option><option>Devolución</option><option>Ajuste</option></select></div>
+                    <div class="col"><label>Cantidad</label><input id="movQty" class="input" value="5"></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>Costo unitario</label><input id="movCost" class="input" value="840000"></div>
+                    <div class="col"><label>Referencia</label><input id="movRef" class="input" value="FAC-2026-001"></div>
+                </div>
+                <div class="mb-10"><label>Motivo</label><textarea id="movReason" class="input" rows="2">Compra mensual</textarea></div>
+                <div class="flex">
+                    <button class="btn btn-primary" onclick="doUpdateStock()">Confirmar movimiento</button>
+                    <button class="btn btn-outline" onclick="showView('consult-inventory')">Cancelar</button>
+                </div>
+                <div class="footer-bar"><span class="brand">Tecnologías del Futuro S.A.S.</span><span>v1.2.3.c</span></div>
+            </div>
+        </div>
+
+        <!-- ==================== CONSULT INVENTORY ==================== -->
+        <div id="view-consult-inventory" class="view">
+            <div class="card">
+                <div class="card-header">
+                    <span>🔍 Consultar Inventario</span>
+                    <span class="logo-badge"><strong>Tecnologías</strong> del Futuro</span>
+                </div>
+                <div id="invSearchAlert" class="alert"></div>
+                <div class="row">
+                    <div class="col"><input id="invSearch" class="input" placeholder="Buscar por código o nombre..." onkeyup="filterInventory()"></div>
+                    <div class="col"><select id="invCatFilter" class="select" onchange="filterInventory()"><option value="all">Todas las categorías</option><option>Electrónica</option><option>Computación</option><option>Oficina</option></select></div>
+                    <div class="col"><button class="btn btn-primary" onclick="filterInventory()">Filtrar</button></div>
+                </div>
+                <table class="table" id="invTable">
+                    <thead><tr><th>Código</th><th>Nombre</th><th>Categoría</th><th>Stock</th><th>Precio Venta</th><th>Valor Total*</th><th>Acción</th></tr></thead>
+                    <tbody id="invBody">
+                        <tr data-code="PROD-001" data-cat="Computación"><td>PROD-001</td><td>Laptop Gamer XT</td><td>Computación</td><td>15</td><td>$1.200.000</td><td>$18.000.000</td><td><button class="btn btn-primary btn-sm" onclick="alert('Detalle del producto PROD-001')">Detalle</button></td></tr>
+                        <tr data-code="PROD-002" data-cat="Electrónica"><td>PROD-002</td><td>Mouse Inalámbrico</td><td>Electrónica</td><td><span class="badge badge-danger">3 (Bajo)</span></td><td>$85.000</td><td>$255.000</td><td><button class="btn btn-primary btn-sm" onclick="alert('Detalle del producto PROD-002')">Detalle</button></td></tr>
+                        <tr data-code="PROD-003" data-cat="Computación"><td>PROD-003</td><td>Monitor 24"</td><td>Computación</td><td><span class="badge badge-success">20</span></td><td>$650.000</td><td>$13.000.000</td><td><button class="btn btn-primary btn-sm" onclick="alert('Detalle del producto PROD-003')">Detalle</button></td></tr>
+                    </tbody>
+                </table>
+                <div class="flex space-between mt-20">
+                    <span>Mostrando <span id="invCount">3</span> de 3 productos</span>
+                    <div><button class="btn btn-sm" onclick="simulateExport('Excel')">📊 Excel</button> <button class="btn btn-sm" onclick="simulateExport('PDF')">📄 PDF</button></div>
+                </div>
+                <div class="footer-bar"><span class="brand">Tecnologías del Futuro S.A.S.</span><span>v1.2.3.c</span></div>
+            </div>
+        </div>
+
+        <!-- ==================== REGISTER SALE ==================== -->
+        <div id="view-register-sale" class="view">
+            <div class="card">
+                <div class="card-header">
+                    <span>🧾 Registrar Venta</span>
+                    <span class="logo-badge"><strong>Tecnologías</strong> del Futuro</span>
+                </div>
+                <div id="saleAlert" class="alert"></div>
+                <div class="row">
+                    <div class="col"><input id="saleProductSearch" class="input" placeholder="Buscar producto..." value="Mouse"></div>
+                    <div class="col"><input id="saleQty" class="input" placeholder="Cantidad" value="2"></div>
+                    <div class="col"><button class="btn btn-primary btn-sm" onclick="addToCart()">Agregar</button></div>
+                </div>
+                <table class="table" id="cartTable">
+                    <thead><tr><th>Producto</th><th>Cant.</th><th>Precio Unit.</th><th>Descuento</th><th>Subtotal</th><th>Acción</th></tr></thead>
+                    <tbody id="cartBody">
+                        <tr data-price="1200000" data-qty="1"><td>Laptop Gamer XT</td><td>1</td><td>$1.200.000</td><td>$0</td><td>$1.200.000</td><td><button class="btn btn-danger btn-sm" onclick="removeFromCart(this)">Eliminar</button></td></tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col"><label>Cliente</label><input id="saleClient" class="input" placeholder="Buscar o registrar cliente" value="Carlos Pérez"></div>
+                    <div class="col"><label>Método de pago</label><select id="salePayment" class="select"><option>Efectivo</option><option selected>Tarjeta</option><option>Transferencia</option><option>Crédito</option></select></div>
+                </div>
+                <div style="background:#f8fafc; padding:18px; border-radius:12px; margin-top:12px;" id="saleTotals">
+                    <div class="flex space-between"><span>Subtotal:</span><strong id="saleSubtotal">$1.200.000</strong></div>
+                    <div class="flex space-between"><span>Descuentos:</span><strong id="saleDiscount">-$0</strong></div>
+                    <div class="flex space-between"><span>IVA (19%):</span><strong id="saleTax">$228.000</strong></div>
+                    <div class="flex space-between" style="font-size:22px; border-top:2px solid #d8e0ea; padding-top:12px;"><span>Total a pagar:</span><strong id="saleTotal">$1.428.000</strong></div>
+                </div>
+                <div class="flex mt-20">
+                    <button class="btn btn-success" onclick="doSale()">Confirmar Venta</button>
+                    <button class="btn btn-outline" onclick="clearCart()">Cancelar</button>
+                </div>
+                <div class="footer-bar"><span class="brand">Tecnologías del Futuro S.A.S.</span><span>v1.2.3.c</span></div>
+            </div>
+        </div>
+
+        <!-- ==================== ANNUL SALE ==================== -->
+        <div id="view-annul-sale" class="view">
+            <div class="card">
+                <div class="card-header">
+                    <span>🚫 Anular Venta</span>
+                    <span class="logo-badge"><strong>Tecnologías</strong> del Futuro</span>
+                </div>
+                <div id="annulAlert" class="alert"></div>
+                <div class="row">
+                    <div class="col"><input id="annulSearch" class="input" placeholder="Número de venta, cliente o fecha" value="VENTA-001"></div>
+                    <div class="col"><button class="btn btn-primary" onclick="searchSaleToAnnul()">Buscar</button></div>
+                </div>
+                <table class="table" id="annulTable">
+                    <thead><tr><th>N° Venta</th><th>Fecha</th><th>Cliente</th><th>Total</th><th>Estado</th><th>Acción</th></tr></thead>
+                    <tbody id="annulBody">
+                        <tr data-id="VENTA-001"><td>VENTA-001</td><td>28/08/2026</td><td>Carlos Pérez</td><td>$1.594.770</td><td><span class="badge badge-success">Pagada</span></td><td><button class="btn btn-warning btn-sm" onclick="selectSaleToAnnul(this)">Seleccionar</button></td></tr>
+                        <tr data-id="VENTA-002"><td>VENTA-002</td><td>29/08/2026</td><td>Ana Gómez</td><td>$2.300.000</td><td><span class="badge badge-success">Pagada</span></td><td><button class="btn btn-warning btn-sm" onclick="selectSaleToAnnul(this)">Seleccionar</button></td></tr>
+                    </tbody>
+                </table>
+                <div id="annulForm" style="background:#fff3cd; padding:18px; border-radius:12px; margin-top:15px; display:none;">
+                    <label>Motivo de anulación (obligatorio)</label>
+                    <textarea id="annulReason" class="input" rows="2">El cliente devolvió el producto por falla.</textarea>
+                    <div class="flex mt-20">
+                        <button class="btn btn-danger" onclick="doAnnulSale()">Anular Venta</button>
+                        <button class="btn btn-outline" onclick="cancelAnnul()">Cancelar</button>
+                    </div>
+                </div>
+                <div class="footer-bar"><span class="brand">Tecnologías del Futuro S.A.S.</span><span>v1.2.3.c</span></div>
+            </div>
+        </div>
+
+        <!-- ==================== REGISTER CLIENT ==================== -->
+        <div id="view-register-client" class="view">
+            <div class="card">
+                <div class="card-header">
+                    <span>👥 Registrar Cliente</span>
+                    <span class="logo-badge"><strong>Tecnologías</strong> del Futuro</span>
+                </div>
+                <div id="clientAlert" class="alert"></div>
+                <div class="row">
+                    <div class="col"><label>Tipo identificación</label><select id="clientType" class="select"><option>Cédula</option><option selected>NIT</option><option>CE</option></select></div>
+                    <div class="col"><label>Número identificación</label><input id="clientId" class="input" value="901234567-8"></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>Razón social</label><input id="clientBusiness" class="input" value="Tecnologías del Futuro S.A.S."></div>
+                    <div class="col"><label>Nombre completo</label><input id="clientName" class="input" value="Juan Pérez"></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>Dirección</label><input id="clientAddress" class="input" value="Calle 123 #45-67"></div>
+                    <div class="col"><label>Teléfono</label><input id="clientPhone" class="input" value="3105551234"></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>Correo</label><input id="clientEmail" class="input" value="juan@tecnologias.com"></div>
+                    <div class="col"><label>Régimen fiscal</label><select id="clientRegime" class="select"><option>Persona Natural</option><option selected>Persona Jurídica</option><option>Gran Contribuyente</option></select></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>Condiciones pago</label><select id="clientPayment" class="select"><option>Contado</option><option selected>Crédito 30 días</option></select></div>
+                    <div class="col"><label>Límite de crédito</label><input id="clientCredit" class="input" value="$5.000.000"></div>
+                </div>
+                <div class="flex">
+                    <button class="btn btn-success" onclick="doRegisterClient()">Guardar</button>
+                    <button class="btn btn-outline" onclick="showView('consult-client')">Cancelar</button>
+                </div>
+                <div class="footer-bar"><span class="brand">Tecnologías del Futuro S.A.S.</span><span>v1.2.3.c</span></div>
+            </div>
+        </div>
+
+        <!-- ==================== CONSULT CLIENT ==================== -->
+        <div id="view-consult-client" class="view">
+            <div class="card">
+                <div class="card-header">
+                    <span>🔎 Consultar Cliente</span>
+                    <span class="logo-badge"><strong>Tecnologías</strong> del Futuro</span>
+                </div>
+                <div id="clientSearchAlert" class="alert"></div>
+                <div class="row">
+                    <div class="col"><input id="clientSearchInput" class="input" placeholder="Identificación, nombre o correo" value="901234567" onkeyup="filterClients()"></div>
+                    <div class="col"><button class="btn btn-primary" onclick="filterClients()">Buscar</button></div>
+                </div>
+                <table class="table" id="clientTable">
+                    <thead><tr><th>Identificación</th><th>Nombre</th><th>Correo</th><th>Saldo pendiente*</th><th>Acción</th></tr></thead>
+                    <tbody id="clientBody">
+                        <tr data-id="901234567-8"><td>901234567-8</td><td>Tecnologías del Futuro S.A.S.</td><td>juan@tecnologias.com</td><td>$2.500.000</td><td><button class="btn btn-primary btn-sm" onclick="showClientDetail(this)">Ver detalle</button></td></tr>
+                        <tr data-id="123456789"><td>123456789</td><td>María López</td><td>maria@demo.com</td><td>$0</td><td><button class="btn btn-primary btn-sm" onclick="showClientDetail(this)">Ver detalle</button></td></tr>
+                    </tbody>
+                </table>
+                <div id="clientDetail" style="background:#f7fafc; padding:18px; border-radius:12px; margin-top:15px; display:none;">
+                    <strong>Ficha del cliente:</strong> <span id="clientDetailText">Selecciona un cliente</span>
+                </div>
+                <div class="footer-bar"><span class="brand">Tecnologías del Futuro S.A.S.</span><span>v1.2.3.c</span></div>
+            </div>
+        </div>
+
+        <!-- ==================== REGISTER SUPPLIER ==================== -->
+        <div id="view-register-supplier" class="view">
+            <div class="card">
+                <div class="card-header">
+                    <span>🏢 Registrar Proveedor</span>
+                    <span class="logo-badge"><strong>Tecnologías</strong> del Futuro</span>
+                </div>
+                <div id="supplierAlert" class="alert"></div>
+                <div class="row">
+                    <div class="col"><label>Identificación (NIT)</label><input id="suppId" class="input" value="890123456-7"></div>
+                    <div class="col"><label>Razón social</label><input id="suppBusiness" class="input" value="Distribuidora Global S.A."></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>Contacto</label><input id="suppContact" class="input" value="María Gómez"></div>
+                    <div class="col"><label>Teléfono</label><input id="suppPhone" class="input" value="3105556789"></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>Correo</label><input id="suppEmail" class="input" value="maria@distribuidora.com"></div>
+                    <div class="col"><label>Condiciones pago</label><select id="suppPayment" class="select"><option>Contado</option><option selected>30 días</option><option>60 días</option></select></div>
+                </div>
+                <div class="row">
+                    <div class="col"><label>Calificación</label><select id="suppRating" class="select"><option>A</option><option selected>B</option><option>C</option></select></div>
+                    <div class="col"><label>Categoría</label><select id="suppCategory" class="select"><option>Nacional</option><option selected>Internacional</option></select></div>
+                </div>
+                <div class="flex">
+                    <button class="btn btn-success" onclick="doRegisterSupplier()">Guardar</button>
+                    <button class="btn btn-outline" onclick="showView('consult-supplier')">Cancelar</button>
+                </div>
+                <div class="footer-bar"><span class="brand">Tecnologías del Futuro S.A.S.</span><span>v1.2.3.c</span></div>
+            </div>
+        </div>
+
+        <!-- ==================== CONSULT SUPPLIER ==================== -->
+        <div id="view-consult-supplier" class="view">
+            <div class="card">
+                <div class="card-header">
+                    <span>🔎 Consultar Proveedor</span>
+                    <span class="logo-badge"><strong>Tecnologías</strong> del Futuro</span>
+                </div>
+                <div id="suppSearchAlert" class="alert"></div>
+                <div class="row">
+                    <div class="col"><input id="suppSearchInput" class="input" placeholder="Identificación o razón social" value="Distribuidora Global" onkeyup="filterSuppliers()"></div>
+                    <div class="col"><button class="btn btn-primary" onclick="filterSuppliers()">Buscar</button></div>
+                </div>
+                <table class="table" id="suppTable">
+                    <thead><tr><th>Identificación</th><th>Razón Social</th><th>Contacto</th><th>Calificación</th><th>Acción</th></tr></thead>
+                    <tbody id="suppBody">
+                        <tr data-id="890123456-7"><td>890123456-7</td><td>Distribuidora Global S.A.</td><td>María Gómez</td><td><span class="badge badge-success">B</span></td><td><button class="btn btn-primary btn-sm" onclick="showSupplierDetail(this)">Ver detalle</button></td></tr>
+                        <tr data-id="123456789-0"><td>123456789-0</td><td>Proveedores Unidos</td><td>Luis Pérez</td><td><span class="badge badge-warning">C</span></td><td><button class="btn btn-primary btn-sm" onclick="showSupplierDetail(this)">Ver detalle</button></td></tr>
+                    </tbody>
+                </table>
+                <div id="suppDetail" style="background:#f7fafc; padding:18px; border-radius:12px; margin-top:15px; display:none;">
+                    <strong>Ficha del proveedor:</strong> <span id="suppDetailText">Selecciona un proveedor</span>
+                </div>
+                <div class="footer-bar"><span class="brand">Tecnologías del Futuro S.A.S.</span><span>v1.2.3.c</span></div>
+            </div>
+        </div>
+
+        <!-- ==================== REPORT INVENTORY ==================== -->
+        <div id="view-report-inventory" class="view">
+            <div class="card">
+                <div class="card-header">
+                    <span>📈 Reporte de Inventario</span>
+                    <span class="logo-badge"><strong>Tecnologías</strong> del Futuro</span>
+                </div>
+                <div id="repInvAlert" class="alert"></div>
+                <div class="row">
+                    <div class="col"><label>Categoría</label><select id="repInvCat" class="select"><option value="all">Todas</option><option>Electrónica</option><option>Computación</option><option>Oficina</option></select></div>
+                    <div class="col"><label>Rango stock</label><input id="repInvStock" class="input" placeholder="Mín - Máx" value="0 - 100"></div>
+                    <div class="col"><label>Fecha corte</label><input id="repInvDate" class="input" type="date" value="2026-08-30"></div>
+                    <div class="col"><button class="btn btn-primary" onclick="generateInventoryReport()">Generar</button></div>
+                </div>
+                <div id="repInvResult" style="display:none; margin-top:15px;">
+                    <table class="table">
+                        <thead><tr><th>Código</th><th>Nombre</th><th>Stock</th><th>Costo*</th><th>Valor Total*</th></tr></thead>
+                        <tbody>
+                            <tr><td>PROD-001</td><td>Laptop Gamer XT</td><td>15</td><td>$850.000</td><td>$12.750.000</td></tr>
+                            <tr><td>PROD-002</td><td>Mouse Inalámbrico</td><td>3</td><td>$40.000</td><td>$120.000</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="flex mt-20">
+                        <button class="btn btn-primary" onclick="simulateExport('Excel')">📊 Excel</button>
+                        <button class="btn btn-primary" onclick="simulateExport('PDF')">📄 PDF</button>
+                    </div>
+                </div>
+                <div class="footer-bar"><span class="brand">Tecnologías del Futuro S.A.S.</span><span>v1.2.3.c</span></div>
+            </div>
+        </div>
+
+        <!-- ==================== REPORT SALES ==================== -->
+        <div id="view-report-sales" class="view">
+            <div class="card">
+                <div class="card-header">
+                    <span>📊 Reporte de Ventas</span>
+                    <span class="logo-badge"><strong>Tecnologías</strong> del Futuro</span>
+                </div>
+                <div id="repSalesAlert" class="alert"></div>
+                <div class="row">
+                    <div class="col"><label>Desde</label><input id="repSalesFrom" class="input" type="date" value="2026-08-01"></div>
+                    <div class="col"><label>Hasta</label><input id="repSalesTo" class="input" type="date" value="2026-08-30"></div>
+                    <div class="col"><label>Vendedor</label><select id="repSalesSeller" class="select"><option value="all">Todos</option><option>Juan Pérez</option><option>Ana Gómez</option></select></div>
+                    <div class="col"><button class="btn btn-primary" onclick="generateSalesReport()">Generar</button></div>
+                </div>
+                <div id="repSalesResult" style="display:none; margin-top:15px;">
+                    <div style="background:#f8fafc; padding:15px; border-radius:12px; margin-bottom:15px;">
+                        <strong>Totales del período:</strong> Ventas: $45.300.000 | Productos: 120 | IVA: $8.607.000
+                    </div>
+                    <table class="table">
+                        <thead><tr><th>Fecha</th><th>N° Venta</th><th>Cliente</th><th>Vendedor</th><th>Total</th></tr></thead>
+                        <tbody>
+                            <tr><td>28/08/2026</td><td>VENTA-001</td><td>Carlos Pérez</td><td>Juan Pérez</td><td>$1.594.770</td></tr>
+                            <tr><td>29/08/2026</td><td>VENTA-002</td><td>Ana Gómez</td><td>Juan Pérez</td><td>$2.300.000</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="flex mt-20">
+                        <button class="btn btn-primary" onclick="simulateExport('Excel')">📊 Excel</button>
+                        <button class="btn btn-primary" onclick="simulateExport('PDF')">📄 PDF</button>
+                    </div>
+                </div>
+                <div class="footer-bar"><span class="brand">Tecnologías del Futuro S.A.S.</span><span>v1.2.3.c</span></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ==================== NAVEGACIÓN ====================
+        function showView(viewId) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById('view-' + viewId).classList.add('active');
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.menu-item').forEach(item => {
+                if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(viewId)) {
+                    item.classList.add('active');
+                }
+            });
+            document.querySelectorAll('.alert').forEach(a => a.style.display = 'none');
+        }
+
+        function showAlert(alertId, message, type = 'success') {
+            const el = document.getElementById(alertId);
+            el.textContent = message;
+            el.className = 'alert alert-' + type;
+            el.style.display = 'block';
+            setTimeout(() => { el.style.display = 'none'; }, 4000);
+        }
+
+        // ==================== LOGIN ====================
+        function doLogin() {
+            const user = document.getElementById('loginUser').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+            if (!user || !pass) { showAlert('loginAlert', 'Ingrese usuario y contraseña', 'danger'); return; }
+            if (user === 'juan.perez' && pass === '123456') {
+                showAlert('loginAlert', '✅ Bienvenido, redirigiendo...', 'success');
+                setTimeout(() => showView('consult-inventory'), 1500);
+            } else {
+                showAlert('loginAlert', '❌ Usuario o contraseña incorrectos', 'danger');
+            }
+        }
+
+        // ==================== RECOVER ====================
+        function doRecover() {
+            const email = document.getElementById('recoverEmail').value.trim();
+            const user = document.getElementById('recoverUser').value.trim();
+            if (!email || !user) { showAlert('recoverAlert', 'Complete ambos campos', 'danger'); return; }
+            showAlert('recoverAlert', '📨 Se ha enviado un código de verificación a su correo (simulación)', 'success');
+            // Simular avance al paso 2 (en la realidad, redirigiría a verificación)
+        }
+
+        // ==================== REGISTER USER ====================
+        function doRegisterUser() {
+            const name = document.getElementById('regName').value.trim();
+            const id = document.getElementById('regId').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const user = document.getElementById('regUsername').value.trim();
+            const pass = document.getElementById('regPass').value;
+            const passConfirm = document.getElementById('regPassConfirm').value;
+            if (!name || !id || !email || !user || !pass) { showAlert('regUserAlert', 'Complete todos los campos', 'danger'); return; }
+            if (pass !== passConfirm) { showAlert('regUserAlert', 'Las contraseñas no coinciden', 'danger'); return; }
+            if (pass.length < 6) { showAlert('regUserAlert', 'La contraseña debe tener al menos 6 caracteres', 'danger'); return; }
+            showAlert('regUserAlert', '✅ Usuario registrado exitosamente', 'success');
+        }
+
+        // ==================== CHANGE PASS ====================
+        function doChangePass() {
+            const newp = document.getElementById('newPass').value;
+            const confirm = document.getElementById('newPassConfirm').value;
+            if (!newp || !confirm) { showAlert('changePassAlert', 'Complete ambos campos', 'danger'); return; }
+            if (newp !== confirm) { showAlert('changePassAlert', 'Las contraseñas no coinciden', 'danger'); return; }
+            if (newp.length < 10) { showAlert('changePassAlert', 'La contraseña debe tener al menos 10 caracteres', 'danger'); return; }
+            // Verificar requisitos de seguridad (simulado)
+            const hasUpper = /[A-Z]/.test(newp);
+            const hasLower = /[a-z]/.test(newp);
+            const hasNumber = /[0-9]/.test(newp);
+            const hasSymbol = /[!@$%]/.test(newp);
+            if (!hasUpper || !hasLower || !hasNumber || !hasSymbol) {
+                showAlert('changePassAlert', 'La contraseña no cumple con todos los requisitos de seguridad', 'danger');
+                return;
+            }
+            showAlert('changePassAlert', '✅ Contraseña actualizada exitosamente', 'success');
+        }
+
+        // ==================== REGISTER PRODUCT ====================
+        function doRegisterProduct() {
+            const code = document.getElementById('prodCode').value.trim();
+            const name = document.getElementById('prodName').value.trim();
+            const cost = document.getElementById('prodCost').value.trim();
+            const price = document.getElementById('prodPrice').value.trim();
+            const stock = document.getElementById('prodStock').value.trim();
+            if (!code || !name || !cost || !price || !stock) { showAlert('regProdAlert', 'Complete todos los campos obligatorios', 'danger'); return; }
+            if (isNaN(cost) || isNaN(price) || isNaN(stock) || parseFloat(cost) <= 0 || parseFloat(price) <= 0 || parseInt(stock) < 0) {
+                showAlert('regProdAlert', 'Precios > 0 y stock >= 0', 'danger'); return;
+            }
+            showAlert('regProdAlert', '✅ Producto registrado exitosamente', 'success');
+        }
+
+        // ==================== UPDATE STOCK ====================
+        function doUpdateStock() {
+            const qty = document.getElementById('movQty').value.trim();
+            if (!qty || isNaN(qty)) { showAlert('stockAlert', 'Ingrese una cantidad válida', 'danger'); return; }
+            const ref = document.getElementById('movRef').value.trim();
+            if (!ref) { showAlert('stockAlert', 'La referencia es obligatoria', 'danger'); return; }
+            showAlert('stockAlert', '✅ Movimiento confirmado. Stock actualizado.', 'success');
+        }
+
+        // ==================== FILTER INVENTORY ====================
+        function filterInventory() {
+            const search = document.getElementById('invSearch').value.toLowerCase();
+            const cat = document.getElementById('invCatFilter').value;
+            const rows = document.querySelectorAll('#invBody tr');
+            let visible = 0;
+            rows.forEach(row => {
+                const code = row.getAttribute('data-code').toLowerCase();
+                const category = row.getAttribute('data-cat');
+                const name = row.cells[1].textContent.toLowerCase();
+                let match = true;
+                if (search && !code.includes(search) && !name.includes(search)) match = false;
+                if (cat !== 'all' && category !== cat) match = false;
+                row.style.display = match ? '' : 'none';
+                if (match) visible++;
+            });
+            document.getElementById('invCount').textContent = visible;
+            if (visible === 0) showAlert('invSearchAlert', 'No se encontraron productos', 'warning');
+            else document.getElementById('invSearchAlert').style.display = 'none';
+        }
+
+        // ==================== SALE CART ====================
+        let cartItems = [{ product: 'Laptop Gamer XT', qty: 1, price: 1200000, discount: 0 }];
+
+        function renderCart() {
+            const tbody = document.getElementById('cartBody');
+            tbody.innerHTML = '';
+            let subtotal = 0;
+            cartItems.forEach((item, index) => {
+                const sub = item.qty * item.price - item.discount;
+                subtotal += sub;
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.product}</td>
+                    <td>${item.qty}</td>
+                    <td>$${item.price.toLocaleString()}</td>
+                    <td>$${item.discount.toLocaleString()}</td>
+                    <td>$${sub.toLocaleString()}</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="removeCartItem(${index})">Eliminar</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+            const tax = Math.round(subtotal * 0.19);
+            const total = subtotal + tax;
+            document.getElementById('saleSubtotal').textContent = '$' + subtotal.toLocaleString();
+            document.getElementById('saleDiscount').textContent = '$0';
+            document.getElementById('saleTax').textContent = '$' + tax.toLocaleString();
+            document.getElementById('saleTotal').textContent = '$' + total.toLocaleString();
+        }
+
+        function addToCart() {
+            const search = document.getElementById('saleProductSearch').value.trim();
+            const qty = parseInt(document.getElementById('saleQty').value.trim());
+            if (!search || !qty || qty <= 0) { showAlert('saleAlert', 'Producto y cantidad válida', 'danger'); return; }
+            if (search.toLowerCase().includes('mouse')) {
+                cartItems.push({ product: 'Mouse Inalámbrico', qty, price: 85000, discount: 0 });
+                showAlert('saleAlert', '✅ Producto agregado', 'success');
+            } else if (search.toLowerCase().includes('laptop')) {
+                cartItems.push({ product: 'Laptop Gamer XT', qty, price: 1200000, discount: 0 });
+                showAlert('saleAlert', '✅ Producto agregado', 'success');
+            } else {
+                showAlert('saleAlert', 'Producto no encontrado (simulación: "Mouse" o "Laptop")', 'danger');
+                return;
+            }
+            renderCart();
+        }
+
+        function removeCartItem(index) {
+            cartItems.splice(index, 1);
+            renderCart();
+            showAlert('saleAlert', 'Producto eliminado', 'warning');
+        }
+
+        function clearCart() {
+            cartItems = [];
+            renderCart();
+            showAlert('saleAlert', 'Carrito vacío', 'warning');
+        }
+
+        function doSale() {
+            if (cartItems.length === 0) { showAlert('saleAlert', 'Carrito vacío', 'danger'); return; }
+            const client = document.getElementById('saleClient').value.trim();
+            if (!client) { showAlert('saleAlert', 'Seleccione un cliente', 'danger'); return; }
+            showAlert('saleAlert', '✅ Venta confirmada. Comprobante generado.', 'success');
+            setTimeout(() => { cartItems = []; renderCart(); document.getElementById('saleClient').value = ''; }, 2000);
+        }
+
+        // ==================== ANNUL SALE ====================
+        let selectedSaleId = null;
+
+        function searchSaleToAnnul() {
+            const query = document.getElementById('annulSearch').value.trim().toLowerCase();
+            const rows = document.querySelectorAll('#annulBody tr');
+            let found = false;
+            rows.forEach(row => {
+                const id = row.getAttribute('data-id').toLowerCase();
+                const text = row.textContent.toLowerCase();
+                if (query && (id.includes(query) || text.includes(query))) {
+                    row.style.display = '';
+                    found = true;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            if (!found) showAlert('annulAlert', 'No se encontraron ventas', 'warning');
+            else document.getElementById('annulAlert').style.display = 'none';
+        }
+
+        function selectSaleToAnnul(btn) {
+            const row = btn.closest('tr');
+            selectedSaleId = row.getAttribute('data-id');
+            document.getElementById('annulForm').style.display = 'block';
+            showAlert('annulAlert', `Venta ${selectedSaleId} seleccionada`, 'success');
+        }
+
+        function doAnnulSale() {
+            const reason = document.getElementById('annulReason').value.trim();
+            if (!reason) { showAlert('annulAlert', 'Motivo obligatorio', 'danger'); return; }
+            if (confirm(`¿Anular venta ${selectedSaleId}?`)) {
+                showAlert('annulAlert', `✅ Venta ${selectedSaleId} anulada`, 'success');
+                document.getElementById('annulForm').style.display = 'none';
+                selectedSaleId = null;
+            }
+        }
+
+        function cancelAnnul() {
+            document.getElementById('annulForm').style.display = 'none';
+            selectedSaleId = null;
+            showAlert('annulAlert', 'Anulación cancelada', 'warning');
+        }
+
+        // ==================== REGISTER CLIENT ====================
+        function doRegisterClient() {
+            const id = document.getElementById('clientId').value.trim();
+            const name = document.getElementById('clientName').value.trim();
+            const email = document.getElementById('clientEmail').value.trim();
+            if (!id || !name || !email) { showAlert('clientAlert', 'Complete identificación, nombre y correo', 'danger'); return; }
+            if (!email.includes('@')) { showAlert('clientAlert', 'Correo inválido', 'danger'); return; }
+            showAlert('clientAlert', '✅ Cliente registrado exitosamente', 'success');
+        }
+
+        // ==================== CONSULT CLIENT ====================
+        function filterClients() {
+            const search = document.getElementById('clientSearchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#clientBody tr');
+            let visible = 0;
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (search && !text.includes(search)) row.style.display = 'none';
+                else { row.style.display = ''; visible++; }
+            });
+            if (visible === 0) showAlert('clientSearchAlert', 'No se encontraron clientes', 'warning');
+            else document.getElementById('clientSearchAlert').style.display = 'none';
+        }
+
+        function showClientDetail(btn) {
+            const row = btn.closest('tr');
+            const name = row.cells[1].textContent;
+            const id = row.cells[0].textContent;
+            const detail = document.getElementById('clientDetail');
+            document.getElementById('clientDetailText').textContent = `${name} (ID: ${id}) - Saldo: ${row.cells[3].textContent}`;
+            detail.style.display = 'block';
+        }
+
+        // ==================== REGISTER SUPPLIER ====================
+        function doRegisterSupplier() {
+            const id = document.getElementById('suppId').value.trim();
+            const business = document.getElementById('suppBusiness').value.trim();
+            const contact = document.getElementById('suppContact').value.trim();
+            if (!id || !business || !contact) { showAlert('supplierAlert', 'Complete identificación, razón social y contacto', 'danger'); return; }
+            showAlert('supplierAlert', '✅ Proveedor registrado', 'success');
+        }
+
+        // ==================== CONSULT SUPPLIER ====================
+        function filterSuppliers() {
+            const search = document.getElementById('suppSearchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#suppBody tr');
+            let visible = 0;
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (search && !text.includes(search)) row.style.display = 'none';
+                else { row.style.display = ''; visible++; }
+            });
+            if (visible === 0) showAlert('suppSearchAlert', 'No se encontraron proveedores', 'warning');
+            else document.getElementById('suppSearchAlert').style.display = 'none';
+        }
+
+        function showSupplierDetail(btn) {
+            const row = btn.closest('tr');
+            const name = row.cells[1].textContent;
+            const id = row.cells[0].textContent;
+            const detail = document.getElementById('suppDetail');
+            document.getElementById('suppDetailText').textContent = `${name} (ID: ${id}) - Historial de compras: 5 órdenes`;
+            detail.style.display = 'block';
+        }
+
+        // ==================== REPORTS ====================
+        function generateInventoryReport() {
+            document.getElementById('repInvResult').style.display = 'block';
+            showAlert('repInvAlert', '✅ Reporte de inventario generado', 'success');
+        }
+
+        function generateSalesReport() {
+            document.getElementById('repSalesResult').style.display = 'block';
+            showAlert('repSalesAlert', '✅ Reporte de ventas generado', 'success');
+        }
+
+        function simulateExport(format) {
+            alert(`📥 Simulando descarga en ${format}`);
+        }
+
+        // ==================== INIT ====================
+        window.onload = function() {
+            renderCart();
+            filterInventory();
+        };
+    </script>
+
+</body>
+</html>

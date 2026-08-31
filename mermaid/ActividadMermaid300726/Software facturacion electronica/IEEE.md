@@ -939,7 +939,11 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 
 ## 1.INICIO DE SESION EN EL SISTEMA
 
-### CASO DE USO 1 
+### CASO DE USO 1
+
+
+*Figura 1: Interfaz de inicio de sesión del sistema*
+
 | CÓDIGO    | LOGIN-001    |
 |---|---|
 | NOMBRE    | Login del sistema    |
@@ -952,6 +956,9 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | ESCENARIOS DE ESCEPCION    | • El usuario no existe en la base de datos (mensaje: "Usuario o contraseña incorrectos")<br>• La contraseña ingresada no coincide con el hash almacenado (mensaje genérico: "Usuario o contraseña incorrectos")<br>• La cuenta del usuario está bloqueada por múltiples intentos fallidos (mensaje: "Cuenta bloqueada, contacte al administrador")<br>• La cuenta del usuario ha expirado (mensaje: "Su cuenta ha expirado, contacte al administrador")<br>• El usuario no tiene permisos para acceder al sistema (mensaje: "Acceso denegado")<br>• La base de datos no responde (mensaje: "Error de conexión, intente más tarde")<br>• Se supera el límite de intentos fallidos (5 intentos) y se bloquea la cuenta temporalmente |
 | CONDICIÓN DE ÉXITO    | El usuario logra ingresar al sistema y visualiza el dashboard correspondiente a su rol, con todas las funcionalidades autorizadas |
 | CUESTIONES A RESOLVER    | Implementación de hash seguro (bcrypt/Argon2), manejo de sesiones con JWT y expiración, registro de intentos fallidos para análisis de seguridad, política de bloqueo de cuentas (número de intentos y tiempo de desbloqueo), integración con LDAP/Active Directory si se requiere, manejo de autenticación de dos factores (2FA) en el futuro |
+
+###### VISTA CASO DE USO 1
+![LogIn](https://i.postimg.cc/QC9ZNX0c/1-Log-In.webp)
 
 ---
 ## 2. REGISTAR USUARIO EN SISTEMA
@@ -972,6 +979,10 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | La cuenta de usuario queda registrada exitosamente en el sistema, el usuario puede iniciar sesión (si está activo) y se le notifica la creación |
 | CUESTIONES A RESOLVER    | Políticas de contraseñas (complejidad, caducidad, historial de contraseñas), flujo de activación por correo electrónico, manejo de roles y permisos granulares, integración con directorio LDAP, registro de auditoría de creación de usuarios, posibilidad de auto-registro con aprobación del administrador |
 
+###### VISTA CASO DE USO 2
+
+![Registrar usuario en sistema](https://i.postimg.cc/T1Lv2RCc/2-Registrar-Nuevo-Usuario.webp)
+
 ---
 ## 3. RECUPERAR CLAVE DE USUARIO
 
@@ -988,6 +999,13 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | ESCENARIOS DE ESCEPCION    | • El token ha expirado (mensaje: "El enlace ha expirado, solicite uno nuevo")<br>• El token no es válido (mensaje: "Enlace inválido")<br>• La nueva contraseña no cumple con la política de seguridad (mensaje indicando los requisitos)<br>• El usuario intenta usar una contraseña que ya ha usado anteriormente (si hay historial, se rechaza)<br>• El correo de restablecimiento no puede ser enviado (se registra el error y se informa al usuario) |
 | CONDICIÓN DE ÉXITO    | La contraseña del usuario es restablecida exitosamente y puede iniciar sesión con la nueva contraseña |
 | CUESTIONES A RESOLVER    | Generación de tokens seguros con expiración, política de historial de contraseñas (no repetir las últimas N), protección contra ataques de fuerza bruta en el formulario de recuperación, registro de intentos fallidos para monitoreo de seguridad, integración con preguntas de seguridad como alternativa, notificación al usuario sobre el cambio (correo de confirmación) |
+
+###### VISTA CASO DE USO 3
+
+![Reuperar clave de usuario](https://i.postimg.cc/D0J3f2Bg/3-Recuperar-Contrasena-1.webp)
+![Reuperar clave de usuario](https://i.postimg.cc/d3kcQq46/3-Recuperar-Contrasena-2.webp)
+![Reuperar clave de usuario](https://i.postimg.cc/tJKQYLMV/3-Recuperar-Contrasena-3.webp)
+
 
 ---
 ## 4. RECUPERAR USUARIO DEL SISTEMA
@@ -1006,6 +1024,11 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | El usuario recibe en su correo el nombre de usuario (o los nombres) que le permiten iniciar sesión en el sistema |
 | CUESTIONES A RESOLVER    | Privacidad: no revelar si el correo está registrado (mensaje genérico para evitar enumeración de usuarios), manejo de múltiples cuentas con el mismo correo, registro de intentos de recuperación de usuario para auditoría, política de límite de intentos por IP |
 
+###### VISTA CASO DE USO 4
+
+![Recuperar usuario en sistema](https://i.postimg.cc/T1Lv2RCc/2-Registrar-Nuevo-Usuario.webp)
+
+
 ---
 ## 5. CAMBIAR CONTRASEÑA DE FORMA PERIODICA
 
@@ -1022,6 +1045,11 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | ESCENARIOS DE ESCEPCION    | • La contraseña actual ingresada no coincide con la almacenada (mensaje: "Contraseña actual incorrecta")<br>• La nueva contraseña no cumple con los requisitos de complejidad (mensaje detallado)<br>• La nueva contraseña ya fue utilizada anteriormente (mensaje: "No puede usar una contraseña que haya usado antes")<br>• El usuario ingresa la misma contraseña que la actual (mensaje: "La nueva contraseña debe ser diferente")<br>• El usuario no recuerda su contraseña actual (se redirige a recuperación)<br>• La cuenta del usuario está bloqueada o inactiva (no permite cambio)<br>• El sistema no puede actualizar la contraseña por error de base de datos |
 | CONDICIÓN DE ÉXITO    | La contraseña del usuario se actualiza correctamente, se registra la fecha de cambio y se aplica la nueva política de seguridad, permitiendo al usuario continuar con sus operaciones |
 | CUESTIONES A RESOLVER    | Configuración de período de vigencia (días), política de historial de contraseñas (número a recordar), notificaciones de vencimiento anticipado (ej. 7 días antes), bloqueo de acceso si no se cambia después de la expiración, integración con directorio activo si se usa, registro de cambios en el log de auditoría para cumplimiento normativo |
+
+##### VISTA CASO DE USO 5
+
+![Cambiar Contraseña periodicamente](https://i.postimg.cc/XqRSpTzF/5-Cambio-Periodicocontrasena.webp)
+
 ---
 ## 6. REGISTRAR PRODUCTO EN INVENTARIO
 
@@ -1038,6 +1066,10 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | ESCENARIOS DE ESCEPCION    | • El código del producto ya existe en el sistema (mensaje: "Código ya registrado")<br>• El usuario omite campos obligatorios (mensaje: "Complete los campos requeridos")<br>• El stock inicial ingresado es negativo (mensaje: "Stock no válido")<br>• El proveedor seleccionado no existe o está inactivo<br>• El usuario no tiene permisos para registrar productos<br>• La conexión a la base de datos falla |
 | CONDICIÓN DE ÉXITO    | El producto queda registrado en el catálogo de inventario, disponible para transacciones de compra, venta y ajustes |
 | CUESTIONES A RESOLVER    | Generación automática de códigos (correlativo, por categoría), manejo de múltiples proveedores y precios por proveedor, control de impuestos según categoría, registro de unidades de medida y conversiones, soporte para productos con variantes (talla, color, etc.), validación de precios de compra vs venta (margen mínimo) |
+
+## VISTA CASO DE USO 6
+
+![Registrar Producto en Inventario](https://lens.usercontent.google.com/banana?agsi=CmdnbG9iYWw6OjAwMDA1NWNmZWM3MDAyNmQ6MDAwMDAwZWI6MTpiMWYxN2NlNzFmZDU2NTk2OjAwMDA1NWNmZWM3MDAyNmQ6MDAwMDAzNjA3NDIwMzM2ODowMDA2NWE0YTEwZGJiNGZmEAIYASIJaW1hZ2UvcG5n)
 
 ---
 ## 7. ACTUALIZAR STOCK DE PRODUCTO
@@ -1108,7 +1140,7 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CUESTIONES A RESOLVER    | Políticas de tiempo límite para anulaciones (ej. solo ventas del día), integración con facturación electrónica para notas crédito, manejo de devoluciones parciales, control de permisos y autorizaciones según el monto o antigüedad de la venta, trazabilidad completa de anulaciones para auditoría |
 
 ---
-## 11. REGISTRAR CLINETE EN EL SISTEMA
+## 11. REGISTRAR CLIENTE EN EL SISTEMA
 
 ### CASO DE USO 11
 | CÓDIGO    | REGISCLI-001    |
@@ -1125,7 +1157,7 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CUESTIONES A RESOLVER    | Verificación contra listas de terceros (DIAN), manejo de personas naturales y jurídicas, integración con facturación electrónica, gestión de direcciones múltiples, historial de cambios de datos del cliente, políticas de crédito y límite de endeudamiento |
 
 ---
-## 12. CONSULTAR CLINETE EN EL SISTEMA
+## 12. CONSULTAR CLIENTE EN EL SISTEMA
 
 ### CASO DE USO 12
 | CÓDIGO    | CONSULCLI-001    |
@@ -1142,7 +1174,7 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CUESTIONES A RESOLVER    | Búsqueda con caracteres especiales (tildes, eñe), paginación y ordenamiento, rendimiento en bases de datos con muchos clientes, integración con módulo de cartera para mostrar saldo actualizado, permisos por roles para ver información financiera (costos, límite de crédito) |
 
 ---
-## 13. REGISTRAR CLINETE EN EL SISTEMA
+## 13. REGISTRAR CLIENTE EN EL SISTEMA
 
 ### CASO DE USO 13
 | CÓDIGO    | REGISPROV-001    |
@@ -1159,7 +1191,7 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CUESTIONES A RESOLVER    | Validación de NIT contra listas de terceros (DIAN), manejo de proveedores del exterior, historial de calificaciones, gestión de documentos adjuntos, integración con módulo de compras para evaluar desempeño |
 
 ---
-## 14. REGISTRAR CLINETE EN EL SISTEMA
+## 14. REGISTRAR CLIENTE EN EL SISTEMA
 
 ### CASO DE USO 14
 | CÓDIGO    | CONSULPROV-001    |
@@ -1176,7 +1208,7 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CUESTIONES A RESOLVER    | Búsqueda avanzada, paginación, integración con el módulo de compras para mostrar historial, permisos por rol para ver información financiera, manejo de calificaciones y evaluación de proveedores |
 
 ---
-## 15. REGISTRAR CLINETE EN EL SISTEMA
+## 15. REGISTRAR CLIENTE EN EL SISTEMA
 
 ### CASO DE USO 15
 | CÓDIGO    | REPORTEINV-001    |
@@ -1193,7 +1225,7 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CUESTIONES A RESOLVER    | Optimización de consultas para grandes volúmenes de datos, formatos de exportación (Excel con fórmulas, PDF con gráficos), definición de KPIs (rotación, días de inventario), personalización de reportes según rol (gerente ve todo, administrador ve costos, etc.) |
 
 ---
-## 16. REGISTRAR CLINETE EN EL SISTEMA
+## 16. REGISTRAR CLIENTE EN EL SISTEMA
 
 ### CASO DE USO 16
 | CÓDIGO    | REPORTEVENTAS-001    |
