@@ -1086,6 +1086,10 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | El stock del producto se actualiza correctamente, el movimiento queda registrado en el historial y el sistema refleja el nuevo nivel de inventario |
 | CUESTIONES A RESOLVER    | Cálculo del costo promedio ponderado al ingresar compras, control de lotes y fechas de vencimiento, integración con los módulos de compras y ventas para actualización automática, políticas de ajuste (máximo permitido sin aprobación), auditoría completa de movimientos para trazabilidad |
 
+### VISTA CASO DE USO 7
+
+![Actualizar Stock de Producto](VistasIEEE/7.ActualizarStockdeProducto.webp)
+
 ---
 ## 8. CONSULTAR INVENTARIO
 
@@ -1102,6 +1106,10 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | ESCENARIOS DE ESCEPCION    | • No se encuentran productos con los filtros aplicados (mensaje: "No hay productos que coincidan con los filtros")<br> • El sistema no responde debido a alta carga de datos (se sugiere paginación)<br>• La sesión del usuario expira durante la consulta (se redirige a login)<br>• El usuario no tiene permisos para ver costos (se oculta la columna de costo) |
 | CONDICIÓN DE ÉXITO    | El usuario visualiza correctamente el estado actual del inventario con toda la información que necesita para tomar decisiones de compra, venta o ajuste |
 | CUESTIONES A RESOLVER    | Paginación y rendimiento para grandes volúmenes de datos, filtros dinámicos, permisos granulares por columna, exportación a formatos Excel y PDF, integración con reportes avanzados, actualización en tiempo real (si se usan sockets o polling) |
+
+### VISTA CASO DE USO 8
+
+![Consultar Inventario](VistasIEEE/8.ConsultarInventario.webp)
 
 ---
 ## 9. REGISTRAR VENTA EN EL SISTEMA
@@ -1120,6 +1128,9 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | La venta se completa exitosamente, el stock se actualiza, se genera el comprobante y los datos quedan registrados para reportes y contabilidad |
 | CUESTIONES A RESOLVER    | Control de stock concurrente (evitar sobreventa), integración con facturación electrónica, manejo de descuentos y promociones, formas de pago (efectivo, crédito, tarjeta, transferencia), políticas de crédito para clientes (límite y plazos), generación de comprobantes en diferentes formatos (ticket, factura, nota de venta) |
 
+### VISTA CASO DE USO 7
+
+![Registrar Venta en el Sistema](VistasIEEE/9.RegistrarNuevaVenta.webp)
 ---
 ## 10. ANULAR VENTA EN EL SISTEMA
 
@@ -1137,6 +1148,9 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | La venta queda anulada, el stock se restaura, se genera la documentación de soporte y los datos contables quedan corregidos |
 | CUESTIONES A RESOLVER    | Políticas de tiempo límite para anulaciones (ej. solo ventas del día), integración con facturación electrónica para notas crédito, manejo de devoluciones parciales, control de permisos y autorizaciones según el monto o antigüedad de la venta, trazabilidad completa de anulaciones para auditoría |
 
+### VISTA CASO DE USO 10
+
+![Anular Venta en el Sistema](VistasIEEE/10.AnularVenta.webp)
 ---
 ## 11. REGISTRAR CLIENTE EN EL SISTEMA
 
@@ -1153,6 +1167,10 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | ESCENARIOS DE ESCEPCION    | • El número de identificación no cumple con el formato (ej. NIT sin dígito de verificación)<br>• El correo electrónico ya está registrado para otro cliente (se valida)<br>• El usuario no tiene permisos para crear clientes<br>• La base de datos no responde durante el guardado |
 | CONDICIÓN DE ÉXITO    | El cliente queda registrado en el sistema y puede ser seleccionado en las transacciones de venta y facturación |
 | CUESTIONES A RESOLVER    | Verificación contra listas de terceros (DIAN), manejo de personas naturales y jurídicas, integración con facturación electrónica, gestión de direcciones múltiples, historial de cambios de datos del cliente, políticas de crédito y límite de endeudamiento |
+
+### VISTA CASO DE USO 11
+
+![Registrar Clinete en el Sistema](VistasIEEE/11.RegistrarNuevocliente.webp)
 
 ---
 ## 12. CONSULTAR CLIENTE EN EL SISTEMA
@@ -1171,8 +1189,12 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | El usuario visualiza la información solicitada del cliente y puede tomar decisiones comerciales (ventas, cobranza, ajustes de crédito) |
 | CUESTIONES A RESOLVER    | Búsqueda con caracteres especiales (tildes, eñe), paginación y ordenamiento, rendimiento en bases de datos con muchos clientes, integración con módulo de cartera para mostrar saldo actualizado, permisos por roles para ver información financiera (costos, límite de crédito) |
 
+### VISTA CASO DE USO 12
+
+![Consultar Cliente en el Sistema](VistasIEEE/12.ConsultarClinete.webp)
+
 ---
-## 13. REGISTRAR CLIENTE EN EL SISTEMA
+## 13. REGISTRAR PROVEEDOR EN EL SISTEMA
 
 ### CASO DE USO 13
 | CÓDIGO    | REGISPROV-001    |
@@ -1188,8 +1210,12 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | El proveedor queda registrado en el sistema y puede ser seleccionado en las órdenes de compra y cuentas por pagar |
 | CUESTIONES A RESOLVER    | Validación de NIT contra listas de terceros (DIAN), manejo de proveedores del exterior, historial de calificaciones, gestión de documentos adjuntos, integración con módulo de compras para evaluar desempeño |
 
+### VISTA CASO DE USO 13
+
+![Registrar Proveedor en el Sistema](VistasIEEE/13.RegistrarNuevoProveedor.webp)
+
 ---
-## 14. REGISTRAR CLIENTE EN EL SISTEMA
+## 14. CONSULTAR PROVEEDOR EN EL SISTEMA
 
 ### CASO DE USO 14
 | CÓDIGO    | CONSULPROV-001    |
@@ -1205,8 +1231,12 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | El usuario visualiza la información solicitada del proveedor y puede tomar decisiones de compra o pago |
 | CUESTIONES A RESOLVER    | Búsqueda avanzada, paginación, integración con el módulo de compras para mostrar historial, permisos por rol para ver información financiera, manejo de calificaciones y evaluación de proveedores |
 
+### VISTA CASO DE USO 14
+
+![Consultar Proveedor en el Sistema](VistasIEEE/14.ConsultarProveedor.webp)
+
 ---
-## 15. REGISTRAR CLIENTE EN EL SISTEMA
+## 15. GENERAR REGPORTE DE INVENTARIO
 
 ### CASO DE USO 15
 | CÓDIGO    | REPORTEINV-001    |
@@ -1222,8 +1252,12 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | El reporte de inventario se genera correctamente y es entregado al usuario en el formato solicitado, permitiendo análisis de gestión de stock |
 | CUESTIONES A RESOLVER    | Optimización de consultas para grandes volúmenes de datos, formatos de exportación (Excel con fórmulas, PDF con gráficos), definición de KPIs (rotación, días de inventario), personalización de reportes según rol (gerente ve todo, administrador ve costos, etc.) |
 
+### VISTA CASO DE USO 15
+
+![Generar Reporte de Inventario](VistasIEEE/15.GenerarReportedeInventario.webp)
+
 ---
-## 16. REGISTRAR CLIENTE EN EL SISTEMA
+## 16. GENERAR REPORTE DE VENTAS
 
 ### CASO DE USO 16
 | CÓDIGO    | REPORTEVENTAS-001    |
@@ -1238,6 +1272,10 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | ESCENARIOS DE ESCEPCION    | • No hay ventas en el período seleccionado (se muestra mensaje)<br>• El volumen de datos es excesivo y se recomienda ajustar el rango<br>• El usuario no tiene permisos para ver datos financieros detallados (costos, márgenes) |
 | CONDICIÓN DE ÉXITO    | El reporte de ventas se genera correctamente, permitiendo al gerente tomar decisiones estratégicas basadas en los datos de ventas |
 | CUESTIONES A RESOLVER    | Cálculo de comisiones por vendedor, integración con datos de costos para calcular márgenes, formatos de exportación con gráficos interactivos, análisis de tendencias (mes a mes, año a año), manejo de grandes volúmenes de datos con agregaciones precalculadas |
+
+### VISTA CASO DE USO 16
+
+![Generar Reporte de Ventas](VistasIEEE/16.ReportedeVentas.webp)
 
 # 4.1.2.CREACION DE DIAGRAMAS DE CLASE DEL PROYECTO
 
