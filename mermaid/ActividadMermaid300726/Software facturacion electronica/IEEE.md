@@ -1128,7 +1128,7 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | La venta se completa exitosamente, el stock se actualiza, se genera el comprobante y los datos quedan registrados para reportes y contabilidad |
 | CUESTIONES A RESOLVER    | Control de stock concurrente (evitar sobreventa), integración con facturación electrónica, manejo de descuentos y promociones, formas de pago (efectivo, crédito, tarjeta, transferencia), políticas de crédito para clientes (límite y plazos), generación de comprobantes en diferentes formatos (ticket, factura, nota de venta) |
 
-### VISTA CASO DE USO 7
+### VISTA CASO DE USO 9
 
 ![Registrar Venta en el Sistema](VistasIEEE/9.RegistrarNuevaVenta.webp)
 ---
