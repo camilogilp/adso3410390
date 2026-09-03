@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tecnologías del Futuro S.A.S.</title>
+    <!-- ===== SweetAlert2 CDN ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
+        /* ===== ESTILOS EXISTENTES (se mantienen) ===== */
         * {
             margin: 0;
             padding: 0;
@@ -17,6 +20,7 @@
             height: 100vh;
             background: #f0f4f8;
             color: #1a2332;
+            transition: background 0.3s, color 0.3s;
         }
 
         /* ===== SIDEBAR ===== */
@@ -30,7 +34,21 @@
             box-shadow: 2px 0 12px rgba(0,0,0,0.08);
             display: flex;
             flex-direction: column;
+            transition: background 0.3s;
         }
+
+        body.hide-sidebar .sidebar {
+            display: none;
+        }
+        body.hide-sidebar .content {
+            flex: 1;
+            margin-left: 0;
+            max-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .sidebar .logo-area {
             padding: 0 24px 24px;
             border-bottom: 1px solid #1c3a5e;
@@ -98,10 +116,93 @@
         /* ===== CONTENT ===== */
         .content {
             flex: 1;
-            padding: 28px 36px;
+            padding: 0 36px 20px 36px;
             overflow-y: auto;
             background: #f0f4f8;
+            transition: background 0.3s;
+            display: flex;
+            flex-direction: column;
         }
+
+        /* ===== HEADER ===== */
+        .app-header {
+            background: #ffffff;
+            padding: 16px 24px;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border-bottom: 2px solid #e9edf4;
+            margin-bottom: 24px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            transition: background 0.3s, border-color 0.3s;
+            text-align: center;
+        }
+        .app-header h1 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #0a1e3d;
+            letter-spacing: 1px;
+        }
+        .app-header h1 span {
+            color: #00b4d8;
+        }
+
+        /* ===== FOOTER ===== */
+        .app-footer {
+            margin-top: auto;
+            background: #ffffff;
+            border-radius: 16px 16px 0 0;
+            padding: 20px 24px;
+            border-top: 2px solid #e9edf4;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.3s, border-color 0.3s;
+            margin-top: 30px;
+            gap: 12px;
+        }
+        .app-footer .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .app-footer .footer-brand .logo-icon {
+            font-size: 28px;
+            font-weight: 700;
+            color: #00b4d8;
+            background: #e9edf4;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .app-footer .footer-brand .company-info {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #2d4059;
+        }
+        .app-footer .footer-brand .company-info strong {
+            font-size: 16px;
+            color: #0a1e3d;
+        }
+        .app-footer .footer-brand .company-info .address {
+            font-size: 12px;
+            color: #5a7a9a;
+        }
+        .app-footer .footer-copy {
+            font-size: 13px;
+            color: #5a7a9a;
+            text-align: right;
+        }
+        .app-footer .footer-copy .copy-icon {
+            font-weight: 700;
+        }
+
+        /* ===== VISTAS ===== */
         .view {
             display: none;
             animation: fadeIn 0.25s ease;
@@ -122,6 +223,7 @@
             box-shadow: 0 4px 20px rgba(10,30,61,0.06);
             margin-bottom: 24px;
             border: 1px solid #e9edf4;
+            transition: background 0.3s, border-color 0.3s;
         }
         .card-header {
             font-size: 20px;
@@ -327,12 +429,14 @@
         /* ===== LOGIN ===== */
         .login-container {
             max-width: 440px;
-            margin: 40px auto;
+            margin: 0 auto;
             background: #fff;
             padding: 36px 40px;
             border-radius: 20px;
             box-shadow: 0 8px 32px rgba(10,30,61,0.10);
             border: 1px solid #e9edf4;
+            transition: background 0.3s, border-color 0.3s;
+            width: 100%;
         }
         .login-container .logo-big {
             text-align: center;
@@ -357,12 +461,71 @@
             margin-top: 4px;
         }
 
+        /* ===== TOGGLE CONTRASEÑA ===== */
+        .password-wrapper {
+            position: relative;
+        }
+        .password-wrapper .input {
+            padding-right: 48px;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5a7a9a;
+            transition: background 0.2s;
+        }
+        .toggle-password:hover {
+            background: #e9edf4;
+        }
+        .toggle-password:active {
+            transform: translateY(-50%) scale(0.92);
+        }
+        .toggle-password svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: #5a7a9a;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.2s;
+        }
+        .toggle-password:hover svg {
+            stroke: #0a1e3d;
+        }
+        body.dark-mode .toggle-password svg {
+            stroke: #8a9cb0;
+        }
+        body.dark-mode .toggle-password:hover svg {
+            stroke: #c8d0e0;
+        }
+        .toggle-password .eye-slash {
+            display: none;
+        }
+        .toggle-password.showing .eye {
+            display: none;
+        }
+        .toggle-password.showing .eye-slash {
+            display: block;
+        }
+
         /* ===== SEGURIDAD (checks) ===== */
         .security-checks {
             background: #f7fafc;
             border-radius: 12px;
             padding: 16px 20px;
             margin: 12px 0 16px;
+            transition: background 0.3s;
         }
         .security-checks .check-item {
             display: flex;
@@ -406,22 +569,6 @@
         }
         .session-status .item .value.valid {
             color: #00b4d8;
-        }
-
-        /* ===== FOOTER ===== */
-        .footer-bar {
-            margin-top: 28px;
-            padding-top: 14px;
-            border-top: 1px solid #e9edf4;
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: #8a9cb0;
-            flex-wrap: wrap;
-        }
-        .footer-bar .brand {
-            color: #4a6a8a;
-            font-weight: 500;
         }
 
         /* ===== MISC ===== */
@@ -489,9 +636,261 @@
         .text-muted { color: #5a7a9a; font-size: 13px; }
         .text-small { font-size: 13px; }
         .gap-8 { gap: 8px; }
+
+        /* ===== BOTÓN DE MODO OSCURO ===== */
+        .btn-modo {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #0a1e3d;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 18px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .btn-modo:hover {
+            background: #122c4f;
+            transform: scale(1.05);
+        }
+
+        /* ===== MODO OSCURO ===== */
+        body.dark-mode {
+            background: #1a1a2e;
+            color: #e0e0e0;
+        }
+        body.dark-mode .content {
+            background: #1a1a2e;
+        }
+        body.dark-mode .sidebar {
+            background: #0d1b2a;
+        }
+        body.dark-mode .sidebar .logo-area .company strong {
+            color: #4fc3f7;
+        }
+        body.dark-mode .sidebar .menu-item {
+            color: #a0b4c8;
+        }
+        body.dark-mode .sidebar .menu-item:hover,
+        body.dark-mode .sidebar .menu-item.active {
+            background: #1a2a40;
+            color: #fff;
+        }
+        body.dark-mode .card {
+            background: #252540;
+            border-color: #3a3a5a;
+        }
+        body.dark-mode .card-header {
+            color: #c8d0e0;
+            border-bottom-color: #3a3a5a;
+        }
+        body.dark-mode .card-header .logo-badge {
+            background: #3a3a5a;
+            color: #c8d0e0;
+        }
+        body.dark-mode .card-header .logo-badge strong {
+            color: #4fc3f7;
+        }
+        body.dark-mode .login-container {
+            background: #252540;
+            border-color: #3a3a5a;
+        }
+        body.dark-mode .login-container .logo-big h1 {
+            color: #c8d0e0;
+        }
+        body.dark-mode .login-container .logo-big h1 strong {
+            color: #4fc3f7;
+        }
+        body.dark-mode .login-container .logo-big .sub {
+            color: #8a9cb0;
+        }
+        body.dark-mode .input,
+        body.dark-mode .select,
+        body.dark-mode textarea {
+            background: #1a1a2e;
+            border-color: #3a3a5a;
+            color: #e0e0e0;
+        }
+        body.dark-mode .input:focus,
+        body.dark-mode .select:focus,
+        body.dark-mode textarea:focus {
+            border-color: #4fc3f7;
+        }
+        body.dark-mode label {
+            color: #b0c4d8;
+        }
+        body.dark-mode .btn-primary {
+            background: #4fc3f7;
+            color: #0a1e3d;
+        }
+        body.dark-mode .btn-primary:hover {
+            background: #3aa8e0;
+        }
+        body.dark-mode .btn-success {
+            background: #4fc3f7;
+            color: #0a1e3d;
+        }
+        body.dark-mode .btn-success:hover {
+            background: #3aa8e0;
+        }
+        body.dark-mode .btn-outline {
+            border-color: #3a3a5a;
+            color: #b0c4d8;
+        }
+        body.dark-mode .btn-outline:hover {
+            border-color: #4fc3f7;
+            background: #2a2a4a;
+        }
+        body.dark-mode .table th {
+            background: #2a2a4a;
+            color: #b0c4d8;
+            border-bottom-color: #3a3a5a;
+        }
+        body.dark-mode .table td {
+            border-bottom-color: #2a2a4a;
+            color: #d0d8e0;
+        }
+        body.dark-mode .badge-success {
+            background: #1e3a2e;
+            color: #8fc9a8;
+        }
+        body.dark-mode .badge-danger {
+            background: #3a1a1a;
+            color: #e88a8a;
+        }
+        body.dark-mode .badge-warning {
+            background: #3a2a1a;
+            color: #d4b87a;
+        }
+        body.dark-mode .step {
+            background: #2a2a4a;
+            color: #b0c4d8;
+        }
+        body.dark-mode .step.active {
+            background: #4fc3f7;
+            color: #0a1e3d;
+        }
+        body.dark-mode .step .num {
+            background: #1a1a2e;
+            color: #b0c4d8;
+        }
+        body.dark-mode .step.active .num {
+            background: #0a1e3d;
+            color: #fff;
+        }
+        body.dark-mode .security-checks {
+            background: #1a1a2e;
+        }
+        body.dark-mode .security-checks .check-item {
+            color: #d0d8e0;
+        }
+        body.dark-mode .session-status {
+            background: #1a1a2e;
+        }
+        body.dark-mode .session-status .item .label {
+            color: #8a9cb0;
+        }
+        body.dark-mode .session-status .item .value {
+            color: #c8d0e0;
+        }
+        body.dark-mode .session-status .item .value.valid {
+            color: #4fc3f7;
+        }
+        body.dark-mode .footer-bar {
+            border-top-color: #3a3a5a;
+            color: #8a9cb0;
+        }
+        body.dark-mode .footer-bar .brand {
+            color: #8a9cb0;
+        }
+        body.dark-mode .link {
+            color: #4fc3f7;
+        }
+        body.dark-mode .alert-success {
+            background: #1a3a2a;
+            color: #8fc9a8;
+        }
+        body.dark-mode .alert-danger {
+            background: #3a1a1a;
+            color: #e88a8a;
+        }
+        body.dark-mode .alert-warning {
+            background: #3a2a1a;
+            color: #d4b87a;
+        }
+        body.dark-mode .btn-modo {
+            background: #4fc3f7;
+            color: #0a1e3d;
+        }
+        body.dark-mode .btn-modo:hover {
+            background: #3aa8e0;
+        }
+
+        /* ===== HEADER Y FOOTER en modo oscuro ===== */
+        body.dark-mode .app-header {
+            background: #252540;
+            border-bottom-color: #3a3a5a;
+        }
+        body.dark-mode .app-header h1 {
+            color: #c8d0e0;
+        }
+        body.dark-mode .app-header h1 span {
+            color: #4fc3f7;
+        }
+        body.dark-mode .app-footer {
+            background: #252540;
+            border-top-color: #3a3a5a;
+        }
+        body.dark-mode .app-footer .footer-brand .logo-icon {
+            background: #3a3a5a;
+            color: #4fc3f7;
+        }
+        body.dark-mode .app-footer .footer-brand .company-info {
+            color: #b0c4d8;
+        }
+        body.dark-mode .app-footer .footer-brand .company-info strong {
+            color: #c8d0e0;
+        }
+        body.dark-mode .app-footer .footer-brand .company-info .address {
+            color: #8a9cb0;
+        }
+        body.dark-mode .app-footer .footer-copy {
+            color: #8a9cb0;
+        }
+
+        /* ===== AJUSTES RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 28px 24px;
+                margin: 20px 12px;
+            }
+            .content {
+                padding: 0 16px 16px 16px;
+            }
+            .sidebar {
+                width: 220px;
+            }
+            .app-footer {
+                flex-direction: column;
+                text-align: center;
+            }
+            .app-footer .footer-copy {
+                text-align: center;
+            }
+            .app-footer .footer-brand {
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- Botón de modo claro/oscuro -->
+    <button class="btn-modo" id="modoBoton" aria-label="Cambiar a modo oscuro">🌙 Modo oscuro</button>
 
     <!-- SIDEBAR -->
     <div class="sidebar">
@@ -503,7 +902,7 @@
         </div>
 
         <div class="group-title">Seguridad</div>
-        <div class="menu-item active" onclick="showView('login')">🔐 Login</div>
+        <div class="menu-item" onclick="showView('login')">🔐 Login</div>
         <div class="menu-item" onclick="showView('recover')">🔑 Recuperar Acceso</div>
         <div class="menu-item" onclick="showView('register-user')">👤 Registrar Usuario</div>
         <div class="menu-item" onclick="showView('change-pass')">🔄 Cambiar Contraseña</div>
@@ -533,6 +932,11 @@
     <!-- CONTENT -->
     <div class="content">
 
+        <!-- ===== HEADER ===== -->
+        <header class="app-header">
+            <h1>Sistema de <span>Inventario y Ventas</span></h1>
+        </header>
+
         <!-- ==================== LOGIN ==================== -->
         <div id="view-login" class="view active">
             <div class="login-container">
@@ -547,7 +951,20 @@
                 </div>
                 <div class="mb-10">
                     <label>Contraseña</label>
-                    <input id="loginPass" class="input" type="password" value="123456" placeholder="Ingresa tu contraseña">
+                    <div class="password-wrapper">
+                        <input id="loginPass" class="input" type="password" value="123456" placeholder="Ingresa tu contraseña">
+                        <button type="button" class="toggle-password" onclick="togglePassVisibility('loginPass', this)" aria-label="Mostrar contraseña">
+                            <svg class="eye" viewBox="0 0 24 24">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                            <svg class="eye-slash" viewBox="0 0 24 24">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                <circle cx="12" cy="12" r="3" />
+                                <line x1="3" y1="3" x2="21" y2="21" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
                 <div class="flex space-between mb-10">
                     <div class="checkbox-group">
@@ -566,7 +983,7 @@
             </div>
         </div>
 
-        <!-- ==================== RECOVER (ESTILO IMAGEN) ==================== -->
+        <!-- ==================== RECOVER ==================== -->
         <div id="view-recover" class="view">
             <div class="card" style="max-width:620px; margin:20px auto;">
                 <div class="card-header" style="justify-content:space-between;">
@@ -644,7 +1061,7 @@
             </div>
         </div>
 
-        <!-- ==================== CHANGE PASS (ESTILO IMAGEN) ==================== -->
+        <!-- ==================== CHANGE PASS ==================== -->
         <div id="view-change-pass" class="view">
             <div class="card" style="max-width:560px; margin:20px auto;">
                 <div class="card-header" style="justify-content:space-between;">
@@ -766,7 +1183,7 @@
             </div>
         </div>
 
-        <!-- ==================== CONSULT INVENTORY ==================== -->
+        <!-- ==================== CONSULT INVENTORY (con SweetAlert) ==================== -->
         <div id="view-consult-inventory" class="view">
             <div class="card">
                 <div class="card-header">
@@ -782,14 +1199,14 @@
                 <table class="table" id="invTable">
                     <thead><tr><th>Código</th><th>Nombre</th><th>Categoría</th><th>Stock</th><th>Precio Venta</th><th>Valor Total*</th><th>Acción</th></tr></thead>
                     <tbody id="invBody">
-                        <tr data-code="PROD-001" data-cat="Computación"><td>PROD-001</td><td>Laptop Gamer XT</td><td>Computación</td><td>15</td><td>$1.200.000</td><td>$18.000.000</td><td><button class="btn btn-primary btn-sm" onclick="alert('Detalle del producto PROD-001')">Detalle</button></td></tr>
-                        <tr data-code="PROD-002" data-cat="Electrónica"><td>PROD-002</td><td>Mouse Inalámbrico</td><td>Electrónica</td><td><span class="badge badge-danger">3 (Bajo)</span></td><td>$85.000</td><td>$255.000</td><td><button class="btn btn-primary btn-sm" onclick="alert('Detalle del producto PROD-002')">Detalle</button></td></tr>
-                        <tr data-code="PROD-003" data-cat="Computación"><td>PROD-003</td><td>Monitor 24"</td><td>Computación</td><td><span class="badge badge-success">20</span></td><td>$650.000</td><td>$13.000.000</td><td><button class="btn btn-primary btn-sm" onclick="alert('Detalle del producto PROD-003')">Detalle</button></td></tr>
+                        <tr data-code="PROD-001" data-cat="Computación"><td>PROD-001</td><td>Laptop Gamer XT</td><td>Computación</td><td>15</td><td>$1.200.000</td><td>$18.000.000</td><td><button class="btn btn-primary btn-sm" onclick="showProductDetail('PROD-001', 'Laptop Gamer XT', 'Computación', '15', '$1.200.000')">Detalle</button></td></tr>
+                        <tr data-code="PROD-002" data-cat="Electrónica"><td>PROD-002</td><td>Mouse Inalámbrico</td><td>Electrónica</td><td><span class="badge badge-danger">3 (Bajo)</span></td><td>$85.000</td><td>$255.000</td><td><button class="btn btn-primary btn-sm" onclick="showProductDetail('PROD-002', 'Mouse Inalámbrico', 'Electrónica', '3', '$85.000')">Detalle</button></td></tr>
+                        <tr data-code="PROD-003" data-cat="Computación"><td>PROD-003</td><td>Monitor 24"</td><td>Computación</td><td><span class="badge badge-success">20</span></td><td>$650.000</td><td>$13.000.000</td><td><button class="btn btn-primary btn-sm" onclick="showProductDetail('PROD-003', 'Monitor 24"', 'Computación', '20', '$650.000')">Detalle</button></td></tr>
                     </tbody>
                 </table>
                 <div class="flex space-between mt-20">
                     <span>Mostrando <span id="invCount">3</span> de 3 productos</span>
-                    <div><button class="btn btn-sm" onclick="simulateExport('Excel')">📊 Excel</button> <button class="btn btn-sm" onclick="simulateExport('PDF')">📄 PDF</button></div>
+                    <div><button class="btn btn-sm" onclick="simulateExport">📊 Excel</button> <button class="btn btn-sm" onclick="simulateExport('PDF')">📄 PDF</button></div>
                 </div>
                 <div class="footer-bar"><span class="brand">Tecnologías del Futuro S.A.S.</span><span>v1.2.3.c</span></div>
             </div>
@@ -811,7 +1228,7 @@
                 <table class="table" id="cartTable">
                     <thead><tr><th>Producto</th><th>Cant.</th><th>Precio Unit.</th><th>Descuento</th><th>Subtotal</th><th>Acción</th></tr></thead>
                     <tbody id="cartBody">
-                        <tr data-price="1200000" data-qty="1"><td>Laptop Gamer XT</td><td>1</td><td>$1.200.000</td><td>$0</td><td>$1.200.000</td><td><button class="btn btn-danger btn-sm" onclick="removeFromCart(this)">Eliminar</button></td></tr>
+                        <!-- Las filas se generan dinámicamente con renderCart() -->
                     </tbody>
                 </table>
                 <div class="row">
@@ -899,7 +1316,7 @@
             </div>
         </div>
 
-        <!-- ==================== CONSULT CLIENT ==================== -->
+        <!-- ==================== CONSULT CLIENT (con SweetAlert) ==================== -->
         <div id="view-consult-client" class="view">
             <div class="card">
                 <div class="card-header">
@@ -914,11 +1331,23 @@
                 <table class="table" id="clientTable">
                     <thead><tr><th>Identificación</th><th>Nombre</th><th>Correo</th><th>Saldo pendiente*</th><th>Acción</th></tr></thead>
                     <tbody id="clientBody">
-                        <tr data-id="901234567-8"><td>901234567-8</td><td>Tecnologías del Futuro S.A.S.</td><td>juan@tecnologias.com</td><td>$2.500.000</td><td><button class="btn btn-primary btn-sm" onclick="showClientDetail(this)">Ver detalle</button></td></tr>
-                        <tr data-id="123456789"><td>123456789</td><td>María López</td><td>maria@demo.com</td><td>$0</td><td><button class="btn btn-primary btn-sm" onclick="showClientDetail(this)">Ver detalle</button></td></tr>
+                        <tr data-id="901234567-8" data-name="Tecnologías del Futuro S.A.S." data-email="juan@tecnologias.com" data-balance="$2.500.000">
+                            <td>901234567-8</td>
+                            <td>Tecnologías del Futuro S.A.S.</td>
+                            <td>juan@tecnologias.com</td>
+                            <td>$2.500.000</td>
+                            <td><button class="btn btn-primary btn-sm" onclick="showClientDetail(this)">Ver detalle</button></td>
+                        </tr>
+                        <tr data-id="123456789" data-name="María López" data-email="maria@demo.com" data-balance="$0">
+                            <td>123456789</td>
+                            <td>María López</td>
+                            <td>maria@demo.com</td>
+                            <td>$0</td>
+                            <td><button class="btn btn-primary btn-sm" onclick="showClientDetail(this)">Ver detalle</button></td>
+                        </tr>
                     </tbody>
                 </table>
-                <div id="clientDetail" style="background:#f7fafc; padding:18px; border-radius:12px; margin-top:15px; display:none;">
+                <div id="clientDetail" style="display:none; background:#f7fafc; padding:18px; border-radius:12px; margin-top:15px;">
                     <strong>Ficha del cliente:</strong> <span id="clientDetailText">Selecciona un cliente</span>
                 </div>
                 <div class="footer-bar"><span class="brand">Tecnologías del Futuro S.A.S.</span><span>v1.2.3.c</span></div>
@@ -957,7 +1386,7 @@
             </div>
         </div>
 
-        <!-- ==================== CONSULT SUPPLIER ==================== -->
+        <!-- ==================== CONSULT SUPPLIER (con SweetAlert) ==================== -->
         <div id="view-consult-supplier" class="view">
             <div class="card">
                 <div class="card-header">
@@ -972,11 +1401,23 @@
                 <table class="table" id="suppTable">
                     <thead><tr><th>Identificación</th><th>Razón Social</th><th>Contacto</th><th>Calificación</th><th>Acción</th></tr></thead>
                     <tbody id="suppBody">
-                        <tr data-id="890123456-7"><td>890123456-7</td><td>Distribuidora Global S.A.</td><td>María Gómez</td><td><span class="badge badge-success">B</span></td><td><button class="btn btn-primary btn-sm" onclick="showSupplierDetail(this)">Ver detalle</button></td></tr>
-                        <tr data-id="123456789-0"><td>123456789-0</td><td>Proveedores Unidos</td><td>Luis Pérez</td><td><span class="badge badge-warning">C</span></td><td><button class="btn btn-primary btn-sm" onclick="showSupplierDetail(this)">Ver detalle</button></td></tr>
+                        <tr data-id="890123456-7" data-name="Distribuidora Global S.A." data-contact="María Gómez" data-rating="B">
+                            <td>890123456-7</td>
+                            <td>Distribuidora Global S.A.</td>
+                            <td>María Gómez</td>
+                            <td><span class="badge badge-success">B</span></td>
+                            <td><button class="btn btn-primary btn-sm" onclick="showSupplierDetail(this)">Ver detalle</button></td>
+                        </tr>
+                        <tr data-id="123456789-0" data-name="Proveedores Unidos" data-contact="Luis Pérez" data-rating="C">
+                            <td>123456789-0</td>
+                            <td>Proveedores Unidos</td>
+                            <td>Luis Pérez</td>
+                            <td><span class="badge badge-warning">C</span></td>
+                            <td><button class="btn btn-primary btn-sm" onclick="showSupplierDetail(this)">Ver detalle</button></td>
+                        </tr>
                     </tbody>
                 </table>
-                <div id="suppDetail" style="background:#f7fafc; padding:18px; border-radius:12px; margin-top:15px; display:none;">
+                <div id="suppDetail" style="display:none; background:#f7fafc; padding:18px; border-radius:12px; margin-top:15px;">
                     <strong>Ficha del proveedor:</strong> <span id="suppDetailText">Selecciona un proveedor</span>
                 </div>
                 <div class="footer-bar"><span class="brand">Tecnologías del Futuro S.A.S.</span><span>v1.2.3.c</span></div>
@@ -1048,28 +1489,70 @@
             </div>
         </div>
 
+        <!-- ==================== FOOTER ==================== -->
+        <footer class="app-footer">
+            <div class="footer-brand">
+                <div class="logo-icon">TF</div>
+                <div class="company-info">
+                    <strong>Tecnologías del Futuro S.A.S.</strong><br>
+                    <span class="address">Calle 123 #45-67, Bogotá, Colombia<br>
+                    Tel: +57 601 555 1234 | contacto@tecnologiasfuturo.com</span>
+                </div>
+            </div>
+            <div class="footer-copy">
+                <span class="copy-icon">©</span> 2026 Tecnologías del Futuro S.A.S.<br>
+                Todos los derechos reservados.
+            </div>
+        </footer>
+
     </div>
 
     <script>
         // ==================== NAVEGACIÓN ====================
         function showView(viewId) {
+            if (viewId === 'login') {
+                document.body.classList.add('hide-sidebar');
+            } else {
+                document.body.classList.remove('hide-sidebar');
+            }
+
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.getElementById('view-' + viewId).classList.add('active');
-            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
-            document.querySelectorAll('.menu-item').forEach(item => {
-                if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(viewId)) {
-                    item.classList.add('active');
-                }
-            });
+            const targetView = document.getElementById('view-' + viewId);
+            if (targetView) {
+                targetView.classList.add('active');
+                document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(viewId)) {
+                        item.classList.add('active');
+                    }
+                });
+            }
             document.querySelectorAll('.alert').forEach(a => a.style.display = 'none');
         }
 
         function showAlert(alertId, message, type = 'success') {
             const el = document.getElementById(alertId);
-            el.textContent = message;
-            el.className = 'alert alert-' + type;
-            el.style.display = 'block';
-            setTimeout(() => { el.style.display = 'none'; }, 4000);
+            if (el) {
+                el.textContent = message;
+                el.className = 'alert alert-' + type;
+                el.style.display = 'block';
+                setTimeout(() => { el.style.display = 'none'; }, 4000);
+            }
+        }
+
+        // ==================== TOGGLE CONTRASEÑA ====================
+        function togglePassVisibility(inputId, btnElement) {
+            const input = document.getElementById(inputId);
+            if (!input) return;
+            if (input.type === 'password') {
+                input.type = 'text';
+                btnElement.classList.add('showing');
+                btnElement.setAttribute('aria-label', 'Ocultar contraseña');
+            } else {
+                input.type = 'password';
+                btnElement.classList.remove('showing');
+                btnElement.setAttribute('aria-label', 'Mostrar contraseña');
+            }
         }
 
         // ==================== LOGIN ====================
@@ -1079,7 +1562,11 @@
             if (!user || !pass) { showAlert('loginAlert', 'Ingrese usuario y contraseña', 'danger'); return; }
             if (user === 'juan.perez' && pass === '123456') {
                 showAlert('loginAlert', '✅ Bienvenido, redirigiendo...', 'success');
-                setTimeout(() => showView('consult-inventory'), 1500);
+                setTimeout(() => {
+                    showView('consult-inventory');
+                    const alertEl = document.getElementById('loginAlert');
+                    if (alertEl) alertEl.style.display = 'none';
+                }, 1500);
             } else {
                 showAlert('loginAlert', '❌ Usuario o contraseña incorrectos', 'danger');
             }
@@ -1091,7 +1578,6 @@
             const user = document.getElementById('recoverUser').value.trim();
             if (!email || !user) { showAlert('recoverAlert', 'Complete ambos campos', 'danger'); return; }
             showAlert('recoverAlert', '📨 Se ha enviado un código de verificación a su correo (simulación)', 'success');
-            // Simular avance al paso 2 (en la realidad, redirigiría a verificación)
         }
 
         // ==================== REGISTER USER ====================
@@ -1115,7 +1601,6 @@
             if (!newp || !confirm) { showAlert('changePassAlert', 'Complete ambos campos', 'danger'); return; }
             if (newp !== confirm) { showAlert('changePassAlert', 'Las contraseñas no coinciden', 'danger'); return; }
             if (newp.length < 10) { showAlert('changePassAlert', 'La contraseña debe tener al menos 10 caracteres', 'danger'); return; }
-            // Verificar requisitos de seguridad (simulado)
             const hasUpper = /[A-Z]/.test(newp);
             const hasLower = /[a-z]/.test(newp);
             const hasNumber = /[0-9]/.test(newp);
@@ -1134,11 +1619,30 @@
             const cost = document.getElementById('prodCost').value.trim();
             const price = document.getElementById('prodPrice').value.trim();
             const stock = document.getElementById('prodStock').value.trim();
+            const category = document.getElementById('prodCat').value;
             if (!code || !name || !cost || !price || !stock) { showAlert('regProdAlert', 'Complete todos los campos obligatorios', 'danger'); return; }
             if (isNaN(cost) || isNaN(price) || isNaN(stock) || parseFloat(cost) <= 0 || parseFloat(price) <= 0 || parseInt(stock) < 0) {
                 showAlert('regProdAlert', 'Precios > 0 y stock >= 0', 'danger'); return;
             }
-            showAlert('regProdAlert', '✅ Producto registrado exitosamente', 'success');
+
+            const tableBody = document.getElementById('invBody');
+            if (!tableBody) return;
+            const newRow = document.createElement('tr');
+            newRow.setAttribute('data-code', code);
+            newRow.setAttribute('data-cat', category);
+            newRow.innerHTML = `
+                <td>${code}</td>
+                <td>${name}</td>
+                <td>${category}</td>
+                <td>${stock}</td>
+                <td>$${parseFloat(price).toLocaleString()}</td>
+                <td>$${(parseFloat(stock) * parseFloat(price)).toLocaleString()}</td>
+                <td><button class="btn btn-primary btn-sm" onclick="showProductDetail('${code}', '${name}', '${category}', '${stock}', '$${parseFloat(price).toLocaleString()}')">Detalle</button></td>
+            `;
+            tableBody.appendChild(newRow);
+            const countSpan = document.getElementById('invCount');
+            if (countSpan) countSpan.textContent = tableBody.children.length;
+            showAlert('regProdAlert', '✅ Producto registrado y añadido al inventario', 'success');
         }
 
         // ==================== UPDATE STOCK ====================
@@ -1166,9 +1670,32 @@
                 row.style.display = match ? '' : 'none';
                 if (match) visible++;
             });
-            document.getElementById('invCount').textContent = visible;
+            const countSpan = document.getElementById('invCount');
+            if (countSpan) countSpan.textContent = visible;
             if (visible === 0) showAlert('invSearchAlert', 'No se encontraron productos', 'warning');
-            else document.getElementById('invSearchAlert').style.display = 'none';
+            else {
+                const alertEl = document.getElementById('invSearchAlert');
+                if (alertEl) alertEl.style.display = 'none';
+            }
+        }
+
+        // ==================== PRODUCT DETAIL SweetAlert ====================
+        function showProductDetail(code, name, category, stock, price) {
+            Swal.fire({
+                title: `📦 Detalle del producto: ${name}`,
+                html: `
+                    <div style="text-align:left; font-size:15px;">
+                        <p><strong>Código:</strong> ${code}</p>
+                        <p><strong>Categoría:</strong> ${category}</p>
+                        <p><strong>Stock disponible:</strong> ${stock}</p>
+                        <p><strong>Precio de venta:</strong> ${price}</p>
+                    </div>
+                `,
+                icon: 'success',
+                draggable: true,
+                confirmButtonColor: '#0a1e3d',
+                confirmButtonText: 'Aceptar'
+            });
         }
 
         // ==================== SALE CART ====================
@@ -1176,6 +1703,7 @@
 
         function renderCart() {
             const tbody = document.getElementById('cartBody');
+            if (!tbody) return;
             tbody.innerHTML = '';
             let subtotal = 0;
             cartItems.forEach((item, index) => {
@@ -1183,21 +1711,25 @@
                 subtotal += sub;
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${item.product}</td>
-                    <td>${item.qty}</td>
-                    <td>$${item.price.toLocaleString()}</td>
-                    <td>$${item.discount.toLocaleString()}</td>
-                    <td>$${sub.toLocaleString()}</td>
-                    <td><button class="btn btn-danger btn-sm" onclick="removeCartItem(${index})">Eliminar</button></td>
-                `;
+                        <td>${item.product}</td>
+                        <td>${item.qty}</td>
+                        <td>$${item.price.toLocaleString()}</td>
+                        <td>$${item.discount.toLocaleString()}</td>
+                        <td>$${sub.toLocaleString()}</td>
+                        <td><button class="btn btn-danger btn-sm" onclick="removeCartItem(${index})">Eliminar</button></td>
+                    `;
                 tbody.appendChild(tr);
             });
             const tax = Math.round(subtotal * 0.19);
             const total = subtotal + tax;
-            document.getElementById('saleSubtotal').textContent = '$' + subtotal.toLocaleString();
-            document.getElementById('saleDiscount').textContent = '$0';
-            document.getElementById('saleTax').textContent = '$' + tax.toLocaleString();
-            document.getElementById('saleTotal').textContent = '$' + total.toLocaleString();
+            const saleSubtotal = document.getElementById('saleSubtotal');
+            const saleDiscount = document.getElementById('saleDiscount');
+            const saleTax = document.getElementById('saleTax');
+            const saleTotal = document.getElementById('saleTotal');
+            if (saleSubtotal) saleSubtotal.textContent = '$' + subtotal.toLocaleString();
+            if (saleDiscount) saleDiscount.textContent = '$0';
+            if (saleTax) saleTax.textContent = '$' + tax.toLocaleString();
+            if (saleTotal) saleTotal.textContent = '$' + total.toLocaleString();
         }
 
         function addToCart() {
@@ -1255,7 +1787,10 @@
                 }
             });
             if (!found) showAlert('annulAlert', 'No se encontraron ventas', 'warning');
-            else document.getElementById('annulAlert').style.display = 'none';
+            else {
+                const alertEl = document.getElementById('annulAlert');
+                if (alertEl) alertEl.style.display = 'none';
+            }
         }
 
         function selectSaleToAnnul(btn) {
@@ -1286,12 +1821,29 @@
             const id = document.getElementById('clientId').value.trim();
             const name = document.getElementById('clientName').value.trim();
             const email = document.getElementById('clientEmail').value.trim();
+            const balance = document.getElementById('clientCredit').value.trim() || '$0';
             if (!id || !name || !email) { showAlert('clientAlert', 'Complete identificación, nombre y correo', 'danger'); return; }
             if (!email.includes('@')) { showAlert('clientAlert', 'Correo inválido', 'danger'); return; }
-            showAlert('clientAlert', '✅ Cliente registrado exitosamente', 'success');
+
+            const tableBody = document.getElementById('clientBody');
+            if (!tableBody) return;
+            const newRow = document.createElement('tr');
+            newRow.setAttribute('data-id', id);
+            newRow.setAttribute('data-name', name);
+            newRow.setAttribute('data-email', email);
+            newRow.setAttribute('data-balance', balance);
+            newRow.innerHTML = `
+                <td>${id}</td>
+                <td>${name}</td>
+                <td>${email}</td>
+                <td>${balance}</td>
+                <td><button class="btn btn-primary btn-sm" onclick="showClientDetail(this)">Ver detalle</button></td>
+            `;
+            tableBody.appendChild(newRow);
+            showAlert('clientAlert', '✅ Cliente registrado y añadido a la lista', 'success');
         }
 
-        // ==================== CONSULT CLIENT ====================
+        // ==================== CONSULT CLIENT (SweetAlert) ====================
         function filterClients() {
             const search = document.getElementById('clientSearchInput').value.toLowerCase();
             const rows = document.querySelectorAll('#clientBody tr');
@@ -1302,16 +1854,32 @@
                 else { row.style.display = ''; visible++; }
             });
             if (visible === 0) showAlert('clientSearchAlert', 'No se encontraron clientes', 'warning');
-            else document.getElementById('clientSearchAlert').style.display = 'none';
+            else {
+                const alertEl = document.getElementById('clientSearchAlert');
+                if (alertEl) alertEl.style.display = 'none';
+            }
         }
 
         function showClientDetail(btn) {
             const row = btn.closest('tr');
-            const name = row.cells[1].textContent;
-            const id = row.cells[0].textContent;
-            const detail = document.getElementById('clientDetail');
-            document.getElementById('clientDetailText').textContent = `${name} (ID: ${id}) - Saldo: ${row.cells[3].textContent}`;
-            detail.style.display = 'block';
+            const id = row.getAttribute('data-id');
+            const name = row.getAttribute('data-name');
+            const email = row.getAttribute('data-email');
+            const balance = row.getAttribute('data-balance');
+            Swal.fire({
+                title: `👤 Ficha del cliente: ${name}`,
+                html: `
+                    <div style="text-align:left; font-size:15px;">
+                        <p><strong>Identificación:</strong> ${id}</p>
+                        <p><strong>Correo:</strong> ${email}</p>
+                        <p><strong>Saldo pendiente:</strong> ${balance}</p>
+                    </div>
+                `,
+                icon: 'success',
+                draggable: true,
+                confirmButtonColor: '#0a1e3d',
+                confirmButtonText: 'Aceptar'
+            });
         }
 
         // ==================== REGISTER SUPPLIER ====================
@@ -1319,11 +1887,29 @@
             const id = document.getElementById('suppId').value.trim();
             const business = document.getElementById('suppBusiness').value.trim();
             const contact = document.getElementById('suppContact').value.trim();
+            const rating = document.getElementById('suppRating').value;
             if (!id || !business || !contact) { showAlert('supplierAlert', 'Complete identificación, razón social y contacto', 'danger'); return; }
-            showAlert('supplierAlert', '✅ Proveedor registrado', 'success');
+
+            const tableBody = document.getElementById('suppBody');
+            if (!tableBody) return;
+            const newRow = document.createElement('tr');
+            newRow.setAttribute('data-id', id);
+            newRow.setAttribute('data-name', business);
+            newRow.setAttribute('data-contact', contact);
+            newRow.setAttribute('data-rating', rating);
+            const ratingBadge = rating === 'A' ? 'badge-success' : rating === 'B' ? 'badge-warning' : 'badge-danger';
+            newRow.innerHTML = `
+                <td>${id}</td>
+                <td>${business}</td>
+                <td>${contact}</td>
+                <td><span class="badge ${ratingBadge}">${rating}</span></td>
+                <td><button class="btn btn-primary btn-sm" onclick="showSupplierDetail(this)">Ver detalle</button></td>
+            `;
+            tableBody.appendChild(newRow);
+            showAlert('supplierAlert', '✅ Proveedor registrado y añadido a la lista', 'success');
         }
 
-        // ==================== CONSULT SUPPLIER ====================
+        // ==================== CONSULT SUPPLIER (SweetAlert) ====================
         function filterSuppliers() {
             const search = document.getElementById('suppSearchInput').value.toLowerCase();
             const rows = document.querySelectorAll('#suppBody tr');
@@ -1334,16 +1920,32 @@
                 else { row.style.display = ''; visible++; }
             });
             if (visible === 0) showAlert('suppSearchAlert', 'No se encontraron proveedores', 'warning');
-            else document.getElementById('suppSearchAlert').style.display = 'none';
+            else {
+                const alertEl = document.getElementById('suppSearchAlert');
+                if (alertEl) alertEl.style.display = 'none';
+            }
         }
 
         function showSupplierDetail(btn) {
             const row = btn.closest('tr');
-            const name = row.cells[1].textContent;
-            const id = row.cells[0].textContent;
-            const detail = document.getElementById('suppDetail');
-            document.getElementById('suppDetailText').textContent = `${name} (ID: ${id}) - Historial de compras: 5 órdenes`;
-            detail.style.display = 'block';
+            const id = row.getAttribute('data-id');
+            const name = row.getAttribute('data-name');
+            const contact = row.getAttribute('data-contact');
+            const rating = row.getAttribute('data-rating');
+            Swal.fire({
+                title: `🏢 Ficha del proveedor: ${name}`,
+                html: `
+                    <div style="text-align:left; font-size:15px;">
+                        <p><strong>Identificación:</strong> ${id}</p>
+                        <p><strong>Contacto:</strong> ${contact}</p>
+                        <p><strong>Calificación:</strong> ${rating}</p>
+                    </div>
+                `,
+                icon: 'success',
+                draggable: true,
+                confirmButtonColor: '#0a1e3d',
+                confirmButtonText: 'Aceptar'
+            });
         }
 
         // ==================== REPORTS ====================
@@ -1361,11 +1963,31 @@
             alert(`📥 Simulando descarga en ${format}`);
         }
 
-        // ==================== INIT ====================
+        // ==================== INICIALIZACIÓN ====================
         window.onload = function() {
             renderCart();
             filterInventory();
+            showView('login');
+
+            const modoGuardado = localStorage.getItem('modo-oscuro');
+            if (modoGuardado === 'true') {
+                document.body.classList.add('dark-mode');
+                const boton = document.getElementById('modoBoton');
+                if (boton) boton.textContent = '☀️ Modo claro';
+            }
         };
+
+        // ==================== BOTÓN DE MODO OSCURO ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            const boton = document.getElementById('modoBoton');
+            if (boton) {
+                boton.addEventListener('click', function() {
+                    const isDark = document.body.classList.toggle('dark-mode');
+                    localStorage.setItem('modo-oscuro', isDark);
+                    boton.textContent = isDark ? '☀️ Modo claro' : '🌙 Modo oscuro';
+                });
+            }
+        });
     </script>
 
 </body>
