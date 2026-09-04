@@ -10,30 +10,16 @@
 }
 
 /* ============================================================
-   FONDO DEGRADADO CON ANIMACIÓN
+   FONDO DEGRADADO CON ANIMACION
    ============================================================ */
 body {
-    background: linear-gradient(135deg, #9194a3, #6b4c9a, #9005c8);
-    background-size: 300% 300%;
-    animation: moverFondo 10s ease-in-out infinite alternate;
+    background: linear-gradient(2deg, #8370eb, #9005c8);
     font-family: 'Poppins', sans-serif;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     min-height: 100dvh;
     padding: 1.5rem;
-}
-
-@keyframes moverFondo {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
 }
 
 /* ============================================================
@@ -106,7 +92,7 @@ header h5 {
 }
 
 /* ============================================================
-   MENÚ EN COLUMNA (FLEX)
+   MENU EN COLUMNA (FLEX)
    ============================================================ */
 menu {
     display: flex;
@@ -146,7 +132,7 @@ menu a:hover {
 }
 
 menu a:hover span {
-    background-color: #fff;
+    background-color: #052feb;
     color: #060606;
 }
 
@@ -190,12 +176,72 @@ menu a aside small {
 }
 
 /* ============================================================
-   CONTROL DE VISIBILIDAD DE SECCIONES
+   BOTON DE NAVEGACION (VOLVER)
    ============================================================ */
-.seccion {
-    display: none;
+.btn-volver {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #f1f1f5;
+    color: #090909;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: none;
+    text-decoration: none;
+    z-index: 999;
 }
 
-.seccion.activa {
-    display: block;
+.btn-volver:hover {
+    background-color: #f3f2f5;
+    color: #060606;
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.btn-volver svg {
+    width: 28px;
+    height: 28px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ============================================================
+   CONTENIDO EMBEBIDO (IFRAME)
+   ============================================================ */
+section iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 450px;
+    border-radius: 1rem;
+    margin-top: 1rem;
+}
+
+/* ============================================================
+   CONTENIDO PENDIENTE (PLACEHOLDER)
+   ============================================================ */
+.placeholder {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #2d2d44;
+}
+
+.placeholder h2 {
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.placeholder p {
+    font-size: 1rem;
+    color: #3d3d5c;
 }
