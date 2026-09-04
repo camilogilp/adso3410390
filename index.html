@@ -4,35 +4,391 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADSO 3410390</title>
-    <link rel="stylesheet" href="src/css/master.css">
+    <style>
+        /* ============================================================
+           FUENTES Y RESET (NO MODIFICADO)
+           ============================================================ */
+        @import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(2deg, #8370eb, #9005c8);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100dvh;
+            padding: 1.5rem;
+        }
+
+        main {
+            max-width: 600px;
+            width: 100%;
+            background: rgb(190, 191, 219);
+            backdrop-filter: blur(4px);
+            border-radius: 2rem;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 15px 35px rgb(8, 8, 8);
+            transition: all 0.2s;
+            margin-top: 0;
+        }
+
+        /* ============================================================
+           ESTILOS COMUNES (NO MODIFICADOS)
+           ============================================================ */
+        header {
+            text-align: center;
+        }
+
+        header h1 {
+            border-bottom: 2px solid rgba(167, 6, 6, 0.2);
+            font-size: 2.8rem;
+            font-weight: 200;
+            padding-bottom: 0.3rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        header img {
+            border: 4px solid #dde413;
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            object-position: top;
+            display: inline-block;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        header h2 {
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 1.8rem;
+            margin-bottom: 0.2rem;
+            color: #1a1a2e;
+        }
+
+        header h3 {
+            font-weight: 400;
+            font-size: 1.1rem;
+            color: #2d2d44;
+            margin-bottom: 0.1rem;
+        }
+
+        header h4 {
+            font-weight: 300;
+            font-size: 1rem;
+            color: #3d3d5c;
+            margin-bottom: 0.1rem;
+        }
+
+        header h5 {
+            font-weight: 500;
+            font-size: 1rem;
+            color: #1e1e32;
+            margin-bottom: 1.8rem;
+        }
+
+        /* ---- MENÚ EN COLUMNA (FLEX) ---- */
+        menu {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 1.2rem;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        menu a {
+            max-width: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            background: rgba(232, 227, 227, 0.7);
+            backdrop-filter: blur(2px);
+            border-radius: 5rem;
+            padding: 0.5rem 0.8rem 0.5rem 0.5rem;
+            color: #171616;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        menu a:hover {
+            background-color: #6354e8;
+            transform: scale(1.03) translateX(6px);
+            box-shadow: 0 8px 20px rgb(19, 18, 18);
+            color: #0b0b0b;
+            border-color: #8dddeb;
+        }
+
+        menu a:hover span {
+            background-color: #052feb;
+            color: #060606;
+        }
+
+        menu a:hover small {
+            color: #fff9;
+        }
+
+        menu a span {
+            background-color: #3944e2;
+            color: #ffffff;
+            font-size: 2rem;
+            font-weight: 600;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: background 0.3s;
+        }
+
+        menu a aside {
+            margin-left: 0.8rem;
+            text-align: left;
+            flex: 1;
+        }
+
+        menu a aside h3 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        menu a aside small {
+            font-size: 0.8rem;
+            color: #000000;
+            font-weight: 300;
+            transition: color 0.3s;
+        }
+
+        /* ============================================================
+           CONTROL DE VISIBILIDAD DE SECCIONES
+           ============================================================ */
+        .seccion {
+            display: none;
+        }
+
+        .seccion.activa {
+            display: block;
+        }
+
+        /* ============================================================
+           BOTONES DE NAVEGACIÓN (FUERA DEL MAIN, EN EL BODY)
+           ============================================================ */
+        .btn-nav {
+            position: fixed;
+            gap: 1rem;
+            top: 1rem;
+            left: 1rem;
+            width: 50px;           /* Antes 60px */
+            height: 50px;          /* Antes 60px */
+            border-radius: 50%;
+            background-color: #f1f1f5;
+            color: #090909;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: none;
+            text-decoration: none;
+            z-index: 999;
+        }
+
+        .btn-nav:hover {
+            background-color: #f3f2f5;
+            color: #060606;
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            
+        }
+
+        /* Clases que se añaden/remueven con JavaScript para mostrar/ocultar */
+        .btn-nav.visible {
+            display: flex;
+        }
+
+        /* Estilo específico para el SVG de la flecha */
+        .btn-flecha svg {
+            width: 28px;           /* Antes 32px */
+            height: 28px;          /* Antes 32px */
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .btn-casa {
+            font-size: 1.6rem;     /* Antes 2rem */
+            line-height: 1;
+        }
+    </style>
 </head>
 <body>
+    <!-- ============================================================
+         MAIN (CONTENIDO)
+         ============================================================ -->
     <main>
-        <header>
-            <h1>ADSO 3410390</h1>
-            <img src="src/imgs/JCGP.jpg" alt="Foto de perfil">
-            <h2>JUAN CAMILO GIL PEREZ</h2>
-            <h3>Análisis y Desarrollo de Software</h3>
-            <h4>Centro de Procesos Industriales y Construcción</h4>
-            <h5>SENA - Regional Caldas</h5>
+        <!-- SECCIÓN 1: MENÚ PRINCIPAL -->
+        <div id="menu-principal" class="seccion activa">
+            <header>
+                <h1>ADSO 3410390</h1>
+                <img src="src/imgs/JCGP.jpg" alt="Foto de perfil">
+                <h2>JUAN CAMILO GIL PEREZ</h2>
+                <h3>Análisis y Desarrollo de Software</h3>
+                <h4>Centro de Procesos Industriales y Construcción</h4>
+                <h5>SENA - Regional Caldas</h5>
 
-            <menu>
-                <a href="01-Layout/index.html">
-                    <span>01</span>
-                    <aside>
-                        <h3>Layout</h3>
-                        <small>Wireframe | Style Guide | Mock Up</small>
-                    </aside>
-                </a>
-                <a href="02-JavaScript/index.html">
-                    <span>02</span>
-                    <aside>
-                        <h3>JavaScript</h3>
-                        <small>Behavior | Vanilla</small>
-                    </aside>
-                </a>
-            </menu>
-        </header>
+                <menu>
+                    <a onclick="mostrarSubmenu()">
+                        <span>01</span>
+                        <aside>
+                            <h3>Layout</h3>
+                            <small>Wireframe | Style Guide | Mock Up</small>
+                        </aside>
+                    </a>
+                    <a href="02-JavaScript/index.html">
+                        <span>02</span>
+                        <aside>
+                            <h3>JavaScript</h3>
+                            <small>Behavior | Vanilla</small>
+                        </aside>
+                    </a>
+                </menu>
+            </header>
+        </div>
+
+        <!-- SECCIÓN 2: SUBMENÚ DE LAYOUT -->
+        <div id="submenu-layout" class="seccion">
+            <header>
+                <h1><strong>01. LayOut</strong></h1>
+                <img src="https://i.pinimg.com/736x/5d/c5/23/5dc5239aeef50e0be2b334ebf58c99fe.jpg">
+                <p></p>
+
+                <menu>
+                    <a onclick="mostrarWireframe()">
+                        <span>01</span>
+                        <aside>
+                            <h3>Wireframe Lo-Fi</h3>
+                        </aside>
+                    </a>
+                    <a href="02-JavaScript/index.html">
+                        <span>02</span>
+                        <aside>
+                            <h3>Wireframe Hi-Fi</h3>
+                        </aside>
+                    </a>
+                    <a href="02-JavaScript/index.html">
+                        <span>03</span>
+                        <aside>
+                            <h3>Style Guide</h3>
+                        </aside>
+                    </a>
+                    <a href="02-JavaScript/index.html">
+                        <span>04</span>
+                        <aside>
+                            <h3>Mock Up</h3>
+                        </aside>
+                    </a>
+                    <a href="02-JavaScript/index.html">
+                        <span>05</span>
+                        <aside>
+                            <h3>LayOut</h3>
+                        </aside>
+                    </a>
+                </menu>
+            </header>
+        </div>
+
+        <!-- SECCIÓN 3: WIREFRAME LO-FI -->
+        <div id="submenu-wireframe" class="seccion">
+            <header>
+                <h1><strong>01. Wireframe Lo-Fi</strong></h1>
+                <p>Esta es una Wireframe lo-fi, la fase inicial de una pagina web</p>
+            </header>
+            <section>
+                <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="100%" height="450"
+                    src="https://embed.figma.com/design/EZSciZG95AoM5xauD39Saa/Layout?node-id=1-2&embed-host=share"
+                    allowfullscreen></iframe>
+            </section>
+        </div>
+
+        <!-- SECCIÓN 3: WIREFRAME  -->
+        <div id="submenu-wireframe" class="seccion">
+            <header>
+                <h1><strong>02. Wireframe HI-FI</strong></h1>
+                <p>Esta es una Wireframe lo-fi, la fase inicial de una pagina web</p>
+            </header>
+            <section>
+                <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="100%" height="450"
+                    src="https://embed.figma.com/design/EZSciZG95AoM5xauD39Saa/Layout?node-id=0-1&embed-host=share" allowfullscreen></iframe>
+            </section>
+        </div>
     </main>
+
+    <!-- ============================================================
+         BOTONES DE NAVEGACIÓN (FUERA DEL MAIN, EN EL BODY)
+         ============================================================ -->
+    <!-- Botón de casa (vuelve al menú principal) -->
+    <div id="btn-casa" class="btn-nav btn-casa" onclick="mostrarPrincipal()" title="Volver al menú principal">
+        🏠
+    </div>
+
+    <!-- Botón de flecha (vuelve al submenú Layout) -->
+    <div id="btn-flecha" class="btn-nav btn-flecha" onclick="mostrarSubmenu()" title="Volver al menú anterior">
+        <svg viewBox="0 0 24 24">
+            <path d="M15 18l-6-6 6-6" />
+        </svg>
+    </div>
+
+    <script>
+        /* ============================================================
+           FUNCIONES PARA ALTERNAR ENTRE MENÚS (NO MODIFICADAS)
+           ============================================================ */
+        function mostrarSubmenu() {
+            document.getElementById('menu-principal').classList.remove('activa');
+            document.getElementById('submenu-layout').classList.add('activa');
+            document.getElementById('submenu-wireframe').classList.remove('activa');
+
+            document.getElementById('btn-casa').classList.add('visible');
+            document.getElementById('btn-flecha').classList.remove('visible');
+        }
+
+        function mostrarPrincipal() {
+            document.getElementById('menu-principal').classList.add('activa');
+            document.getElementById('submenu-layout').classList.remove('activa');
+            document.getElementById('submenu-wireframe').classList.remove('activa');
+
+            document.getElementById('btn-casa').classList.remove('visible');
+            document.getElementById('btn-flecha').classList.remove('visible');
+        }
+
+        function mostrarWireframe() {
+            document.getElementById('menu-principal').classList.remove('activa');
+            document.getElementById('submenu-layout').classList.remove('activa');
+            document.getElementById('submenu-wireframe').classList.add('activa');
+
+            document.getElementById('btn-casa').classList.remove('visible');
+            document.getElementById('btn-flecha').classList.add('visible');
+        }
+    </script>
 </body>
 </html>
