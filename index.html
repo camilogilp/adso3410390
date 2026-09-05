@@ -279,68 +279,42 @@
         <!-- SECCIÓN 2: SUBMENÚ DE LAYOUT -->
         <div id="submenu-layout" class="seccion">
             <header>
-                <h1><strong>01. LayOut</strong></h1>
-                <img src="https://i.pinimg.com/736x/5d/c5/23/5dc5239aeef50e0be2b334ebf58c99fe.jpg">
-                <p></p>
+                <h1><strong>01. Layout</strong></h1>
+                <img src="https://i.pinimg.com/736x/5d/c5/23/5dc5239aeef50e0be2b334ebf58c99fe.jpg" alt="Layout">
 
                 <menu>
-                    <a onclick="mostrarWireframe()">
+                    <a href="01-Layout/wireframe-lofi.html">
                         <span>01</span>
                         <aside>
                             <h3>Wireframe Lo-Fi</h3>
                         </aside>
                     </a>
-                    <a href="02-JavaScript/index.html">
+                    <a href="01-Layout/wireframe-hifi.html">
                         <span>02</span>
                         <aside>
                             <h3>Wireframe Hi-Fi</h3>
                         </aside>
                     </a>
-                    <a href="02-JavaScript/index.html">
+                    <a href="01-Layout/style-guide.html">
                         <span>03</span>
                         <aside>
                             <h3>Style Guide</h3>
                         </aside>
                     </a>
-                    <a href="02-JavaScript/index.html">
+                    <a href="01-Layout/mockup.html">
                         <span>04</span>
                         <aside>
                             <h3>Mock Up</h3>
                         </aside>
                     </a>
-                    <a href="02-JavaScript/index.html">
+                    <a href="01-Layout/layout.html">
                         <span>05</span>
                         <aside>
-                            <h3>LayOut</h3>
+                            <h3>Layout</h3>
                         </aside>
                     </a>
                 </menu>
             </header>
-        </div>
-
-        <!-- SECCIÓN 3: WIREFRAME LO-FI -->
-        <div id="submenu-wireframe" class="seccion">
-            <header>
-                <h1><strong>01. Wireframe Lo-Fi</strong></h1>
-                <p>Esta es una Wireframe lo-fi, la fase inicial de una pagina web</p>
-            </header>
-            <section>
-                <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="100%" height="450"
-                    src="https://embed.figma.com/design/EZSciZG95AoM5xauD39Saa/Layout?node-id=1-2&embed-host=share"
-                    allowfullscreen></iframe>
-            </section>
-        </div>
-
-        <!-- SECCIÓN 3: WIREFRAME  -->
-        <div id="submenu-wireframe" class="seccion">
-            <header>
-                <h1><strong>02. Wireframe HI-FI</strong></h1>
-                <p>Esta es una Wireframe lo-fi, la fase inicial de una pagina web</p>
-            </header>
-            <section>
-                <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="100%" height="450"
-                    src="https://embed.figma.com/design/EZSciZG95AoM5xauD39Saa/Layout?node-id=0-1&embed-host=share" allowfullscreen></iframe>
-            </section>
         </div>
     </main>
 
@@ -366,7 +340,6 @@
         function mostrarSubmenu() {
             document.getElementById('menu-principal').classList.remove('activa');
             document.getElementById('submenu-layout').classList.add('activa');
-            document.getElementById('submenu-wireframe').classList.remove('activa');
 
             document.getElementById('btn-casa').classList.add('visible');
             document.getElementById('btn-flecha').classList.remove('visible');
@@ -375,19 +348,9 @@
         function mostrarPrincipal() {
             document.getElementById('menu-principal').classList.add('activa');
             document.getElementById('submenu-layout').classList.remove('activa');
-            document.getElementById('submenu-wireframe').classList.remove('activa');
 
             document.getElementById('btn-casa').classList.remove('visible');
             document.getElementById('btn-flecha').classList.remove('visible');
-        }
-
-        function mostrarWireframe() {
-            document.getElementById('menu-principal').classList.remove('activa');
-            document.getElementById('submenu-layout').classList.remove('activa');
-            document.getElementById('submenu-wireframe').classList.add('activa');
-
-            document.getElementById('btn-casa').classList.remove('visible');
-            document.getElementById('btn-flecha').classList.add('visible');
         }
     </script>
 </body>

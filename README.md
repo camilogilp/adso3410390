@@ -2,7 +2,7 @@
 ![My Picture](src/imgs/JCGP.jpg)
 ## Juan Camilo Gil Pérez
 ### Analisis y Desarrollo de Software
-** Centro de Procesos Industriales y Construccion
+**Centro de Procesos Industriales y Construccion**
 >  SENA
 ---
 1. Layout
