@@ -955,8 +955,33 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | El usuario logra ingresar al sistema y visualiza el dashboard correspondiente a su rol, con todas las funcionalidades autorizadas |
 | CUESTIONES A RESOLVER    | Implementación de hash seguro (bcrypt/Argon2), manejo de sesiones con JWT y expiración, registro de intentos fallidos para análisis de seguridad, política de bloqueo de cuentas (número de intentos y tiempo de desbloqueo), integración con LDAP/Active Directory si se requiere, manejo de autenticación de dos factores (2FA) en el futuro |
 
-###### VISTA CASO DE USO 1
+<p align="center">
+
+##### VISTA CASO DE USO 1
+
 ![LogIn](VistasIEEE/1.LogIn.webp)
+
+</p>
+
+##### DIAGRAMA DE FLUJO CASO DE USO 1
+
+```mermaid
+flowchart TD
+    I([Inicio]) --> P1["1. El usuario ingresa a la página de login del sistema"]
+    P1 --> P2["2. El sistema muestra el formulario: usuario, contraseña, 'Recordar contraseña' y botón 'Ingresar'"]
+    P2 --> P3["3. El usuario digita su nombre de usuario y contraseña"]
+    P3 --> P4["4. Clic en el botón 'Ingresar'"]
+    P4 --> D1{5. ¿Los campos no están vacíos?}
+    D1 -- No --> X([Fin del intento])
+    D1 -- Sí --> P5["6. El sistema consulta la base de datos"]
+    P5 --> D2{¿El usuario existe y la contraseña coincide con el hash?}
+    D2 -- No --> X
+    D2 -- Sí --> D3{¿La cuenta está ACTIVA y no ha expirado?}
+    D3 -- No --> X
+    D3 -- Sí --> P6["7. Crear sesión segura (token JWT) y registrar el acceso en el log de auditoría"]
+    P6 --> P7["8. Redirigir al dashboard principal según su rol"]
+    P7 --> F([Fin exitoso])
+```
 
 ---
 ## 2. REGISTAR USUARIO EN SISTEMA
@@ -977,9 +1002,32 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | La cuenta de usuario queda registrada exitosamente en el sistema, el usuario puede iniciar sesión (si está activo) y se le notifica la creación |
 | CUESTIONES A RESOLVER    | Políticas de contraseñas (complejidad, caducidad, historial de contraseñas), flujo de activación por correo electrónico, manejo de roles y permisos granulares, integración con directorio LDAP, registro de auditoría de creación de usuarios, posibilidad de auto-registro con aprobación del administrador |
 
-###### VISTA CASO DE USO 2
+<p align="center">
+
+##### VISTA CASO DE USO 2
 
 ![Registrar usuario en sistema](VistasIEEE/2.RegistrarNuevoUsuario.webp)
+
+</p>
+
+##### DIAGRAMA DE FLUJO CASO DE USO 2
+
+```mermaid
+flowchart TD
+    I([Inicio]) --> P1["1. El administrador accede al módulo de administración de usuarios"]
+    P1 --> P2["2. Selecciona 'Crear usuario'"]
+    P2 --> P3["3. El sistema muestra el formulario: nombre completo, identificación, correo, usuario, contraseña, confirmación, rol y estado"]
+    P3 --> P4["4. El administrador diligencia los datos del nuevo usuario"]
+    P4 --> P5["5. Clic en 'Guardar'"]
+    P5 --> D1{6. ¿El nombre de usuario y el correo no están duplicados?}
+    D1 -- No --> X([Fin del registro])
+    D1 -- Sí --> D2{7. ¿La contraseña cumple la política de seguridad?}
+    D2 -- No --> X
+    D2 -- Sí --> P6["8. Se asigna el rol correspondiente (Administrador, Vendedor, Bodeguero, Auditor, etc.)"]
+    P6 --> P7["9. El sistema crea el registro y envía un correo con credenciales y enlace de activación"]
+    P7 --> P8["10. El sistema confirma la creación de la cuenta"]
+    P8 --> F([Fin exitoso])
+```
 
 ---
 ## 3. RECUPERAR CLAVE DE USUARIO
@@ -998,11 +1046,38 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | La contraseña del usuario es restablecida exitosamente y puede iniciar sesión con la nueva contraseña |
 | CUESTIONES A RESOLVER    | Generación de tokens seguros con expiración, política de historial de contraseñas (no repetir las últimas N), protección contra ataques de fuerza bruta en el formulario de recuperación, registro de intentos fallidos para monitoreo de seguridad, integración con preguntas de seguridad como alternativa, notificación al usuario sobre el cambio (correo de confirmación) |
 
-###### VISTA CASO DE USO 3
+<p align="center">
+
+##### VISTA CASO DE USO 3
 
 ![Reuperar clave de usuario](VistasIEEE/3.RecuperarContraseña_1.webp)
 ![Reuperar clave de usuario](VistasIEEE/3.RecuperarContraseña_2.webp)
 ![Reuperar clave de usuario](VistasIEEE/3.RecuperarContraseña_3.webp)
+
+</p>
+
+##### DIAGRAMA DE FLUJO CASO DE USO 3
+
+```mermaid
+flowchart TD
+    I([Inicio]) --> P1["1. El usuario accede al login y hace clic en '¿Olvidó su contraseña?'"]
+    P1 --> P2["2. El sistema muestra un formulario solicitando el nombre de usuario o correo"]
+    P2 --> P3["3. El usuario ingresa su nombre de usuario o correo"]
+    P3 --> D1{4. ¿El dato corresponde a una cuenta activa?}
+    D1 -- No --> X([Fin del restablecimiento])
+    D1 -- Sí --> P4["5. El sistema genera un token único (hash) con fecha de expiración (30 minutos)"]
+    P4 --> P5["6. El sistema envía un correo con el enlace /reset-password?token=..."]
+    P5 --> P6["7. El usuario hace clic en el enlace del correo"]
+    P6 --> D2{8. ¿El token es válido y no ha expirado?}
+    D2 -- No --> X
+    D2 -- Sí --> P7["9. El sistema muestra el formulario de nueva contraseña y confirmación"]
+    P7 --> P8["10. El usuario ingresa la nueva contraseña y la confirma"]
+    P8 --> D3{11. ¿La contraseña cumple la política de seguridad?}
+    D3 -- No --> X
+    D3 -- Sí --> P9["12. Actualizar la contraseña (hash), invalidar el token y registrar el cambio"]
+    P9 --> P10["13. Confirmar que la contraseña fue restablecida y redirigir al login"]
+    P10 --> F([Fin exitoso])
+```
 
 
 ---
@@ -1022,9 +1097,28 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | El usuario recibe en su correo el nombre de usuario (o los nombres) que le permiten iniciar sesión en el sistema |
 | CUESTIONES A RESOLVER    | Privacidad: no revelar si el correo está registrado (mensaje genérico para evitar enumeración de usuarios), manejo de múltiples cuentas con el mismo correo, registro de intentos de recuperación de usuario para auditoría, política de límite de intentos por IP |
 
-###### VISTA CASO DE USO 4
+<p align="center">
+
+##### VISTA CASO DE USO 4
 
 ![Recuperar usuario en sistema](VistasIEEE/4.RecuperarNombreUsuario.webp)
+
+</p>
+
+##### DIAGRAMA DE FLUJO CASO DE USO 4
+
+```mermaid
+flowchart TD
+    I([Inicio]) --> P1["1. El usuario accede al login y hace clic en '¿Olvidó su usuario?'"]
+    P1 --> P2["2. El sistema muestra un formulario solicitando el correo electrónico registrado"]
+    P2 --> P3["3. El usuario ingresa su correo electrónico"]
+    P3 --> D1{4. ¿El correo corresponde a una o más cuentas activas?}
+    D1 -- No --> X([Fin de la recuperación])
+    D1 -- Sí --> P4["5. El sistema envía un correo con los nombres de usuario asociados a ese correo"]
+    P4 --> P5["6. El correo puede incluir instrucciones para restablecer la contraseña si se requiere"]
+    P5 --> P6["7. El sistema muestra: 'Se ha enviado la información a su correo electrónico'"]
+    P6 --> F([Fin exitoso])
+```
 
 
 ---
@@ -1044,9 +1138,46 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | La contraseña del usuario se actualiza correctamente, se registra la fecha de cambio y se aplica la nueva política de seguridad, permitiendo al usuario continuar con sus operaciones |
 | CUESTIONES A RESOLVER    | Configuración de período de vigencia (días), política de historial de contraseñas (número a recordar), notificaciones de vencimiento anticipado (ej. 7 días antes), bloqueo de acceso si no se cambia después de la expiración, integración con directorio activo si se usa, registro de cambios en el log de auditoría para cumplimiento normativo |
 
+<p align="center">
+
 ##### VISTA CASO DE USO 5
 
 ![Cambiar Contraseña periodicamente](VistasIEEE/5.CambioPeriodicocontraseña.webp)
+
+</p>
+
+##### DIAGRAMA DE FLUJO CASO DE USO 5
+
+```mermaid
+flowchart TD
+    subgraph A["CAMBIO OBLIGATORIO POR VENCIMIENTO"]
+        direction TB
+        IA([Inicio]) --> A1["1. El usuario intenta iniciar sesión o acceder a una funcionalidad"]
+        A1 --> A2["2. El sistema verifica la fecha del último cambio de contraseña"]
+        A2 --> DA{3. ¿Han pasado más de 90 días desde el último cambio?}
+        DA -- No --> FA([Fin: se permite el acceso])
+        DA -- Sí --> A3["4. El sistema bloquea el acceso y muestra: 'Su contraseña ha expirado. Debe cambiarla para continuar'"]
+        A3 --> A4["5. Redirige al formulario de cambio de contraseña"]
+        A4 --> A5["6. El usuario ingresa contraseña actual, nueva y confirmación"]
+        A5 --> D1{7. ¿La contraseña actual es correcta?}
+        D1 -- No --> XA([Fin del cambio])
+        D1 -- Sí --> D2{8. ¿La nueva cumple la política de seguridad y no está en el historial?}
+        D2 -- No --> XA
+        D2 -- Sí --> A6["9. Actualizar la contraseña, registrar la fecha del cambio y guardar el historial"]
+        A6 --> A7["10. Confirmar el cambio y permitir continuar con la sesión"]
+    end
+
+    subgraph B["CAMBIO VOLUNTARIO"]
+        direction TB
+        IB([Inicio]) --> B1["1. El usuario autenticado accede a su perfil y selecciona 'Cambiar contraseña'"]
+        B1 --> B2["2. El sistema muestra el formulario de cambio"]
+        B2 --> B3["3. El usuario ingresa contraseña actual, nueva y confirmación"]
+        B3 --> D1
+        B3 --> D3{¿La contraseña actual es correcta y la nueva cumple la política?}
+        D3 -- No --> XB([Fin del cambio])
+        D3 -- Sí --> B4["4. Actualizar la contraseña y confirmar el cambio"]
+    end
+```
 
 ---
 ## 6. REGISTRAR PRODUCTO EN INVENTARIO
@@ -1065,9 +1196,31 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | El producto queda registrado en el catálogo de inventario, disponible para transacciones de compra, venta y ajustes |
 | CUESTIONES A RESOLVER    | Generación automática de códigos (correlativo, por categoría), manejo de múltiples proveedores y precios por proveedor, control de impuestos según categoría, registro de unidades de medida y conversiones, soporte para productos con variantes (talla, color, etc.), validación de precios de compra vs venta (margen mínimo) |
 
+<p align="center">
+
 ## VISTA CASO DE USO 6
 
 ![Registrar Producto en Inventario](VistasIEEE/6.RegistrarProducto.webp)
+
+</p>
+
+##### DIAGRAMA DE FLUJO CASO DE USO 6
+
+```mermaid
+flowchart TD
+    I([Inicio]) --> P1["1. El usuario accede al módulo de inventarios y selecciona 'Registrar producto'"]
+    P1 --> P2["2. El sistema muestra el formulario: código, nombre, descripción, categoría, unidad de medida, precios, impuesto, stock inicial, ubicación y proveedores"]
+    P2 --> P3["3. El usuario completa los campos obligatorios (código, nombre, categoría, precios, stock inicial)"]
+    P3 --> P4["4. Opcional: agrega imágenes, documentos o notas"]
+    P4 --> P5["5. Clic en 'Guardar'"]
+    P5 --> D1{6. ¿El código no está duplicado?}
+    D1 -- No --> X([Fin del registro])
+    D1 -- Sí --> D2{7. ¿Los precios son mayores que cero y el stock inicial es un entero no negativo?}
+    D2 -- No --> X
+    D2 -- Sí --> P6["8. El sistema almacena el producto y genera el registro"]
+    P6 --> P7["9. Confirmar el registro exitoso y mostrar el producto creado"]
+    P7 --> F([Fin exitoso])
+```
 
 ---
 ## 7. ACTUALIZAR STOCK DE PRODUCTO
@@ -1086,9 +1239,72 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | El stock del producto se actualiza correctamente, el movimiento queda registrado en el historial y el sistema refleja el nuevo nivel de inventario |
 | CUESTIONES A RESOLVER    | Cálculo del costo promedio ponderado al ingresar compras, control de lotes y fechas de vencimiento, integración con los módulos de compras y ventas para actualización automática, políticas de ajuste (máximo permitido sin aprobación), auditoría completa de movimientos para trazabilidad |
 
+<p align="center">
+
 ### VISTA CASO DE USO 7
 
 ![Actualizar Stock de Producto](VistasIEEE/7.ActualizarStockdeProducto.webp)
+
+</p>
+
+##### DIAGRAMA DE FLUJO CASO DE USO 7
+
+```mermaid
+flowchart TD
+    classDef ok fill:#e2f4e2,stroke:#3a7,color:#164,stroke-width:2px
+    classDef err fill:#ffe0e0,stroke:#c00,color:#700,stroke-width:2px
+    classDef alt fill:#fff3d6,stroke:#c90,color:#754a00,stroke-width:2px
+
+    subgraph PR["FLUJO PRINCIPAL"]
+        direction TB
+        I([Inicio]) --> P1["1. El usuario busca el producto en el módulo de inventarios"]
+        P1 --> P2["2. Selecciona el producto y elige 'Actualizar stock'"]
+        P2 --> P3["3. El sistema muestra el formulario:<br>producto, stock actual, tipo de movimiento, cantidad, costo unitario, referencia y motivo"]
+        P3 --> P4["4. El usuario selecciona el tipo de movimiento (compra, venta, devolución, ajuste) y la cantidad"]
+        P4 --> P5["5. Ingresa la referencia del documento (factura, nota)"]
+        P5 --> P6["6. Clic en 'Confirmar'"]
+        P6 --> D1{"7. ¿La cantidad es válida? (si es salida, ¿no supera el stock disponible?)"}
+        D1 -- Sí --> P7["8. Actualizar el stock en la base de datos"]
+        P7 --> P8["9. Registrar el movimiento en el historial con fecha y responsable"]
+        P8 --> P9["10. Confirmar la actualización y mostrar el nuevo stock"]
+        P9 --> F([Fin exitoso]):::ok
+    end
+
+    subgraph EX["EXCEPCIONES"]
+        direction TB
+        E1["ERROR: Stock insuficiente"]
+        E2["ERROR: Producto no encontrado"]
+        E3["ERROR: Tipo de movimiento inválido"]
+        E4["ERROR: Referencia del documento duplicada"]
+        E5["ERROR: Sin permisos para actualizar stock"]
+        E6["ERROR: La base de datos no responde"]
+    end
+
+    subgraph AL["ALTERNATIVOS"]
+        direction TB
+        ALT1["Compra que ingresa stock y actualiza el costo promedio ponderado"]
+        ALT2["Ajuste por merma (stock negativo) justificando motivo: robo, daño o caducidad"]
+        ALT3["Reversión de un movimiento anterior (anulación de compra o venta)"]
+        ALT4["Movimiento futuro programado (compra pendiente de recepción)"]
+    end
+
+    D1 -- No --> E1
+    E1 --> XP([Fin del movimiento])
+    E2 --> XP
+    E3 --> XP
+    E4 --> XP
+    E5 --> XP
+    E6 --> XP
+
+    P3 -. "ALTERNATIVO" .-> ALT1
+    P4 -. "ALTERNATIVO" .-> ALT2
+    P4 -. "ALTERNATIVO" .-> ALT3
+    P4 -. "ALTERNATIVO" .-> ALT4
+
+    class F ok
+    class E1,E2,E3,E4,E5,E6 err
+    class ALT1,ALT2,ALT3,ALT4 alt
+```
 
 ---
 ## 8. CONSULTAR INVENTARIO
@@ -1107,9 +1323,27 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | El usuario visualiza correctamente el estado actual del inventario con toda la información que necesita para tomar decisiones de compra, venta o ajuste |
 | CUESTIONES A RESOLVER    | Paginación y rendimiento para grandes volúmenes de datos, filtros dinámicos, permisos granulares por columna, exportación a formatos Excel y PDF, integración con reportes avanzados, actualización en tiempo real (si se usan sockets o polling) |
 
+<p align="center">
+
 ### VISTA CASO DE USO 8
 
 ![Consultar Inventario](VistasIEEE/8.ConsultarInventario.webp)
+
+</p>
+
+##### DIAGRAMA DE FLUJO CASO DE USO 8
+
+```mermaid
+flowchart TD
+    I([Inicio]) --> P1["1. El usuario ingresa al módulo de inventarios y selecciona 'Consultar inventario'"]
+    P1 --> P2["2. El sistema muestra la tabla: código, nombre, categoría, stock, costo, precio de venta y valor total"]
+    P2 --> P3["3. El usuario aplica filtros (categoría, rango de stock, rango de precios, búsqueda)"]
+    P3 --> P4["4. El sistema actualiza la lista según los filtros aplicados"]
+    P4 --> P5["5. El sistema permite ordenar por cualquier columna (ascendente/descendente)"]
+    P5 --> P6["6. El usuario selecciona un producto para ver su detalle completo"]
+    P6 --> P7["7. Opcional: exportar la consulta a Excel o PDF (si tiene permisos)"]
+    P7 --> F([Fin exitoso])
+```
 
 ---
 ## 9. REGISTRAR VENTA EN EL SISTEMA
@@ -1128,9 +1362,80 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | La venta se completa exitosamente, el stock se actualiza, se genera el comprobante y los datos quedan registrados para reportes y contabilidad |
 | CUESTIONES A RESOLVER    | Control de stock concurrente (evitar sobreventa), integración con facturación electrónica, manejo de descuentos y promociones, formas de pago (efectivo, crédito, tarjeta, transferencia), políticas de crédito para clientes (límite y plazos), generación de comprobantes en diferentes formatos (ticket, factura, nota de venta) |
 
+<p align="center">
+
 ### VISTA CASO DE USO 9
 
 ![Registrar Venta en el Sistema](VistasIEEE/9.RegistrarNuevaVenta.webp)
+
+</p>
+
+##### DIAGRAMA DE FLUJO CASO DE USO 9
+
+```mermaid
+flowchart TD
+    classDef ok fill:#e2f4e2,stroke:#3a7,color:#164,stroke-width:2px
+    classDef err fill:#ffe0e0,stroke:#c00,color:#700,stroke-width:2px
+    classDef alt fill:#fff3d6,stroke:#c90,color:#754a00,stroke-width:2px
+
+    subgraph PR["FLUJO PRINCIPAL"]
+        direction TB
+        I([Inicio]) --> P1["1. El usuario accede al módulo de ventas y selecciona 'Nueva venta'"]
+        P1 --> P2["2. El sistema muestra la pantalla de venta con carrito vacío"]
+        P2 --> P3["3. El usuario busca productos por código o nombre y los agrega al carrito"]
+        P3 --> P4["4. Ingresa la cantidad deseada para cada producto"]
+        P4 --> D1{"5. ¿Desea modificar el precio unitario? (con autorización)"}
+        D1 -- Sí --> P5["El usuario aplica el nuevo precio/descuento"]
+        D1 -- No --> P6
+        P5 --> P6["6. Selecciona o registra al cliente (búsqueda por identificación o nombre)"]
+        P6 --> P7["7. El sistema calcula subtotal, descuentos e impuestos (IVA) por producto"]
+        P7 --> P8["8. El usuario selecciona el método de pago (efectivo, tarjeta, transferencia, crédito)"]
+        P8 --> P9["9. El usuario confirma la venta"]
+        P9 --> D2{10. ¿Hay stock suficiente para todos los productos?}
+        D2 -- Sí --> P10["11. Descontar el stock de los productos"]
+        P10 --> P11["12. Generar el comprobante de venta (ticket o factura)"]
+        P11 --> P12["13. Registrar la venta en el historial y actualizar los saldos contables"]
+        P12 --> P13["14. Mostrar el comprobante y permitir imprimir o enviar por correo"]
+        P13 --> F([Fin exitoso]):::ok
+    end
+
+    subgraph EX["EXCEPCIONES"]
+        direction TB
+        E1["ERROR: Stock insuficiente para el producto (se muestra la cantidad disponible)"]
+        E2["ERROR: El cliente no existe y no se puede crear por falta de datos"]
+        E3["ERROR: Método de pago no válido (tarjeta rechazada)"]
+        E4["ERROR: El precio de venta es menor al costo (regla de margen mínimo)"]
+        E5["ERROR: Sin permisos para realizar ventas"]
+        E6["ERROR: Fallo de base de datos durante la confirmación (se puede reanudar o deshacer)"]
+    end
+
+    subgraph AL["ALTERNATIVOS"]
+        direction TB
+        ALT1["El cliente no está registrado: se redirige a un formulario rápido de registro"]
+        ALT2["Se aplica un descuento manual autorizado (porcentaje o monto fijo)"]
+        ALT3["Se combinan métodos de pago (50% efectivo, 50% tarjeta)"]
+        ALT4["Se requiere factura electrónica: se activa el flujo de facturación con la DIAN"]
+        ALT5["Stock insuficiente: se sugiere la cantidad disponible y se pide elegir otra cantidad"]
+    end
+
+    D2 -- No --> E1
+    E1 --> XP([Fin de la venta])
+    E2 --> XP
+    E3 --> XP
+    E4 --> XP
+    E5 --> XP
+    E6 --> XP
+
+    P6 -. "ALTERNATIVO" .-> ALT1
+    D1 -. "ALTERNATIVO" .-> ALT2
+    P8 -. "ALTERNATIVO" .-> ALT3
+    P11 -. "ALTERNATIVO" .-> ALT4
+    D2 -. "ALTERNATIVO" .-> ALT5
+
+    class F ok
+    class E1,E2,E3,E4,E5,E6 err
+    class ALT1,ALT2,ALT3,ALT4,ALT5 alt
+```
 ---
 ## 10. ANULAR VENTA EN EL SISTEMA
 
@@ -1148,9 +1453,71 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | La venta queda anulada, el stock se restaura, se genera la documentación de soporte y los datos contables quedan corregidos |
 | CUESTIONES A RESOLVER    | Políticas de tiempo límite para anulaciones (ej. solo ventas del día), integración con facturación electrónica para notas crédito, manejo de devoluciones parciales, control de permisos y autorizaciones según el monto o antigüedad de la venta, trazabilidad completa de anulaciones para auditoría |
 
+<p align="center">
+
 ### VISTA CASO DE USO 10
 
 ![Anular Venta en el Sistema](VistasIEEE/10.AnularVenta.webp)
+
+</p>
+
+##### DIAGRAMA DE FLUJO CASO DE USO 10
+
+```mermaid
+flowchart TD
+    classDef ok fill:#e2f4e2,stroke:#3a7,color:#164,stroke-width:2px
+    classDef err fill:#ffe0e0,stroke:#c00,color:#700,stroke-width:2px
+    classDef alt fill:#fff3d6,stroke:#c90,color:#754a00,stroke-width:2px
+
+    subgraph PR["FLUJO PRINCIPAL"]
+        direction TB
+        I([Inicio]) --> P1["1. El usuario busca la venta (por número, cliente o fecha)"]
+        P1 --> P2["2. Selecciona la venta y elige 'Anular venta'"]
+        P2 --> P3["3. El sistema muestra un formulario solicitando el motivo de la anulación (obligatorio)"]
+        P3 --> P4["4. El usuario ingresa el motivo y confirma la anulación"]
+        P4 --> D1{"5. ¿La venta es anulable? (no anulada y no en proceso de cierre)"}
+        D1 -- Sí --> P5["6. Generar nota crédito (si aplica) o comprobante de anulación"]
+        P5 --> P6["7. Aumentar el stock de los productos devueltos (restaurar cantidades)"]
+        P6 --> P7["8. Registrar la anulación en el historial de movimientos y de ventas"]
+        P7 --> P8["9. Revertir los asientos contables (si está integrado)"]
+        P8 --> P9["10. Confirmar la anulación y mostrar el comprobante"]
+        P9 --> F([Fin exitoso]):::ok
+    end
+
+    subgraph EX["EXCEPCIONES"]
+        direction TB
+        E1["ERROR: Venta no encontrada"]
+        E2["ERROR: La venta ya fue anulada previamente"]
+        E3["ERROR: Permisos insuficientes para anular ventas"]
+        E4["ERROR: El motivo de anulación no es válido"]
+        E5["Error en la nota crédito electrónica: se registra y se notifica al administrador"]
+        E6["El stock no puede restaurarse por movimientos intermedios: se requiere ajuste manual"]
+    end
+
+    subgraph AL["ALTERNATIVOS"]
+        direction TB
+        ALT1["La venta ya fue facturada electrónicamente: generar nota crédito electrónica y enviar a la DIAN"]
+        ALT2["La venta tenía pagos parciales: gestionar la devolución según el método de pago"]
+        ALT3["La venta está en período de cierre contable: requiere autorización especial (flujo de aprobación)"]
+        ALT4["Devolución parcial de productos: requiere un sub-caso de uso"]
+    end
+
+    D1 -- No --> ALT3
+    E1 --> XP([Fin de la anulación])
+    E2 --> XP
+    E3 --> XP
+    E4 --> XP
+    E5 --> XP
+    E6 --> XP
+
+    P5 -. "ALTERNATIVO" .-> ALT1
+    P8 -. "ALTERNATIVO" .-> ALT2
+    P3 -. "ALTERNATIVO" .-> ALT4
+
+    class F ok
+    class E1,E2,E3,E4,E5,E6 err
+    class ALT1,ALT2,ALT3,ALT4 alt
+```
 ---
 ## 11. REGISTRAR CLIENTE EN EL SISTEMA
 
@@ -1168,9 +1535,30 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | El cliente queda registrado en el sistema y puede ser seleccionado en las transacciones de venta y facturación |
 | CUESTIONES A RESOLVER    | Verificación contra listas de terceros (DIAN), manejo de personas naturales y jurídicas, integración con facturación electrónica, gestión de direcciones múltiples, historial de cambios de datos del cliente, políticas de crédito y límite de endeudamiento |
 
+<p align="center">
+
 ### VISTA CASO DE USO 11
 
 ![Registrar Clinete en el Sistema](VistasIEEE/11.RegistrarNuevocliente.webp)
+
+</p>
+
+##### DIAGRAMA DE FLUJO CASO DE USO 11
+
+```mermaid
+flowchart TD
+    I([Inicio]) --> P1["1. El usuario accede al módulo de clientes y selecciona 'Registrar cliente'"]
+    P1 --> P2["2. El sistema muestra el formulario: tipo y número de identificación, razón social, nombre, dirección, teléfono, correo, régimen, condiciones de pago, límite de crédito y descuento"]
+    P2 --> P3["3. El usuario diligencia los campos obligatorios (identificación, nombre, teléfono, correo)"]
+    P3 --> P4["4. Clic en 'Guardar'"]
+    P4 --> D1{5. ¿El número de identificación no está duplicado?}
+    D1 -- No --> X([Fin del registro])
+    D1 -- Sí --> D2{6. ¿El correo tiene formato válido?}
+    D2 -- No --> X
+    D2 -- Sí --> P5["7. El sistema almacena el cliente y asigna un código interno automático"]
+    P5 --> P6["8. Confirmar el registro exitoso"]
+    P6 --> F([Fin exitoso])
+```
 
 ---
 ## 12. CONSULTAR CLIENTE EN EL SISTEMA
@@ -1189,9 +1577,26 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | El usuario visualiza la información solicitada del cliente y puede tomar decisiones comerciales (ventas, cobranza, ajustes de crédito) |
 | CUESTIONES A RESOLVER    | Búsqueda con caracteres especiales (tildes, eñe), paginación y ordenamiento, rendimiento en bases de datos con muchos clientes, integración con módulo de cartera para mostrar saldo actualizado, permisos por roles para ver información financiera (costos, límite de crédito) |
 
+<p align="center">
+
 ### VISTA CASO DE USO 12
 
 ![Consultar Cliente en el Sistema](VistasIEEE/12.ConsultarClinete.webp)
+
+</p>
+
+##### DIAGRAMA DE FLUJO CASO DE USO 12
+
+```mermaid
+flowchart TD
+    I([Inicio]) --> P1["1. El usuario accede al módulo de clientes y selecciona 'Consultar cliente'"]
+    P1 --> P2["2. Ingresa el criterio de búsqueda (identificación, nombre, correo)"]
+    P2 --> P3["3. El sistema muestra la lista de clientes que coinciden"]
+    P3 --> P4["4. El usuario selecciona un cliente de la lista"]
+    P4 --> P5["5. El sistema muestra la ficha: datos personales, condiciones de pago, límite de crédito, descuento, historial de compras, saldo pendiente y contactos"]
+    P5 --> P6["6. El usuario navega a las ventas del cliente o a la gestión de cartera"]
+    P6 --> F([Fin exitoso])
+```
 
 ---
 ## 13. REGISTRAR PROVEEDOR EN EL SISTEMA
@@ -1210,9 +1615,30 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | El proveedor queda registrado en el sistema y puede ser seleccionado en las órdenes de compra y cuentas por pagar |
 | CUESTIONES A RESOLVER    | Validación de NIT contra listas de terceros (DIAN), manejo de proveedores del exterior, historial de calificaciones, gestión de documentos adjuntos, integración con módulo de compras para evaluar desempeño |
 
+<p align="center">
+
 ### VISTA CASO DE USO 13
 
 ![Registrar Proveedor en el Sistema](VistasIEEE/13.RegistrarNuevoProveedor.webp)
+
+</p>
+
+##### DIAGRAMA DE FLUJO CASO DE USO 13
+
+```mermaid
+flowchart TD
+    I([Inicio]) --> P1["1. El usuario accede al módulo de proveedores y selecciona 'Registrar proveedor'"]
+    P1 --> P2["2. El sistema muestra el formulario: tipo y número de identificación, razón social, nombre comercial, contacto, dirección, condiciones de pago, calificación y categoría"]
+    P2 --> P3["3. El usuario diligencia los campos obligatorios (identificación, razón social, contacto)"]
+    P3 --> P4["4. Clic en 'Guardar'"]
+    P4 --> D1{5. ¿El número de identificación no está duplicado?}
+    D1 -- No --> X([Fin del registro])
+    D1 -- Sí --> D2{6. ¿El correo y el teléfono tienen formato válido?}
+    D2 -- No --> X
+    D2 -- Sí --> P5["7. El sistema almacena el proveedor y asigna un código interno"]
+    P5 --> P6["8. Confirmar el registro exitoso"]
+    P6 --> F([Fin exitoso])
+```
 
 ---
 ## 14. CONSULTAR PROVEEDOR EN EL SISTEMA
@@ -1231,9 +1657,26 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | El usuario visualiza la información solicitada del proveedor y puede tomar decisiones de compra o pago |
 | CUESTIONES A RESOLVER    | Búsqueda avanzada, paginación, integración con el módulo de compras para mostrar historial, permisos por rol para ver información financiera, manejo de calificaciones y evaluación de proveedores |
 
+<p align="center">
+
 ### VISTA CASO DE USO 14
 
 ![Consultar Proveedor en el Sistema](VistasIEEE/14.ConsultarProveedor.webp)
+
+</p>
+
+##### DIAGRAMA DE FLUJO CASO DE USO 14
+
+```mermaid
+flowchart TD
+    I([Inicio]) --> P1["1. El usuario accede al módulo de proveedores y selecciona 'Consultar proveedor'"]
+    P1 --> P2["2. Ingresa el criterio de búsqueda (identificación o razón social)"]
+    P2 --> P3["3. El sistema muestra la lista de proveedores que coinciden"]
+    P3 --> P4["4. El usuario selecciona un proveedor"]
+    P4 --> P5["5. El sistema muestra la ficha: datos generales, condiciones de pago, calificación, historial de compras, saldo pendiente y contactos"]
+    P5 --> P6["6. El usuario navega a las órdenes de compra asociadas"]
+    P6 --> F([Fin exitoso])
+```
 
 ---
 ## 15. GENERAR REGPORTE DE INVENTARIO
@@ -1252,9 +1695,28 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | El reporte de inventario se genera correctamente y es entregado al usuario en el formato solicitado, permitiendo análisis de gestión de stock |
 | CUESTIONES A RESOLVER    | Optimización de consultas para grandes volúmenes de datos, formatos de exportación (Excel con fórmulas, PDF con gráficos), definición de KPIs (rotación, días de inventario), personalización de reportes según rol (gerente ve todo, administrador ve costos, etc.) |
 
+<p align="center">
+
 ### VISTA CASO DE USO 15
 
 ![Generar Reporte de Inventario](VistasIEEE/15.GenerarReportedeInventario.webp)
+
+</p>
+
+##### DIAGRAMA DE FLUJO CASO DE USO 15
+
+```mermaid
+flowchart TD
+    I([Inicio]) --> P1["1. El usuario accede al módulo de reportes y selecciona 'Reporte de inventario'"]
+    P1 --> P2["2. Configura los filtros: categoría, rango de stock, bodega y fecha de corte"]
+    P2 --> P3["3. Clic en 'Generar'"]
+    P3 --> P4["4. El sistema consulta la base de datos con los parámetros seleccionados"]
+    P4 --> P5["5. Construye el reporte con tablas y gráficos de resumen (valor por categoría, distribución de stock)"]
+    P5 --> P6["6. El usuario previsualiza el reporte"]
+    P6 --> P7["7. Selecciona el formato de exportación (PDF, Excel)"]
+    P7 --> P8["8. El sistema descarga el archivo generado"]
+    P8 --> F([Fin exitoso])
+```
 
 ---
 ## 16. GENERAR REPORTE DE VENTAS
@@ -1273,9 +1735,27 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | CONDICIÓN DE ÉXITO    | El reporte de ventas se genera correctamente, permitiendo al gerente tomar decisiones estratégicas basadas en los datos de ventas |
 | CUESTIONES A RESOLVER    | Cálculo de comisiones por vendedor, integración con datos de costos para calcular márgenes, formatos de exportación con gráficos interactivos, análisis de tendencias (mes a mes, año a año), manejo de grandes volúmenes de datos con agregaciones precalculadas |
 
+<p align="center">
+
 ### VISTA CASO DE USO 16
 
 ![Generar Reporte de Ventas](VistasIEEE/16.ReportedeVentas.webp)
+
+</p>
+
+##### DIAGRAMA DE FLUJO CASO DE USO 16
+
+```mermaid
+flowchart TD
+    I([Inicio]) --> P1["1. El usuario accede al módulo de reportes y selecciona 'Reporte de ventas'"]
+    P1 --> P2["2. Configura los filtros: rango de fechas, vendedor, cliente, categoría de producto y método de pago"]
+    P2 --> P3["3. Clic en 'Generar'"]
+    P3 --> P4["4. El sistema procesa los datos de ventas del período seleccionado"]
+    P4 --> P5["5. Muestra el reporte con totales, tendencias y gráficos (ventas por día y por categoría)"]
+    P5 --> P6["6. El usuario aplica filtros adicionales o agrupa por diferentes dimensiones"]
+    P6 --> P7["7. Exporta el reporte a Excel o PDF"]
+    P7 --> F([Fin exitoso])
+```
 
 # 4.1.2.CREACION DE DIAGRAMAS DE CLASE DEL PROYECTO
 
