@@ -32,14 +32,6 @@
 
 <hr>
 
-##### FICHA DEL DOCUMENTO
-
-| FECHA | REVISIÓN(ES) | AUTOR(ES) |
-|-------|--------------|-----------|
-| 20/06/2026 | V1.0 | Juan Camilo Gil Perez |
-
----
-
 # DIAGRAMAS DE FLUJO DE CASOS DE USO
 
 Este documento contiene los **16 diagramas de flujo** de los casos de uso definidos en la sección **4.1.1 Definición del caso de uso** de `IEEE.md`. Cada diagrama modela el **escenario principal** en Mermaid (`flowchart TD`), con la siguiente convención:

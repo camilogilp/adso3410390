@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RESUMEN EJECUTIVO - SISTEMA DE INVENTARIO, VENTAS Y REPORTES</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+            color: #000;
+            line-height: 1.6;
+        }
+
+        .container {
+            background: white;
+            padding: 50px 60px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 26px;
+            border-bottom: 2px solid #1a3c6e;
+            padding-bottom: 12px;
+            margin-bottom: 30px;
+            font-weight: bold;
+            color: #1a3c6e;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-top: 35px;
+            border-bottom: 1px solid #999;
+            padding-bottom: 6px;
+            color: #1a3c6e;
+        }
+
+        h3 {
+            font-size: 18px;
+            margin-top: 25px;
+            color: #2c3e50;
+        }
+
+        h4 {
+            font-size: 16px;
+            margin-top: 20px;
+            color: #2c3e50;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .red {
+            color: #c0392b;
+        }
+
+        .blue {
+            color: #1a3c6e;
+        }
+
+        .mt-60 {
+            margin-top: 60px;
+        }
+
+        .mt-30 {
+            margin-top: 30px;
+        }
+
+        .mt-6rem {
+            margin-top: 6rem;
+        }
+
+        hr {
+            border: none;
+            border-top: 2px solid #ccc;
+            margin: 30px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        th,
+        td {
+            border: 1px solid #0e0e0e;
+            padding: 8px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #e9ecef;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        ul,
+        ol {
+            margin: 10px 0 10px 25px;
+        }
+
+        li {
+            margin-bottom: 4px;
+        }
+
+        ul ul {
+            margin: 4px 0 4px 20px;
+        }
+
+        .portada {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .portada .institucion {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .portada .documento {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 40px;
+        }
+
+        .portada .proyecto {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 25px;
+        }
+
+        .portada .cliente {
+            font-size: 18px;
+            margin-top: 15px;
+        }
+
+        .portada .datos {
+            font-size: 16px;
+            margin-top: 12px;
+        }
+
+        .portada .footer-line {
+            margin-top: 45px;
+        }
+
+        .toc {
+            margin: 20px 0 0 0;
+        }
+
+        .toc ol {
+            margin-left: 25px;
+        }
+
+        .card-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .pantalla {
+            border: 1px solid #ccc;
+            border-left: 4px solid #1a3c6e;
+            border-radius: 4px;
+            padding: 10px 14px;
+            flex: 1 1 220px;
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- ==================== PORTADA ==================== -->
+        <div class="portada">
+            <p class="institucion">SERVICIO NACIONAL DE APRENDIZAJE (SENA)</p>
+            <p class="institucion">CENTRO DE PROCESOS INDUSTRIALES Y CONSTRUCCIÓN</p>
+            <p class="institucion" style="font-size:16px;">TECNOLOGÍA EN ANÁLISIS Y DESARROLLO DE SOFTWARE</p>
+
+            <p class="documento">RESUMEN EJECUTIVO</p>
+
+            <p class="proyecto">PROYECTO: SISTEMA DE INVENTARIO, VENTAS Y REPORTES</p>
+            <p class="cliente">TECNOLOGÍAS DEL FUTURO S.A.S.</p>
+
+            <p class="datos mt-30">FICHA: 3410390<br>
+                CÓDIGO DEL PROGRAMA: 228118<br>
+                COMPETENCIA: 220501093<br>
+                DURACIÓN: 96 HORAS<br>
+                VERSIÓN: 1&nbsp;&nbsp;|&nbsp;&nbsp;ESTADO: EN PROCESO</p>
+
+            <p class="datos mt-60">ELABORADO POR:<br>
+                <span class="bold">JUAN CAMILO GIL PÉREZ</span></p>
+
+            <p class="datos mt-30">INSTRUCTOR:<br>
+                <span class="bold">JOSÉ GERMÁN ESTRADA CLAVIJO</span></p>
+
+            <p class="datos footer-line">JULIO 2026</p>
+        </div>
+
+        <hr>
+
+        <!-- ==================== TABLA DE CONTENIDO ==================== -->
+        <div>
+            <h2>CONTENIDO</h2>
+            <div class="toc">
+                <ol>
+                    <li>Información general del proyecto</li>
+                    <li>Resumen del proyecto</li>
+                    <li>Módulos y alcance funcional</li>
+                    <li>Roles de usuario</li>
+                    <li>Casos de uso del sistema</li>
+                    <li>Prototipo de la solución</li>
+                    <li>Diagrama de clases</li>
+                    <li>Plan de trabajo del proyecto</li>
+                    <li>Requisitos no funcionales destacados</li>
+                    <li>Conclusión y próximos pasos</li>
+                </ol>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- ==================== 1. INFORMACIÓN GENERAL ==================== -->
+        <h2>1. INFORMACIÓN GENERAL DEL PROYECTO</h2>
+
+        <table>
+            <tr>
+                <th style="width:30%;">Aspecto</th>
+                <th>Detalle</th>
+            </tr>
+            <tr>
+                <td>Nombre del proyecto</td>
+                <td>Sistema de inventario, ventas y reportes – Tecnologías del Futuro S.A.S.</td>
+            </tr>
+            <tr>
+                <td>Cliente</td>
+                <td><span class="bold">Tecnologías del Futuro S.A.S.</span></td>
+            </tr>
+            <tr>
+                <td>Tipo de sistema</td>
+                <td>Aplicación web empresarial (frontend + backend API REST + base de datos)</td>
+            </tr>
+            <tr>
+                <td>Alcance general</td>
+                <td>Gestión de usuarios y seguridad, inventarios y productos, proveedores, compras, clientes, ventas, anulación de ventas, reportes de inventario y de ventas, y tablero de indicadores (KPIs).</td>
+            </tr>
+            <tr>
+                <td>Estado actual</td>
+                <td>En proceso (versión 1 del resumen ejecutivo)</td>
+            </tr>
+            <tr>
+                <td>Equipo de formación</td>
+                <td>Autor: Juan Camilo Gil Pérez · Instructor: José Germán Estrada Clavijo · Entidad: SENA</td>
+            </tr>
+            <tr>
+                <td>Ambiente de aprendizaje</td>
+                <td>Ficha 3410390 · Código del programa 228118 · Competencia 220501093 · 96 horas</td>
+            </tr>
+        </table>
+
+        <!-- ==================== 2. RESUMEN DEL PROYECTO ==================== -->
+        <h2>2. RESUMEN DEL PROYECTO</h2>
+
+        <h3>2.1. Objetivo general</h3>
+        <p>Diseñar y documentar un sistema de información que permita a Tecnologías del Futuro S.A.S. administrar el inventario, registrar compras y ventas, gestionar clientes y proveedores, y generar reportes que apoyen la toma de decisiones del negocio, sustituyendo los procesos actuales llevados de forma manual.</p>
+
+        <h3>2.2. Objetivos específicos</h3>
+        <ul>
+            <li>Definir y documentar los casos de uso del sistema (inicio de sesión, usuarios, inventario, ventas, clientes, proveedores y reportes).</li>
+            <li>Modelar el diagrama de clases con las entidades principales y sus relaciones.</li>
+            <li>Construir el prototipo de la interfaz que valide los flujos de las pantallas críticas (venta, producto, inventario y dashboard).</li>
+            <li>Establecer el plan de trabajo por fases con sus entregables y actividades de calidad.</li>
+        </ul>
+
+        <h3>2.3. Situación actual y problema a resolver</h3>
+        <p>Tecnologías del Futuro S.A.S. controla su inventario, ventas y proveedores mediante procesos manuales basados en planillas en papel y archivos de Excel. Esto genera demoras en la consulta de existencias, riesgo de desabastecimiento o sobrestock, y dificultad para conocer el comportamiento de las ventas y el valor del inventario.</p>
+
+        <h3>2.4. Beneficios esperados</h3>
+        <ul>
+            <li>Control del stock en tiempo real (estado: bajo, normal o sobrestock).</li>
+            <li>Registro ágil de ventas con descuentos, impuestos, métodos de pago y comprobante.</li>
+            <li>Reportes de inventario y de ventas exportables a Excel, PDF y CSV.</li>
+            <li>Dashboard con indicadores clave (ventas del día, stock bajo, clientes frecuentes, valor del inventario).</li>
+            <li>Trazabilidad y auditoría de todos los movimientos del sistema.</li>
+        </ul>
+
+        <!-- ==================== 3. MÓDULOS Y ALCANCE FUNCIONAL ==================== -->
+        <h2>3. MÓDULOS Y ALCANCE FUNCIONAL</h2>
+
+        <table>
+            <tr>
+                <th style="width:25%;">Módulo</th>
+                <th>Descripción</th>
+            </tr>
+            <tr>
+                <td>Seguridad y autenticación</td>
+                <td>Inicio de sesión por usuario y contraseña, recuperación de credenciales, cambio periódico de contraseña, bloqueo de cuentas, sesión segura (JWT) y registro de auditoría.</td>
+            </tr>
+            <tr>
+                <td>Gestión de usuarios y roles</td>
+                <td>CRUD de usuarios, asignación de roles y permisos granulares por módulo.</td>
+            </tr>
+            <tr>
+                <td>Auditoría</td>
+                <td>Bitácora de eventos (logs inmutables) con registro de quién, cuándo, IP y acción realizada.</td>
+            </tr>
+            <tr>
+                <td>Inventarios y productos</td>
+                <td>Registro de productos, categorías, unidades de medida, impuestos, control de stock (costo promedio ponderado), movimientos de inventario y consultas con filtros.</td>
+            </tr>
+            <tr>
+                <td>Proveedores</td>
+                <td>CRUD de proveedores, consulta con búsqueda avanzada y evaluación de desempeño.</td>
+            </tr>
+            <tr>
+                <td>Compras</td>
+                <td>Órdenes de compra, recepción de mercancía y actualización automática del stock.</td>
+            </tr>
+            <tr>
+                <td>Clientes</td>
+                <td>CRUD de clientes, condiciones de pago, límite de crédito y descuentos especiales.</td>
+            </tr>
+            <tr>
+                <td>Ventas</td>
+                <td>Registro de ventas, aplicación de descuentos, cálculo de impuestos, selección del método de pago y generación del comprobante.</td>
+            </tr>
+            <tr>
+                <td>Anulación y notas</td>
+                <td>Anulación de ventas autorizada con reversión de stock y registro en el historial de movimientos.</td>
+            </tr>
+            <tr>
+                <td>Reportes</td>
+                <td>Reportes de inventario y de ventas con filtros y exportación a Excel, PDF y CSV.</td>
+            </tr>
+            <tr>
+                <td>Dashboard con KPIs</td>
+                <td>Indicadores clave: ventas del día, stock bajo, clientes frecuentes y valor total del inventario.</td>
+            </tr>
+            <tr>
+                <td>Notificaciones</td>
+                <td>Envío de correos: notificaciones y reportes programados.</td>
+            </tr>
+            <tr>
+                <td>Importación de datos</td>
+                <td>Carga inicial de productos, clientes, proveedores y saldos desde archivos Excel/CSV.</td>
+            </tr>
+        </table>
+
+        <!-- ==================== 4. ROLES DE USUARIO ==================== -->
+        <h2>4. ROLES DE USUARIO</h2>
+
+        <table>
+            <tr>
+                <th style="width:25%;">Rol</th>
+                <th>Responsabilidades principales</th>
+            </tr>
+            <tr>
+                <td>Administrador</td>
+                <td>Gestión de usuarios, roles y permisos; configuración del sistema; supervisión general.</td>
+            </tr>
+            <tr>
+                <td>Administrador de inventario</td>
+                <td>Registro de productos, control de stock, ajustes y consulta del inventario.</td>
+            </tr>
+            <tr>
+                <td>Bodeguero / Auxiliar de bodega</td>
+                <td>Registro de productos, actualización de stock y recepción de mercancía.</td>
+            </tr>
+            <tr>
+                <td>Vendedor</td>
+                <td>Registro de ventas, anulación autorizada y consulta de inventario (precios de venta).</td>
+            </tr>
+            <tr>
+                <td>Cajero</td>
+                <td>Registro de ventas y generación de comprobantes (con permisos).</td>
+            </tr>
+            <tr>
+                <td>Gerente</td>
+                <td>Consulta de reportes y dashboard; visualización de costos e indicadores.</td>
+            </tr>
+            <tr>
+                <td>Auditor</td>
+                <td>Consulta de inventario, reportes y trazabilidad de movimientos sin intervenir las operaciones.</td>
+            </tr>
+            <tr>
+                <td>Contador</td>
+                <td>Consulta de clientes, proveedores y reportes de ventas para cierres y análisis.</td>
+            </tr>
+            <tr>
+                <td>Auxiliar de compras</td>
+                <td>Gestión de proveedores, órdenes de compra y recepción de mercancía.</td>
+            </tr>
+            <tr>
+                <td>Auxiliar administrativo</td>
+                <td>Soporte en la gestión de clientes y ventas.</td>
+            </tr>
+        </table>
+
+        <!-- ==================== 5. CASOS DE USO ==================== -->
+        <h2>5. CASOS DE USO DEL SISTEMA</h2>
+
+        <p>El sistema contempla <span class="bold">16 casos de uso</span>, definidos en la sección 4.1.1 de la Especificación de Requisitos de Software (ERS).</p>
+
+        <table>
+            <tr>
+                <th style="width:4%;">#</th>
+                <th style="width:22%;">Código</th>
+                <th>Nombre</th>
+                <th>Objetivo</th>
+            </tr>
+            <tr><td>1</td><td>LOGIN-001</td><td>Inicio de sesión en el sistema</td><td>Validar la identidad del usuario y permitir el acceso al sistema.</td></tr>
+            <tr><td>2</td><td>REGISTRO-001</td><td>Registrar usuario en el sistema</td><td>Crear cuentas de usuario con credenciales y rol asignado.</td></tr>
+            <tr><td>3</td><td>RECCLA-001</td><td>Recuperar clave de usuario</td><td>Permitir restablecer la contraseña cuando el usuario la olvida.</td></tr>
+            <tr><td>4</td><td>RECUUS-001</td><td>Recuperar nombre de usuario</td><td>Permitir al usuario recordar su nombre de usuario.</td></tr>
+            <tr><td>5</td><td>CAMC-001</td><td>Cambiar contraseña de forma periódica</td><td>Cambiar la contraseña al cumplirse el periodo establecido por la política de seguridad.</td></tr>
+            <tr><td>6</td><td>REGPI-001</td><td>Registrar producto en inventario</td><td>Ingresar un nuevo producto al catálogo con costos, precios, impuestos y proveedores.</td></tr>
+            <tr><td>7</td><td>CTSI-001</td><td>Actualizar stock de producto</td><td>Modificar las existencias por compra, venta, devolución o ajuste físico.</td></tr>
+            <tr><td>8</td><td>CONSULI-001</td><td>Consultar inventario</td><td>Buscar, filtrar y consultar el estado del inventario y su valor total.</td></tr>
+            <tr><td>9</td><td>REGISVEN-001</td><td>Registrar venta en el sistema</td><td>Registrar una venta con descuentos, impuestos, pago y comprobante.</td></tr>
+            <tr><td>10</td><td>ANULAVEN-001</td><td>Anular venta en el sistema</td><td>Anular una venta autorizada revirtiendo el stock.</td></tr>
+            <tr><td>11</td><td>REGISCLI-001</td><td>Registrar cliente en el sistema</td><td>Ingresar un nuevo cliente con condiciones de pago y crédito.</td></tr>
+            <tr><td>12</td><td>CONSULCLI-001</td><td>Consultar cliente en el sistema</td><td>Buscar y consultar la información de los clientes registrados.</td></tr>
+            <tr><td>13</td><td>REGISPROV-001</td><td>Registrar proveedor en el sistema</td><td>Ingresar un nuevo proveedor con sus datos y evaluación.</td></tr>
+            <tr><td>14</td><td>CONSULPROV-001</td><td>Consultar proveedor en el sistema</td><td>Buscar y consultar la información de los proveedores registrados.</td></tr>
+            <tr><td>15</td><td>REPORTEINV-001</td><td>Generar reporte de inventario</td><td>Generar el reporte del estado y valor del inventario con filtros.</td></tr>
+            <tr><td>16</td><td>REPORTEVENTAS-001</td><td>Generar reporte de ventas</td><td>Generar el reporte de ventas del periodo con totales y tendencias.</td></tr>
+        </table>
+
+        <!-- ==================== 6. PROTOTIPO ==================== -->
+        <h2>6. PROTOTIPO DE LA SOLUCIÓN</h2>
+
+        <p>Se desarrollaron prototipos de baja fidelidad (wireframes) y de alta fidelidad (interactivos) para validar la estructura y los flujos de las pantallas críticas del sistema. El prototipo de alta fidelidad contempla una aplicación web con menú lateral (sidebar), identidad corporativa de Tecnologías del Futuro S.A.S. y tablero principal con indicadores.</p>
+
+        <h3>6.1. Pantallas críticas del prototipo</h3>
+
+        <div class="card-grid">
+            <div class="pantalla"><strong>Inicio de sesión</strong><br>Ingreso con usuario y contraseña con validación de cuenta activa y redirección según rol.</div>
+            <div class="pantalla"><strong>Dashboard (KPIs)</strong><br>Ventas del día, stock bajo, clientes frecuentes y valor del inventario.</div>
+            <div class="pantalla"><strong>Registro de venta</strong><br>Búsqueda de producto, cantidades, descuentos, impuestos, pago y comprobante.</div>
+            <div class="pantalla"><strong>Registro de producto</strong><br>Código, categoría, unidad de medida, precios, impuesto, stock inicial y proveedores.</div>
+            <div class="pantalla"><strong>Consulta de inventario</strong><br>Listado con filtros, estado por producto e historial de movimientos.</div>
+            <div class="pantalla"><strong>Gestión de clientes</strong><br>Registro y consulta de clientes con condiciones de pago y límite de crédito.</div>
+            <div class="pantalla"><strong>Gestión de proveedores</strong><br>Registro y consulta de proveedores con búsqueda avanzada.</div>
+            <div class="pantalla"><strong>Reportes</strong><br>Reporte de inventario y de ventas con filtros por periodo y exportación.</div>
+        </div>
+
+        <h3>6.2. Validación del prototipo</h3>
+        <ul>
+            <li>Construcción de wireframes para definir la estructura y el flujo de las pantallas críticas.</li>
+            <li>Validación con usuarios del equipo operativo (vendedores, bodegueros y administradores).</li>
+            <li>Construcción del prototipo de alta fidelidad con colores, tipografía y datos reales.</li>
+            <li>Validación final con el Administrador de Inventario y el Gerente General para la aprobación formal.</li>
+        </ul>
+
+        <!-- ==================== 7. DIAGRAMA DE CLASES ==================== -->
+        <h2>7. DIAGRAMA DE CLASES</h2>
+
+        <p>El modelo de datos del sistema se compone de las siguientes entidades principales y sus relaciones:</p>
+
+        <table>
+            <tr>
+                <th style="width:25%;">Entidad</th>
+                <th>Atributos y responsabilidad principal</th>
+            </tr>
+            <tr>
+                <td>Usuario</td>
+                <td>Identificación, credenciales, correo, estado y rol. Responsable de las operaciones del sistema; permite cambiar la contraseña y el rol.</td>
+            </tr>
+            <tr>
+                <td>Rol</td>
+                <td>Nombre, descripción y permisos. Un usuario tiene uno o varios roles.</td>
+            </tr>
+            <tr>
+                <td>Producto</td>
+                <td>Código interno, nombre, categoría, unidad de medida, precios, impuesto, stock y ubicación en bodega.</td>
+            </tr>
+            <tr>
+                <td>Categoría</td>
+                <td>Agrupación de productos para filtros y reportes.</td>
+            </tr>
+            <tr>
+                <td>Movimiento de inventario</td>
+                <td>Registro de entradas y salidas de stock con su causa (compra, venta, ajuste, anulación).</td>
+            </tr>
+            <tr>
+                <td>Proveedor</td>
+                <td>Datos del proveedor, calificación y productos asociados.</td>
+            </tr>
+            <tr>
+                <td>Compra / Detalle de compra</td>
+                <td>Órdenes de compra y líneas de recepción que actualizan el stock.</td>
+            </tr>
+            <tr>
+                <td>Cliente</td>
+                <td>Datos del cliente, condiciones de pago y límite de crédito.</td>
+            </tr>
+            <tr>
+                <td>Venta / Detalle de venta</td>
+                <td>Cabecera y líneas de la venta con descuentos, impuestos, pago y comprobante.</td>
+            </tr>
+            <tr>
+                <td>Reporte</td>
+                <td>Consulta estructurada de inventario o de ventas con filtros por periodo y exportación.</td>
+            </tr>
+        </table>
+
+        <p>Las relaciones principales son: Usuario 1..* hacia Rol; Producto N hacia Categoría y hacia Proveedor; Venta 1..* hacia Detalle de venta y hacia Movimiento de inventario; Compra 1..* hacia Detalle de compra y hacia Movimiento de inventario.</p>
+
+        <!-- ==================== 8. PLAN DE TRABAJO ==================== -->
+        <h2>8. PLAN DE TRABAJO DEL PROYECTO</h2>
+
+        <h3>Fase 1: Inicio y planificación</h3>
+        <ul>
+            <li>1.1. Kickoff del proyecto: reunión inicial con el equipo de desarrollo y el cliente para definir comunicaciones y expectativas.</li>
+            <li>1.2. Definición de objetivos y alcance con el cliente.</li>
+            <li>1.3. Estudio de viabilidad técnica (infraestructura, servidores y base de datos).</li>
+            <li>1.4. Planificación detallada: cronograma, recursos y estimación de tiempos y costos.</li>
+            <li>1.5. Firma del acta de inicio del proyecto.</li>
+        </ul>
+
+        <h3>Fase 2: Elicitación y análisis de requisitos</h3>
+        <ul>
+            <li>2.1. Entrevistas con stakeholders: Gerente General, Administrador de Inventario, Vendedor Líder y personal de bodega.</li>
+            <li>2.2. Aplicación de cuestionarios de elicitación al equipo operativo.</li>
+            <li>2.3. Análisis de la documentación y los flujos de trabajo actuales (planillas en papel y Excel).</li>
+            <li>2.4. Identificación de requisitos funcionales (inventarios, ventas, clientes, proveedores, reportes y seguridad).</li>
+            <li>2.5. Identificación de requisitos no funcionales (rendimiento, disponibilidad, seguridad, usabilidad y mantenibilidad).</li>
+            <li>2.6. Priorización de requisitos con el cliente (MoSCoW).</li>
+        </ul>
+
+        <h3>Fase 3: Especificación y diseño</h3>
+        <ul>
+            <li>3.1. Redacción de la Especificación de Requisitos de Software (ERS) según el formato IEEE 830.</li>
+            <li>3.2. Definición de los 16 casos de uso del sistema.</li>
+            <li>3.3. Creación del diagrama de clases (entidades, atributos, métodos y relaciones).</li>
+            <li>3.4. Definición de criterios de aceptación medibles para cada requisito funcional.</li>
+            <li>3.5. Revisión y validación del documento ERS con el cliente.</li>
+            <li>3.6. Aprobación formal del documento ERS.</li>
+        </ul>
+
+        <h3>Fase 4: Prototipado y validación</h3>
+        <ul>
+            <li>4.1. Construcción de prototipos de baja fidelidad (wireframes) de las pantallas críticas.</li>
+            <li>4.2. Validación de los prototipos con los usuarios del equipo operativo.</li>
+            <li>4.3. Construcción de prototipos de alta fidelidad interactivos.</li>
+            <li>4.4. Validación final con el Administrador de Inventario y el Gerente General.</li>
+            <li>4.5. Aprobación formal de los prototipos para iniciar el desarrollo.</li>
+        </ul>
+
+        <h3>Fase 5: Implementación y desarrollo</h3>
+        <ul>
+            <li>5.1. Configuración del entorno de desarrollo, repositorios y herramientas de CI/CD.</li>
+            <li>5.2. Desarrollo del módulo de seguridad y autenticación (login, recuperación de credenciales, cambio periódico de contraseña, bloqueo de cuentas, roles y permisos).</li>
+            <li>5.3. Desarrollo del módulo de gestión de usuarios y roles (CRUD y permisos granulares).</li>
+            <li>5.4. Desarrollo del módulo de auditoría (logs inmutables: quién, cuándo, IP y acción).</li>
+            <li>5.5. Desarrollo del módulo de inventarios y productos (registro, categorías, stock por costo promedio ponderado, movimientos y consultas con filtros).</li>
+            <li>5.6. Desarrollo del módulo de gestión de proveedores (CRUD, calificación y evaluación).</li>
+            <li>5.7. Desarrollo del módulo de compras (órdenes de compra, recepción y actualización automática del stock).</li>
+            <li>5.8. Desarrollo del módulo de gestión de clientes (CRUD, condiciones de pago, límite de crédito y descuentos).</li>
+            <li>5.9. Desarrollo del módulo de ventas (registro, descuentos, impuestos, métodos de pago y comprobante).</li>
+            <li>5.10. Desarrollo del módulo de notas de crédito y anulación (anulación autorizada con reversión de stock y trazabilidad).</li>
+            <li>5.11. Desarrollo del módulo de reportes (inventario y ventas, con filtros y exportación a Excel, PDF y CSV).</li>
+            <li>5.12. Desarrollo del dashboard con KPIs (ventas del día, stock bajo, clientes frecuentes y valor del inventario).</li>
+            <li>5.13. Desarrollo del módulo de notificaciones por correo (reportes programados).</li>
+            <li>5.14. Desarrollo del módulo de importación de datos (carga de saldos, productos y clientes desde Excel/CSV).</li>
+            <li>5.15. Desarrollo de la interfaz de usuario (frontend) según los prototipos aprobados.</li>
+            <li>5.16. Desarrollo del backend (API REST) con validaciones y persistencia.</li>
+            <li>5.17. Configuración de la base de datos (esquema, tablas, relaciones, índices y migraciones).</li>
+        </ul>
+
+        <h3>Fase 6: Pruebas y calidad</h3>
+        <ul>
+            <li>6.1. Pruebas unitarias del backend (cobertura mínima del 80%).</li>
+            <li>6.2. Pruebas de integración entre módulos (inventario–ventas y compras–inventario).</li>
+            <li>6.3. Pruebas funcionales (CP-001 a CP-010) que cubren los requisitos críticos (productos, ventas, anulación y reportes).</li>
+            <li>6.4. Pruebas de usabilidad con vendedores y bodegueros.</li>
+            <li>6.5. Pruebas de rendimiento y carga (600 transacciones por hora y 20 usuarios concurrentes).</li>
+            <li>6.6. Pruebas de seguridad (penetración, cifrado AES-256, TLS 1.3, bloqueo de intentos fallidos y auditoría de logs).</li>
+            <li>6.7. Pruebas de recuperación ante desastres (restauración de copias de seguridad).</li>
+            <li>6.8. Pruebas de aceptación de usuario (UAT) con un script de 20 casos de negocio reales con el Gerente General y el Administrador de Inventario.</li>
+            <li>6.9. Corrección de defectos reportados según criticidad.</li>
+        </ul>
+
+        <h3>Fase 7: Despliegue y capacitación</h3>
+        <ul>
+            <li>7.1. Configuración del entorno de producción en la nube.</li>
+            <li>7.2. Migración de datos iniciales (productos, clientes, proveedores y saldos).</li>
+            <li>7.3. Despliegue del sistema en producción y verificación de funcionamiento.</li>
+            <li>7.4. GO LIVE y cierre del período de pruebas paralelas con el sistema actual.</li>
+            <li>7.5. Capacitación al equipo operativo: sesiones prácticas de 2 semanas simulando un mes de operación.</li>
+            <li>7.6. Capacitación al equipo de TI interno para soporte de primer nivel.</li>
+            <li>7.7. Generación de manuales de usuario (PDF) y manuales técnicos de arquitectura y despliegue.</li>
+        </ul>
+
+        <h3>Fase 8: Cierre y seguimiento</h3>
+        <ul>
+            <li>8.1. Período de pruebas paralelas (30 días hábiles) verificando consistencia de datos y rendimiento.</li>
+            <li>8.2. Informe de pruebas paralelas con la comparación de resultados.</li>
+            <li>8.3. Firma de conformidad y acta de cierre del proyecto.</li>
+            <li>8.4. Entrega de código fuente, manuales y scripts al cliente.</li>
+            <li>8.5. Configuración del sistema de soporte por tickets.</li>
+            <li>8.6. Definición del backlog de mejoras para una fase 2.</li>
+            <li>8.7. Reunión de cierre con presentación de resultados y recolección de retroalimentación.</li>
+            <li>8.8. Inicio del período de soporte y mantenimiento (12 meses): respuesta &lt; 4 horas para incidentes críticos y &lt; 24 horas para menores.</li>
+        </ul>
+
+        <!-- ==================== 9. REQUISITOS NO FUNCIONALES ==================== -->
+        <h2>9. REQUISITOS NO FUNCIONALES DESTACADOS</h2>
+
+        <table>
+            <tr>
+                <th style="width:25%;">Categoría</th>
+                <th>Requisito</th>
+            </tr>
+            <tr>
+                <td>Rendimiento</td>
+                <td>Capacidad para procesar 600 transacciones por hora y soportar 20 usuarios concurrentes en temporada alta.</td>
+            </tr>
+            <tr>
+                <td>Seguridad</td>
+                <td>Cifrado AES-256 para datos sensibles, transporte seguro TLS 1.3, bloqueo tras intentos fallidos, contraseñas con hash y registro de auditoría.</td>
+            </tr>
+            <tr>
+                <td>Disponibilidad</td>
+                <td>Copias de seguridad y procedimientos de recuperación ante caídas del sistema.</td>
+            </tr>
+            <tr>
+                <td>Usabilidad</td>
+                <td>Interfaz intuitiva validada con vendedores y bodegueros en las pruebas de usabilidad.</td>
+            </tr>
+            <tr>
+                <td>Mantenibilidad</td>
+                <td>Código modular (frontend + API REST), pruebas unitarias con cobertura mínima del 80% y documentación técnica.</td>
+            </tr>
+            <tr>
+                <td>Soporte</td>
+                <td>12 meses de soporte: respuesta &lt; 4 horas para incidentes críticos y &lt; 24 horas para incidentes menores.</td>
+            </tr>
+        </table>
+
+        <!-- ==================== 10. CONCLUSIÓN ==================== -->
+        <h2>10. CONCLUSIÓN Y PRÓXIMOS PASOS</h2>
+
+        <p>El proyecto <span class="bold">Sistema de inventario, ventas y reportes – Tecnologías del Futuro S.A.S.</span> responde a la necesidad del cliente de modernizar la gestión de su inventario y de sus operaciones de venta mediante una aplicación web con control de stock, registro de compras y ventas, gestión de clientes y proveedores, reportes y un tablero de indicadores.</p>
+
+        <p>El análisis realizado hasta el momento ha permitido definir el alcance funcional, los 16 casos de uso, el modelo de clases y el prototipo de las pantallas críticas. Como próximos pasos se requiere la aprobación de los entregables documentales (ERS, prototipos y diagramas) para avanzar con el desarrollo de los módulos, las pruebas de calidad y el despliegue del sistema.</p>
+
+        <hr>
+
+        <p class="center bold">SENA · CENTRO DE PROCESOS INDUSTRIALES Y CONSTRUCCIÓN<br>
+            TECNOLOGÍA EN ANÁLISIS Y DESARROLLO DE SOFTWARE · FICHA 3410390<br>
+            PROYECTO: SISTEMA DE INVENTARIO, VENTAS Y REPORTES – TECNOLOGÍAS DEL FUTURO S.A.S.</p>
+
+    </div>
+</body>
+
+</html>
