@@ -1,0 +1,1199 @@
+
+IE2V2.html
+Página
+1
+de
+1
+100%
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>IE-002: El Desafío del Analista - RAP 02</title>
+    <style>
+        /* ===== CSS BASE DE LA PLANTILLA ORIGINAL SENA ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #e2e6e9;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.45;
+            padding: 40px 20px;
+            color: #1e2a3a;
+        }
+
+        .instrumento-container {
+            max-width: 1200px;
+            margin: 0 auto 3rem auto;
+            background-color: #ffffff;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            padding: 2rem 2rem 2.5rem 2rem;
+        }
+
+        .sena-header {
+            border-bottom: 3px solid #2c6e2f;
+            margin-bottom: 1.8rem;
+            padding-bottom: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+        .sena-header h3 { color: #2c6e2f; font-weight: 600; font-size: 1.1rem; letter-spacing: 0.5px; }
+        .sena-header p { font-size: 0.85rem; color: #2c3e50; }
+
+        .titulo-instrumento {
+            background: #f0f4f8;
+            padding: 0.6rem 1rem;
+            border-left: 6px solid #2c6e2f;
+            margin: 1rem 0 1.5rem 0;
+        }
+        .titulo-instrumento h1 { font-size: 1.6rem; font-weight: 700; color: #1f3b2c; }
+        .titulo-instrumento p { margin-top: 4px; font-size: 0.95rem; }
+
+        .seccion {
+            margin: 2rem 0 1rem 0;
+            border-bottom: 2px solid #cbd5e1;
+            padding-bottom: 0.3rem;
+        }
+        .seccion h2 {
+            font-size: 1.4rem; font-weight: 600; color: #1f4f2d;
+            display: inline-block; background: #eef3e6;
+            padding: 0.2rem 1rem; border-radius: 30px;
+        }
+
+        .badge-rap {
+            background-color: #1e4663; color: white; font-size: 0.65rem;
+            font-weight: bold; padding: 3px 10px; border-radius: 20px;
+            display: inline-block; margin-right: 4px;
+        }
+
+        .firma-area {
+            margin-top: 2rem; display: flex; justify-content: space-between;
+            gap: 2rem; flex-wrap: wrap;
+        }
+        .firma-cuadro {
+            flex: 1; text-align: center; border-top: 1px dashed #9ca3af;
+            padding-top: 2rem; margin-top: 1rem;
+        }
+        .firma-cuadro p { margin: 0.5rem 0; }
+        .firma-linea { margin-top: 1rem; font-size: 0.8rem; color: #6b7280; }
+
+        footer {
+            margin-top: 2rem; font-size: 0.7rem; text-align: center;
+            color: #6c757d; border-top: 1px solid #dee2e6; padding-top: 1rem;
+        }
+
+        /* ===== HUD (Barra superior con estadísticas) ===== */
+        .hud {
+            display: flex; justify-content: space-between; align-items: center;
+            background: linear-gradient(135deg, #1e4663 0%, #2c3e50 100%);
+            color: white; padding: 1rem 1.5rem; border-radius: 12px;
+            margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .hud-item {
+            display: flex; align-items: center; gap: 0.6rem;
+            font-weight: 600; font-size: 0.95rem;
+        }
+        .hud-item .value { font-size: 1.4rem; font-weight: 800; }
+        .hud-item .icon { font-size: 1.5rem; }
+        .timer-box {
+            background: rgba(255,255,255,0.15); padding: 0.4rem 1rem;
+            border-radius: 20px; font-family: 'Courier New', monospace;
+            font-size: 1.1rem; font-weight: 700;
+        }
+        .timer-box.warning { background: #f59e0b; animation: pulse 1s infinite; }
+        .timer-box.danger { background: #dc2626; animation: pulse 0.5s infinite; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        .patience-bar {
+            flex: 1; min-width: 200px; max-width: 300px;
+            height: 20px; background: rgba(255,255,255,0.2);
+            border-radius: 20px; overflow: hidden; position: relative;
+        }
+        .patience-bar .fill {
+            height: 100%; width: 100%;
+            background: linear-gradient(90deg, #ef4444, #f59e0b, #22c55e);
+            transition: width 0.6s ease;
+        }
+        .patience-bar .label {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; font-weight: 700; color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* ===== FASE 1: BRIEFING ===== */
+        .case-brief {
+            background: #f8fafc; border-left: 6px solid #1e4663;
+            padding: 1.5rem; border-radius: 0 12px 12px 0; margin-bottom: 1.5rem;
+        }
+        .case-brief h3 {
+            color: #1e4663; margin-bottom: 0.8rem; font-size: 1.2rem;
+        }
+        .case-brief p { margin-bottom: 0.6rem; color: #2c3e50; }
+        .case-brief .client-quote {
+            background: #eef2f7; padding: 1rem; border-radius: 8px;
+            font-style: italic; margin-top: 1rem; color: #1e4663;
+            border-left: 3px solid #2c6e2f;
+        }
+
+        /* ===== PREGUNTAS ===== */
+        .question-block {
+            background: #fafcfe; border: 1px solid #dce6ef;
+            border-radius: 14px; padding: 1.2rem 1.5rem;
+            margin-bottom: 1.2rem; transition: all 0.2s;
+        }
+        .question-block.correct { border-left: 6px solid #2c6e2f; background: #f6fcf7; }
+        .question-block.incorrect { border-left: 6px solid #b91c1c; background: #fdf6f6; }
+        .question-block.neutral { border-left: 6px solid #94a3b8; }
+        .question-block.disabled { opacity: 0.85; }
+
+        .q-header {
+            display: flex; justify-content: space-between;
+            align-items: center; margin-bottom: 0.6rem;
+        }
+        .q-number { font-weight: 700; color: #1e4663; font-size: 0.95rem; }
+        .q-type {
+            font-size: 0.7rem; background: #e2e8f0; padding: 2px 12px;
+            border-radius: 20px; color: #1e3a5f; font-weight: 600;
+        }
+        .q-text { font-weight: 500; font-size: 1rem; margin-bottom: 0.8rem; }
+
+        .options { display: flex; flex-direction: column; gap: 0.4rem; }
+        .options label {
+            display: flex; align-items: center; gap: 0.6rem;
+            padding: 0.4rem 0.8rem; border-radius: 8px;
+            cursor: pointer; transition: background 0.15s; font-size: 0.95rem;
+        }
+        .options label:hover { background: #f1f5f9; }
+        .options input[type="radio"] {
+            width: 18px; height: 18px; accent-color: #2c6e2f; flex-shrink: 0;
+        }
+        .options input:disabled { accent-color: #94a3b8; cursor: not-allowed; }
+        .options label.disabled { cursor: not-allowed; opacity: 0.7; }
+
+        .feedback {
+            margin-top: 0.8rem; padding: 0.6rem 1rem; border-radius: 8px;
+            font-size: 0.9rem; display: none;
+        }
+        .feedback.show { display: block; }
+        .feedback.correct-fb { background: #e6f7ec; border-left: 4px solid #2c6e2f; color: #166534; }
+        .feedback.incorrect-fb { background: #fde8e8; border-left: 4px solid #b91c1c; color: #991b1b; }
+
+        /* ===== FASE 2: DECISIONES ===== */
+        .decision-block {
+            background: #f8fafc; border: 2px solid #e2e8f0;
+            border-radius: 14px; padding: 1.5rem; margin-bottom: 1.5rem;
+            transition: all 0.2s;
+        }
+        .decision-block.correct { border-color: #2c6e2f; background: #f6fcf7; }
+        .decision-block.incorrect { border-color: #b91c1c; background: #fdf6f6; }
+        .decision-block h3 {
+            color: #1e4663; font-size: 1.1rem; margin-bottom: 0.5rem;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .decision-context {
+            background: #eef2f7; padding: 0.8rem 1rem; border-radius: 8px;
+            margin-bottom: 1rem; font-size: 0.9rem; color: #2c3e50;
+            border-left: 3px solid #1e4663;
+        }
+        .decision-options {
+            display: flex; flex-direction: column; gap: 0.5rem;
+        }
+        .decision-option {
+            padding: 0.8rem 1rem; border: 2px solid #d1d9e6;
+            border-radius: 10px; cursor: pointer; transition: all 0.2s;
+            font-weight: 500; background: white;
+        }
+        .decision-option:hover:not(.disabled):not(.correct):not(.incorrect) {
+            border-color: #1e4663; background: #f0f7ff;
+        }
+        .decision-option.selected {
+            border-color: #facc15; background: #fef9c3;
+        }
+        .decision-option.correct { border-color: #2c6e2f; background: #dcfce7; }
+        .decision-option.incorrect { border-color: #b91c1c; background: #fde8e8; }
+        .decision-option.disabled { cursor: not-allowed; opacity: 0.7; }
+
+        /* ===== FASE 3: AUDITORÍA ===== */
+        .audit-container {
+            background: #f8fafc; border: 2px solid #e2e8f0;
+            border-radius: 14px; padding: 1.5rem; margin-bottom: 1.5rem;
+        }
+        .audit-diagram {
+            background: white; border: 2px solid #cbd5e1;
+            border-radius: 12px; padding: 2rem 1rem;
+            margin: 1rem 0; position: relative;
+            min-height: 400px;
+            display: flex; flex-direction: column;
+            align-items: center; gap: 1.5rem;
+        }
+        .audit-row {
+            display: flex; justify-content: space-around;
+            align-items: center; width: 100%; gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .audit-node {
+            padding: 0.8rem 1.2rem; border-radius: 50px;
+            font-weight: 600; font-size: 0.9rem; text-align: center;
+            cursor: pointer; transition: all 0.2s;
+            border: 2px solid #1e4663; background: #eef2f7;
+            color: #1e4663; position: relative;
+            min-width: 120px;
+        }
+        .audit-node:hover:not(.correct):not(.incorrect) {
+            transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .audit-node.correct { border-color: #2c6e2f; background: #dcfce7; color: #166534; }
+        .audit-node.incorrect { border-color: #b91c1c; background: #fde8e8; color: #991b1b; }
+        .audit-node.actor {
+            background: #fef9c3; border-color: #d97706; color: #92400e;
+            border-radius: 50%; width: 100px; height: 100px;
+            display: flex; align-items: center; justify-content: center;
+            padding: 0.5rem;
+        }
+        .audit-node.usecase {
+            background: #e0f2fe; border-color: #0284c7; color: #075985;
+            border-radius: 50px;
+        }
+        .audit-connection {
+            font-size: 1.5rem; color: #94a3b8; font-weight: 700;
+        }
+        .audit-connection.error {
+            color: #b91c1c; animation: shake 0.5s;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .audit-instructions {
+            background: #fff8e7; border-left: 4px solid #e6a017;
+            padding: 0.8rem 1.2rem; border-radius: 0 8px 8px 0;
+            margin-bottom: 1rem; font-size: 0.9rem; color: #92400e;
+        }
+        .audit-counter {
+            text-align: center; font-weight: 700; color: #1e4663;
+            font-size: 1.1rem; margin-top: 1rem;
+        }
+
+        /* ===== BOTONES ===== */
+        .btn {
+            border: none; padding: 12px 32px; border-radius: 30px;
+            font-weight: 700; font-size: 1rem; cursor: pointer;
+            transition: all 0.2s; display: inline-flex;
+            align-items: center; gap: 0.5rem;
+        }
+        .btn:hover:not(:disabled) { transform: scale(1.03); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn-primary { background: #2c6e2f; color: white; }
+        .btn-primary:hover:not(:disabled) { background: #1f4f2d; }
+        .btn-secondary { background: #4a5568; color: white; }
+        .btn-secondary:hover:not(:disabled) { background: #2d3748; }
+        .btn-warning { background: #d97706; color: white; }
+        .btn-warning:hover:not(:disabled) { background: #b45309; }
+        .btn-danger { background: #b91c1c; color: white; }
+        .btn-danger:hover:not(:disabled) { background: #991515; }
+
+        .btn-group {
+            display: flex; flex-wrap: wrap; gap: 1rem;
+            margin: 2rem 0 1rem; justify-content: center;
+        }
+
+        /* ===== RESULTADO FINAL ===== */
+        .result-box {
+            background: #f0f7ff; border-radius: 16px; padding: 2rem;
+            margin: 1.5rem 0; text-align: center;
+            border: 2px solid #cbddee; display: none;
+        }
+        .result-box.show { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result-box .score {
+            font-size: 4rem; font-weight: 800; color: #1e4663; line-height: 1;
+        }
+        .result-box .score-detail { font-size: 1.1rem; color: #2c3e50; }
+        .result-box .status {
+            font-size: 1.5rem; font-weight: 700; margin-top: 0.5rem;
+        }
+        .status.aprobado { color: #2c6e2f; }
+        .status.desaprobado { color: #b91c1c; }
+        .status.cancelado { color: #b91c1c; font-size: 1.8rem; }
+        .stage-result {
+            background: #f8fafc; border-radius: 12px; padding: 1.5rem;
+            margin: 1rem 0; border: 1px solid #e2e8f0; text-align: left;
+        }
+        .stage-result h3 { color: #1e4663; margin-bottom: 0.8rem; font-size: 1.1rem; }
+        .stage-result .stage-row {
+            display: flex; justify-content: space-between;
+            padding: 0.4rem 0; border-bottom: 1px solid #e2e8f0;
+        }
+        .stage-result .stage-row:last-child { border-bottom: none; }
+        .stage-result .stage-score { font-weight: 700; color: #2c6e2f; }
+
+        /* ===== OVERLAY ===== */
+        .locked-overlay {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.7);
+            z-index: 999; justify-content: center; align-items: center;
+        }
+        .locked-overlay.show { display: flex; }
+        .locked-overlay .message {
+            background: white; padding: 2.5rem 3rem; border-radius: 20px;
+            text-align: center; max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .locked-overlay .message h2 { color: #1e4663; margin-bottom: 0.5rem; }
+        .locked-overlay .message p { color: #4a5568; margin-bottom: 1.5rem; }
+
+        /* ===== INSTRUCCIONES ===== */
+        .instructions-box {
+            background: #fff8e7; border-left: 6px solid #e6a017;
+            padding: 1rem 1.5rem; border-radius: 0 12px 12px 0;
+            margin-bottom: 1.5rem;
+        }
+        .instructions-box p { font-size: 0.95rem; color: #4a5568; margin-bottom: 0.3rem; }
+        .instructions-box strong { color: #92400e; }
+
+        @media (max-width: 700px) {
+            .instrumento-container { padding: 1.2rem; }
+            .hud { padding: 0.8rem 1rem; flex-direction: column; align-items: stretch; }
+            .patience-bar { max-width: 100%; }
+            .audit-node.actor { width: 80px; height: 80px; font-size: 0.75rem; }
+        }
+
+        @media print {
+            .btn, .hud, .attempts-badge { display: none; }
+            body { padding: 0; background: white; }
+            .instrumento-container { box-shadow: none; padding: 1rem; margin-bottom: 0; }
+            .feedback, .feedback-box { display: block !important; }
+            .locked-overlay { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="instrumento-container">
+    <!-- HEADER SENA -->
+    <div class="sena-header">
+        <div>
+            <h3>PROCESO DE GESTIÓN DE FORMACIÓN PROFESIONAL INTEGRAL</h3>
+            <p>SERVICIO NACIONAL DE APRENDIZAJE (SENA)</p>
+        </div>
+        <div>
+            <p>Código: GFPI-F-135</p>
+            <p>Versión: 4</p>
+        </div>
+    </div>
+
+    <!-- TÍTULO -->
+    <div class="titulo-instrumento">
+        <h1>🎯 IE-002: EL DESAFÍO DEL ANALISTA</h1>
+        <p><strong>Competencia:</strong> 220501092 - Establecer requisitos de la solución de software</p>
+        <p><span class="badge-rap">RAP 02</span> Modelar las funciones del software de acuerdo con el informe de requisitos</p>
+    </div>
+
+    <!-- INSTRUCCIONES -->
+    <div class="instructions-box">
+        <p><strong>⏱️ Tiempo límite:</strong> Tienes <strong>1 hora</strong> para completar este desafío. El temporizador se detendrá al finalizar o al agotarse el tiempo.</p>
+        <p><strong>💼 Caso real:</strong> Eres un Analista de Software Junior. Debes modelar el sistema de la <strong>Librería El Saber</strong> antes de que el cliente pierda la paciencia.</p>
+        <p><strong>📄 Entrega:</strong> Al finalizar, haz clic en <strong>"🖨️ Imprimir / PDF"</strong>, guarda el archivo y <strong>súbelo a Classroom</strong> junto con tu nota.</p>
+    </div>
+
+    <!-- HUD -->
+    <div class="hud">
+        <div class="hud-item">
+            <span class="icon">⏱️</span>
+            <div>
+                <div style="font-size:0.75rem; opacity:0.8;">TIEMPO RESTANTE</div>
+                <div class="timer-box" id="timerBox">60:00</div>
+            </div>
+        </div>
+        <div class="hud-item" style="flex:1; min-width:200px;">
+            <span class="icon">😊</span>
+            <div style="flex:1;">
+                <div style="font-size:0.75rem; opacity:0.8;">PACIENCIA DEL CLIENTE</div>
+                <div class="patience-bar">
+                    <div class="fill" id="patienceFill" style="width:100%"></div>
+                    <div class="label" id="patienceLabel">100%</div>
+                </div>
+            </div>
+        </div>
+        <div class="hud-item">
+            <span class="icon">🏆</span>
+            <div>
+                <div style="font-size:0.75rem; opacity:0.8;">PUNTAJE</div>
+                <div class="value"><span id="scoreDisplay">0</span><span style="font-size:1rem;">/100</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- FASE 1: BRIEFING DEL CLIENTE + 30 PREGUNTAS                  -->
+    <!-- ============================================================ -->
+    <div id="phase1">
+        <div class="seccion">
+            <h2>📋 FASE 1: BRIEFING DEL CLIENTE</h2>
+        </div>
+
+        <div class="case-brief">
+            <h3>🏪 Caso: Librería "El Saber"</h3>
+            <p>La <strong>Librería El Saber</strong> es un negocio familiar con 30 años de historia. Venden libros, papelería y artículos de oficina. Actualmente gestionan todo en papel y Excel, pero el volumen de ventas ha crecido y necesitan un <strong>sistema de gestión de inventario y ventas</strong>.</p>
+            <p>El dueño, <strong>Don Ricardo</strong>, te ha contratado para analizar y modelar el sistema. Él necesita:</p>
+            <ul style="margin-left:1.5rem; margin-bottom:0.8rem;">
+                <li>Registrar libros con: ISBN, título, autor, editorial, precio, stock.</li>
+                <li>Gestionar ventas: cliente, libros vendidos, total, fecha.</li>
+                <li>Administrar clientes: nombre, cédula, teléfono, email.</li>
+                <li>Controlar inventario: alertas cuando el stock baje de 5 unidades.</li>
+                <li>Generar reportes: ventas del día, libros más vendidos, stock bajo.</li>
+            </ul>
+            <div class="client-quote">
+                "Necesito que el sistema sea fácil de usar. Mis empleados no son expertos en tecnología. Y por favor, no me haga perder tiempo con cosas raras. Si algo no está claro, pregúnteme." — Don Ricardo
+            </div>
+        </div>
+
+        <p style="margin-bottom:1rem; font-style:italic;">A continuación, responde las 30 preguntas de conocimiento. Cada respuesta correcta suma <strong>2 puntos</strong>. Cada error reduce la paciencia del cliente en <strong>2%</strong>.</p>
+
+        <div id="questionsContainer"></div>
+
+        <div style="text-align:center; margin-top:1.5rem;">
+            <button class="btn btn-primary" onclick="finishPhase1()" id="btnFinishPhase1">✅ Calificar Fase 1 y Continuar</button>
+        </div>
+        <div class="feedback" id="feedbackPhase1" style="margin-top:1rem;"></div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- FASE 2: DECISIONES DE MODELADO                                -->
+    <!-- ============================================================ -->
+    <div id="phase2" style="display:none;">
+        <div class="seccion">
+            <h2>🧠 FASE 2: DECISIONES DE MODELADO</h2>
+        </div>
+        <p style="margin-bottom:1rem; font-style:italic;">Don Ricardo necesita que tomes 5 decisiones críticas para el modelado del sistema. Cada decisión correcta suma <strong>5 puntos</strong>. Cada error reduce la paciencia en <strong>10%</strong>.</p>
+
+        <div id="decisionsContainer"></div>
+
+        <div style="text-align:center; margin-top:1.5rem;">
+            <button class="btn btn-primary" onclick="finishPhase2()" id="btnFinishPhase2">✅ Calificar Fase 2 y Continuar</button>
+        </div>
+        <div class="feedback" id="feedbackPhase2" style="margin-top:1rem;"></div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- FASE 3: AUDITORÍA FINAL                                       -->
+    <!-- ============================================================ -->
+    <div id="phase3" style="display:none;">
+        <div class="seccion">
+            <h2>🔍 FASE 3: AUDITORÍA FINAL</h2>
+        </div>
+        <p style="margin-bottom:1rem; font-style:italic;">Don Ricardo recibió un diagrama de casos de uso de otro analista, pero sospecha que tiene errores. Ayúdalo a encontrar <strong>3 errores</strong> en el diagrama. Cada error detectado suma <strong>5 puntos</strong>.</p>
+
+        <div class="audit-instructions">
+            <strong>🔎 Instrucciones:</strong> Haz clic sobre los elementos que consideres erróneos en el siguiente diagrama de casos de uso. Los elementos pueden ser: actores, casos de uso o conexiones.
+        </div>
+
+        <div class="audit-container">
+            <div class="audit-diagram" id="auditDiagram">
+                <!-- Fila superior: Actores y casos de uso -->
+                <div class="audit-row">
+                    <div class="audit-node actor" data-error="0">👤 Bibliotecario</div>
+                    <div class="audit-connection">→</div>
+                    <div class="audit-node usecase" data-error="0">📚 Registrar Libro</div>
+                    <div class="audit-node usecase" data-error="1">💾 Base de Datos</div>
+                </div>
+
+                <div class="audit-row">
+                    <div class="audit-node actor" data-error="0">👤 Cliente</div>
+                    <div class="audit-connection">→</div>
+                    <div class="audit-node usecase" data-error="0">🛒 Comprar Libro</div>
+                    <div class="audit-connection">→</div>
+                    <div class="audit-node usecase" data-error="0">📊 Generar Reporte</div>
+                </div>
+
+                <div class="audit-row">
+                    <div class="audit-node actor" data-error="1">👤 Servidor</div>
+                    <div class="audit-connection error" data-error="0">→</div>
+                    <div class="audit-node usecase" data-error="0">💳 Procesar Pago</div>
+                </div>
+
+                <div class="audit-row">
+                    <div class="audit-node usecase" data-error="1">📦 Gestionar Inventario</div>
+                    <div class="audit-connection">→</div>
+                    <div class="audit-node usecase" data-error="0">📈 Alertar Stock Bajo</div>
+                </div>
+            </div>
+
+            <div class="audit-counter">
+                Errores encontrados: <span id="auditFound">0</span> / 3
+            </div>
+        </div>
+
+        <div style="text-align:center; margin-top:1.5rem;">
+            <button class="btn btn-primary" onclick="finishPhase3()" id="btnFinishPhase3" disabled>✅ Finalizar Desafío</button>
+        </div>
+        <div class="feedback" id="feedbackPhase3" style="margin-top:1rem;"></div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- RESULTADO FINAL                                               -->
+    <!-- ============================================================ -->
+    <div class="result-box" id="finalResultBox">
+        <div class="score" id="finalScore">0</div>
+        <div class="score-detail">de 100 puntos</div>
+        <div class="status" id="finalStatus">---</div>
+        <div style="margin-top:1rem; font-size:0.95rem;" id="finalDetail"></div>
+
+        <div class="stage-result">
+            <h3>📊 Desglose por Fase</h3>
+            <div class="stage-row">
+                <span>📋 Fase 1: Briefing (30 preguntas)</span>
+                <span class="stage-score" id="phase1Score">0 / 60</span>
+            </div>
+            <div class="stage-row">
+                <span>🧠 Fase 2: Decisiones de Modelado</span>
+                <span class="stage-score" id="phase2Score">0 / 25</span>
+            </div>
+            <div class="stage-row">
+                <span>🔍 Fase 3: Auditoría Final</span>
+                <span class="stage-score" id="phase3Score">0 / 15</span>
+            </div>
+        </div>
+
+        <div style="text-align:left; background:white; padding:1.5rem; border-radius:12px; margin-top:1.5rem; border:1px solid #e2e8f0;">
+            <h3 style="color:#1e4663; margin-bottom:0.8rem;">📚 Recomendaciones de Estudio</h3>
+            <ul id="recommendationsList" style="margin-left:1.5rem; color:#4a5568;"></ul>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+            <button class="btn btn-warning" onclick="window.print()">🖨️ Imprimir / PDF</button>
+            <button class="btn btn-secondary" onclick="resetAll()" style="margin-left:0.5rem;">🔄 Reiniciar</button>
+        </div>
+    </div>
+
+    <!-- FIRMAS -->
+    <div class="firma-area">
+        <div class="firma-cuadro">
+            <p>_________________________</p>
+            <p><strong>Firma del Instructor - Tutor</strong></p>
+            <p class="firma-linea">Nombre: José Germán Estrada Clavijo</p>
+        </div>
+        <div class="firma-cuadro">
+            <p>_________________________</p>
+            <p><strong>Firma del Aprendiz</strong></p>
+            <p class="firma-linea">Nombre: <input type="text" style="width: 70%; border: none; border-bottom: 1px solid #ccc;" placeholder="Aprendiz"></p>
+        </div>
+    </div>
+
+    <div style="margin-top: 1.5rem;">
+        <strong>OBSERVACIONES GENERALES:</strong>
+        <textarea rows="3" style="width: 100%; margin-top: 0.5rem; padding: 8px; border: 1px solid #bdc4cc; border-radius: 8px;" placeholder="Comentarios adicionales sobre el desempeño del aprendiz..."></textarea>
+    </div>
+
+    <footer>
+        <p>IE-002: El Desafío del Analista – SENA – Competencia 220501092 | RAP 02</p>
+        <p>© Servicio Nacional de Aprendizaje - Formación Profesional Integral</p>
+    </footer>
+</div>
+
+<!-- OVERLAY DE BLOQUEO -->
+<div class="locked-overlay" id="lockedOverlay">
+    <div class="message">
+        <h2 id="overlayTitle">🔒 Desafío Finalizado</h2>
+        <p id="overlayMessage">Revisa tu puntaje y las recomendaciones.</p>
+        <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir / PDF</button>
+        <button class="btn btn-secondary" onclick="cerrarOverlay()" style="margin-top:0.5rem;">Cerrar</button>
+    </div>
+</div>
+
+<script>
+    // ===================================================================
+    // ESTADO GLOBAL
+    // ===================================================================
+    let totalScore = 0;
+    let phase1Score = 0;
+    let phase2Score = 0;
+    let phase3Score = 0;
+    let patience = 100;
+    let gameLocked = false;
+    let timerInterval = null;
+    let timeRemaining = 3600; // 60 minutos en segundos
+
+    // ===================================================================
+    // TEMPORIZADOR
+    // ===================================================================
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            if (gameLocked) return;
+            timeRemaining--;
+            if (timeRemaining <= 0) {
+                timeRemaining = 0;
+                clearInterval(timerInterval);
+                timeUp();
+            }
+            updateTimerDisplay();
+        }, 1000);
+    }
+
+    function updateTimerDisplay() {
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        const display = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+        const box = document.getElementById('timerBox');
+        box.textContent = display;
+        box.classList.remove('warning', 'danger');
+        if (timeRemaining <= 600 && timeRemaining > 300) {
+            box.classList.add('warning');
+        } else if (timeRemaining <= 300) {
+            box.classList.add('danger');
+        }
+    }
+
+    function timeUp() {
+        if (gameLocked) return;
+        gameLocked = true;
+        document.getElementById('overlayTitle').textContent = '⏰ ¡Tiempo Agotado!';
+        document.getElementById('overlayMessage').textContent = 'El tiempo límite de 1 hora se ha agotado. El instrumento se ha bloqueado.';
+        document.getElementById('lockedOverlay').classList.add('show');
+        disableAll();
+    }
+
+    // ===================================================================
+    // PACIENCIA DEL CLIENTE
+    // ===================================================================
+    function updatePatience(delta) {
+        patience = Math.max(0, Math.min(100, patience + delta));
+        document.getElementById('patienceFill').style.width = patience + '%';
+        document.getElementById('patienceLabel').textContent = patience + '%';
+        if (patience <= 0 && !gameLocked) {
+            gameLocked = true;
+            clearInterval(timerInterval);
+            document.getElementById('overlayTitle').textContent = '😠 ¡Cliente Perdido!';
+            document.getElementById('overlayMessage').textContent = 'La paciencia del cliente llegó a 0%. El proyecto ha sido cancelado.';
+            document.getElementById('lockedOverlay').classList.add('show');
+            disableAll();
+        }
+    }
+
+    // ===================================================================
+    // ACTUALIZAR PUNTAJE
+    // ===================================================================
+    function updateScore() {
+        totalScore = phase1Score + phase2Score + phase3Score;
+        document.getElementById('scoreDisplay').textContent = totalScore;
+    }
+
+    // ===================================================================
+    // PREGUNTAS DE LA FASE 1 (30 preguntas)
+    // ===================================================================
+    const preguntasData = [
+        // ===== Interpretación de requisitos (1-5) =====
+        { id: 'q1', text: '¿Qué es un actor en un diagrama de casos de uso?',
+            options: ['Un objeto del sistema', 'Un rol que interactúa con el sistema', 'Una tabla de base de datos', 'Un archivo de configuración'],
+            correct: 'b', feedback: 'Un actor es un rol (persona, sistema externo) que interactúa con el sistema.' },
+        { id: 'q2', text: '¿Cuál de los siguientes NO es un artefacto de la fase de análisis?',
+            options: ['Diagrama de casos de uso', 'Modelo de dominio', 'Código fuente', 'Diagrama de actividades'],
+            correct: 'c', feedback: 'El código fuente se produce en la fase de construcción, no en análisis.' },
+        { id: 'q3', text: '¿Qué documento sirve como entrada principal para el modelado de funciones?',
+            options: ['Informe de requisitos', 'Manual de usuario', 'Plan de pruebas', 'Código fuente'],
+            correct: 'a', feedback: 'El informe de requisitos es la entrada principal del modelado.' },
+        { id: 'q4', text: 'En un caso de uso, el flujo básico describe:',
+            options: ['Las excepciones', 'El camino exitoso principal', 'Los errores del sistema', 'Las pruebas unitarias'],
+            correct: 'b', feedback: 'El flujo básico es el camino exitoso principal del caso de uso.' },
+        { id: 'q5', text: '¿Qué es un stakeholder?',
+            options: ['Solo el cliente', 'Cualquier persona con interés en el sistema', 'Solo el desarrollador', 'Solo el usuario final'],
+            correct: 'b', feedback: 'Stakeholder incluye a todos los implicados en el sistema.' },
+
+        // ===== Diagramas de casos de uso UML (6-12) =====
+        { id: 'q6', text: '¿Qué relación UML indica que un caso de uso siempre incluye a otro?',
+            options: ['extend', 'include', 'generalización', 'asociación'],
+            correct: 'b', feedback: 'La relación "include" indica inclusión obligatoria.' },
+        { id: 'q7', text: '¿Qué relación UML indica comportamiento opcional?',
+            options: ['extend', 'include', 'generalización', 'composición'],
+            correct: 'a', feedback: 'La relación "extend" indica comportamiento opcional o alternativo.' },
+        { id: 'q8', text: 'En un diagrama de casos de uso, la generalización se usa para:',
+            options: ['Indicar herencia entre actores o casos de uso', 'Indicar composición', 'Indicar agregación', 'Indicar dependencia'],
+            correct: 'a', feedback: 'La generalización indica herencia (un actor/caso de uso es especialización de otro).' },
+        { id: 'q9', text: '¿Cuántos actores como mínimo debe tener un caso de uso?',
+            options: ['0', '1', '2', '3'],
+            correct: 'b', feedback: 'Todo caso de uso debe estar asociado al menos a un actor.' },
+        { id: 'q10', text: '¿Qué elemento NO debe aparecer en un diagrama de casos de uso?',
+            options: ['Actores', 'Casos de uso', 'Base de datos', 'Relaciones'],
+            correct: 'c', feedback: 'La base de datos es un componente interno, no un elemento del diagrama de casos de uso.' },
+        { id: 'q11', text: 'La frontera del sistema en un diagrama de casos de uso se representa con:',
+            options: ['Un rectángulo', 'Un círculo', 'Un rombo', 'Una línea punteada'],
+            correct: 'a', feedback: 'El rectángulo delimita el sistema y separa actores de casos de uso.' },
+        { id: 'q12', text: '¿Qué es un caso de uso?',
+            options: ['Una funcionalidad del sistema', 'Una tabla de base de datos', 'Un archivo de configuración', 'Un error del sistema'],
+            correct: 'a', feedback: 'Un caso de uso representa una funcionalidad del sistema.' },
+
+        // ===== Plantillas extendidas de casos de uso (13-18) =====
+        { id: 'q13', text: '¿Qué elemento NO forma parte de una plantilla extendida de caso de uso?',
+            options: ['Precondiciones', 'Flujo básico', 'Código SQL', 'Flujo alternativo'],
+            correct: 'c', feedback: 'El código SQL no forma parte de la plantilla de caso de uso.' },
+        { id: 'q14', text: 'Las precondiciones de un caso de uso describen:',
+            options: ['Lo que debe cumplirse antes de ejecutar el caso de uso', 'Lo que sucede después', 'Los errores posibles', 'Las pruebas'],
+            correct: 'a', feedback: 'Las precondiciones son condiciones que deben cumplirse antes.' },
+        { id: 'q15', text: 'Las poscondiciones de un caso de uso describen:',
+            options: ['Lo que debe cumplirse antes', 'El estado del sistema después de ejecutar el caso de uso', 'Los errores', 'Las pruebas'],
+            correct: 'b', feedback: 'Las poscondiciones describen el estado del sistema después.' },
+        { id: 'q16', text: 'El flujo alternativo de un caso de uso describe:',
+            options: ['El camino exitoso', 'Caminos alternativos o excepciones', 'Las precondiciones', 'Las poscondiciones'],
+            correct: 'b', feedback: 'El flujo alternativo describe caminos alternativos o excepciones.' },
+        { id: 'q17', text: '¿Qué es un escenario en un caso de uso?',
+            options: ['Una instancia específica de un caso de uso', 'Un error del sistema', 'Una tabla de base de datos', 'Un archivo de configuración'],
+            correct: 'a', feedback: 'Un escenario es una instancia específica de un caso de uso.' },
+        { id: 'q18', text: '¿Qué elemento describe la interacción entre actor y sistema paso a paso?',
+            options: ['Flujo de eventos', 'Precondición', 'Poscondición', 'Actor secundario'],
+            correct: 'a', feedback: 'El flujo de eventos describe la interacción paso a paso.' },
+
+        // ===== Diagramas de actividades (19-24) =====
+        { id: 'q19', text: '¿Qué elemento se usa para representar una decisión en un diagrama de actividades?',
+            options: ['Rombo', 'Rectángulo', 'Círculo', 'Triángulo'],
+            correct: 'a', feedback: 'El rombo representa una decisión (bifurcación condicional).' },
+        { id: 'q20', text: '¿Qué elemento representa el inicio de un diagrama de actividades?',
+            options: ['Círculo relleno', 'Círculo con borde', 'Rectángulo redondeado', 'Rombo'],
+            correct: 'a', feedback: 'El círculo relleno (nodo inicial) representa el inicio.' },
+        { id: 'q21', text: '¿Qué elemento representa el fin de un diagrama de actividades?',
+            options: ['Círculo relleno', 'Círculo con borde (ojo de buey)', 'Rectángulo', 'Rombo'],
+            correct: 'b', feedback: 'El círculo con borde (nodo final) representa el fin.' },
+        { id: 'q22', text: 'Las bifurcaciones (fork) y uniones (join) en diagramas de actividades representan:',
+            options: ['Concurrencia', 'Decisiones', 'Bucles', 'Excepciones'],
+            correct: 'a', feedback: 'Fork y join representan flujos concurrentes (paralelos).' },
+        { id: 'q23', text: '¿Qué es un swimlane (carril) en un diagrama de actividades?',
+            options: ['Una división que asigna responsabilidades a actores', 'Un tipo de decisión', 'Un nodo final', 'Un error'],
+            correct: 'a', feedback: 'Los swimlanes dividen el diagrama por responsable (actor o departamento).' },
+        { id: 'q24', text: '¿Qué elemento conecta las actividades en un diagrama?',
+            options: ['Flechas de flujo', 'Líneas punteadas', 'Rombos', 'Círculos'],
+            correct: 'a', feedback: 'Las flechas de flujo conectan las actividades.' },
+
+        // ===== Modelo de dominio (25-30) =====
+        { id: 'q25', text: '¿Qué es el modelo de dominio?',
+            options: ['Una representación de las clases conceptuales del negocio', 'Un diagrama de base de datos', 'Un diagrama de casos de uso', 'Un plan de pruebas'],
+            correct: 'a', feedback: 'El modelo de dominio representa las clases conceptuales del negocio.' },
+        { id: 'q26', text: '¿Qué relación indica que una clase contiene a otra?',
+            options: ['Composición', 'Herencia', 'Asociación', 'Dependencia'],
+            correct: 'a', feedback: 'La composición indica que una clase contiene a otra (relación todo-parte fuerte).' },
+        { id: 'q27', text: 'La multiplicidad en una relación indica:',
+            options: ['Cuántas instancias participan en la relación', 'El tipo de dato', 'El nombre del método', 'El color de la clase'],
+            correct: 'a', feedback: 'La multiplicidad indica cuántas instancias participan (1, 0..1, *, 1..*).' },
+        { id: 'q28', text: '¿Qué es una clase de asociación?',
+            options: ['Una clase que representa una relación entre dos clases', 'Una clase abstracta', 'Una clase de utilidades', 'Una clase de prueba'],
+            correct: 'a', feedback: 'Una clase de asociación representa una relación que tiene atributos propios.' },
+        { id: 'q29', text: 'En el modelo de dominio, los atributos representan:',
+            options: ['Características de las clases', 'Métodos de las clases', 'Relaciones entre clases', 'Errores del sistema'],
+            correct: 'a', feedback: 'Los atributos representan características o propiedades de las clases.' },
+        { id: 'q30', text: '¿Qué es una clase abstracta en el modelo de dominio?',
+            options: ['Una clase que no se puede instanciar directamente', 'Una clase con muchos métodos', 'Una clase sin atributos', 'Una clase de prueba'],
+            correct: 'a', feedback: 'Una clase abstracta no se puede instanciar directamente, solo heredarse.' }
+    ];
+
+    function renderQuestions() {
+        const container = document.getElementById('questionsContainer');
+        container.innerHTML = '';
+        preguntasData.forEach((q, idx) => {
+            const block = document.createElement('div');
+            block.className = 'question-block neutral';
+            block.dataset.index = idx;
+            block.id = 'block_' + q.id;
+            const header = document.createElement('div');
+            header.className = 'q-header';
+            header.innerHTML = '<span class="q-number">Pregunta ' + (idx + 1) + '</span><span class="q-type">Opción múltiple</span>';
+            const text = document.createElement('div');
+            text.className = 'q-text';
+            text.textContent = q.text;
+            const options = document.createElement('div');
+            options.className = 'options';
+            const letras = ['a', 'b', 'c', 'd'];
+            q.options.forEach((opt, oi) => {
+                const label = document.createElement('label');
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = q.id;
+                input.value = letras[oi];
+                label.appendChild(input);
+                label.append(' ' + letras[oi] + ') ' + opt);
+                options.appendChild(label);
+            });
+            const feedback = document.createElement('div');
+            feedback.className = 'feedback';
+            feedback.dataset.feedback = q.feedback;
+            feedback.textContent = q.feedback;
+            block.appendChild(header);
+            block.appendChild(text);
+            block.appendChild(options);
+            block.appendChild(feedback);
+            container.appendChild(block);
+        });
+    }
+
+    function finishPhase1() {
+        if (gameLocked) return;
+        let correctas = 0;
+        let incorrectas = 0;
+        const totalPreguntas = preguntasData.length;
+        preguntasData.forEach((q) => {
+            const block = document.getElementById('block_' + q.id);
+            if (!block) return;
+            const feedbackEl = block.querySelector('.feedback');
+            const userAnswer = document.querySelector('input[name="' + q.id + '"]:checked');
+            const userVal = userAnswer ? userAnswer.value : null;
+            const isCorrect = userVal === q.correct;
+            block.classList.remove('correct', 'incorrect', 'neutral');
+            feedbackEl.classList.remove('show', 'correct-fb', 'incorrect-fb');
+            if (!userVal) {
+                block.classList.add('incorrect');
+                feedbackEl.classList.add('show', 'incorrect-fb');
+                feedbackEl.innerHTML = '⚠️ No respondida. Respuesta correcta: ' + q.correct + '. ' + q.feedback;
+                incorrectas++;
+                return;
+            }
+            if (isCorrect) {
+                correctas++;
+                block.classList.add('correct');
+                feedbackEl.classList.add('show', 'correct-fb');
+                feedbackEl.innerHTML = '✅ Correcto. ' + q.feedback;
+            } else {
+                incorrectas++;
+                block.classList.add('incorrect');
+                feedbackEl.classList.add('show', 'incorrect-fb');
+                feedbackEl.innerHTML = '❌ Incorrecto. Tu respuesta: ' + userVal + '. Correcta: ' + q.correct + '. ' + q.feedback;
+            }
+        });
+        phase1Score = correctas * 2; // 2 pts por pregunta = 60 pts máx
+        updateScore();
+        // Reducir paciencia por errores (2% por error)
+        updatePatience(-incorrectas * 2);
+        // Deshabilitar
+        document.querySelectorAll('.options input').forEach(el => el.disabled = true);
+        document.querySelectorAll('.options label').forEach(el => el.classList.add('disabled'));
+        document.querySelectorAll('.question-block').forEach(el => el.classList.add('disabled'));
+        document.getElementById('btnFinishPhase1').disabled = true;
+        const fb = document.getElementById('feedbackPhase1');
+        fb.className = 'feedback show ' + (correctas >= 20 ? 'correct-fb' : 'incorrect-fb');
+        fb.innerHTML = '📊 Resultado Fase 1: ' + correctas + ' correctas, ' + incorrectas + ' incorrectas. Puntaje: ' + phase1Score + '/60. Paciencia: ' + patience + '%.';
+        if (patience > 0) {
+            setTimeout(() => {
+                document.getElementById('phase1').style.display = 'none';
+                document.getElementById('phase2').style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 2000);
+        }
+    }
+
+    // ===================================================================
+    // FASE 2: DECISIONES DE MODELADO
+    // ===================================================================
+    const decisionesData = [
+        {
+            id: 'd1',
+            title: 'Decisión 1: Actores del Sistema',
+            context: 'Don Ricardo te pregunta: "¿Quiénes van a usar el sistema?"',
+            question: '¿Cuál de los siguientes NO debería ser un actor en el diagrama de casos de uso?',
+            options: [
+                { value: 'a', text: 'Bibliotecario' },
+                { value: 'b', text: 'Cliente' },
+                { value: 'c', text: 'Servidor de base de datos' },
+                { value: 'd', text: 'Administrador' }
+            ],
+            correct: 'c',
+            feedback: 'El servidor de base de datos es un componente interno del sistema, no un actor. Los actores son roles externos que interactúan con el sistema.'
+        },
+        {
+            id: 'd2',
+            title: 'Decisión 2: Relación entre Casos de Uso',
+            context: 'El caso de uso "Registrar Venta" siempre ejecuta "Actualizar Inventario".',
+            question: '¿Qué relación UML usarías entre "Registrar Venta" y "Actualizar Inventario"?',
+            options: [
+                { value: 'a', text: 'extend' },
+                { value: 'b', text: 'include' },
+                { value: 'c', text: 'generalización' },
+                { value: 'd', text: 'asociación' }
+            ],
+            correct: 'b',
+            feedback: 'La relación "include" se usa cuando un caso de uso siempre incluye la ejecución de otro (comportamiento obligatorio).'
+        },
+        {
+            id: 'd3',
+            title: 'Decisión 3: Flujo Alternativo',
+            context: 'En el caso de uso "Comprar Libro", el libro puede no estar disponible en stock.',
+            question: '¿Cuál sería el flujo alternativo correcto?',
+            options: [
+                { value: 'a', text: 'El sistema muestra un error y cierra la aplicación' },
+                { value: 'b', text: 'El sistema ofrece al cliente solicitar el libro por encargo' },
+                { value: 'c', text: 'El sistema ignora la solicitud del cliente' },
+                { value: 'd', text: 'El sistema elimina el libro del catálogo' }
+            ],
+            correct: 'b',
+            feedback: 'El flujo alternativo debe ofrecer una solución al cliente (solicitar por encargo), no solo mostrar un error.'
+        },
+        {
+            id: 'd4',
+            title: 'Decisión 4: Modelo de Dominio',
+            context: 'Estás modelando las clases del dominio de la librería.',
+            question: '¿Cuál de las siguientes clases NO debería tener métodos de negocio complejos?',
+            options: [
+                { value: 'a', text: 'Libro' },
+                { value: 'b', text: 'Cliente' },
+                { value: 'c', text: 'Venta' },
+                { value: 'd', text: 'DetalleVenta' }
+            ],
+            correct: 'd',
+            feedback: 'DetalleVenta es una clase de asociación que representa la relación entre Venta y Libro. No debería tener lógica de negocio compleja, solo atributos como cantidad y precio unitario.'
+        },
+        {
+            id: 'd5',
+            title: 'Decisión 5: Multiplicidad',
+            context: 'Estás definiendo la relación entre "Libro" y "Autor".',
+            question: '¿Cuál es la multiplicidad correcta si un libro puede tener varios autores y un autor puede escribir varios libros?',
+            options: [
+                { value: 'a', text: '1 a 1' },
+                { value: 'b', text: '1 a *' },
+                { value: 'c', text: '* a *' },
+                { value: 'd', text: '0..1 a 0..1' }
+            ],
+            correct: 'c',
+            feedback: 'La multiplicidad * a * (muchos a muchos) es correcta porque un libro puede tener varios autores y un autor varios libros.'
+        }
+    ];
+
+    let decisionesSeleccionadas = {};
+
+    function renderDecisions() {
+        const container = document.getElementById('decisionsContainer');
+        container.innerHTML = '';
+        decisionesData.forEach((d, idx) => {
+            const block = document.createElement('div');
+            block.className = 'decision-block';
+            block.id = 'decision_' + d.id;
+            block.innerHTML = `
+                <h3>🧠 ${d.title}</h3>
+                <div class="decision-context">${d.context}</div>
+                <p style="font-weight:600; margin-bottom:0.8rem;">${d.question}</p>
+                <div class="decision-options" data-decision="${d.id}">
+                    ${d.options.map(opt => `
+                        <div class="decision-option" data-value="${opt.value}" data-decision="${d.id}">
+                            <strong>${opt.value})</strong> ${opt.text}
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="feedback" id="feedback_${d.id}"></div>
+            `;
+            container.appendChild(block);
+        });
+        // Event listeners
+        document.querySelectorAll('.decision-option').forEach(opt => {
+            opt.addEventListener('click', function() {
+                if (gameLocked) return;
+                if (this.classList.contains('correct') || this.classList.contains('incorrect') || this.classList.contains('disabled')) return;
+                const decisionId = this.dataset.decision;
+                // Deseleccionar otros de la misma decisión
+                document.querySelectorAll(`.decision-option[data-decision="${decisionId}"]`).forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+                decisionesSeleccionadas[decisionId] = this.dataset.value;
+            });
+        });
+    }
+
+    function finishPhase2() {
+        if (gameLocked) return;
+        let correctas = 0;
+        let incorrectas = 0;
+        decisionesData.forEach((d) => {
+            const block = document.getElementById('decision_' + d.id);
+            const feedbackEl = document.getElementById('feedback_' + d.id);
+            const selected = decisionesSeleccionadas[d.id];
+            if (!selected) {
+                incorrectas++;
+                feedbackEl.className = 'feedback show incorrect-fb';
+                feedbackEl.innerHTML = '⚠️ No respondida. Respuesta correcta: ' + d.correct + '. ' + d.feedback;
+                return;
+            }
+            const selectedOption = block.querySelector(`.decision-option[data-value="${selected}"]`);
+            if (selected === d.correct) {
+                correctas++;
+                selectedOption.classList.add('correct');
+                feedbackEl.className = 'feedback show correct-fb';
+                feedbackEl.innerHTML = '✅ ¡Correcto! ' + d.feedback;
+            } else {
+                incorrectas++;
+                selectedOption.classList.add('incorrect');
+                // Marcar la correcta
+                block.querySelector(`.decision-option[data-value="${d.correct}"]`).classList.add('correct');
+                feedbackEl.className = 'feedback show incorrect-fb';
+                feedbackEl.innerHTML = '❌ Incorrecto. La respuesta correcta era ' + d.correct + '. ' + d.feedback;
+            }
+        });
+        phase2Score = correctas * 5; // 5 pts por decisión = 25 pts máx
+        updateScore();
+        // Reducir paciencia por errores (10% por error)
+        updatePatience(-incorrectas * 10);
+        // Deshabilitar
+        document.querySelectorAll('.decision-option').forEach(el => el.classList.add('disabled'));
+        document.getElementById('btnFinishPhase2').disabled = true;
+        const fb = document.getElementById('feedbackPhase2');
+        fb.className = 'feedback show ' + (correctas >= 4 ? 'correct-fb' : 'incorrect-fb');
+        fb.innerHTML = '📊 Resultado Fase 2: ' + correctas + ' correctas, ' + incorrectas + ' incorrectas. Puntaje: ' + phase2Score + '/25. Paciencia: ' + patience + '%.';
+        if (patience > 0) {
+            setTimeout(() => {
+                document.getElementById('phase2').style.display = 'none';
+                document.getElementById('phase3').style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 2000);
+        }
+    }
+
+    // ===================================================================
+    // FASE 3: AUDITORÍA FINAL
+    // ===================================================================
+    let auditFound = 0;
+    let auditErrorsFound = new Set();
+
+    function setupAudit() {
+        document.querySelectorAll('.audit-node, .audit-connection').forEach(el => {
+            el.addEventListener('click', function() {
+                if (gameLocked) return;
+                if (auditFound >= 3) return;
+                if (this.classList.contains('correct') || this.classList.contains('incorrect')) return;
+                const isError = this.dataset.error === '1';
+                if (isError) {
+                    this.classList.add('correct');
+                    auditFound++;
+                    auditErrorsFound.add(this.textContent.trim());
+                    document.getElementById('auditFound').textContent = auditFound;
+                    if (auditFound === 3) {
+                        document.getElementById('btnFinishPhase3').disabled = false;
+                        const fb = document.getElementById('feedbackPhase3');
+                        fb.className = 'feedback show correct-fb';
+                        fb.innerHTML = '✅ ¡Excelente! Has encontrado los 3 errores.';
+                    }
+                } else {
+                    this.classList.add('incorrect');
+                    // Penalización: -2% paciencia por clic erróneo
+                    updatePatience(-2);
+                    setTimeout(() => this.classList.remove('incorrect'), 1000);
+                }
+            });
+        });
+    }
+
+    function finishPhase3() {
+        if (gameLocked) return;
+        phase3Score = auditFound * 5; // 5 pts por error encontrado = 15 pts máx
+        updateScore();
+        finishGame();
+    }
+
+    // ===================================================================
+    // FINALIZAR DESAFÍO
+    // ===================================================================
+    function finishGame() {
+        if (gameLocked) return;
+        gameLocked = true;
+        clearInterval(timerInterval);
+        // Mostrar resultado final
+        document.getElementById('phase3').style.display = 'none';
+        const resultBox = document.getElementById('finalResultBox');
+        resultBox.classList.add('show');
+        const status = totalScore >= 70 ? 'APROBADO' : 'DESAPROBADO';
+        const statusClass = totalScore >= 70 ? 'aprobado' : 'desaprobado';
+        document.getElementById('finalScore').textContent = totalScore;
+        document.getElementById('finalStatus').textContent = status;
+        document.getElementById('finalStatus').className = 'status ' + statusClass;
+        document.getElementById('finalDetail').textContent = 'Desafío completado. Puntaje final: ' + totalScore + '/100.';
+        document.getElementById('phase1Score').textContent = phase1Score + ' / 60';
+        document.getElementById('phase2Score').textContent = phase2Score + ' / 25';
+        document.getElementById('phase3Score').textContent = phase3Score + ' / 15';
+        // Recomendaciones
+        const recList = document.getElementById('recommendationsList');
+        recList.innerHTML = '';
+        if (phase1Score < 40) recList.innerHTML += '<li>Refuerza los conceptos de casos de uso, actores, relaciones UML (include, extend) y modelo de dominio.</li>';
+        if (phase2Score < 20) recList.innerHTML += '<li>Repasa las decisiones de modelado: actores correctos, relaciones entre casos de uso, flujos alternativos y multiplicidad.</li>';
+        if (phase3Score < 10) recList.innerHTML += '<li>Practica la detección de errores en diagramas de casos de uso (actores internos, casos de uso huérfanos, relaciones mal etiquetadas).</li>';
+        if (recList.innerHTML === '') recList.innerHTML = '<li>¡Felicidades! Has dominado el modelado de funciones del software.</li>';
+        document.getElementById('overlayTitle').textContent = '🔒 Desafío Finalizado';
+        document.getElementById('overlayMessage').textContent = 'Puntaje final: ' + totalScore + '/100. Revisa tu desglose y recomendaciones.';
+        document.getElementById('lockedOverlay').classList.add('show');
+    }
+
+    function cerrarOverlay() {
+        document.getElementById('lockedOverlay').classList.remove('show');
+    }
+
+    function disableAll() {
+        document.querySelectorAll('input, .decision-option, .audit-node, .audit-connection, button').forEach(el => {
+            if (el.tagName === 'BUTTON' && (el.textContent.includes('Imprimir') || el.textContent.includes('Cerrar'))) return;
+            el.disabled = true;
+            if (el.classList) el.classList.add('disabled');
+        });
+    }
+
+    // ===================================================================
+    // RESET
+    // ===================================================================
+    function resetAll() {
+        gameLocked = false;
+        totalScore = 0; phase1Score = 0; phase2Score = 0; phase3Score = 0;
+        patience = 100; auditFound = 0; auditErrorsFound = new Set();
+        decisionesSeleccionadas = {};
+        timeRemaining = 3600;
+        clearInterval(timerInterval);
+        startTimer();
+        updateTimerDisplay();
+        document.getElementById('scoreDisplay').textContent = '0';
+        document.getElementById('patienceFill').style.width = '100%';
+        document.getElementById('patienceLabel').textContent = '100%';
+        document.getElementById('auditFound').textContent = '0';
+        document.getElementById('finalResultBox').classList.remove('show');
+        document.getElementById('lockedOverlay').classList.remove('show');
+        document.getElementById('phase1').style.display = 'block';
+        document.getElementById('phase2').style.display = 'none';
+        document.getElementById('phase3').style.display = 'none';
+        document.getElementById('btnFinishPhase1').disabled = false;
+        document.getElementById('btnFinishPhase2').disabled = false;
+        document.getElementById('btnFinishPhase3').disabled = true;
+        document.getElementById('feedbackPhase1').className = 'feedback';
+        document.getElementById('feedbackPhase2').className = 'feedback';
+        document.getElementById('feedbackPhase3').className = 'feedback';
+        document.querySelectorAll('.question-block').forEach(el => {
+            el.classList.remove('correct','incorrect','disabled');
+            el.classList.add('neutral');
+            const fb = el.querySelector('.feedback');
+            if (fb) { fb.classList.remove('show','correct-fb','incorrect-fb'); fb.textContent = fb.dataset.feedback || ''; }
+        });
+        document.querySelectorAll('input[type="radio"]').forEach(el => { el.checked = false; el.disabled = false; });
+        document.querySelectorAll('.options label').forEach(el => el.classList.remove('disabled'));
+        document.querySelectorAll('.decision-block').forEach(el => { el.classList.remove('correct','incorrect'); });
+        document.querySelectorAll('.decision-option').forEach(el => { el.classList.remove('selected','correct','incorrect','disabled'); });
+        document.querySelectorAll('.decision-block .feedback').forEach(el => { el.className = 'feedback'; el.innerHTML = ''; });
+        document.querySelectorAll('.audit-node, .audit-connection').forEach(el => el.classList.remove('correct','incorrect'));
+        renderQuestions();
+        renderDecisions();
+        setupAudit();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ===================================================================
+    // INICIALIZACIÓN
+    // ===================================================================
+    window.onload = function() {
+        renderQuestions();
+        renderDecisions();
+        setupAudit();
+        startTimer();
+        updateTimerDisplay();
+    };
+</script>
+
+</body>
+</html>
+Acercar
+Mostrando IE2V2.html
