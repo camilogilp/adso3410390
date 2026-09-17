@@ -1760,139 +1760,139 @@ flowchart TD
                     direction LR
 
                     class Usuario {
-                    + Long id
-                    + String nombre
-                    + String email
-                    + String contraseniaHash
-                    + LocalDateTime fechaRegistro
-                    + Boolean activo
+                    - Long id
+                    - String nombre
+                    - String email
+                    - String contraseniaHash
+                    - LocalDateTime fechaRegistro
+                    - Boolean activo
                     + autenticar(String contrasenia) Boolean
                     + cambiarRol(Rol nuevoRol) void
                     }
 
                     class Rol {
-                    + Long id
-                    + String nombre
-                    + String descripcion
+                    - Long id
+                    - String nombre
+                    - String descripcion
                     }
 
                     class Cliente {
-                    + Long id
-                    + String identificacion
-                    + String nombreCompleto
-                    + String telefono
-                    + String direccion
-                    + String email
-                    + String tipoCliente
+                    - Long id
+                    - String identificacion
+                    - String nombreCompleto
+                    - String telefono
+                    - String direccion
+                    - String email
+                    - String tipoCliente
                     + actualizarDatos() void
                     }
 
                     class Factura {
-                    + Long id
-                    + String numeroFactura
-                    + LocalDateTime fechaEmision
-                    + LocalDateTime fechaVencimiento
-                    + Double total
-                    + String estadoPago
+                    - Long id
+                    - String numeroFactura
+                    - LocalDateTime fechaEmision
+                    - LocalDateTime fechaVencimiento
+                    - Double total
+                    - String estadoPago
                     + generarNumeroFactura() String
                     + calcularTotal() Double
                     + pagar() Boolean
                     }
 
                     class Pedido {
-                    + Long id
-                    + LocalDateTime fechaCreacion
-                    + String estado
-                    + Double subtotal
-                    + Double descuento
-                    + Double total
-                    + String observaciones
+                    - Long id
+                    - LocalDateTime fechaCreacion
+                    - String estado
+                    - Double subtotal
+                    - Double descuento
+                    - Double total
+                    - String observaciones
                     + calcularTotales() void
                     + confirmarPedido() Boolean
-                    + agregarDetalle(Producto producto, Integer cantidad) void
+                    + agregarDetalle(Producto producto, int cantidad) void
                     }
 
                     class EstadoPedido {
                    
-                        +cotizado
-                        +confirmado
-                        +despachado
-                        +entregado
+                        - cotizado
+                        - confirmado
+                        - despachado
+                        - entregado
                         }
 
                         class EstadoPago {
                        
-                            +pendiente
-                            +pagado
-                            +vencido
+                            - pendiente
+                            - pagado
+                            - vencido
                             }
 
                             class DetalleFactura {
-                            + Long id
-                            + Integer cantidad
-                            + Double precioUnitario
-                            + Double subtotal
+                            - Long id
+                            - int cantidad
+                            - Double precioUnitario
+                            - Double subtotal
                             + calcularSubtotal() Double
                             }
 
                             class DetallePedido {
-                            + Long id
-                            + Integer cantidad
-                            + Double precioUnitario
-                            + Double descuentoLinea
-                            + Double subtotal
+                            - Long id
+                            - int cantidad
+                            - Double precioUnitario
+                            - Double descuentoLinea
+                            - Double subtotal
                             + calcularSubtotal() Double
                             }
 
                             class Producto {
-                            + Long id
-                            + String sku
-                            + String nombre
-                            + String descripcion
-                            + Double precioVenta
-                            + Double impuestoPorcentaje
-                            + Integer stockMinimo
-                            + Integer stockMaximo
+                            - Long id
+                            - String sku
+                            - String nombre
+                            - String descripcion
+                            - Double precioVenta
+                            - Double impuestoPorcentaje
+                            - int stockMinimo
+                            - int stockMaximo
                             + actualizarPrecio(Double nuevoPrecio) void
-                            + verificarDisponibilidad(Integer cantidad) Boolean
+                            + verificarDisponibilidad(int cantidad) Boolean
                             + calcularPrecioConImpuesto() Double
                             }
 
                             class Categoria {
-                            + Long id
-                            + String nombre
-                            + String descripcion
+                            - Long id
+                            - String nombre
+                            - String descripcion
                             }
 
                             class Stock {
-                            + Long id
-                            + Integer cantidadDisponible
-                            + Integer puntoReorden
-                            + ajustar(Integer cantidad) void
+                            - Long id
+                            - int cantidadDisponible
+                            - int puntoReorden
+                            + ajustar(int cantidad) void
                             + estaCritico() Boolean
-                            + validarStock(Integer cantidad) Boolean
+                            + validarStock(int cantidad) Boolean
                             }
 
                             class MovimientoInventario {
-                            + Long id
-                            + Integer cantidad
-                            + LocalDateTime fecha
-                            + String motivo
-                            + Double costoPromedio
+                            - Long id
+                            - int cantidad
+                            - LocalDateTime fecha
+                            - String motivo
+                            - Double costoPromedio
                             + ejecutar() void
                             }
 
                             class TipoMovimiento {
-                                +entrada
-                                +salida
-                                +ajuste
+                                - entrada
+                                - salida
+                                - ajuste
                                 }
 
                                 class Bodega {
-                                + Long id
-                                + String nombre
-                                + String ubicacion
-                                + Integer capacidad
+                                - Long id
+                                - String nombre
+                                - String ubicacion
+                                - int capacidad
                                 }
 
                                 %% Relaciones Capa 1 -> Capa 2
