@@ -26,13 +26,13 @@
 <p align="center"><b>TECNOLOGIA EN ANALISIS Y DESARROLLO DE SOFTWARE</b></p>
 
 <div style="margin-top: 60px;"></div>
-<p align="center"><b>ETAPA DE ELICITACION DE REQUISITOS</b></p>
+<p align="center"><b>ETAPA DE ANALISIS Y PLANEACION</b></p>
 
 <div style="margin-top: 60px;"></div>
 <p align="center"><b>FORMACION PRESENCIAL JORNADA DE LA MAÑANA</b></p>
 
 <div style="margin-top: 60px;"></div>
-<p align="center"><b>20 DE JUNIO 2026</b></p>
+<p align="center"><b>01 DE OCTUBRE 2026</b></p>
 
 <div style="margin-top: 6rem;"></div>
 
@@ -42,40 +42,63 @@
 
 | FECHA | REVISIÓN(ES) | AUTOR(ES) |
 |-------|--------------|-----------|
-| 20/06/2026 | V1.0 | Juan Camilo Gil Perez |
-| 30/07/2026 | V1.1 | Juan Camilo Gil Perez |
-| 13/08/2026 | V1.2 | Juan Camilo Gil Perez |
-| 20/08/2026 | V1.3 | Juan Camilo Gil Perez |
-| 25/08/2026 | V1.4 | Juan Camilo Gil Perez |
+| 23/07/2026 | JOSE GERMAN ESTRADA CLAVIJO | Juan Camilo Gil Perez |
+| 30/07/2026 | JOSE GERMAN ESTRADA CLAVIJO | Juan Camilo Gil Perez |
+| 6/08/2026 | JOSE GERMAN ESTRADA CLAVIJO | Juan Camilo Gil Perez |
+| 13/08/2026 | JOSE GERMAN ESTRADA CLAVIJO| Juan Camilo Gil Perez |
+| 20/08/2026 | JOSE GERMAN ESTRADA CLAVIJO | Juan Camilo Gil Perez |
+| 27/08/2026 | JOSE GERMAN ESTRADA CLAVIJO| Juan Camilo Gil Perez |
+| 03/09/2026 | JOSE GERMAN ESTRADA CLAVIJO| Juan Camilo Gil Perez |
+| 10/09/2026 | JOSE GERMAN ESTRADA CLAVIJO| Juan Camilo Gil Perez |
+| 17/09/2026 | JOSE GERMAN ESTRADA CLAVIJO| Juan Camilo Gil Perez |
 | | | |
 
 ---
 
-##### DOCUMENTO VALIDADO POR LAS PARTES EN FECHA:
+##### DOCUMENTO VALIDADO POR LAS PARTES EN FECHA: 01/10/2026
 
 | POR CLIENTE | DESARROLLADOR |
 |-------------|---------------|
-| FECHA: 20/06/2026 | FECHA: 20/06/2026 |
+| FECHA: 23/07/2026 | FECHA: 22/06/2026 |
 | NOMBRE DEL ENCARGADO: Jose Germán Estrada | NOMBRE DEL ENCARGADO: Juan Camilo Gil Perez|
 
 | POR CLIENTE | DESARROLLADOR |
 |-------------|---------------|
-| FECHA: 30/07/2026 | FECHA: 30/07/2026 |
+| FECHA: 30/07/2026 | FECHA: 29/07/2026 |
+| NOMBRE DEL ENCARGADO: Jose Germán Estrada | NOMBRE DEL ENCARGADO: Juan Camilo Gil Perez|
+| POR CLIENTE | DESARROLLADOR |
+|-------------|---------------|
+| FECHA: 06/08/2026 | FECHA: 05/07/2026 |
 | NOMBRE DEL ENCARGADO: Jose Germán Estrada | NOMBRE DEL ENCARGADO: Juan Camilo Gil Perez|
 
 | POR CLIENTE | DESARROLLADOR |
 |-------------|---------------|
-| FECHA: 13/08/2026 | FECHA: 13/08/2026 |
+| FECHA: 13/08/2026 | FECHA: 12/08/2026 |
 | NOMBRE DEL ENCARGADO: Jose Germán Estrada | NOMBRE DEL ENCARGADO: Juan Camilo Gil Perez|
 
 | POR CLIENTE | DESARROLLADOR |
 |-------------|---------------|
-| FECHA: 20/08/2026 | FECHA: 20/08/2026 |
+| FECHA: 20/08/2026 | FECHA: 19/08/2026 |
 | NOMBRE DEL ENCARGADO: Jose Germán Estrada | NOMBRE DEL ENCARGADO: Juan Camilo Gil Perez|
 
 | POR CLIENTE | DESARROLLADOR |
 |-------------|---------------|
-| FECHA: 25/08/2026 | FECHA: 25/08/2026 |
+| FECHA: 27/08/2026 | FECHA: 26/08/2026 |
+| NOMBRE DEL ENCARGADO: Jose Germán Estrada | NOMBRE DEL ENCARGADO: Juan Camilo Gil Perez|
+
+| POR CLIENTE | DESARROLLADOR |
+|-------------|---------------|
+| FECHA: 03/09/2026 | FECHA: 02/08/2026 |
+| NOMBRE DEL ENCARGADO: Jose Germán Estrada | NOMBRE DEL ENCARGADO: Juan Camilo Gil Perez|
+
+| POR CLIENTE | DESARROLLADOR |
+|-------------|---------------|
+| FECHA: 10/09/2026 | FECHA: 09/08/2026 |
+| NOMBRE DEL ENCARGADO: Jose Germán Estrada | NOMBRE DEL ENCARGADO: Juan Camilo Gil Perez|
+
+| POR CLIENTE | DESARROLLADOR |
+|-------------|---------------|
+| FECHA: 17/09/2026 | FECHA: 16/08/2026 |
 | NOMBRE DEL ENCARGADO: Jose Germán Estrada | NOMBRE DEL ENCARGADO: Juan Camilo Gil Perez|
 ---
 
@@ -107,8 +130,6 @@
 
 ## 1. INTRODUCCION
 
-*(Contexto del negocio y necesidad de digitalización contable)*
-
 Visión Clara S.A.S. es una empresa especializada en la comercialización y adaptación de gafas y dispositivos de asistencia visual para personas con discapacidad visual (baja visión y ceguera). La empresa opera con 3 sedes físicas (Centro, Norte, Occidente) y una tienda virtual, atendiendo tanto a EPS y hospitales (B2B) como a clientes finales.
 
 Actualmente, la empresa enfrenta desafíos significativos en su gestión contable y financiera: el proceso de contabilización manual toma 3 días completos a la semana, el cierre mensual se extiende hasta 15 días, y la facturación electrónica presenta devoluciones de la DIAN que afectan el flujo de caja. Se requiere un sistema que automatice estos procesos y proporcione visibilidad en tiempo real de la rentabilidad por producto y por sede.
@@ -128,13 +149,9 @@ Desarrollar e implementar un sistema contable y de facturación electrónica int
 
 ##### 1.3. PROPOSITO
 
-*(Que finalidad tiene el software frente a la necesidad de automatización contable y cumplimiento DIAN)*
-
 El software tiene como propósito principal ser la herramienta de gestión financiera diaria de Visión Clara S.A.S., permitiendo al equipo contable pasar de una contabilidad "reactiva" a una "predictiva" en tiempo real. La finalidad es eliminar el tipeo manual de asientos, reducir errores en la liquidación de retenciones e IVA, y proporcionar dashboards actualizados que permitan tomar decisiones informadas sobre compras de inventario y gestión de cartera.
 
 ##### 1.4. ALCANCE
-
-*(Que tan lejos va a abarcar el software en las funciones de la empresa)*
 
 El sistema abarcará las siguientes áreas de la empresa:
 
@@ -182,15 +199,11 @@ El sistema abarcará las siguientes áreas de la empresa:
 
 ##### 1.7. REFERENCIAS
 
-*(Ejemplos de software que resuelven necesidades similares)*
-
 - **SIIGO Nube:** Software contable actualmente utilizado, se desea reemplazar por su rigidez y lentitud en integración DIAN.
 - **Odoo:** Evaluado por su flexibilidad técnica, pero rechazado por requerir demasiados módulos externos para el tratamiento fiscal colombiano.
 - **Nómina Software:** Evaluado pero considerado muy básico para el control de inventarios de alto valor.
 
 ##### 1.8. RESUMEN
-
-*(Breve resumen del uso del software, para que se usa)*
 
 El sistema contable y de facturación electrónica es una herramienta integral diseñada para automatizar la gestión financiera de Visión Clara S.A.S. El software permite generar y enviar facturas electrónicas a la DIAN, gestionar inventarios de productos de alto valor, administrar cartera y proveedores, y generar reportes financieros en tiempo real. Su uso diario está previsto para el equipo contable, el gerente general y personal administrativo, facilitando el cumplimiento tributario y la toma de decisiones estratégicas basadas en datos.
 
@@ -198,15 +211,11 @@ El sistema contable y de facturación electrónica es una herramienta integral d
 
 ## 2. DESCRIPCION GENERAL
 
-*(A groso modo la descripción del software en funcionamiento, como se usa o funciona)*
-
 El software contable y de facturación electrónica es una aplicación web (SaaS) alojada en la nube (AWS o Azure), accesible desde navegador y con versión móvil (PWA) para aprobaciones rápidas. La plataforma está diseñada con una interfaz simple y rápida para el día a día, con la capacidad de desplegar opciones avanzadas para la contabilidad.
 
 El sistema se organiza en módulos interconectados: Facturación Electrónica, Contabilidad, Cartera, Proveedores, Inventarios, Activos Fijos, Nómina, Reportes y Declaraciones Tributarias. Cada módulo permite el registro, consulta, edición y generación de reportes con trazabilidad completa de todas las acciones realizadas.
 
 ##### 2.1. PERSPECTIVA DEL PRODUCTO
-
-*(Como se describe la interfaz del sistema, con las que él usuario interactúa con el sistema y cuales usuarios lo usarán y bajo que roles)*
 
 El sistema se presenta como una aplicación web (responsive) con las siguientes características de interfaz:
 
@@ -227,8 +236,6 @@ El sistema se presenta como una aplicación web (responsive) con las siguientes 
 | **Auditor Externo** | Contador externo para revisiones | Solo lectura de todos los módulos |
 
 ##### 2.2. FUNCIONALIDADES DEL PRODUCTO *(Elicitación)*
-
-*(Enumerar todas y cada una de las funciones que pide el cliente para su proyecto de automatización)*
 
 **PREGUNTAS PARA EL PROCESO DE ELICITACIÓN DE REQUISITOS**
 
@@ -678,8 +685,6 @@ Después del lanzamiento, las solicitudes de soporte se manejarán a través de 
 
 ##### 2.3. CARACTERISTICAS DE LOS USUARIOS *(Funciones de la persona en el proceso)*
 
-*(Descripción de cada rol dentro del software)*
-
 | ROL | DESCRIPCIÓN | CONOCIMIENTO CONTABLE | CONOCIMIENTO TECNOLÓGICO |
 |-----|-------------|----------------------|--------------------------|
 | **Administrador** | Gerente General y Gerente Financiero | Alto | Medio |
@@ -688,8 +693,6 @@ Después del lanzamiento, las solicitudes de soporte se manejarán a través de 
 | **Auditor Externo** | Revisión y verificación contable | Alto | Medio |
 
 ##### 2.4. RESTRICCIONES
-
-*(lo que no se quiere que se haga dentro del software, lo que cada rol tiene permitido y no permitido)*
 
 | RESTRICCIÓN | DETALLE |
 |-------------|---------|
@@ -704,8 +707,6 @@ Después del lanzamiento, las solicitudes de soporte se manejarán a través de 
 ---
 
 ## 3. REQUISITOS ESPECIFICOS
-
-*(Enumerar todas y cada una de las funciones que pide el cliente para su proyecto de automatización)*
 
 | ID | REQUISITO | DESCRIPCIÓN |
 |----|-----------|-------------|
@@ -826,8 +827,6 @@ A continuación se detalla cada una de las actividades del cronograma:
 
 ## 3.2.2. CRONOGRAMA DE ACTIVIDADES DEL PROYECTO (DIAGRAMA DE GANTT)
 
-*(Planificación temporal de las actividades necesarias para la ejecución del proyecto)*
-
 A continuación se presenta el cronograma de actividades del proyecto, con una duración total de **6 meses** (24 semanas), desde el **1 de julio de 2026** hasta el **31 de diciembre de 2026**, fecha estimada de GO LIVE.
 
 **Leyenda de colores:**
@@ -891,10 +890,7 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 | 6.4 Transferencia de conocimiento | Diana Carolina Sánchez | | | | | | ████ | Semana 24 |
 | **★ Hito 6: Proyecto finalizado** | Ana María Rodríguez | | | | | | ★ | Fin Semana 24 |
 
-
-
-
-##### 3.3. REQUISITOS NO FUNCIONALES *(no tiene dependencias de otros requisitos)*
+##### 3.3. REQUISITOS NO FUNCIONALES *
 
 | ID | CATEGORÍA | DESCRIPCIÓN | PRIORIDAD | MÉTODO DE VERIFICACIÓN |
 |----|-----------|-------------|-----------|------------------------|
@@ -940,7 +936,6 @@ A continuación se presenta el cronograma de actividades del proyecto, con una d
 ## 1.INICIO DE SESION EN EL SISTEMA
 
 ### CASO DE USO 1
-
 
 | CÓDIGO    | LOGIN-001    |
 |---|---|
@@ -1934,9 +1929,6 @@ flowchart TD
 
 
 ##### 4.2. FORMATO DE CASO DE PRUEBA
-
-*(Formato para documentar y ejecutar casos de prueba de los requisitos funcionales)
-
 
 ---
 
