@@ -1,0 +1,447 @@
+/* ============================================================
+   Pampa Argentinian Street Food — master.css
+   Las fuentes se cargan en el HTML (preconnect + Google Fonts)
+   ============================================================ */
+
+/* ---------- Variables ---------- */
+:root {
+    --color-expresso: #2a1b0f;
+    --color-flat: #D4AF37;
+    --color-cream: #f1eae0;
+    --font-headings: "Cormorant Garamond", serif;
+    --font-body: "Inter", sans-serif;
+    --navbar-height: 5.5rem;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--navbar-height) + 1rem);
+}
+
+body {
+    background-image: url(../images/_fondoPagina.webp);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: var(--color-cream);
+    font-family: var(--font-body);
+}
+
+/* ---------- Accesibilidad ---------- */
+:focus-visible {
+    outline: 2px solid var(--color-flat);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ---------- Navbar ---------- */
+#navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;
+    height: var(--navbar-height);
+    padding-inline: 1.4rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-bottom: 1px solid var(--color-cream);
+    backdrop-filter: blur(6px);
+}
+
+#navbar .logo-golden {
+    height: 85%;
+    width: auto;
+    object-fit: contain;
+}
+
+#navbar .options {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+}
+
+#navbar .options a {
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+    color: var(--color-cream);
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: transform 0.2s ease-in, color 0.2s ease-in, border-color 0.2s ease-in;
+}
+
+#navbar .options a:hover {
+    border-bottom-color: var(--color-flat);
+    color: var(--color-flat);
+    transform: translateY(-4px) scale(1.02);
+}
+
+#navbar .options a.active {
+    border-bottom-color: var(--color-flat);
+    color: var(--color-flat);
+}
+
+/* ---------- Hero ---------- */
+.hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100dvh;
+    overflow: hidden;
+    text-align: center;
+}
+
+.hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+            rgba(0, 0, 0, 0.65) 0%,
+            rgba(0, 0, 0, 0.25) 45%,
+            rgba(0, 0, 0, 0.8) 100%);
+}
+
+.hero-overlay {
+    position: relative;
+    z-index: 1;
+    padding: 2rem 1.5rem;
+}
+
+.hero-overlay h1 {
+    font-family: var(--font-headings);
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.65);
+}
+
+/* ---------- Títulos de sección ---------- */
+.section-title {
+    margin-bottom: 2.5rem;
+    color: var(--color-cream);
+    font-family: var(--font-headings);
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.section-title::after {
+    content: "";
+    display: block;
+    width: 70px;
+    height: 3px;
+    margin: 0.8rem auto 0;
+    background-color: var(--color-flat);
+}
+
+/* ---------- Secciones de productos ---------- */
+.section-products {
+    padding: 4.5rem 1.5rem;
+    background-color: rgba(42, 27, 15, 0.9);
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: 1.5rem;
+    max-width: 75rem;
+    margin-inline: auto;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    background-color: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(241, 234, 224, 0.2);
+    border-radius: 0.6rem;
+    transition: transform 0.2s ease-in, border-color 0.2s ease-in;
+}
+
+.card:hover {
+    border-color: var(--color-flat);
+    transform: translateY(-4px);
+}
+
+.card h3 {
+    color: var(--color-flat);
+    font-family: var(--font-headings);
+    font-size: 1.7rem;
+    font-weight: 700;
+}
+
+.card .price {
+    margin-top: auto;
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+/* ---------- Sobre Pampa ---------- */
+.section-about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 5rem 1.5rem;
+    text-align: center;
+    background:
+        linear-gradient(rgba(42, 27, 15, 0.88), rgba(42, 27, 15, 0.88)),
+        url(../images/_fondoPagina.webp) no-repeat center / cover;
+}
+
+.section-about p {
+    max-width: 46rem;
+    font-size: 1.05rem;
+}
+
+.section-about .about-lead {
+    color: var(--color-flat);
+    font-size: 1.15rem;
+    font-weight: 500;
+}
+
+.section-about .about-box {
+    max-width: 52rem;
+    padding: 2rem 4rem;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.section-about .logo-full {
+    width: auto;
+    height: clamp(150px, 28vw, 310px);
+}
+
+.section-about menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    list-style: none;
+}
+
+.section-about menu li {
+    display: flex;
+    width: min(300px, 100%);
+}
+
+.section-about menu a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    width: 100%;
+    min-height: 70px;
+    padding: 0.6rem 1.2rem;
+    background-color: var(--color-expresso);
+    border: 1px solid var(--color-cream);
+    border-radius: 0.6rem;
+    color: var(--color-cream);
+    font-size: 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: transform 0.2s ease-in, border-color 0.2s ease-in, color 0.2s ease-in;
+}
+
+.section-about menu a:hover {
+    border-color: var(--color-flat);
+    color: var(--color-flat);
+    transform: translateY(-4px) scale(1.05);
+}
+
+.section-about menu a svg {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ---------- Footer / Eventos y Reservas ---------- */
+#eventos-reservas {
+    padding: 4.5rem 1.5rem 2rem;
+    background-color: #1a1108;
+    text-align: center;
+}
+
+.footer-contacto {
+    max-width: 40rem;
+    margin: -1rem auto 2.5rem;
+    color: rgba(241, 234, 224, 0.85);
+    font-size: 1.05rem;
+}
+
+.footer-sedes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 1.5rem;
+    max-width: 52rem;
+    margin: 0 auto 2.5rem;
+}
+
+.sede {
+    padding: 1.5rem;
+    background-color: rgba(241, 234, 224, 0.06);
+    border: 1px solid rgba(241, 234, 224, 0.2);
+    border-radius: 0.6rem;
+}
+
+.sede h3 {
+    margin-bottom: 0.6rem;
+    color: var(--color-flat);
+    font-family: var(--font-headings);
+    font-size: 1.5rem;
+    text-transform: uppercase;
+}
+
+.sede p {
+    font-size: 0.95rem;
+}
+
+.sede a {
+    color: var(--color-flat);
+    text-decoration: none;
+}
+
+.sede a:hover {
+    text-decoration: underline;
+}
+
+.footer-social {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.footer-social a {
+    padding: 0.5rem 1.3rem;
+    border: 1px solid var(--color-cream);
+    border-radius: 999px;
+    color: var(--color-cream);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in, color 0.2s ease-in, border-color 0.2s ease-in;
+}
+
+.footer-social a:hover {
+    background-color: var(--color-flat);
+    border-color: var(--color-flat);
+    color: var(--color-expresso);
+}
+
+.footer-bottom {
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(241, 234, 224, 0.2);
+    color: rgba(241, 234, 224, 0.7);
+    font-size: 0.85rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+    :root {
+        --navbar-height: 5rem;
+    }
+
+    #navbar {
+        gap: 1.25rem;
+        padding-inline: 1rem;
+    }
+
+    #navbar .options {
+        gap: 1.25rem;
+    }
+
+    #navbar .options a {
+        font-size: 1.05rem;
+    }
+
+    .section-about .about-box {
+        padding: 1.75rem 2rem;
+    }
+
+    .section-about menu {
+        gap: 1.25rem;
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        --navbar-height: 9rem;
+    }
+
+    #navbar {
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.6rem;
+        height: auto;
+        min-height: var(--navbar-height);
+        padding: 0.75rem 1rem;
+    }
+
+    #navbar .logo-golden {
+        height: 3.4rem;
+    }
+
+    #navbar .options {
+        gap: 0.7rem 1.1rem;
+        justify-content: center;
+    }
+
+    #navbar .options a {
+        font-size: 0.95rem;
+    }
+
+    .hero-overlay h1 {
+        font-size: clamp(2.2rem, 11vw, 3rem);
+    }
+
+    .section-products,
+    .section-about,
+    #eventos-reservas {
+        padding-inline: 1.1rem;
+    }
+
+    .section-about .about-box {
+        padding: 1.5rem 1.25rem;
+    }
+
+    .footer-contacto {
+        margin-top: 0;
+    }
+}
