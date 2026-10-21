@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" role="img" aria-label="Imagen pendiente">
+    <circle cx="200" cy="200" r="200" fill="#4a3220" />
+    <g fill="none" stroke="#d4af37" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.9">
+        <path d="M118 192h164l-15 86H133z" />
+        <path d="M140 192a60 60 0 0 1 120 0" />
+        <path d="M200 132v-24" />
+        <path d="M176 108h48" />
+    </g>
+    <text x="200" y="322" text-anchor="middle" font-family="Inter, Segoe UI, sans-serif" font-size="21"
+        fill="#f1eae0" opacity="0.85">Añade la imagen</text>
+</svg>

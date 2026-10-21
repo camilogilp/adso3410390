@@ -14,19 +14,22 @@
     <link rel="icon" type="image/png" href="images/LogoGolden.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/master.css">
+
 </head>
 
 <body>
     <header id="navbar">
-        <img class="logo-golden" src="images/LogoGolden.png" alt="Pampa Argentinian Street Food" width="236" height="236">
+        <img class="logo-golden" src="images/LogoGolden.png" alt="Pampa Argentinian Street Food" width="236"
+            height="236">
         <nav class="options" aria-label="Navegación principal">
             <a href="#hamburguesas" class="active" aria-current="true">Hamburguesas Argentinas</a>
             <a href="#postres">Postres</a>
-            <a href="#Eventos-Reservas">Eventos y Reservas</a>
+            <a href="#eventos-reservas">Eventos y Reservas</a>
         </nav>
     </header>
 
@@ -85,34 +88,105 @@
             </menu>
         </section>
 
-        <!-- HAMBURGUESAS -->
+<!-- HAMBURGUESAS -->
         <section id="hamburguesas" class="section-products">
             <h2 class="section-title">Hamburguesas Argentinas</h2>
+            <!--
+                Cada hamburguesa tiene su propio selector de imagen:
+                1) Reemplaza el src por tu foto (por ejemplo images/hamburguesas/mendocina.jpg), o
+                2) haz clic sobre la foto para elegirla desde tu computador (se guarda en el navegador).
+                Si la imagen no existe se muestra images/hamburguesas/placeholder.svg
+            -->
             <div class="cards-grid">
-                <article class="card">
-                    <h3>Mendocino</h3>
-                    <p>Carne de res, queso cheddar, cebolla caramelizada, lechuga, tomate y salsa de la casa.</p>
-                    <p class="price">$27.900</p>
+                <article class="card card--hamburguesa">
+                    <label class="card--hamburguesa__media">
+                        <input class="sr-only" type="file" id="hamburguesa-imagen-1" accept="image/*"
+                            data-preview="hamburguesa-foto-1">
+                        <img id="hamburguesa-foto-1" src="images/hamburguesas/mendocina.jpg"
+                            alt="Hamburguesa Mendocina" width="320" height="400" loading="lazy"
+                            onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
+                    </label>
+                    <div class="card--hamburguesa__body">
+                        <h3>Mendocina</h3>
+                        <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr
+                            Pechuga de pollo, chimichurri casero, salsa de vino tinto, glace de cerveza negra, cebolla
+                            caramelizada, tomates asados, queso mozarella y lechuga.
+
+                            Acompañada de papa criolla y alioli de ajo rostizado.</p>
+                        <p class="price">$27.900</p>
+                    </div>
                 </article>
-                <article class="card">
-                    <h3>Pampero</h3>
-                    <p>Doble carne, doble queso, panceta crujiente y salsa barbacoa ahumada.</p>
-                    <p class="price">$28.000</p>
+                <article class="card card--hamburguesa">
+                    <label class="card--hamburguesa__media">
+                        <input class="sr-only" type="file" id="hamburguesa-imagen-2" accept="image/*"
+                            data-preview="hamburguesa-foto-2">
+                        <img id="hamburguesa-foto-2" src="images/hamburguesas/pampera.jpg"
+                            alt="Hamburguesa Pampera" width="320" height="400" loading="lazy"
+                            onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
+                    </label>
+                    <div class="card--hamburguesa__body">
+                        <h3>Pampera</h3>
+                        <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr
+                            Pulled-pork, Huevo frito, glace de cerveza negra, chimichurri casero, cebolla caramelizada,
+                            tomates asados, queso mozarella y lechuga.
+
+                            Acompañada de papa criolla y alioli de ajo rostizado.</p>
+                        <p class="price">$29.900</p>
+                    </div>
                 </article>
-                <article class="card">
-                    <h3>Patagónico</h3>
-                    <p>Carne de cordero, queso provolone, rúcula y alioli de ajo.</p>
-                    <p class="price">$31.900</p>
+                <article class="card card--hamburguesa">
+                    <label class="card--hamburguesa__media">
+                        <input class="sr-only" type="file" id="hamburguesa-imagen-3" accept="image/*"
+                            data-preview="hamburguesa-foto-3">
+                        <img id="hamburguesa-foto-3" src="images/hamburguesas/provinciana.jpg"
+                            alt="Hamburguesa Provinciana" width="320" height="400" loading="lazy"
+                            onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
+                    </label>
+                    <div class="card--hamburguesa__body">
+                        <h3>Provinciana</h3>
+                        <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr
+                            Pechuga de pollo apanada, salsa de vino tinto, glace de cerveza negra, chimichurri casero,
+                            cebolla caramelizada, tomates asados, queso mozarella y lechuga.
+
+                            Acompañada de papa criolla y alioli de ajo rostizado.</p>
+                        <p class="price">$30.900</p>
+                    </div>
                 </article>
-                <article class="card">
-                    <h3>Iguazú</h3>
-                    <p>Carne de res, queso tybo, huevo frito, morrones asados y mayonesa casera.</p>
-                    <p class="price">$35.900</p>
+                <article class="card card--hamburguesa">
+                    <label class="card--hamburguesa__media">
+                        <input class="sr-only" type="file" id="hamburguesa-imagen-4" accept="image/*"
+                            data-preview="hamburguesa-foto-4">
+                        <img id="hamburguesa-foto-4" src="images/hamburguesas/bariloche.jpg"
+                            alt="Hamburguesa Bariloche" width="320" height="400" loading="lazy"
+                            onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
+                    </label>
+                    <div class="card--hamburguesa__body">
+                        <h3>Bariloche</h3>
+                        <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr Ropa
+                            Vieja de Pechuga de pollo, salsa de vino tinto, mermelada de tomates asados, aros de cebolla
+                            apanada, chimichurri casero, queso mozarella y lechuga.
+
+                            Acompañada de papa criolla y alioli de ajo rostizado.</p>
+                        <p class="price">$32.900</p>
+                    </div>
                 </article>
-                <article class="card">
-                    <h3>Gran Rojo</h3>
-                    <p>Triple carne, cheddar, bacon, cebolla morada y salsa picante secreta.</p>
-                    <p class="price">$34.900</p>
+                <article class="card card--hamburguesa">
+                    <label class="card--hamburguesa__media">
+                        <input class="sr-only" type="file" id="hamburguesa-imagen-5" accept="image/*"
+                            data-preview="hamburguesa-foto-5">
+                        <img id="hamburguesa-foto-5" src="images/hamburguesas/entre-rios.jpg"
+                            alt="Hamburguesa Entre Rios" width="320" height="400" loading="lazy"
+                            onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
+                    </label>
+                    <div class="card--hamburguesa__body">
+                        <h3>Entre Rios</h3>
+                        <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr,
+                            Portobello asado a la parrilla, tocineta, salsa de vino tinto, glace de cerveza negra,
+                            cebolla caramelizada, tomates asados, queso mozarella y lechuga.
+
+                            Acompañada de papa criolla y alioli de ajo rostizado.</p>
+                        <p class="price">$34.900</p>
+                    </div>
                 </article>
             </div>
         </section>
@@ -120,22 +194,62 @@
         <!-- POSTRES -->
         <section id="postres" class="section-products">
             <h2 class="section-title">Postres</h2>
+            <!--
+                Cada postre tiene su propio selector de imagen:
+                1) La foto ya está enlazada (images/postres/<nombre del postre>.png), o
+                2) haz clic sobre el círculo para elegirla desde tu computador (se guarda en el navegador).
+                Si la imagen no existe se muestra images/postres/placeholder.svg
+            -->
             <div class="cards-grid">
-                <article class="card">
+                <article class="card card--postre">
+                    <label class="card--postre__media">
+                        <input class="sr-only" type="file" id="postre-imagen-1" accept="image/*"
+                            data-preview="postre-foto-1">
+                        <img id="postre-foto-1" src="images/postres/lemon%20pie.png" alt="Lemon Pie" width="500"
+                            height="500" loading="lazy"
+                            onerror="this.onerror=null;this.src='images/postres/placeholder.svg'">
+                    </label>
+                    <p class="card--postre__hint">Clic en la foto para cambiarla</p>
                     <h3>Lemon Pie</h3>
-                    <p>Auténtica receta de limón, crema de limón, merengue italiano y toque de canela.</p>
+                    <p class="card--postre__desc">Acompañado de nueces pecanas, merengue italiano y toffee.</p>
                 </article>
-                <article class="card">
+                <article class="card card--postre">
+                    <label class="card--postre__media">
+                        <input class="sr-only" type="file" id="postre-imagen-2" accept="image/*"
+                            data-preview="postre-foto-2">
+                        <img id="postre-foto-2" src="images/postres/alfajores.png" alt="Alfajores" width="500"
+                            height="500" loading="lazy"
+                            onerror="this.onerror=null;this.src='images/postres/placeholder.svg'">
+                    </label>
+                    <p class="card--postre__hint">Clic en la foto para cambiarla</p>
                     <h3>Alfajores</h3>
-                    <p>Alfajores de maicena, rellenos de dulce de leche, bañados de chocolate o azúcar impalpable.</p>
+                    <p class="card--postre__desc">Variedad de alfajores, rellenos con dulce de leche y mermelada.</p>
                 </article>
-                <article class="card">
+                <article class="card card--postre">
+                    <label class="card--postre__media">
+                        <input class="sr-only" type="file" id="postre-imagen-3" accept="image/*"
+                            data-preview="postre-foto-3">
+                        <img id="postre-foto-3" src="images/postres/peras%20al%20cabernet.png" alt="Peras al Cabernet"
+                            width="500" height="500" loading="lazy"
+                            onerror="this.onerror=null;this.src='images/postres/placeholder.svg'">
+                    </label>
+                    <p class="card--postre__hint">Clic en la foto para cambiarla</p>
                     <h3>Peras al Cabernet</h3>
-                    <p>Peras cocidas en vino cabernet sauvignon, canela, romero y pistacho.</p>
+                    <p class="card--postre__desc">Acompañadas de helado de vainilla, almibar de cabernet suavignon y
+                        pistacho.</p>
                 </article>
-                <article class="card">
+                <article class="card card--postre">
+                    <label class="card--postre__media">
+                        <input class="sr-only" type="file" id="postre-imagen-4" accept="image/*"
+                            data-preview="postre-foto-4">
+                        <img id="postre-foto-4" src="images/postres/volcan%20de%20chocolate.png" alt="Volcán de Chocolate"
+                            width="500" height="500" loading="lazy"
+                            onerror="this.onerror=null;this.src='images/postres/placeholder.svg'">
+                    </label>
+                    <p class="card--postre__hint">Clic en la foto para cambiarla</p>
                     <h3>Volcán de Chocolate</h3>
-                    <p>Volcán de chocolate caliente, centro fundido, helado de vainilla, frambuesa y pistacho.</p>
+                    <p class="card--postre__desc">Acompañadas de helado de vainilla, almibar de cabernet suavignon y
+                        pistacho.</p>
                 </article>
             </div>
         </section>
@@ -150,13 +264,31 @@
         <div class="footer-sedes">
             <article class="sede">
                 <h3>Sede Poblado</h3>
+                <div class="sede__mapa">
+                    <iframe
+                        src="https://www.google.com/maps?q=Calle+44+%23103-45+Provenza,+Medell%C3%ADn,+Antioquia,+Colombia&amp;output=embed"
+                        title="Mapa de la Sede Poblado en Provenza, Medellín" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+                </div>
                 <p>Calle 44# 103-45 Provenza</p>
-                <p><a href="tel:+573143629459">314&nbsp;362&nbsp;9459</a></p>
+                <p><a href="tel:3145629459">314&nbsp;562&nbsp;9459</a></p>
+                <a class="sede__enlace-mapa"
+                    href="https://www.google.com/maps/search/?api=1&amp;query=Calle+44+%23103-45+Provenza,+Medell%C3%ADn,+Antioquia,+Colombia"
+                    target="_blank" rel="noopener">Ver ubicación en Google Maps</a>
             </article>
             <article class="sede">
                 <h3>Sede Laureles</h3>
+                <div class="sede__mapa">
+                    <iframe
+                        src="https://www.google.com/maps?q=Circular+74+%2339-36+Av+Nutibara,+Medell%C3%ADn,+Antioquia,+Colombia&amp;output=embed"
+                        title="Mapa de la Sede Laureles en la Av Nutibara, Medellín" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+                </div>
                 <p>Circular 74 # 39-36 Av Nutibara</p>
-                <p><a href="tel:+573143629459">314&nbsp;362&nbsp;9459</a></p>
+                <p><a href="tel:3145629459">314&nbsp;562&nbsp;9459</a></p>
+                <a class="sede__enlace-mapa"
+                    href="https://www.google.com/maps/search/?api=1&amp;query=Circular+74+%2339-36+Av+Nutibara,+Medell%C3%ADn,+Antioquia,+Colombia"
+                    target="_blank" rel="noopener">Ver ubicación en Google Maps</a>
             </article>
         </div>
 
@@ -166,8 +298,11 @@
             <a href="#">WhatsApp</a>
         </nav>
 
-        <p class="footer-bottom">Copy Right Pampa Argentinian Street Food | 2026 | Diseño y desarrollo: Juan Camilo Gil Pérez</p>
+        <p class="footer-bottom">Copy Right Pampa Argentinian Street Food | 2026 | Diseño y desarrollo: Juan Camilo Gil
+            Pérez</p>
     </footer>
+
+    <script src="js/imagenes.js" defer></script>
 </body>
 
 </html>
