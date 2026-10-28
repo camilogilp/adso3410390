@@ -26,11 +26,14 @@
     <header id="navbar">
         <img class="logo-golden" src="images/LogoGolden.png" alt="Pampa Argentinian Street Food" width="236"
             height="236">
-        <nav class="options" aria-label="Navegación principal">
+        <nav id="nav-menu" class="options" aria-label="Navegación principal">
             <a href="#hamburguesas" class="active" aria-current="true">Hamburguesas Argentinas</a>
             <a href="#postres">Postres</a>
             <a href="#eventos-reservas">Eventos y Reservas</a>
         </nav>
+        <button id="mburger" class="mburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+            <img src="images/menuH.png" alt="" aria-hidden="true">
+        </button>
     </header>
 
     <main>
@@ -46,7 +49,7 @@
         <!-- SOBRE PAMPA -->
         <section id="about" class="section-about">
             <h2 class="section-title">Sobre Pampa</h2>
-            <p class="about-lead">En Pampa llevamos el sabor de la calle argentina a tu mesa: carnes a la parrilla,
+            <p class="about-lead">En Pampa llevamos el auténtico sabor Argentino a tu mesa: carnes a la parrilla,
                 recetas familiares y el toque dorado de nuestro pan artesanal.</p>
             <p class="about-box">Nacimos con una parrilla, una receta heredada y la idea de que una buena hamburguesa
                 no necesita adornos. Hoy somos el punto de encuentro de los amantes del asado en Poblado y Laureles.
@@ -92,20 +95,16 @@
         <section id="hamburguesas" class="section-products">
             <h2 class="section-title">Hamburguesas Argentinas</h2>
             <!--
-                Cada hamburguesa tiene su propio selector de imagen:
-                1) Reemplaza el src por tu foto (por ejemplo images/hamburguesas/mendocina.jpg), o
-                2) haz clic sobre la foto para elegirla desde tu computador (se guarda en el navegador).
+                La imagen se define directamente en el HTML con el atributo src.
                 Si la imagen no existe se muestra images/hamburguesas/placeholder.svg
             -->
             <div class="cards-grid">
                 <article class="card card--hamburguesa">
-                    <label class="card--hamburguesa__media">
-                        <input class="sr-only" type="file" id="hamburguesa-imagen-1" accept="image/*"
-                            data-preview="hamburguesa-foto-1">
+                    <div class="card--hamburguesa__media">
                         <img id="hamburguesa-foto-1" src="images/hamburguesas/mendocina.jpg"
                             alt="Hamburguesa Mendocina" width="320" height="400" loading="lazy"
                             onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
-                    </label>
+                    </div>
                     <div class="card--hamburguesa__body">
                         <h3>Mendocina</h3>
                         <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr
@@ -117,13 +116,11 @@
                     </div>
                 </article>
                 <article class="card card--hamburguesa">
-                    <label class="card--hamburguesa__media">
-                        <input class="sr-only" type="file" id="hamburguesa-imagen-2" accept="image/*"
-                            data-preview="hamburguesa-foto-2">
+                    <div class="card--hamburguesa__media">
                         <img id="hamburguesa-foto-2" src="images/hamburguesas/pampera.jpg"
                             alt="Hamburguesa Pampera" width="320" height="400" loading="lazy"
                             onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
-                    </label>
+                    </div>
                     <div class="card--hamburguesa__body">
                         <h3>Pampera</h3>
                         <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr
@@ -135,13 +132,11 @@
                     </div>
                 </article>
                 <article class="card card--hamburguesa">
-                    <label class="card--hamburguesa__media">
-                        <input class="sr-only" type="file" id="hamburguesa-imagen-3" accept="image/*"
-                            data-preview="hamburguesa-foto-3">
+                    <div class="card--hamburguesa__media">
                         <img id="hamburguesa-foto-3" src="images/hamburguesas/provinciana.jpg"
                             alt="Hamburguesa Provinciana" width="320" height="400" loading="lazy"
                             onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
-                    </label>
+                    </div>
                     <div class="card--hamburguesa__body">
                         <h3>Provinciana</h3>
                         <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr
@@ -153,13 +148,11 @@
                     </div>
                 </article>
                 <article class="card card--hamburguesa">
-                    <label class="card--hamburguesa__media">
-                        <input class="sr-only" type="file" id="hamburguesa-imagen-4" accept="image/*"
-                            data-preview="hamburguesa-foto-4">
+                    <div class="card--hamburguesa__media">
                         <img id="hamburguesa-foto-4" src="images/hamburguesas/bariloche.jpg"
                             alt="Hamburguesa Bariloche" width="320" height="400" loading="lazy"
                             onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
-                    </label>
+                    </div>
                     <div class="card--hamburguesa__body">
                         <h3>Bariloche</h3>
                         <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr Ropa
@@ -171,13 +164,11 @@
                     </div>
                 </article>
                 <article class="card card--hamburguesa">
-                    <label class="card--hamburguesa__media">
-                        <input class="sr-only" type="file" id="hamburguesa-imagen-5" accept="image/*"
-                            data-preview="hamburguesa-foto-5">
+                    <div class="card--hamburguesa__media">
                         <img id="hamburguesa-foto-5" src="images/hamburguesas/entre-rios.jpg"
                             alt="Hamburguesa Entre Rios" width="320" height="400" loading="lazy"
                             onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
-                    </label>
+                    </div>
                     <div class="card--hamburguesa__body">
                         <h3>Entre Rios</h3>
                         <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr,
@@ -195,58 +186,44 @@
         <section id="postres" class="section-products">
             <h2 class="section-title">Postres</h2>
             <!--
-                Cada postre tiene su propio selector de imagen:
-                1) La foto ya está enlazada (images/postres/<nombre del postre>.png), o
-                2) haz clic sobre el círculo para elegirla desde tu computador (se guarda en el navegador).
+                La imagen se define directamente en el HTML con el atributo src.
                 Si la imagen no existe se muestra images/postres/placeholder.svg
             -->
             <div class="cards-grid">
                 <article class="card card--postre">
-                    <label class="card--postre__media">
-                        <input class="sr-only" type="file" id="postre-imagen-1" accept="image/*"
-                            data-preview="postre-foto-1">
+                    <div class="card--postre__media">
                         <img id="postre-foto-1" src="images/postres/lemon%20pie.png" alt="Lemon Pie" width="500"
                             height="500" loading="lazy"
                             onerror="this.onerror=null;this.src='images/postres/placeholder.svg'">
-                    </label>
-                    <p class="card--postre__hint">Clic en la foto para cambiarla</p>
+                    </div>
                     <h3>Lemon Pie</h3>
                     <p class="card--postre__desc">Acompañado de nueces pecanas, merengue italiano y toffee.</p>
                 </article>
                 <article class="card card--postre">
-                    <label class="card--postre__media">
-                        <input class="sr-only" type="file" id="postre-imagen-2" accept="image/*"
-                            data-preview="postre-foto-2">
+                    <div class="card--postre__media">
                         <img id="postre-foto-2" src="images/postres/alfajores.png" alt="Alfajores" width="500"
                             height="500" loading="lazy"
                             onerror="this.onerror=null;this.src='images/postres/placeholder.svg'">
-                    </label>
-                    <p class="card--postre__hint">Clic en la foto para cambiarla</p>
+                    </div>
                     <h3>Alfajores</h3>
                     <p class="card--postre__desc">Variedad de alfajores, rellenos con dulce de leche y mermelada.</p>
                 </article>
                 <article class="card card--postre">
-                    <label class="card--postre__media">
-                        <input class="sr-only" type="file" id="postre-imagen-3" accept="image/*"
-                            data-preview="postre-foto-3">
+                    <div class="card--postre__media">
                         <img id="postre-foto-3" src="images/postres/peras%20al%20cabernet.png" alt="Peras al Cabernet"
                             width="500" height="500" loading="lazy"
                             onerror="this.onerror=null;this.src='images/postres/placeholder.svg'">
-                    </label>
-                    <p class="card--postre__hint">Clic en la foto para cambiarla</p>
+                    </div>
                     <h3>Peras al Cabernet</h3>
                     <p class="card--postre__desc">Acompañadas de helado de vainilla, almibar de cabernet suavignon y
                         pistacho.</p>
                 </article>
                 <article class="card card--postre">
-                    <label class="card--postre__media">
-                        <input class="sr-only" type="file" id="postre-imagen-4" accept="image/*"
-                            data-preview="postre-foto-4">
+                    <div class="card--postre__media">
                         <img id="postre-foto-4" src="images/postres/volcan%20de%20chocolate.png" alt="Volcán de Chocolate"
                             width="500" height="500" loading="lazy"
                             onerror="this.onerror=null;this.src='images/postres/placeholder.svg'">
-                    </label>
-                    <p class="card--postre__hint">Clic en la foto para cambiarla</p>
+                    </div>
                     <h3>Volcán de Chocolate</h3>
                     <p class="card--postre__desc">Acompañadas de helado de vainilla, almibar de cabernet suavignon y
                         pistacho.</p>
@@ -303,6 +280,7 @@
     </footer>
 
     <script src="js/imagenes.js" defer></script>
+    <script src="js/menu.js" defer></script>
 </body>
 
 </html>

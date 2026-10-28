@@ -17,7 +17,7 @@ body {
 }
 
 body {
-  min-block-size: 100svh; 
+  min-block-size: 100svh;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
@@ -45,7 +45,12 @@ a {
   text-decoration-skip-ink: auto;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   text-wrap: balance;
 }
 
