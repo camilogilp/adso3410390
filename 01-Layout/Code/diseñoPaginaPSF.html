@@ -51,9 +51,7 @@
             <h2 class="section-title">Sobre Pampa</h2>
             <p class="about-lead">En Pampa llevamos el auténtico sabor Argentino a tu mesa: carnes a la parrilla,
                 recetas familiares y el toque dorado de nuestro pan artesanal.</p>
-            <p class="about-box">Nacimos con una parrilla, una receta heredada y la idea de que una buena hamburguesa
-                no necesita adornos. Hoy somos el punto de encuentro de los amantes del asado en Poblado y Laureles.
-                Ven, siéntate y deja que la parrilla haga el resto.</p>
+
             <img class="logo-full" src="images/LogoGolden.png" alt="Logotipo de Pampa Argentinian Street Food"
                 width="236" height="236" loading="lazy">
             <menu aria-label="Accesos rápidos">
@@ -91,94 +89,114 @@
             </menu>
         </section>
 
-<!-- HAMBURGUESAS -->
+        <!-- HAMBURGUESAS -->
         <section id="hamburguesas" class="section-products">
             <h2 class="section-title">Hamburguesas Argentinas</h2>
-            <!--
-                La imagen se define directamente en el HTML con el atributo src.
-                Si la imagen no existe se muestra images/hamburguesas/placeholder.svg
-            -->
-            <div class="cards-grid">
-                <article class="card card--hamburguesa">
-                    <div class="card--hamburguesa__media">
-                        <img id="hamburguesa-foto-1" src="images/hamburguesas/mendocina.jpg"
-                            alt="Hamburguesa Mendocina" width="320" height="400" loading="lazy"
-                            onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
-                    </div>
-                    <div class="card--hamburguesa__body">
-                        <h3>Mendocina</h3>
-                        <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr
-                            Pechuga de pollo, chimichurri casero, salsa de vino tinto, glace de cerveza negra, cebolla
-                            caramelizada, tomates asados, queso mozarella y lechuga.
+            <div class="carrusel-wrap">
+                <button type="button" id="hamburguesas-prev" class="carrusel-btn carrusel-btn--prev"
+                    aria-label="Anterior" aria-controls="hamburguesas-track">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M15 6 L9 12 L15 18" />
+                    </svg>
+                </button>
+                <div class="cards-grid" id="hamburguesas-track">
+                    <!-- 1. Mendocina -->
+                    <article class="card card--hamburguesa">
+                        <div class="card--hamburguesa__media">
+                            <img id="hamburguesa-foto-1" src="images/hamburguesas/_mendocina.jpg"
+                                alt="Hamburguesa Mendocina" width="320" height="400" loading="lazy"
+                                onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
+                        </div>
+                        <div class="card--hamburguesa__body">
+                            <h3>Mendocina</h3>
+                            <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr
+                                Crorizo de cerdo parrillado, chimichurri casero, glace de vino tinto, cebolla
+                                caramelizada, tomates asados, queso mozarella y lechuga.
 
-                            Acompañada de papa criolla y alioli de ajo rostizado.</p>
-                        <p class="price">$27.900</p>
-                    </div>
-                </article>
-                <article class="card card--hamburguesa">
-                    <div class="card--hamburguesa__media">
-                        <img id="hamburguesa-foto-2" src="images/hamburguesas/pampera.jpg"
-                            alt="Hamburguesa Pampera" width="320" height="400" loading="lazy"
-                            onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
-                    </div>
-                    <div class="card--hamburguesa__body">
-                        <h3>Pampera</h3>
-                        <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr
-                            Pulled-pork, Huevo frito, glace de cerveza negra, chimichurri casero, cebolla caramelizada,
-                            tomates asados, queso mozarella y lechuga.
+                                Acompañada de papa criolla y alioli de ajo rostizado.</p>
+                            <p class="price">27.900</p>
+                        </div>
+                    </article>
 
-                            Acompañada de papa criolla y alioli de ajo rostizado.</p>
-                        <p class="price">$29.900</p>
-                    </div>
-                </article>
-                <article class="card card--hamburguesa">
-                    <div class="card--hamburguesa__media">
-                        <img id="hamburguesa-foto-3" src="images/hamburguesas/provinciana.jpg"
-                            alt="Hamburguesa Provinciana" width="320" height="400" loading="lazy"
-                            onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
-                    </div>
-                    <div class="card--hamburguesa__body">
-                        <h3>Provinciana</h3>
-                        <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr
-                            Pechuga de pollo apanada, salsa de vino tinto, glace de cerveza negra, chimichurri casero,
-                            cebolla caramelizada, tomates asados, queso mozarella y lechuga.
+                    <!-- 2. Bariloche -->
+                    <article class="card card--hamburguesa">
+                        <div class="card--hamburguesa__media">
+                            <img id="hamburguesa-foto-4" src="images/hamburguesas/bariloche.png"
+                                alt="Hamburguesa Bariloche" width="320" height="400" loading="lazy"
+                                onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
+                        </div>
+                        <div class="card--hamburguesa__body">
+                            <h3>Bariloche</h3>
+                            <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr Ropa
+                                Vieja de Pechuga de pollo, salsa de vino tinto, mermelada de tomates asados, aros de cebolla
+                                apanada, chimichurri casero, queso mozarella y lechuga.
 
-                            Acompañada de papa criolla y alioli de ajo rostizado.</p>
-                        <p class="price">$30.900</p>
-                    </div>
-                </article>
-                <article class="card card--hamburguesa">
-                    <div class="card--hamburguesa__media">
-                        <img id="hamburguesa-foto-4" src="images/hamburguesas/bariloche.jpg"
-                            alt="Hamburguesa Bariloche" width="320" height="400" loading="lazy"
-                            onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
-                    </div>
-                    <div class="card--hamburguesa__body">
-                        <h3>Bariloche</h3>
-                        <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr Ropa
-                            Vieja de Pechuga de pollo, salsa de vino tinto, mermelada de tomates asados, aros de cebolla
-                            apanada, chimichurri casero, queso mozarella y lechuga.
+                                Acompañada de papa criolla y alioli de ajo rostizado.</p>
+                            <p class="price">32.900</p>
+                        </div>
+                    </article>
 
-                            Acompañada de papa criolla y alioli de ajo rostizado.</p>
-                        <p class="price">$32.900</p>
-                    </div>
-                </article>
-                <article class="card card--hamburguesa">
-                    <div class="card--hamburguesa__media">
-                        <img id="hamburguesa-foto-5" src="images/hamburguesas/entre-rios.jpg"
-                            alt="Hamburguesa Entre Rios" width="320" height="400" loading="lazy"
-                            onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
-                    </div>
-                    <div class="card--hamburguesa__body">
-                        <h3>Entre Rios</h3>
-                        <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr,
-                            Portobello asado a la parrilla, tocineta, salsa de vino tinto, glace de cerveza negra,
-                            cebolla caramelizada, tomates asados, queso mozarella y lechuga.
+                    <!-- 3. Entre Rios (centrada al cargar) -->
+                    <article class="card card--hamburguesa">
+                        <div class="card--hamburguesa__media">
+                            <img id="hamburguesa-foto-5" src="images/hamburguesas/entre-rios.jpg"
+                                alt="Hamburguesa Entre Rios" width="320" height="400" loading="lazy"
+                                onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
+                        </div>
+                        <div class="card--hamburguesa__body">
+                            <h3>Entre Rios</h3>
+                            <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr,
+                                Portobello asado a la parrilla, tocineta, salsa de vino tinto, glace de cerveza negra,
+                                cebolla caramelizada, tomates asados, queso mozarella y lechuga.
 
-                            Acompañada de papa criolla y alioli de ajo rostizado.</p>
-                        <p class="price">$34.900</p>
-                    </div>
-                </article>
+                                Acompañada de papa criolla y alioli de ajo rostizado.</p>
+                            <p class="price">34.900</p>
+                        </div>
+                    </article>
+
+                    <!-- 4. Provinciana -->
+                    <article class="card card--hamburguesa">
+                        <div class="card--hamburguesa__media">
+                            <img id="hamburguesa pampera" src="images/hamburguesas/provinciana.png"
+                                alt="Hamburguesa Provinciana" width="350" height="500" loading="lazy"
+                                onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
+                        </div>
+                        <div class="card--hamburguesa__body">
+                            <h3>Provinciana</h3>
+                            <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr
+                                Pechuga de pollo apanada, salsa de vino tinto, glace de cerveza negra, chimichurri casero,
+                                cebolla caramelizada, tomates asados, queso mozarella y lechuga.
+
+                                Acompañada de papa criolla y alioli de ajo rostizado.</p>
+                            <p class="price">30.900</p>
+                        </div>
+                    </article>
+
+                    <!-- 5. Pampera -->
+                    <article class="card card--hamburguesa">
+                        <div class="card--hamburguesa__media">
+                            <img id="hamburguesa-foto-2" src="images/hamburguesas/pampera.png"
+                                alt="Hamburguesa Pampera" width="320" height="400" loading="lazy"
+                                onerror="this.onerror=null;this.src='images/hamburguesas/placeholder.svg'">
+                        </div>
+                        <div class="card--hamburguesa__body">
+                            <h3>Pampera</h3>
+                            <p>Deliciosa hamburgesa con pan brioche de hierbas provenzales, carne 100% res de 160 gr
+                                Pulled-pork, Huevo frito, glace de cerveza negra, chimichurri casero, cebolla caramelizada,
+                                tomates asados, queso mozarella y lechuga.
+
+                                Acompañada de papa criolla y alioli de ajo rostizado.</p>
+                            <p class="price">29.900</p>
+                        </div>
+                    </article>
+                </div>
+
+                <button type="button" id="hamburguesas-next" class="carrusel-btn carrusel-btn--next"
+                    aria-label="Siguiente" aria-controls="hamburguesas-track">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M9 6 L15 12 L9 18" />
+                    </svg>
+                </button>
             </div>
         </section>
 
@@ -186,48 +204,68 @@
         <section id="postres" class="section-products">
             <h2 class="section-title">Postres</h2>
             <!--
-                La imagen se define directamente en el HTML con el atributo src.
-                Si la imagen no existe se muestra images/postres/placeholder.svg
+                Orden sin cambios: Lemon Pie → Alfajores → Peras al Cabernet → Volcán de Chocolate.
+                Lemon Pie se centra al cargar el carrusel en tablet.
             -->
-            <div class="cards-grid">
-                <article class="card card--postre">
-                    <div class="card--postre__media">
-                        <img id="postre-foto-1" src="images/postres/lemon%20pie.png" alt="Lemon Pie" width="500"
-                            height="500" loading="lazy"
-                            onerror="this.onerror=null;this.src='images/postres/placeholder.svg'">
-                    </div>
-                    <h3>Lemon Pie</h3>
-                    <p class="card--postre__desc">Acompañado de nueces pecanas, merengue italiano y toffee.</p>
-                </article>
-                <article class="card card--postre">
-                    <div class="card--postre__media">
-                        <img id="postre-foto-2" src="images/postres/alfajores.png" alt="Alfajores" width="500"
-                            height="500" loading="lazy"
-                            onerror="this.onerror=null;this.src='images/postres/placeholder.svg'">
-                    </div>
-                    <h3>Alfajores</h3>
-                    <p class="card--postre__desc">Variedad de alfajores, rellenos con dulce de leche y mermelada.</p>
-                </article>
-                <article class="card card--postre">
-                    <div class="card--postre__media">
-                        <img id="postre-foto-3" src="images/postres/peras%20al%20cabernet.png" alt="Peras al Cabernet"
-                            width="500" height="500" loading="lazy"
-                            onerror="this.onerror=null;this.src='images/postres/placeholder.svg'">
-                    </div>
-                    <h3>Peras al Cabernet</h3>
-                    <p class="card--postre__desc">Acompañadas de helado de vainilla, almibar de cabernet suavignon y
-                        pistacho.</p>
-                </article>
-                <article class="card card--postre">
-                    <div class="card--postre__media">
-                        <img id="postre-foto-4" src="images/postres/volcan%20de%20chocolate.png" alt="Volcán de Chocolate"
-                            width="500" height="500" loading="lazy"
-                            onerror="this.onerror=null;this.src='images/postres/placeholder.svg'">
-                    </div>
-                    <h3>Volcán de Chocolate</h3>
-                    <p class="card--postre__desc">Acompañadas de helado de vainilla, almibar de cabernet suavignon y
-                        pistacho.</p>
-                </article>
+            <div class="carrusel-wrap">
+                <button type="button" id="postres-prev" class="carrusel-btn carrusel-btn--prev"
+                    aria-label="Anterior" aria-controls="postres-track">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M15 6 L9 12 L15 18" />
+                    </svg>
+                </button>
+
+                <div class="cards-grid" id="postres-track">
+                    <article class="card card--postre">
+                        <div class="card--postre__media">
+                            <img id="postre-foto-1" src="images/postres/lemon%20pie.png" alt="Lemon Pie" width="500"
+                                height="500" loading="lazy"
+                                onerror="this.onerror=null;this.src='images/postres/placeholder.svg'">
+                        </div>
+                        <h3>Lemon Pie</h3>
+                        <p class="card--postre__desc">Acompañado de nueces pecanas, merengue italiano y toffee.</p>
+                        <p class="precio"> 13.900</p>
+                    </article>
+                    <article class="card card--postre">
+                        <div class="card--postre__media">
+                            <img id="postre-foto-2" src="images/postres/alfajores.png" alt="Alfajores" width="500"
+                                height="500" loading="lazy"
+                                onerror="this.onerror=null;this.src='images/postres/placeholder.svg'">
+                        </div>
+                        <h3>Alfajores</h3>
+                        <p class="card--postre__desc">Variedad de alfajores, rellenos con dulce de leche y mermelada.</p>
+                        <p class="Alfajores"> 14.900</p>
+                    </article>
+                    <article class="card card--postre">
+                        <div class="card--postre__media">
+                            <img id="postre-foto-3" src="images/postres/peras%20al%20cabernet.png" alt="Peras al Cabernet"
+                                width="500" height="500" loading="lazy"
+                                onerror="this.onerror=null;this.src='images/postres/placeholder.svg'">
+                        </div>
+                        <h3>Peras al Cabernet</h3>
+                        <p class="card--postre__desc">Acompañadas de helado de vainilla, almibar de cabernet suavignon y
+                            pistacho.</p>
+                        <p class="Peras al cabernet">14.900</p>
+                    </article>
+                    <article class="card card--postre">
+                        <div class="card--postre__media">
+                            <img id="postre-foto-4" src="images/postres/volcan%20de%20chocolate.png" alt="Volcán de Chocolate"
+                                width="500" height="500" loading="lazy"
+                                onerror="this.onerror=null;this.src='images/postres/placeholder.svg'">
+                        </div>
+                        <h3>Volcán de Chocolate</h3>
+                        <p class="card--postre__desc">Acompañadas de helado de vainilla, almibar de cabernet suavignon y
+                            pistacho.</p>
+                        <p class="Volcan ede Chocolate">15.900</p>
+                    </article>
+                </div>
+
+                <button type="button" id="postres-next" class="carrusel-btn carrusel-btn--next"
+                    aria-label="Siguiente" aria-controls="postres-track">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M9 6 L15 12 L9 18" />
+                    </svg>
+                </button>
             </div>
         </section>
     </main>
@@ -281,6 +319,7 @@
 
     <script src="js/imagenes.js" defer></script>
     <script src="js/menu.js" defer></script>
+    <script src="js/carrusel.js" defer></script>
 </body>
 
 </html>

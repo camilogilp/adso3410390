@@ -302,7 +302,6 @@ body {
     text-align: center;
 }
 
-/* ✅ CAMBIO: mismo hover que .card:hover de las hamburguesas */
 .card--postre:hover {
     border-color: var(--color-flat);
     transform: translateY(-4px);
@@ -615,53 +614,422 @@ body {
     }
 }
 
+/* ============================================================
+   ===== Responsive — Móvil (<601px) =====
+   NOTA: la regla de postres en 2 columnas se ha ELIMINADO
+   (ver CAMBIO más abajo) porque ahora #postres .cards-grid
+   es un carrusel horizontal (flex) en móvil.
+   ============================================================ */
 @media (max-width: 600px) {
     :root {
-        --navbar-height: 9rem;
+        --navbar-height: 4.5rem;
     }
 
+    /* ---------- Navbar ---------- */
     #navbar {
-        flex-direction: column;
-        justify-content: center;
-        gap: 0.6rem;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0;
         height: auto;
         min-height: var(--navbar-height);
-        padding: 0.75rem 1rem;
+        padding: 0.6rem 1rem;
     }
 
     #navbar .logo-golden {
-        height: 3.4rem;
+        height: 3rem;
     }
 
     #mburger {
-        align-self: flex-end;
-        margin-left: 0;
+        display: block;
+        order: 2;
+        margin-left: auto;
+        align-self: center;
     }
 
     #navbar .options {
-        gap: 0.7rem 1.1rem;
+        order: 3;
+        width: 100%;
         justify-content: center;
     }
 
     #navbar .options a {
         font-size: 0.95rem;
+        padding: 0.85rem 0.8rem;
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+        min-height: 100svh;
     }
 
     .hero-overlay h1 {
-        font-size: clamp(2.2rem, 11vw, 3rem);
+        font-size: clamp(1.9rem, 9vw, 2.8rem);
+        line-height: 1.15;
     }
 
-    .section-products,
-    .section-about,
+    /* ---------- Títulos de sección ---------- */
+    .section-title {
+        font-size: clamp(1.8rem, 7vw, 2.4rem);
+        margin-bottom: 1.75rem;
+    }
+
+    /* ---------- Secciones ---------- */
+    .section-products {
+        padding: 3rem 1rem;
+    }
+
+    /* ---------- Hamburguesas (1 columna) ---------- */
+    .cards-grid {
+        gap: 1rem;
+    }
+
+    .card--hamburguesa__body {
+        padding: 1rem 1.15rem 1.25rem;
+        gap: 0.6rem;
+    }
+
+    .card--hamburguesa__body p {
+        font-size: 0.95rem;
+    }
+
+    .card--hamburguesa h3 {
+        font-size: 1.5rem;
+    }
+
+    /* ---------- Postres ----------
+       CAMBIO: se ELIMINÓ la regla
+         #postres .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem 0.9rem; }
+       porque en móvil ahora el carrusel (flex) controla el layout.
+       Se conservan los ajustes visuales de .card--postre. */
+    .card--postre {
+        padding: 0.5rem 0.25rem 1rem;
+    }
+
+    .card--postre h3 {
+        font-size: 1.15rem;
+    }
+
+    .card--postre__desc {
+        font-size: 0.82rem;
+        line-height: 1.4;
+    }
+
+    /* ---------- Sobre Pampa ---------- */
+    .section-about {
+        padding: 3rem 1rem;
+        gap: 1.5rem;
+    }
+
+    .section-about p {
+        font-size: 0.98rem;
+    }
+
+    .section-about .about-lead {
+        font-size: 1.05rem;
+    }
+
+    .section-about .logo-full {
+        height: clamp(120px, 40vw, 200px);
+    }
+
+    .section-about menu {
+        gap: 0.9rem;
+    }
+
+    .section-about menu li {
+        width: 100%;
+    }
+
+    .section-about menu a {
+        min-height: 60px;
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .section-about menu a svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    /* ---------- Footer / Eventos y Reservas ---------- */
     #eventos-reservas {
-        padding-inline: 1.1rem;
-    }
-
-    .section-about .about-box {
-        padding: 1.5rem 1.25rem;
+        padding: 3rem 1rem 1.5rem;
     }
 
     .footer-contacto {
-        margin-top: 0;
+        margin: 0 auto 1.75rem;
+        font-size: 0.98rem;
+    }
+
+    .footer-sedes {
+        gap: 1rem;
+        margin-bottom: 1.75rem;
+    }
+
+    .sede {
+        padding: 1rem;
+    }
+
+    .sede__mapa {
+        aspect-ratio: 16 / 10;
+    }
+
+    .sede h3 {
+        font-size: 1.3rem;
+    }
+
+    .sede p {
+        font-size: 0.9rem;
+    }
+
+    /* ---------- Redes sociales ---------- */
+    .footer-social {
+        gap: 0.6rem;
+        margin-bottom: 1.75rem;
+    }
+
+    .footer-social a {
+        flex: 1 1 auto;
+        min-width: 100px;
+        padding: 0.55rem 1rem;
+        font-size: 0.85rem;
+        text-align: center;
+    }
+
+    .footer-bottom {
+        font-size: 0.78rem;
+        line-height: 1.5;
+    }
+}
+
+/* ============================================================
+   ===== Responsive — Móvil muy pequeño (≤420px) =====
+   ============================================================ */
+@media (max-width: 420px) {
+    .hero-overlay h1 {
+        font-size: 1.7rem;
+    }
+
+    .section-title {
+        font-size: 1.55rem;
+    }
+
+    .card--hamburguesa h3 {
+        font-size: 1.35rem;
+    }
+
+    .card--hamburguesa__body {
+        padding: 0.9rem 1rem 1.1rem;
+    }
+
+    .card--hamburguesa__body p {
+        font-size: 0.9rem;
+    }
+
+    .card--postre h3 {
+        font-size: 1rem;
+    }
+
+    .card--postre__desc {
+        font-size: 0.78rem;
+    }
+
+    .footer-social a {
+        min-width: 80px;
+        font-size: 0.8rem;
+    }
+}
+
+/* ============================================================
+   ===== Carrusel horizontal — Móvil + Tablet (≤1024px) =====
+   CAMBIO: antes era @media (min-width: 601px) and (max-width: 1024px).
+   Ahora aplica también a móvil. En escritorio (>1024px) NO se
+   activa y se conserva el grid original.
+   ============================================================ */
+
+.carrusel-wrap {
+    position: relative;
+}
+
+/* Botones ocultos por defecto (solo se muestran dentro del bloque
+   de carrusel ≤1024px). Así quedan ocultos en escritorio. */
+.carrusel-btn {
+    display: none;
+}
+
+@media (max-width: 1024px) {
+
+    #hamburguesas .cards-grid,
+    #postres .cards-grid {
+        display: flex;
+        flex-wrap: nowrap;
+        max-width: none;
+        margin-inline: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        padding-block: 1rem;
+    }
+
+    #hamburguesas .cards-grid::-webkit-scrollbar,
+    #postres .cards-grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Tablet: ancho de tarjeta por clamp. En móvil se sobreescribe
+       más abajo con --card-w en unidades vw. */
+    #hamburguesas .cards-grid {
+        --card-w: clamp(240px, 30vw, 300px);
+        gap: 0.8rem;
+        padding-inline: calc(50% - var(--card-w) / 2);
+    }
+
+    #postres .cards-grid {
+        --card-w: clamp(220px, 26vw, 250px);
+        gap: 0.8rem;
+        padding-inline: calc(50% - var(--card-w) / 2);
+    }
+
+    #hamburguesas .card--hamburguesa,
+    #postres .card--postre {
+        flex: 0 0 var(--card-w);
+        width: var(--card-w);
+        scroll-snap-align: center;
+        transition: filter 0.35s ease, opacity 0.35s ease,
+            transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    /* Efecto de iluminación central: tarjetas no centradas con blur
+       y oscurecimiento. */
+    #hamburguesas .card--hamburguesa,
+    #postres .card--postre {
+        filter: blur(1.5px) brightness(0.65);
+        opacity: 0.75;
+    }
+
+    #hamburguesas .card--hamburguesa.is-center,
+    #postres .card--postre.is-center {
+        filter: blur(0) brightness(1);
+        opacity: 1;
+        transform: scale(1.03);
+        z-index: 2;
+        box-shadow: 0 0 30px rgba(212, 175, 55, 0.35);
+    }
+
+    /* En el carrusel, el hover no debe alterar el estado del efecto. */
+    #hamburguesas .card--hamburguesa:hover,
+    #postres .card--postre:hover {
+        transform: none;
+    }
+
+    #hamburguesas .card--hamburguesa.is-center:hover,
+    #postres .card--postre.is-center:hover {
+        transform: scale(1.03);
+    }
+
+    /* Botones redondos con flecha triangular. */
+    .carrusel-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        border: 2px solid var(--color-flat);
+        border-radius: 50%;
+        background-color: rgba(42, 27, 15, 0.7);
+        color: var(--color-flat);
+        cursor: pointer;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        transition: background-color 0.2s ease, color 0.2s ease,
+            opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .carrusel-btn--prev {
+        left: 0.5rem;
+    }
+
+    .carrusel-btn--next {
+        right: 0.5rem;
+    }
+
+    .carrusel-btn svg {
+        width: 24px;
+        height: 24px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .carrusel-btn:hover:not(:disabled) {
+        background-color: var(--color-flat);
+        color: var(--color-expresso);
+    }
+
+    .carrusel-btn:disabled {
+        opacity: 0.35;
+        cursor: default;
+    }
+
+    .carrusel-btn:focus-visible {
+        outline: 2px solid var(--color-flat);
+        outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        #hamburguesas .cards-grid,
+        #postres .cards-grid {
+            scroll-behavior: auto;
+        }
+
+        #hamburguesas .card--hamburguesa,
+        #postres .card--postre,
+        #hamburguesas .card--hamburguesa.is-center,
+        #postres .card--postre.is-center {
+            filter: none;
+            opacity: 1;
+            transition: none;
+        }
+    }
+}
+
+/* ============================================================
+   ===== Ajustes del carrusel — Móvil (<601px) =====
+   Se colocan AL FINAL para tener prioridad sobre el bloque
+   @media (max-width: 1024px) del carrusel (misma especificidad,
+   mayor orden de aparición).
+   ============================================================ */
+@media (max-width: 600px) {
+    /* Ancho de tarjeta adaptado a pantallas estrechas sin deformar. */
+    #hamburguesas .cards-grid {
+        --card-w: 82vw;
+    }
+
+    #postres .cards-grid {
+        --card-w: 62vw;
+    }
+
+    /* Botones ligeramente más pequeños para no tapar la tarjeta
+       central en pantallas estrechas. Siguen siendo redondos. */
+    .carrusel-btn {
+        width: 38px;
+        height: 38px;
+    }
+
+    .carrusel-btn svg {
+        width: 20px;
+        height: 20px;
     }
 }
