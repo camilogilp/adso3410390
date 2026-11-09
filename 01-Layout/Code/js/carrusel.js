@@ -11,7 +11,7 @@
 (function () {
     "use strict";
 
-    // Ahora se activa en móvil + tablet; se desactiva solo en escritorio.
+    // CAMBIO: ahora se activa en móvil + tablet; solo se desactiva en escritorio.
     const MEDIA = window.matchMedia("(max-width: 1024px)");
     const carousels = [];      // { track, center() }
     let listenersAttached = false;

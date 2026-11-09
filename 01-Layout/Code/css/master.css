@@ -616,9 +616,8 @@ body {
 
 /* ============================================================
    ===== Responsive — Móvil (<601px) =====
-   NOTA: la regla de postres en 2 columnas se ha ELIMINADO
-   (ver CAMBIO más abajo) porque ahora #postres .cards-grid
-   es un carrusel horizontal (flex) en móvil.
+   CAMBIO: se ELIMINÓ la regla de postres en 2 columnas porque
+   ahora #postres .cards-grid es un carrusel horizontal (flex).
    ============================================================ */
 @media (max-width: 600px) {
     :root {
@@ -680,7 +679,7 @@ body {
         padding: 3rem 1rem;
     }
 
-    /* ---------- Hamburguesas (1 columna) ---------- */
+    /* ---------- Hamburguesas ---------- */
     .cards-grid {
         gap: 1rem;
     }
@@ -699,9 +698,9 @@ body {
     }
 
     /* ---------- Postres ----------
-       CAMBIO: se ELIMINÓ la regla
+       CAMBIO: se ELIMINÓ
          #postres .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem 0.9rem; }
-       porque en móvil ahora el carrusel (flex) controla el layout.
+       porque ahora #postres .cards-grid es un carrusel (flex).
        Se conservan los ajustes visuales de .card--postre. */
     .card--postre {
         padding: 0.5rem 0.25rem 1rem;
@@ -853,8 +852,8 @@ body {
     position: relative;
 }
 
-/* Botones ocultos por defecto (solo se muestran dentro del bloque
-   de carrusel ≤1024px). Así quedan ocultos en escritorio. */
+/* Botones ocultos por defecto (solo se muestran dentro del
+   bloque de carrusel ≤1024px). Así quedan ocultos en escritorio. */
 .carrusel-btn {
     display: none;
 }
@@ -921,7 +920,7 @@ body {
         box-shadow: 0 0 30px rgba(212, 175, 55, 0.35);
     }
 
-    /* En el carrusel, el hover no debe alterar el estado del efecto. */
+    /* En el carrusel, el hover no debe alterar el efecto. */
     #hamburguesas .card--hamburguesa:hover,
     #postres .card--postre:hover {
         transform: none;
@@ -988,6 +987,12 @@ body {
         outline-offset: 3px;
     }
 
+    /* En carrusel, evitar que las tarjetas se estiren raro cuando
+       una descripción se expande (cada una con su altura). */
+    #hamburguesas .card--hamburguesa {
+        align-self: flex-start;
+    }
+
     @media (prefers-reduced-motion: reduce) {
         #hamburguesas .cards-grid,
         #postres .cards-grid {
@@ -1008,8 +1013,7 @@ body {
 /* ============================================================
    ===== Ajustes del carrusel — Móvil (<601px) =====
    Se colocan AL FINAL para tener prioridad sobre el bloque
-   @media (max-width: 1024px) del carrusel (misma especificidad,
-   mayor orden de aparición).
+   @media (max-width: 1024px) del carrusel.
    ============================================================ */
 @media (max-width: 600px) {
     /* Ancho de tarjeta adaptado a pantallas estrechas sin deformar. */
@@ -1021,8 +1025,7 @@ body {
         --card-w: 62vw;
     }
 
-    /* Botones ligeramente más pequeños para no tapar la tarjeta
-       central en pantallas estrechas. Siguen siendo redondos. */
+    /* Botones más pequeños para no tapar la tarjeta central. */
     .carrusel-btn {
         width: 38px;
         height: 38px;
@@ -1031,5 +1034,89 @@ body {
     .carrusel-btn svg {
         width: 20px;
         height: 20px;
+    }
+}
+
+/* ============================================================
+   ===== Toggle descripción — Hamburguesas =====
+   Estado inicial truncado (~3 líneas) con degradado inferior.
+   Expandido: descripción completa con transición suave.
+   El precio (.price) permanece SIEMPRE visible.
+   ============================================================ */
+
+/* Triggers: imagen y título clickables. */
+.card--hamburguesa__media img,
+.card--hamburguesa h3 {
+    cursor: pointer;
+}
+
+.card--hamburguesa__media img:focus-visible,
+.card--hamburguesa h3:focus-visible {
+    outline: 2px solid var(--color-flat);
+    outline-offset: 3px;
+}
+
+/* Contenedor animable de la descripción.
+   max-height lo controla JS (para precisión en px).
+   Este valor es solo un fallback para el instante previo a que
+   JS tome el control. */
+.desc-wrap {
+    position: relative;
+    overflow: hidden;
+    max-height: 4.65em; /* ~3 líneas */
+    transition: max-height 0.35s ease;
+}
+
+.desc-wrap > p {
+    margin: 0;
+}
+
+/* Degradado inferior cuando está colapsada y el contenido
+   realmente está truncado (clase .desc-truncatable puesta por JS). */
+.desc-wrap::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1.5em;
+    background: linear-gradient(to bottom, transparent, var(--color-cream));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.card--hamburguesa.desc-collapsed.desc-truncatable .desc-wrap::after {
+    opacity: 1;
+}
+
+/* Indicador chevron ▾ / ▴ junto al h3. */
+.card--hamburguesa h3::after {
+    content: " \25BE"; /* ▾ */
+    display: inline-block;
+    margin-left: 0.35em;
+    font-size: 0.72em;
+    vertical-align: 0.08em;
+    color: var(--color-expresso);
+    opacity: 0.75;
+    transition: transform 0.3s ease;
+}
+
+.card--hamburguesa:not(.desc-collapsed) h3::after {
+    transform: rotate(180deg);
+}
+
+/* Respeto de prefers-reduced-motion: sin transiciones. */
+@media (prefers-reduced-motion: reduce) {
+    .desc-wrap {
+        transition: none;
+    }
+
+    .desc-wrap::after {
+        transition: none;
+    }
+
+    .card--hamburguesa h3::after {
+        transition: none;
     }
 }
