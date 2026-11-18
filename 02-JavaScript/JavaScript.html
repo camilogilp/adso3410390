@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JavaScript - ADSO 3410390</title>
     <link rel="stylesheet" href="../src/css/master.css">
+    <link rel="stylesheet" href="navigation.css">
     <style>
         body {
             position: relative;
@@ -28,48 +29,127 @@
         }
         header img {
             border: 4px solid #060606;
+            width: 170px;
+            height: 170px;
+            margin: 1rem auto;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        /* Menú de temas: conserva el fondo amarillo y toma el acento de Layout. */
+        header menu.js-menu {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: .85rem;
+            width: min(100%, 520px);
+            margin: 1.5rem auto .5rem;
+            padding: 0;
+        }
+        header menu.js-menu a:is(:link, :visited) {
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            gap: .85rem;
+            width: 100%;
+            min-height: 88px;
+            padding: .8rem 1rem;
+            color: #fffc;
+            text-decoration: none;
+            background: rgb(31, 31, 41);
+            border: 1px solid rgba(0, 0, 139, .22);
+            border-radius: 1rem;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, .14);
+            transition: background-color .2s ease, transform .2s ease, box-shadow .2s ease;
+        }
+        header menu.js-menu a:hover {
+            color: #fff;
+            background: darkblue;
+            transform: translateY(-3px);
+            box-shadow: 0 9px 18px rgba(0, 0, 60, .25);
+        }
+        header menu.js-menu a:focus-visible {
+            outline: 3px solid #111;
+            outline-offset: 3px;
+        }
+        header menu.js-menu a span {
+            display: grid;
+            flex: 0 0 54px;
+            width: 54px;
+            height: 54px;
+            place-items: center;
+            color: #fff;
+            background: darkblue;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        header menu.js-menu a:hover span { background: #0009; }
+        header menu.js-menu a aside {
+            display: flex;
+            min-width: 0;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            margin: 0;
+        }
+        header menu.js-menu a h3 {
+            margin: 0;
+            color: inherit;
+            font-size: clamp(.95rem, 2vw, 1.12rem);
+            font-weight: 500;
+            text-align: left;
+        }
+        header menu.js-menu a small {
+            margin-top: .2rem;
+            color: #fffc;
+            font-size: .75rem;
+            font-weight: 300;
+            line-height: 1.35;
+        }
+        @media (max-width: 600px) {
+            header img { width: 145px; height: 145px; }
+            header menu.js-menu { gap: .65rem; }
+            header menu.js-menu a:is(:link, :visited) { min-height: 76px; }
         }
     </style>
 </head>
 <body>
-    <a href="../index.html" class="btn-volver" title="Volver al menú principal">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M15 18l-6-6 6-6" />
-        </svg>
+    <a href="../index.html" class="btn-volver home-button" data-tooltip="Home" aria-label="Home">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.8 12 3l9 7.8M5.5 9.5V21h13V9.5M9.5 21v-7h5v7" /></svg>
     </a>
 
     <main>
         <header>
             <h1><strong>02. JavaScript</strong></h1>
              <img src="imgs/logo-js.png" alt="JavaScript">
-            <menu aria-label="Temas de JavaScript">
+            <menu class="js-menu" aria-label="Temas de JavaScript">
                 <a href="01-eventos.html">
                     <span>01</span>
                     <aside><h3>Eventos</h3></aside>
                 </a>
                 <a href="02-metodos-matematicos.html">
                     <span>02</span>
-                    <aside><h3>Métodos matemáticos</h3><small>Use for advanced calculations</small></aside>
+                    <aside><h3>Métodos matemáticos</h3><small>Redondeo, potencias y valores aleatorios</small></aside>
                 </a>
                 <a href="03-arreglos.html">
                     <span>03</span>
-                    <aside><h3>Arreglos</h3><small>manipulate arrays</small></aside>
+                    <aside><h3>Arreglos</h3><small>Organiza y recorre colecciones</small></aside>
                 </a>
                 <a href="04-eventos-tiempo.html">
                     <span>04</span>
-                    <aside><h3>Eventos de tiempo</h3><small>handle time-based intervals</small></aside>
+                    <aside><h3>Eventos de tiempo</h3><small>Controla acciones por intervalos</small></aside>
                 </a>
                 <a href="05-local-storage.html">
                     <span>05</span>
-                    <aside><h3>Local Storage</h3><small>Store data locally in the browser</small></aside>
+                    <aside><h3>Local Storage</h3><small>Guarda datos en el navegador</small></aside>
                 </a>
                 <a href="06-json.html">
                     <span>06</span>
-                    <aside><h3>JSON</h3><small>Text format for data exchange</small></aside>
+                    <aside><h3>JSON</h3><small>Intercambia datos en formato de texto</small></aside>
                 </a>
                 <a href="07-onenterframe.html">
                     <span>07</span>
-                    <aside><h3>onenterframe</h3><small>execute code on each frame</small></aside>
+                    <aside><h3>onenterframe</h3><small>Ejecuta código en cada fotograma</small></aside>
                 </a>
                 <a href="08-objetos.html">
                     <span>08</span>
@@ -80,6 +160,7 @@
     </main>
 </body>
 </html>
+
 
 
 
