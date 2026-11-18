@@ -1,247 +1,199 @@
-/* ============================================================
-   FUENTES Y RESET
-   ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+/* GOOGLE FONTS: POPPINS*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* ============================================================
-   FONDO DEGRADADO CON ANIMACION
-   ============================================================ */
 body {
-    background: linear-gradient(2deg, #8370eb, #9005c8);
-    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(2deg, #9889ea, #ae32df);
+    background: linear-gradient(45deg, rgb(133, 132, 131), rgb(0, 0, 0));
+    color: aliceblue;
+    font-family: Poppins, serif;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     min-height: 100dvh;
-    padding: 1.5rem;
-}
 
-/* ============================================================
-   ESTILOS PRINCIPALES
-   ============================================================ */
-main {
-    max-width: 600px;
-    width: 100%;
-    background: rgb(190, 191, 219);
-    backdrop-filter: blur(4px);
-    border-radius: 2rem;
-    padding: 2rem 1.5rem;
-    box-shadow: 0 15px 35px rgb(8, 8, 8);
-    transition: all 0.2s;
-    margin-top: 0;
-}
+    nav.back {
+        align-items: center;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        height: 40px;
+        left: 8px;
+        opacity: .6;
+        padding: 0.4rem;
+        position: fixed;
+        top: 8px;
+        transform: scale(.8);
+        transition: all 0.4s ease-in;
+        width: 40px;
 
-header {
-    text-align: center;
-}
+        &:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+    }
 
-header h1 {
-    border-bottom: 2px solid rgba(167, 6, 6, 0.2);
-    font-size: 2.8rem;
-    font-weight: 200;
-    padding-bottom: 0.3rem;
-    margin-bottom: 1rem;
-    letter-spacing: 1px;
-}
+    &.mainmenu.layout {
+        background: linear-gradient(45deg, darkblue, black);
+        
+        main {
+            width: 380px;
+            header {
+                h1 {
+                    margin: 0;
+                }
 
-header img {
-    border: 4px solid #dde413;
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    object-position: top;
-    display: inline-block;
-    margin: 0 auto 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
+                h3 {
+                    font-weight: 200;
+                }
 
-header h2 {
-    text-transform: uppercase;
-    font-weight: 600;
-    font-size: 1.8rem;
-    margin-bottom: 0.2rem;
-    color: #1a1a2e;
-}
+                img {
+                    background-color: #0003;
+                }
+            }
 
-header h3 {
-    font-weight: 400;
-    font-size: 1.1rem;
-    color: #2d2d44;
-    margin-bottom: 0.1rem;
-}
+            menu {
+                gap: 0.4rem;
 
-header h4 {
-    font-weight: 300;
-    font-size: 1rem;
-    color: #3d3d5c;
-    margin-bottom: 0.1rem;
-}
+                a:is(:link, :visited) {
+                    span {
+                        background-color: darkblue;
+                        
+                    }
 
-header h5 {
-    font-weight: 500;
-    font-size: 1rem;
-    color: #1e1e32;
-    margin-bottom: 1.8rem;
-}
+                    aside {
+                        h3 {
+                            font-size: 1rem;
+                        }
+                    }
 
-/* ============================================================
-   MENU EN COLUMNA (FLEX)
-   ============================================================ */
-menu {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1.2rem;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
+                    &:is(:hover) {
+                        background-color: darkblue;
+                    }
+                }
+            }
+        }
+    }
 
-menu a {
-    max-width: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background: rgba(232, 227, 227, 0.7);
-    backdrop-filter: blur(2px);
-    border-radius: 5rem;
-    padding: 0.5rem 0.8rem 0.5rem 0.5rem;
-    color: #171616;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-sizing: border-box;
-    cursor: pointer;
-}
+    main {
+        background: linear-gradient(to bottom, #0009, #0000);
+        border-radius: 0.4rem;
+        min-width: 380px;
+        padding: 1rem;
+    }
 
-menu a:hover {
-    background-color: #6354e8;
-    transform: scale(1.03) translateX(6px);
-    box-shadow: 0 8px 20px rgb(19, 18, 18);
-    color: #0b0b0b;
-    border-color: #8dddeb;
-}
+    /*MAIN MENU*/
+    &.mainmenu {
+        main {
 
-menu a:hover span {
-    background-color: #052feb;
-    color: #060606;
-}
+            header {
+                h1 {
+                    border-bottom: 2px solid #fff9;
+                    font-size: 3.2rem;
+                    font-weight: 400;
+                    text-align: center;
+                }
 
-menu a:hover small {
-    color: #fff9;
-}
+                img {
+                    border: 4px solid #fff9;
+                    border-radius: 50%;
+                    display: flex;
+                    height: 280px;
+                    margin: auto;
+                    object-fit: cover;
+                    width: 280px;
+                }
 
-menu a span {
-    background-color: #3944e2;
-    color: #ffffff;
-    font-size: 2rem;
-    font-weight: 600;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: background 0.3s;
-}
+                h2 {
+                    font-weight: 500;
+                    text-align: center;
+                    text-transform: uppercase;
+                }
 
-menu a aside {
-    margin-left: 0.8rem;
-    text-align: left;
-    flex: 1;
-}
+                h3 {
+                    font-weight: 400;
+                    margin: 0;
+                    text-align: center;
+                }
 
-menu a aside h3 {
-    font-size: 1.4rem;
-    font-weight: 500;
-    margin: 0;
-    line-height: 1.2;
-}
+                h4 {
+                    font-size: 0.8rem;
+                    font-weight: 400;
+                    margin: 0;
+                    text-align: center;
 
-menu a aside small {
-    font-size: 0.8rem;
-    color: #000000;
-    font-weight: 300;
-    transition: color 0.3s;
-}
+                }
 
-/* ============================================================
-   BOTON DE NAVEGACION (VOLVER)
-   ============================================================ */
-.btn-volver {
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #f1f1f5;
-    color: #090909;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    border: none;
-    text-decoration: none;
-    z-index: 999;
-}
+                h5 {
+                    font-size: 0.8rem;
+                    font-weight: 500;
+                    margin: 0;
+                    text-align: center;
+                }
+            }
 
-.btn-volver:hover {
-    background-color: #f3f2f5;
-    color: #060606;
-    transform: scale(1.1);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-}
+            menu {
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                justify-content: center;
+                padding: 0;
 
-.btn-volver svg {
-    width: 28px;
-    height: 28px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
+                a:is(:link, :visited) {
+                    align-items: center;
+                    background-color: rgb(31, 31, 41);
+                    border-radius: 5rem;
+                    color: #fffc;
+                    display: flex;
+                    padding: 0.6rem;
+                    text-decoration: none;
+                    transition: all 0.4s;
+                    width: 320px;
 
-/* ============================================================
-   CONTENIDO EMBEBIDO (IFRAME)
-   ============================================================ */
-section iframe {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    width: 100%;
-    height: 450px;
-    border-radius: 1rem;
-    margin-top: 1rem;
-}
+                    &:is(:hover) {
+                        background-color: rgb(121, 3, 27);
+                        transform: scale(1.04) translateX(18px);
+                    }
 
-/* ============================================================
-   CONTENIDO PENDIENTE (PLACEHOLDER)
-   ============================================================ */
-.placeholder {
-    text-align: center;
-    padding: 3rem 1rem;
-    color: #2d2d44;
-}
+                    span {
+                        background-color: rgb(121, 3, 27);
+                        font-size: 1.8rem;
+                        border-radius: 50%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 1.8rem;
+                        height: 60px;
+                        width: 60px;
+                    }
 
-.placeholder h2 {
-    font-size: 1.4rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-}
+                    &:hover span {
+                        background-color: #0009;
+                    }
 
-.placeholder p {
-    font-size: 1rem;
-    color: #3d3d5c;
+                    aside {
+                        margin-left: 0.6rem;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: start;
+
+                        h3 {
+                            margin: 0;
+                            font-size: 1.6rem;
+                            font-weight: 400;
+                        }
+
+                        small {
+                            color: #fff6;
+                            font-size: 0.8rem;
+                            font-weight: 300;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
 }

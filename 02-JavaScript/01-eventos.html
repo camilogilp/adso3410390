@@ -5,16 +5,259 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eventos - JavaScript ADSO 3410390</title>
     <link rel="stylesheet" href="../src/css/master.css">
+    <style>
+        body.mainmenu {
+            min-height: 100vh;
+            height: auto;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 5rem 1rem 2rem;
+            background: #17212b;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        nav.back { position: fixed; top: 1rem; left: 1rem; z-index: 10; }
+        nav.back a {
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.72);
+            border: 1px solid rgba(255,255,255,.65);
+        }
+        nav.back a:hover { background: #273c50; }
+
+        main.game-panel {
+            width: min(100%, 560px);
+            max-width: 560px;
+            margin: 0 auto;
+            padding: clamp(1rem, 4vw, 2rem);
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 1.5rem;
+            background: rgba(12, 19, 27, .88);
+            box-shadow: 0 16px 42px rgba(0,0,0,.45);
+        }
+        .game-header { display: flex; flex-direction: column; align-items: center; }
+        .game-title {
+            margin: 0 0 1rem;
+            color: #fff;
+            font-size: clamp(1.5rem, 6vw, 2rem);
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 5px rgba(0,0,0,.75);
+        }
+        .game-container {
+            position: relative;
+            width: min(100%, 400px);
+            aspect-ratio: 1;
+            overflow: hidden;
+            border: 4px solid #263746;
+            border-radius: 1rem;
+            background: url('imgs/casita.jpeg') center / cover no-repeat;
+            box-shadow: 0 8px 24px rgba(0,0,0,.55);
+        }
+        .character {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 25%;
+            aspect-ratio: 224 / 300;
+            background: url('imgs/munequito-frente.png') 0 0 / 400% 100% no-repeat;
+            will-change: left, top, background-position;
+        }
+        .character.walking { animation: walkAnim .36s steps(1, end) infinite; }
+        @keyframes walkAnim {
+            0% { background-position-x: 0%; }
+            25% { background-position-x: 33.333%; }
+            50% { background-position-x: 66.667%; }
+            75%, 100% { background-position-x: 100%; }
+        }
+        .instructions {
+            margin: .8rem 0 0;
+            color: #d8e4ed;
+            font-size: .9rem;
+            text-align: center;
+        }
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(3, 64px);
+            grid-template-rows: repeat(2, 58px);
+            gap: .6rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .controls button {
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255,255,255,.4);
+            border-radius: 12px;
+            background: #27834c;
+            color: #fff;
+            font: inherit;
+            font-size: 1.8rem;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,.3);
+            transition: background .15s, transform .1s;
+            touch-action: manipulation;
+        }
+        .controls button:hover { background: #32a85e; }
+        .controls button:active { transform: translateY(3px); }
+        .controls button:focus-visible { outline: 3px solid #ffe66d; outline-offset: 3px; }
+        .btn-up { grid-column: 2; grid-row: 1; }
+        .btn-left { grid-column: 1; grid-row: 2; }
+        .btn-down { grid-column: 2; grid-row: 2; }
+        .btn-right { grid-column: 3; grid-row: 2; }
+
+        @media (max-width: 480px) {
+            body.mainmenu { padding-inline: .75rem; }
+            .game-container { border-width: 3px; }
+            .controls { grid-template-columns: repeat(3, 58px); grid-template-rows: repeat(2, 54px); }
+        }
+    </style>
 </head>
-<body>
-    <a href="index.html" class="btn-volver" title="Volver al menú de JavaScript">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" /></svg>
-    </a>
-    <main>
-        <header>
-            <h1><strong>Eventos</strong></h1>
-            <div class="placeholder"><p>Explora los eventos de JavaScript.</p></div>
+<body class="mainmenu">
+    <nav class="back">
+        <a href="JavaScript.html" aria-label="Volver al menú de JavaScript" title="Volver al menú de JavaScript">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 256 256" aria-hidden="true">
+                <path d="M216 128H40m0 0 72-72m-72 72 72 72" />
+            </svg>
+        </a>
+    </nav>
+
+    <main class="game-panel">
+        <header class="game-header">
+            <h1 class="game-title">Eventos</h1>
+            <div class="game-container" id="game" role="application" aria-label="Escenario del juego. Usa las flechas para mover al personaje">
+                <div class="character" id="character" aria-label="Personaje"></div>
+            </div>
+            <p class="instructions">Muévete con los botones o con las flechas del teclado.</p>
+            <div class="controls" aria-label="Controles de movimiento">
+                <button type="button" class="btn-up" data-direction="up" aria-label="Mover arriba">↑</button>
+                <button type="button" class="btn-left" data-direction="left" aria-label="Mover a la izquierda">←</button>
+                <button type="button" class="btn-down" data-direction="down" aria-label="Mover abajo">↓</button>
+                <button type="button" class="btn-right" data-direction="right" aria-label="Mover a la derecha">→</button>
+            </div>
         </header>
     </main>
+
+    <script>
+        const game = document.getElementById('game');
+        const character = document.getElementById('character');
+        const step = 12;
+        let x = 0;
+        let y = 0;
+        let walkTimer;
+        let repeatTimer;
+        let heldDirection = null;
+
+        const directionSprites = {
+            down: "url('imgs/munequito-frente.png')",
+            left: "url('imgs/munequito-izquierda.png')",
+            right: "url('imgs/munequito-derecha.png')",
+            up: "url('imgs/munequito-espalda.png')"
+        };
+        // Límites del dibujo visible dentro de cada celda (224 x 300 px).
+        const visibleBounds = {
+            down:  { left: 30 / 224, right: 197 / 224, top: 38 / 300, bottom: 1 },
+            left:  { left: 22 / 224, right: 196 / 224, top: 0, bottom: 1 },
+            right: { left: 40 / 224, right: 206 / 224, top: 0, bottom: 1 },
+            up:    { left: 36 / 224, right: 194 / 224, top: 0, bottom: 267 / 300 }
+        };
+
+        function positionLimits(direction) {
+            const bounds = visibleBounds[direction];
+            const margin = 4;
+            return {
+                minX: margin - bounds.left * character.offsetWidth,
+                maxX: game.clientWidth - margin - bounds.right * character.offsetWidth,
+                minY: margin - bounds.top * character.offsetHeight,
+                maxY: game.clientHeight - margin - bounds.bottom * character.offsetHeight
+            };
+        }
+
+        function setInitialPosition() {
+            x = (game.clientWidth - character.offsetWidth) / 2;
+            y = game.clientHeight - character.offsetHeight - 20;
+            renderPosition();
+        }
+
+        function renderPosition() {
+            character.style.left = `${x}px`;
+            character.style.top = `${y}px`;
+        }
+
+        function move(direction) {
+            const bounds = positionLimits(direction);
+            let nextX = x;
+            let nextY = y;
+
+            if (direction === 'up') nextY = Math.max(bounds.minY, y - step);
+            if (direction === 'down') nextY = Math.min(bounds.maxY, y + step);
+            if (direction === 'left') nextX = Math.max(bounds.minX, x - step);
+            if (direction === 'right') nextX = Math.min(bounds.maxX, x + step);
+
+            character.style.backgroundImage = directionSprites[direction];
+            const footX = nextX + character.offsetWidth / 2;
+            const footY = nextY + character.offsetHeight * visibleBounds[direction].bottom;
+            const doorLeft = game.clientWidth * 0.30;
+            const doorRight = game.clientWidth * 0.70;
+            const doorTop = game.clientHeight * 0.48;
+            const doorBottom = game.clientHeight * 0.81;
+            const entersDoor = footX > doorLeft && footX < doorRight && footY > doorTop && footY < doorBottom;
+
+            if (!entersDoor) {
+                x = nextX;
+                y = nextY;
+                renderPosition();
+            }
+
+            character.classList.remove('walking');
+            void character.offsetWidth;
+            character.classList.add('walking');
+            clearTimeout(walkTimer);
+            walkTimer = setTimeout(() => character.classList.remove('walking'), 260);
+        }
+
+        function stopMovement() {
+            clearInterval(repeatTimer);
+            repeatTimer = null;
+            heldDirection = null;
+        }
+
+        document.querySelectorAll('.controls button').forEach((button) => {
+            button.addEventListener('click', () => move(button.dataset.direction));
+        });
+
+        const keyDirections = {
+            ArrowUp: 'up',
+            ArrowDown: 'down',
+            ArrowLeft: 'left',
+            ArrowRight: 'right'
+        };
+        document.addEventListener('keydown', (event) => {
+            const direction = keyDirections[event.key];
+            if (!direction) return;
+            event.preventDefault();
+            if (heldDirection === direction) return;
+
+            stopMovement();
+            heldDirection = direction;
+            move(direction);
+            repeatTimer = setInterval(() => move(direction), 80);
+        });
+        document.addEventListener('keyup', (event) => {
+            if (keyDirections[event.key] === heldDirection) stopMovement();
+        });
+        window.addEventListener('blur', stopMovement);
+
+        setInitialPosition();
+        window.addEventListener('resize', setInitialPosition);
+    </script>
 </body>
 </html>
+
+
+
+

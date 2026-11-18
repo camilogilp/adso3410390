@@ -3,18 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Métodos matemáticos - JavaScript ADSO 3410390</title>
+    <title>Lanzamiento de moneda - Métodos matemáticos</title>
     <link rel="stylesheet" href="../src/css/master.css">
+    <style>
+        body.coin-page {
+            min-height: 100vh;
+            align-items: center;
+            padding: 5rem 1rem 2rem;
+            color: #fff8df;
+            background: radial-gradient(ellipse at 50% 24%, #3b2b10 0%, #17130c 48%, #090b0d 100%);
+            font-family: 'Poppins', sans-serif;
+        }
+        .coin-panel {
+            width: min(100%, 720px);
+            max-width: 720px;
+            padding: clamp(1.25rem, 4vw, 2.5rem);
+            border: 1px solid rgba(255, 215, 112, .24);
+            border-radius: 1.6rem;
+            background: linear-gradient(145deg, rgba(39, 31, 18, .96), rgba(15, 17, 18, .96));
+            box-shadow: 0 24px 70px rgba(0,0,0,.58), inset 0 1px rgba(255,255,255,.06);
+        }
+        .coin-header { text-align: center; }
+        .coin-header h1 {
+            margin: 0; padding: 0; border: 0; color: #ffe08a;
+            font-size: clamp(1.8rem, 6vw, 2.7rem); font-weight: 600; letter-spacing: .02em;
+        }
+        .coin-header p { margin: .45rem 0 0; color: #d2c8ac; font-size: .98rem; }
+        .coin-stage {
+            position: relative; height: 350px; margin: .4rem auto .25rem;
+            perspective: 1100px; perspective-origin: 50% 48%; isolation: isolate;
+        }
+        .coin-shadow {
+            position: absolute; left: 50%; bottom: 28px; width: 138px; height: 24px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse, rgba(0,0,0,.72), rgba(0,0,0,0) 72%);
+            transform: translateX(-50%) scale(1); filter: blur(2px); opacity: .7;
+        }
+        .coin-shadow.is-tossing { animation: shadowFlight var(--duration) ease-out forwards; }
+        .coin {
+            position: absolute; left: 50%; top: 59%; width: clamp(142px, 38vw, 184px); aspect-ratio: 1;
+            transform: translate(-50%, -50%) rotateY(var(--rest-angle, 0deg));
+            transform-style: preserve-3d; filter: drop-shadow(0 15px 12px rgba(0,0,0,.32)); will-change: transform;
+        }
+        .coin.is-tossing { animation: coinFlight var(--duration) cubic-bezier(.18,.72,.22,1) forwards; }
+        .coin-depth-layer {
+            position: absolute; inset: 0; border: 1px solid rgba(120,68,5,.72); border-radius: 50%;
+            background: linear-gradient(135deg, #fff1a1 0%, #db9717 22%, #ffdb57 47%, #a96708 68%, #f8c33e 100%);
+            transform: translateZ(var(--depth)); backface-visibility: visible;
+        }
+        .coin-face {
+            position: absolute; inset: 0; overflow: hidden; border: 2px solid #ffe182; border-radius: 50%;
+            background-color: #d99613; background-position: center; background-size: cover;
+            box-shadow: inset 0 0 0 2px rgba(119,72,7,.48), inset 0 0 15px rgba(74,43,0,.24);
+            backface-visibility: hidden;
+        }
+        .coin-face::after {
+            content: ""; position: absolute; inset: 0; border-radius: inherit;
+            background: radial-gradient(ellipse at 29% 17%, rgba(255,255,255,.26), transparent 35%),
+                        linear-gradient(145deg, transparent 45%, rgba(74,39,0,.18));
+            pointer-events: none;
+        }
+        .coin-face.front { background-image: url('imgs/moneda-cara.png'); transform: translateZ(9px); }
+        .coin-face.back { background-image: url('imgs/moneda-sello.png'); transform: rotateY(180deg) translateZ(9px); }
+        @keyframes coinFlight {
+            0%   { transform: translate(-50%,-50%) translateY(0) rotateX(0deg) rotateY(0deg) scale(1); }
+            18%  { transform: translate(-50%,-50%) translateY(-92px) rotateX(23deg) rotateY(var(--spin-a)) scale(1.04); }
+            48%  { transform: translate(-50%,-50%) translateY(-126px) rotateX(34deg) rotateY(var(--spin-b)) scale(1.06); }
+            78%  { transform: translate(-50%,-50%) translateY(-73px) rotateX(14deg) rotateY(var(--spin-c)) scale(1.02); }
+            100% { transform: translate(-50%,-50%) translateY(0) rotateX(0deg) rotateY(var(--finish-angle)) scale(1); }
+        }
+        @keyframes shadowFlight {
+            0%, 100% { transform: translateX(-50%) scale(1); opacity: .7; }
+            18%, 48% { transform: translateX(-50%) scale(.52); opacity: .24; }
+            78% { transform: translateX(-50%) scale(.76); opacity: .42; }
+        }
+        .coin-result { min-height: 2.2rem; margin: -.15rem 0 .2rem; color: #fff; font-size: clamp(1.25rem,5vw,1.7rem); font-weight: 600; text-align: center; }
+        .coin-result .gold { color: #ffd85e; }
+        .coin-hint { margin: 0 0 1.25rem; color: #b7ae99; font-size: .86rem; text-align: center; }
+        .coin-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: .75rem; }
+        .coin-actions button {
+            min-width: 168px; min-height: 48px; padding: .7rem 1.25rem;
+            border: 1px solid rgba(255,231,151,.72); border-radius: 999px;
+            background: linear-gradient(180deg, #f5c64b, #bb790d); color: #241604;
+            font: inherit; font-size: 1rem; font-weight: 700;
+            box-shadow: 0 6px 18px rgba(0,0,0,.3), inset 0 1px rgba(255,255,255,.42);
+            cursor: pointer; transition: transform .16s ease, filter .16s ease;
+        }
+        .coin-actions button:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.08); }
+        .coin-actions button:active:not(:disabled) { transform: translateY(1px); }
+        .coin-actions button:focus-visible { outline: 3px solid #fff0b3; outline-offset: 3px; }
+        .coin-actions button:disabled { cursor: wait; opacity: .58; }
+        .coin-actions .reset-button {
+            min-width: 120px; border-color: rgba(255,255,255,.2);
+            background: rgba(255,255,255,.08); color: #e8dfc9; box-shadow: none;
+        }
+        .scoreboard { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .7rem; margin-top: 1.6rem; }
+        .score-card { padding: .85rem .5rem; border: 1px solid rgba(255,222,142,.14); border-radius: 1rem; background: rgba(255,255,255,.045); text-align: center; }
+        .score-card strong { display: block; color: #ffe08a; font-size: 1.45rem; }
+        .score-card span { color: #c8bea7; font-size: .78rem; }
+        .history { margin-top: 1.25rem; }
+        .history h2 { margin: 0 0 .55rem; color: #e7d8ac; font-size: .95rem; font-weight: 500; text-align: center; }
+        .history-list { display: flex; min-height: 34px; justify-content: center; flex-wrap: wrap; gap: .45rem; padding: 0; margin: 0; list-style: none; }
+        .history-list li { padding: .27rem .65rem; border: 1px solid rgba(255,216,94,.25); border-radius: 999px; background: rgba(255,211,84,.08); color: #ffdf82; font-size: .75rem; }
+        .history-empty { color: #928a79; font-size: .8rem; align-self: center; }
+        @media (max-width: 520px) {
+            body.coin-page { padding: 4.5rem .75rem 1.25rem; }
+            .coin-stage { height: 315px; }
+            .coin { top: 57%; }
+            .scoreboard { gap: .4rem; }
+            .score-card span { font-size: .68rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .coin.is-tossing, .coin-shadow.is-tossing { animation-duration: .55s; }
+            .coin-actions button { transition: none; }
+        }
+    </style>
 </head>
-<body>
-    <a href="index.html" class="btn-volver" title="Volver al menú de JavaScript">
+<body class="coin-page">
+    <a href="JavaScript.html" class="btn-volver" title="Volver al menú de JavaScript" aria-label="Volver al menú de JavaScript">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" /></svg>
     </a>
-    <main>
-        <header>
-            <h1><strong>Métodos matemáticos</strong></h1>
-            <div class="placeholder"><p>Use for advanced calculations</p></div>
+
+    <main class="coin-panel">
+        <header class="coin-header">
+            <h1>Lanzamiento de moneda</h1>
+            <p>Prueba tu suerte con una moneda de oro.</p>
         </header>
+        <section class="coin-stage" aria-label="Animación del lanzamiento">
+            <div class="coin-shadow" id="coin-shadow" aria-hidden="true"></div>
+            <div class="coin" id="coin" role="img" aria-label="Moneda de oro mostrando la cara con el símbolo de euro">
+                <div class="coin-depth" id="coin-depth" aria-hidden="true"></div>
+                <div class="coin-face front" aria-hidden="true"></div>
+                <div class="coin-face back" aria-hidden="true"></div>
+            </div>
+        </section>
+        <p class="coin-result" id="result" aria-live="polite">Lista para lanzar</p>
+        <p class="coin-hint">Cara muestra € · Sello muestra £ · Cada lanzamiento tiene 50 % de probabilidad.</p>
+        <div class="coin-actions">
+            <button type="button" id="toss-button">Lanzar moneda</button>
+            <button type="button" class="reset-button" id="reset-button">Reiniciar</button>
+        </div>
+        <section class="scoreboard" aria-label="Estadísticas de los lanzamientos">
+            <div class="score-card"><strong id="total-count">0</strong><span>Lanzamientos</span></div>
+            <div class="score-card"><strong id="heads-count">0</strong><span>Cara · €</span></div>
+            <div class="score-card"><strong id="tails-count">0</strong><span>Sello · £</span></div>
+        </section>
+        <section class="history" aria-labelledby="history-title">
+            <h2 id="history-title">Últimos resultados</h2>
+            <ol class="history-list" id="history-list"><li class="history-empty">Aún no hay lanzamientos</li></ol>
+        </section>
     </main>
+
+    <script>
+        const coin = document.getElementById('coin');
+        const depth = document.getElementById('coin-depth');
+        const shadow = document.getElementById('coin-shadow');
+        const tossButton = document.getElementById('toss-button');
+        const resetButton = document.getElementById('reset-button');
+        const result = document.getElementById('result');
+        const historyList = document.getElementById('history-list');
+
+        const depthFragment = document.createDocumentFragment();
+        for (let z = -8; z <= 8; z += 1) {
+            const layer = document.createElement('span');
+            layer.className = 'coin-depth-layer';
+            layer.style.setProperty('--depth', `${z}px`);
+            depthFragment.appendChild(layer);
+        }
+        depth.appendChild(depthFragment);
+
+        let caraCount = 0;
+        let selloCount = 0;
+        let totalCount = 0;
+        let recentResults = [];
+        let isTossing = false;
+
+        function renderHistory() {
+            historyList.replaceChildren();
+            if (recentResults.length === 0) {
+                const empty = document.createElement('li');
+                empty.className = 'history-empty';
+                empty.textContent = 'Aún no hay lanzamientos';
+                historyList.appendChild(empty);
+                return;
+            }
+            recentResults.forEach((item, index) => {
+                const entry = document.createElement('li');
+                entry.textContent = `${totalCount - index}. ${item}`;
+                historyList.appendChild(entry);
+            });
+        }
+
+        function finishToss(outcome, finalAngle) {
+            isTossing = false;
+            coin.classList.remove('is-tossing');
+            shadow.classList.remove('is-tossing');
+            coin.style.setProperty('--rest-angle', `${finalAngle}deg`);
+            tossButton.disabled = false;
+            resetButton.disabled = false;
+            totalCount += 1;
+            if (outcome === 'cara') caraCount += 1;
+            else selloCount += 1;
+            document.getElementById('total-count').textContent = totalCount;
+            document.getElementById('heads-count').textContent = caraCount;
+            document.getElementById('tails-count').textContent = selloCount;
+            result.innerHTML = outcome === 'cara'
+                ? 'Resultado: <span class="gold">CARA · €</span>'
+                : 'Resultado: <span class="gold">SELLO · £</span>';
+            coin.setAttribute('aria-label', outcome === 'cara'
+                ? 'Moneda de oro mostrando la cara con el símbolo de euro'
+                : 'Moneda de oro mostrando el sello con el símbolo de libra');
+            recentResults.unshift(outcome === 'cara' ? 'Cara · €' : 'Sello · £');
+            recentResults = recentResults.slice(0, 8);
+            renderHistory();
+        }
+
+        function tossCoin() {
+            if (isTossing) return;
+            isTossing = true;
+            tossButton.disabled = true;
+            resetButton.disabled = true;
+            result.textContent = 'La moneda está en el aire…';
+
+            const outcome = Math.random() < 0.5 ? 'cara' : 'sello';
+            const turns = 7 + Math.floor(Math.random() * 4);
+            const finalAngle = turns * 360 + (outcome === 'sello' ? 180 : 0);
+            const duration = 1.85 + Math.random() * 0.55;
+            coin.style.setProperty('--finish-angle', `${finalAngle}deg`);
+            coin.style.setProperty('--spin-a', `${Math.round(finalAngle * 0.24)}deg`);
+            coin.style.setProperty('--spin-b', `${Math.round(finalAngle * 0.57)}deg`);
+            coin.style.setProperty('--spin-c', `${Math.round(finalAngle * 0.84)}deg`);
+            coin.style.setProperty('--duration', `${duration}s`);
+            shadow.style.setProperty('--duration', `${duration}s`);
+            coin.classList.remove('is-tossing');
+            shadow.classList.remove('is-tossing');
+            void coin.offsetWidth;
+            coin.classList.add('is-tossing');
+            shadow.classList.add('is-tossing');
+
+            coin.addEventListener('animationend', function onCoinAnimationEnd(event) {
+                if (event.target !== coin || event.animationName !== 'coinFlight') return;
+                coin.removeEventListener('animationend', onCoinAnimationEnd);
+                finishToss(outcome, finalAngle);
+            });
+        }
+
+        function resetGame() {
+            if (isTossing) return;
+            caraCount = 0;
+            selloCount = 0;
+            totalCount = 0;
+            recentResults = [];
+            coin.style.setProperty('--rest-angle', '0deg');
+            coin.setAttribute('aria-label', 'Moneda de oro mostrando la cara con el símbolo de euro');
+            document.getElementById('total-count').textContent = '0';
+            document.getElementById('heads-count').textContent = '0';
+            document.getElementById('tails-count').textContent = '0';
+            result.textContent = 'Lista para lanzar';
+            renderHistory();
+        }
+
+        tossButton.addEventListener('click', tossCoin);
+        resetButton.addEventListener('click', resetGame);
+        document.addEventListener('keydown', (event) => {
+            if (event.code !== 'Space' || event.target instanceof HTMLButtonElement) return;
+            event.preventDefault();
+            tossCoin();
+        });
+    </script>
 </body>
 </html>
